@@ -87,7 +87,7 @@
       "displayName": "Name",
       "description": "The name assigned to all of the objects defined in this template.",
       "required": true,
-      "value": "angular-scaffold"
+      "value": "fpcare"
     },
     {
       "name": "OUTPUT_IMAGE_TAG",
@@ -101,7 +101,7 @@
       "displayName": "GIT Source Repo URL",
       "description": "A GIT URL to your source code. NOTE: unused, but mandatory for scripts.",
       "required": true,
-      "value": "https://github.com/bcgov/angular-scaffold"
+      "value": "https://github.com/bcgov/moh-fpcare"
     },
     {
       "name": "GIT_REF",
