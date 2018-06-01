@@ -1,5 +1,5 @@
 // Edit your app's name below
-def APP_NAME = 'fpcare-web'
+def APP_NAME = 'fpcare'
 // fpcare-web-build-angular-app-build
 def CHAINED_ANGULAR_BUILD = APP_NAME + '-build-angular-app-build'
 
