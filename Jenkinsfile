@@ -1,7 +1,5 @@
 // Edit your app's name below
-def APP_NAME = 'fpcare'
-// fpcare-web-build-angular-app-build
-def CHAINED_ANGULAR_BUILD = APP_NAME + '-build-angular-app-build'
+def APP_NAME = 'angular-app'
 
 // Edit your environment TAG names below
 def TAG_NAMES = ['dev', 'test', 'prod']
@@ -10,26 +8,24 @@ def TAG_NAMES_BACKUP = ['devbackup', 'testbackup', 'prodbackup']
 // You shouldn't have to edit these if you're following the conventions
 def NGINX_BUILD_CONFIG = 'nginx-runtime'
 def BUILD_CONFIG = APP_NAME + '-build'
+def CHAINED_ANGULAR_BUILD = APP_NAME + '-build-angular-app-build'
 def IMAGESTREAM_NAME = APP_NAME
 
 node {
 
-  stage('build nginx runtime') {
+  stage('nginx runtime') {
     echo "Building: " + NGINX_BUILD_CONFIG
     openshiftBuild bldCfg: NGINX_BUILD_CONFIG, showBuildLogs: 'true'
   }
 
-  stage('build ' + CHAINED_ANGULAR_BUILD) {
+  stage(CHAINED_ANGULAR_BUILD) {
     echo "Building: " + CHAINED_ANGULAR_BUILD
     openshiftBuild bldCfg: CHAINED_ANGULAR_BUILD, showBuildLogs: 'true'
   }
 
-  stage('build ' + BUILD_CONFIG) {
+  stage(BUILD_CONFIG) {
     echo "Building: " + BUILD_CONFIG
     openshiftBuild bldCfg: BUILD_CONFIG, showBuildLogs: 'true'
-    // old tag
-    // openshiftTag destStream: IMAGESTREAM_NAME, verbose: 'true', destTag: '$BUILD_ID', srcStream: IMAGESTREAM_NAME, srcTag: 'latest'
-    // new tag
     IMAGE_HASH = sh (
        script: """oc get istag ${IMAGESTREAM_NAME}:latest -o template --template=\"{{.image.dockerImageReference}}\"|awk -F \":\" \'{print \$3}\'""",
  	  returnStdout: true).trim()
