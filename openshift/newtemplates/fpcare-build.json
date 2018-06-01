@@ -1,0 +1,79 @@
+{
+    "kind": "Template",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "fpcare-build",
+        "creationTimestamp": null
+    },
+    "objects": [
+        {
+            "kind": "BuildConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "fpcare-build",
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "fpcare"
+                }
+            },
+            "spec": {
+                "triggers": [
+                    {
+                        "type": "ImageChange",
+                        "imageChange": {}
+                    }
+                ],
+                "runPolicy": "Parallel",
+                "source": {
+                    "type": "Dockerfile",
+                    "dockerfile": "FROM fpcare-build-angular-app-build:latest\nCOPY * /tmp/app/dist/\nCMD  /usr/libexec/s2i/run",
+                    "images": [
+                        {
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "fpcare-build-angular-app-build:latest"
+                            },
+                            "paths": [
+                                {
+                                    "sourcePath": "/opt/app-root/src/dist/.",
+                                    "destinationDir": "tmp"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "strategy": {
+                    "type": "Docker",
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "ImageStreamTag",
+                            "name": "nginx-runtime:latest"
+                        }
+                    }
+                },
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "fpcare:latest"
+                    }
+                },
+                "resources": {
+                    "limits": {
+                        "cpu": "1",
+                        "memory": "4Gi"
+                    },
+                    "requests": {
+                        "cpu": "100m",
+                        "memory": "2Gi"
+                    }
+                },
+                "postCommit": {},
+                "completionDeadlineSeconds": 1800,
+                "nodeSelector": null
+            },
+            "status": {
+                "lastVersion": 0
+            }
+        }
+    ]
+}

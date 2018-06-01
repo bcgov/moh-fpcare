@@ -2,7 +2,7 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "nginx-runtime",
+    "name": "angular-builder",
     "creationTimestamp": null
   },
   "objects": [
@@ -28,10 +28,9 @@
         "source": {
           "type": "Git",
           "git": {
-            "ref": "${GIT_REF}",
             "uri": "${GIT_REPO_URL}"
           },
-          "contextDir": "${SOURCE_CONTEXT_DIR}"
+          "contextDir": "openshift/templates/angular-builder/"
         },
         "strategy": {
           "type": "Docker"
@@ -39,7 +38,7 @@
         "output": {
           "to": {
             "kind": "ImageStreamTag",
-            "name": "${NAME}:${OUTPUT_IMAGE_TAG}"
+            "name": "${NAME}:latest"
           }
         },
         "resources": {},
@@ -54,37 +53,16 @@
     {
       "name": "NAME",
       "displayName": "Name",
-      "description": "The name assigned to all of the frontend objects defined in this template.    You should keep this as default unless your know what your doing.",
+      "description": "The name assigned to all of the frontend objects defined in this template.  You should keep this as default unless your know what your doing.",
       "required": true,
-      "value": "nginx-runtime"
+      "value": "angular-builder"
     },
     {
       "name": "GIT_REPO_URL",
       "displayName": "Git Repo URL",
       "description": "The URL to your GIT repo, don't use the this default unless your just experimenting.",
       "required": true,
-      "value": "https://github.com/bcgov/angular-scaffold"
-    },
-    {
-      "name": "GIT_REF",
-      "displayName": "Git Reference",
-      "description": "The git reference or branch.",
-      "required": true,
-      "value": "master"
-    },
-    {
-      "name": "SOURCE_CONTEXT_DIR",
-      "displayName": "Source Context Directory",
-      "description": "The source context directory.",
-      "required": true,
-      "value": "openshift/templates/nginx-runtime/"
-    },
-    {
-      "name": "OUTPUT_IMAGE_TAG",
-      "displayName": "Output Image Tag",
-      "description": "The tag given to the built image.",
-      "required": true,
-      "value": "latest"
-    }	
+      "value": "https://github.com/bcgov/moh-fpcare"
+    }
   ]
 }

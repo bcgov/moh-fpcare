@@ -28,10 +28,9 @@
         "source": {
           "type": "Git",
           "git": {
-            "ref": "${GIT_REF}",
             "uri": "${GIT_REPO_URL}"
           },
-          "contextDir": "${SOURCE_CONTEXT_DIR}"
+          "contextDir": "openshift/templates/nginx-runtime/"
         },
         "strategy": {
           "type": "Docker"
@@ -39,7 +38,7 @@
         "output": {
           "to": {
             "kind": "ImageStreamTag",
-            "name": "${NAME}:${OUTPUT_IMAGE_TAG}"
+            "name": "${NAME}:latest"
           }
         },
         "resources": {},
@@ -63,28 +62,7 @@
       "displayName": "Git Repo URL",
       "description": "The URL to your GIT repo, don't use the this default unless your just experimenting.",
       "required": true,
-      "value": "https://github.com/bcgov/angular-scaffold"
-    },
-    {
-      "name": "GIT_REF",
-      "displayName": "Git Reference",
-      "description": "The git reference or branch.",
-      "required": true,
-      "value": "master"
-    },
-    {
-      "name": "SOURCE_CONTEXT_DIR",
-      "displayName": "Source Context Directory",
-      "description": "The source context directory.",
-      "required": true,
-      "value": "openshift/templates/nginx-runtime/"
-    },
-    {
-      "name": "OUTPUT_IMAGE_TAG",
-      "displayName": "Output Image Tag",
-      "description": "The tag given to the built image.",
-      "required": true,
-      "value": "latest"
-    }	
+      "value": "https://github.com/bcgov/moh-fpcare"
+    }
   ]
 }
