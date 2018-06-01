@@ -6,7 +6,7 @@
       "description": "Deployment template for a angular on nginx",
       "tags": "angular,nginx"
     },
-    "name": "fpcare-on-nginx"
+    "name": "fpcare"
   },
   "objects": [
     {
@@ -224,7 +224,7 @@
       "displayName": "Name",
       "name": "NAME",
       "required": true,
-      "value": "fpcare-on-nginx"
+      "value": "fpcare"
     },
     {
       "description": "The namespace where to get the above image name",
