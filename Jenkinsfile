@@ -9,7 +9,7 @@ def TAG_NAMES_BACKUP = ['devbackup', 'testbackup', 'prodbackup']
 def NGINX_BUILD_CONFIG = 'nginx-runtime'
 def BUILD_CONFIG = APP_NAME + '-build'
 def CHAINED_ANGULAR_BUILD = APP_NAME + '-on-nginx-build'
-def IMAGESTREAM_NAME = APP_NAME
+def IMAGESTREAM_NAME = APP_NAME + '-on-nginx'
 
 node {
 
@@ -18,14 +18,14 @@ node {
     openshiftBuild bldCfg: NGINX_BUILD_CONFIG, showBuildLogs: 'true'
   }
 
-  stage(CHAINED_ANGULAR_BUILD) {
-    echo "Building: " + CHAINED_ANGULAR_BUILD
-    openshiftBuild bldCfg: CHAINED_ANGULAR_BUILD, showBuildLogs: 'true'
-  }
-
   stage(BUILD_CONFIG) {
     echo "Building: " + BUILD_CONFIG
     openshiftBuild bldCfg: BUILD_CONFIG, showBuildLogs: 'true'
+  }
+
+  stage(CHAINED_ANGULAR_BUILD) {
+    echo "Building: " + CHAINED_ANGULAR_BUILD
+    openshiftBuild bldCfg: CHAINED_ANGULAR_BUILD, showBuildLogs: 'true'
     IMAGE_HASH = sh (
        script: """oc get istag ${IMAGESTREAM_NAME}:latest -o template --template=\"{{.image.dockerImageReference}}\"|awk -F \":\" \'{print \$3}\'""",
  	  returnStdout: true).trim()
