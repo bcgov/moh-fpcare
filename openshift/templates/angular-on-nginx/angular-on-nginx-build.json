@@ -38,7 +38,7 @@
             {
               "from": {
                 "kind": "ImageStreamTag",
-                "name": "angular-app-build:latest"
+                "name": "angular-app:latest"
               },
               "paths": [
                 {
