@@ -1,5 +1,5 @@
 // Edit your app's name below
-def APP_NAME = 'angular-app'
+def APP_NAME = 'fpcare'
 
 // Edit your environment TAG names below
 def TAG_NAMES = ['dev', 'test', 'prod']
