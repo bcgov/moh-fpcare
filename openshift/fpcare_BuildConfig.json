@@ -45,7 +45,7 @@
                     "sourceStrategy": {
                         "from": {
                             "kind": "ImageStreamTag",
-                            "name": "nodejs:6",
+                            "name": "nodejs:8",
                             "namespace": "openshift"
                         }
                     },
