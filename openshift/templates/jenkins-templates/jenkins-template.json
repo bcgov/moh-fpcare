@@ -114,7 +114,7 @@
       "displayName": "Application Name",
       "description": "The name given to the application",
       "required": true,
-      "value": "fpcare"
+      "value": "angular-on-nginx"
     },
     {
       "name": "GIT_SOURCE_URL",
