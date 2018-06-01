@@ -1,0 +1,81 @@
+{
+    "kind": "List",
+    "apiVersion": "v1",
+    "metadata": {},
+    "items": [
+        {
+            "apiVersion": "v1",
+            "kind": "ImageStream",
+            "metadata": {
+                "name": "fpcare-on-nginx"
+            }
+        },
+        {
+            "apiVersion": "v1",
+            "kind": "BuildConfig",
+            "metadata": {
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "fpcare-on-nginx"
+                },
+                "name": "fpcare-on-nginx-build"
+            },
+            "spec": {
+                "completionDeadlineSeconds": 1800,
+                "output": {
+                    "to": {
+                        "kind": "ImageStreamTag",
+                        "name": "fpcare-on-nginx:latest"
+                    }
+                },
+                "resources": {
+                    "limits": {
+                        "cpu": "1",
+                        "memory": "4Gi"
+                    },
+                    "requests": {
+                        "cpu": "100m",
+                        "memory": "2Gi"
+                    }
+                },
+                "runPolicy": "Parallel",
+                "source": {
+                    "dockerfile": "FROM nginx-runtime:latest\nCOPY * /tmp/app/dist/\nCMD  /usr/libexec/s2i/run",
+                    "images": [
+                        {
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "fpcare:latest"
+                            },
+                            "paths": [
+                                {
+                                    "destinationDir": "tmp",
+                                    "sourcePath": "/opt/app-root/src/dist/."
+                                }
+                            ]
+                        }
+                    ],
+                    "type": "Dockerfile"
+                },
+                "strategy": {
+                    "dockerStrategy": {
+                        "from": {
+                            "kind": "ImageStreamTag",
+                            "name": "nginx-runtime:latest",
+                            "namespace": "openshift"
+                        }
+                    },
+                    "type": "Docker"
+                },
+                "triggers": [
+                    {
+                        "type": "ImageChange"
+                    }
+                ]
+            },
+            "status": {
+                "lastVersion": 0
+            }
+        }
+    ]
+}
