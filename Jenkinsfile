@@ -8,7 +8,7 @@ def TAG_NAMES_BACKUP = ['devbackup', 'testbackup', 'prodbackup']
 // You shouldn't have to edit these if you're following the conventions
 def NGINX_BUILD_CONFIG = 'nginx-runtime'
 def BUILD_CONFIG = APP_NAME + '-build'
-def CHAINED_ANGULAR_BUILD = APP_NAME + '-build-angular-app-build'
+def CHAINED_ANGULAR_BUILD = APP_NAME + '-on-nginx-build'
 def IMAGESTREAM_NAME = APP_NAME
 
 node {
