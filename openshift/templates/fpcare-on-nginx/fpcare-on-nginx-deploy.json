@@ -6,19 +6,9 @@
       "description": "Deployment template for a angular on nginx",
       "tags": "angular,nginx"
     },
-    "name": "moh-fpcare"
+    "name": "fpcare-on-nginx"
   },
   "objects": [
-    {
-      "apiVersion": "v1",
-      "kind": "ImageStream",
-      "metadata": {
-        "annotations": {
-          "description": "runtime images stream"
-        },
-        "name": "${SOURCE_NAME}"
-      }
-    },
     {
       "apiVersion": "v1",
       "kind": "DeploymentConfig",
@@ -56,7 +46,7 @@
           "spec": {
             "containers": [
               {
-                "image": "${SOURCE_NAME}",
+                "image": "${NAME}",
                 "imagePullPolicy": "Always",
                 "name": "${NAME}",
                 "ports": [
@@ -97,7 +87,7 @@
                     "memory": "100Mi"
                   },
                   "limits": {
-                    "cpu": "250m",
+                    "cpu": "500m",
                     "memory": "1Gi"
                   }
                 },
@@ -149,7 +139,7 @@
               "from": {
                 "kind": "ImageStreamTag",
                 "namespace": "${IMAGE_NAMESPACE}",
-                "name": "${SOURCE_NAME}:${TAG_NAME}"
+                "name": "${NAME}:${TAG_NAME}"
               }
             }
           }
@@ -207,29 +197,41 @@
           "weight": 100
         }
       }
+    },
+    {
+      "apiVersion": "autoscaling/v1",
+      "kind": "HorizontalPodAutoscaler",
+      "metadata": {
+        "name": "${NAME}",
+        "labels": {
+          "app": "${NAME}"
+        }
+      },
+      "spec": {
+        "scaleTargetRef": {
+          "kind": "DeploymentConfig",
+          "name": "${NAME}",
+          "subresource": "scale"
+        },
+        "minReplicas": 2,
+        "maxReplicas": 6
+      }
     }
   ],
   "parameters": [
-    {
-      "description": "The name of the source image",
-      "displayName": "Source Name",
-      "name": "SOURCE_NAME",
-      "required": true,
-      "value": "moh-fpcare"
-    },
     {
       "description": "The name assigned to all of the openshift objects defined in this template. It is also the name of runtime image you want.",
       "displayName": "Name",
       "name": "NAME",
       "required": true,
-      "value": "moh-fpcare"
+      "value": "fpcare"
     },
     {
       "description": "The namespace where to get the above image name",
       "displayName": "Image Namespace",
       "name": "IMAGE_NAMESPACE",
       "required": true,
-      "value": "moh-fpcare-tools"
+      "value": "gcpe-mygovbc-demo"
     },
     {
       "description": "OpenShift cluster private IP range in CIDR notation, used by Nginx ngx_http_realip_module.",
@@ -247,7 +249,7 @@
       "description": "Nginx ngx_http_access_module ip filter rules",
       "displayName": "Ip Filter Rules",
       "name": "IpFilterRules",
-      "value": "allow 0.0.0.0/0; deny all;"
+      "value": "#allow all; deny all;"
     },
     {
       "description": "The exposed hostname that will route to the service, e.g., myappname.pathfinder.gov.bc.ca, if left blank a value will be defaulted.",
@@ -270,14 +272,15 @@
     {
       "description": "For very simple HTTP Basic authentication, the username of the ONE user",
       "displayName": "HTTP Basic Username",
-      "name": "HTTP_USERNAME",
+      "name": "HTTP_BASIC_USERNAME",
       "value": ""
     },
     {
       "description": "For very simple HTTP Basic authentication, the password of the ONE user",
       "displayName": "HTTP Basic Password",
-      "name": "HTTP_PASSWORD",
+      "name": "HTTP_BASIC_PASSWORD",
       "value": ""
     }
+
   ]
 }

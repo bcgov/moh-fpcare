@@ -58,7 +58,7 @@ if [ ! -z "$MissingParam" ]; then
 fi
 # -------------------------------------------------------------------------------------
 DeploymentConfigPostfix="_DeploymentConfig.json"
-ANGULAR_ON_NGINX_NAME="angular-on-nginx"
+ANGULAR_ON_NGINX_NAME="fpcare-on-nginx"
 
 DEPLOYMENT_PROJECT_NAME="${PROJECT_NAMESPACE}-${DEPLOYMENT_ENV_NAME}"
 BUILD_PROJECT_NAME="${PROJECT_NAMESPACE}-${BUILD_ENV_NAME}"
