@@ -1,0 +1,182 @@
+<!--
+
+  TEMPORARILY COMMENTED OUT
+
+  Need to create a new Module for this to work, DemoModule, which loads VerifierModule directly - NO LAZY LOADING.
+
+  Currently this doesn't work because the components below are now in VerifierModule, and AppModule lazyloads it, so it can't access the components as exports.
+ -->
+
+<!-- <h1>Demo Page</h1>
+<p class="lead">A demonstration of the general-purpose components for FPCARE</p>
+
+<hr>
+
+<section>
+  <h2>Colour Swatch</h2>
+  <div class="container px-3">
+    <div id='color-swatch'>
+        <div class="bg-primary text-white">Primary <code>#036</code></div>
+        <div class="bg-secondary text-white">Secondary: <code>#fcba19</code></div>
+        <div class="bg-success text-white">Success <code>#486446</code></div>
+        <div class="bg-danger text-white">Danger <code>#a94442</code></div>
+        <div class="bg-warning text-dark">Warning <code>#f3cd65</code></div>
+        <div class="bg-info text-white">Info <code>#96c0e6</code></div>
+        <div class="bg-light text-dark border">Light <code>#f8f9fa</code></div>
+        <div class="bg-dark text-white">Dark <code>#343a40</code></div>
+        <div class="bg-white text-dark border">White <code>#fcfcfc</code></div>
+    </div>
+  </div>
+</section>
+
+<hr />
+
+<section class="row">
+  <div class="col-sm d-flex">
+    <div class="col">
+      <h2>Datepicker Component</h2>
+
+      Default. Fluid (block) width.
+      <code>&lt;fpcare-datepicker&gt;&lt;/fpcare-datepicker&gt;</code>
+      <fpcare-datepicker></fpcare-datepicker>
+      <hr />
+
+      Binding to data.
+      <code>&lt;fpcare-datepicker [(date)]="demoDate"&gt;&lt;/fpcare-datepicker&gt;</code>
+      <fpcare-datepicker [(date)]="demoDate"></fpcare-datepicker>
+      <pre>{{this.demoDate | json}}</pre>
+
+      <hr />
+
+      Mini. Fits in a button. Plus custom date formatting.
+      <code>&lt;fpcare-datepicker size='mini' dateFormat="yyyy/mm/dd"&gt;&lt;/fpcare-datepicker&gt;</code>
+      <fpcare-datepicker size='mini' dateFormat="yyyy/mm/dd"></fpcare-datepicker>
+    </div>
+  </div>
+  <div class="col-sm d-flex">
+    <div class="col">
+      <h2>Breadcrumbs</h2>
+
+      <code>&lt;fpcare-breadcrumb&gt;&lt;/fpcare-breadcrumb&gt;</code>
+      <fpcare-breadcrumb></fpcare-breadcrumb>
+
+      <p>Click one of the links below to simulate a route change, and watch how the breadcumb automatically populates. <span class='text-muted small'>Known issue: Currently the breadcrumb is not populated until a route change event is detected. That means the breadcrumb will be blank until you click a link.</span></p>
+
+      <ul>
+          <li><a routerLink="/demo">Demo page</a></li>
+          <li><a routerLink="/demo/ExampleA">/demo/ExampleA</a></li>
+          <li><a routerLink="/demo/ExampleB">/demo/ExampleB</a></li>
+          <li><a routerLink="/demo/ExampleB/ExampleB-1">/demo/ExampleB/ExampleB-1</a></li>
+          <li><a routerLink="/demo/ExampleB/ExampleB-2">/demo/ExampleB/ExampleB-2</a></li>
+          <li><a routerLink="/demo/ExampleC">/demo/ExampleC</a></li>
+      </ul>
+
+      <router-outlet></router-outlet>
+    </div>
+    </div>
+</section>
+
+<hr />
+
+<section class="row">
+  <div class="col">
+    <h2>
+      Miller Collumns
+      <small><a href="https://en.wikipedia.org/wiki/Miller_columns">(wiki)</a></small>
+    </h2>
+
+    <ul>
+      <li>Can load with selections (demoed below). <small>Useful when 'Viewing' a pre-existing record</small></li>
+      <li>Mobile-friendly</li>
+      <li>Searchable (with <code>&lt;fpcare-expanding-search&gt;</code>)</li>
+      <li>Column order is configurable (with <code>config.primaryColumn</code>)</li>
+    </ul>
+
+    <code>
+        &lt;fpcare-miller-columns [config]="millerColumnDummyDataV2"&gt;&lt;/fpcare-miller-columns&gt;
+    </code>
+
+    <fpcare-miller-columns [config]="millerColumnDummyDataV2">
+    </fpcare-miller-columns>
+
+
+  </div>
+</section>
+
+
+<hr />
+
+<section class="row">
+  <div class="col">
+    <h2>Enrollment List</h2>
+
+    <code>
+      &lt;fpcare-enrollment-list [rowItems]="enrollmentListDummyData"&gt;&lt;/fpcare-enrollment-list&gt;
+    </code>
+
+    <div class="row ml-5">
+      <ul class='col'>
+        <li>Includes search (only searches bolded part of row).</li>
+        <li>Rows are expandable</li>
+        <li>Animations for row expansion and search</li>
+      </ul>
+      <ul class="col text-danger">
+        <li>Known Bug: The View Dropdown and Search don't play well together currently.</li>
+        <li>View Dropdown doesn't properly filter top level rows.</li>
+      </ul>
+    </div>
+
+    <hr>
+
+    <fpcare-enrollment-list [rowItems]="[]"></fpcare-enrollment-list>
+  </div>
+</section>
+
+
+<hr>
+
+<section class="row">
+  <div class="col">
+    <h2>Expanding Search</h2>
+
+    <code>
+      &lt;fpcare-expanding-search  (onChange)="filterColumn($event)"&gt;
+      <br>
+      &lt;/fpcare-expanding-search&gt;
+    </code>
+
+    <ul>
+      <li>Not standalone. Used within other components.</li>
+      <li>Versatile alignment, plays nice with flexbox</li>
+      <li>Doesn't handle filtering/search, use <code>(onChange)</code> and handle elsewhere.</li>
+    </ul>
+
+    <div class="bg-info d-flex align-items-end flex-column p-2" style='max-width: 300px'>
+        <fpcare-expanding-search></fpcare-expanding-search>
+    </div>
+  </div>
+
+  <div class="col">
+    <h2>Add User Button (+ modal)</h2>
+
+    <p>
+      <em>In progress.</em>
+    </p>
+
+    <fpcare-add-user-button></fpcare-add-user-button>
+
+  </div>
+
+</section>
+
+<hr>
+
+<section>
+  <div class="row">
+    <div class="col"><h2>Dashboard Bar</h2></div>
+  </div>
+
+  <p><em>In progress.</em></p>
+
+  <fpcare-dashboard-bar></fpcare-dashboard-bar>
+</section> -->

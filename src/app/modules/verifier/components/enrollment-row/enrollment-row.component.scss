@@ -1,0 +1,105 @@
+@import 'variables.scss';
+$rowHeight: 2.5em; //35px;
+$rowBgColor: white;
+// $rowPadding: 0;
+
+:host {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: $gray-200;
+}
+
+.enrollment-icons,
+.enrollment-list-item,
+.enrollment-expandable {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.enrollment-list-item {
+    border: 1px solid $gray-500;
+    border-left: none;
+    border-right: none;
+    min-height: $rowHeight;
+    background: $rowBgColor; // Hide animation underneath it.
+    z-index: 1;
+    position: relative;
+}
+
+// Same hover effect for full rows and expandable rows
+.enrollment-expandable,
+.enrollment-list-item {
+  transition: 0.25s;
+  &:hover {
+    background: darken($rowBgColor, 2.5%);
+  }
+}
+
+.enrollment-expandable {
+  color: $gray-700;
+  min-height: $rowHeight;
+  border: 1px solid $gray-500;
+  flex-wrap: wrap;
+  background: $gray-200;
+}
+
+.enrollment-actions {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+
+    .btn-block {
+      border-radius: 0;
+      border-top: 0;
+      border-right: 0;
+      border-bottom: 0;
+      height: 100%;
+    }
+}
+
+.enrollment-text-container {
+    min-height: $rowHeight;
+    cursor: pointer; // Click to expand
+    display: flex;
+    align-items: center;
+    flex: 5;
+    padding-left: 1em;
+    margin-right: 2em;
+    .enrollment-text-main {
+      // Disabling font-weight as our font (MyraidWebPro.ttf) doesn't support it
+      // and it leads to bad artifacts due to aliasing.
+      // font-weight: 800;
+      font-size: $h4-font-size;
+    }
+    &>span:not(:last-of-type):after {
+        font-size: $font-size-base;
+        color: $gray-600;
+        content: " / "
+    }
+
+    @include media-breakpoint-down(xs){
+      &>span:first-of-type:after {
+        content: "";
+        display: block;
+      }
+    }
+
+    &>span:not(.enrollment-text-main) {
+        color: $gray-600;
+        margin-left: 0.1rem;
+    }
+}
+
+.enrollment-icons>i {
+    padding: 0 5px;
+    font-size: 18px;
+    cursor: pointer;
+
+    // Main action icon, size appropriately
+    &.fa-edit {
+      font-size: 1.75rem; //28px
+    }
+}

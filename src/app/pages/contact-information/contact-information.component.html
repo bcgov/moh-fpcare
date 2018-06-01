@@ -1,0 +1,207 @@
+<form #formRef="ngForm"
+  novalidate
+  (submit)="continue()">
+  <h1 i18n="@@ContactInformation">Contact Information</h1>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for='firstName'
+          i18n="@@firstName">First Name</label>
+        <input type="text"
+          fpcareRequired
+          class="form-control"
+          name='firstName'
+          id='firstName'
+          [(ngModel)]="applicant.firstName">
+      </div>
+    </div>
+    <div class="col-sm-3 col-md-4 col-sm-offset-1 col-md-offset-0">
+      <div class="form-group">
+        <label for='middleName'
+          i18n="@@middleName"
+          class="nowrap-sm wrap-md">Middle name (if applicable)</label>
+        <input type="text"
+          class="form-control"
+          name='middleName'
+          id='middleName'
+          [(ngModel)]="applicant.middleName">
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for='lastName'
+          i18n="@@lastName">Last Name</label>
+        <input type="text"
+          class="form-control"
+          name='lastName'
+          id='lastName'
+          fpcareRequired
+          [(ngModel)]="applicant.lastName">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-5 col-md-4">
+      <div class="form-group">
+        <label for='dateOfBirth'
+          i18n="@@DateOfBirth">Date of Birth</label>
+
+        <fpcare-date name='dateOfBirth'
+          id='dateOfBirth'
+          [showError]="false"
+          [required]="true"
+          restrictDate="past"
+          [(date)]="applicant.dateOfBirth">
+        </fpcare-date>
+
+      </div>
+    </div>
+    <div class="col-sm-3 col-md-4">
+      <div class="form-group">
+        <label for='phoneNumber'
+          i18n="@@phoneNumber">Phone Number</label>
+        <input type="text"
+          class="form-control"
+          name='phoneNumber'
+          id='phoneNumber'
+          fpcareRequired="phone,required"
+          [(ngModel)]="applicant.phoneNumber">
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for='email'
+          i18n="@@email">Email Address</label>
+        <input type="text"
+          class="form-control"
+          name='email'
+          id='email'
+          fpcareRequired="email,required"
+
+          [(ngModel)]="applicant.emailAddress">
+      </div>
+    </div>
+  </div>
+
+  <div class="row" [ngClass]="{'has-error': showAlternatePhoneError}">
+    <div class="col-sm-offset-5 col-md-offset-4 col-sm-3 col-md-4">
+      <div class="form-group">
+        <label for='altphoneNumber'
+          i18n="@@altphoneNumber">Alternate Phone Number</label>
+        <input type="text"
+          class="form-control"
+          name='altphoneNumber'
+          id='altphoneNumber'
+          #altPhoneNumber
+          fpcareRequired="phone"
+          [ngModel]="applicant.altPhoneNumber"
+          (ngModelChange)="onAlternateFieldChange()">
+      </div>
+      <div role="alert" aria-live="assertive" *ngIf="showAlternatePhoneError">
+        <div class="text-danger">At least one of Alternate Phone Number or Alternate Email Address must be filled out.</div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for='altEmail'
+          i18n="@@altEmail">Alternate Email Address</label>
+        <input type="text"
+          class="form-control"
+          name='altEmail'
+          id='altEmail'
+          fpcareRequired="email"
+          #altEmail
+          [ngModel]="applicant.altEmailAddress"
+          (ngModelChange)="onAlternateFieldChange()">
+      </div>
+    </div>
+  </div>
+
+  <hr>
+  <h2>Address Information</h2>
+  <fpcare-address [(applicant)]="applicant"></fpcare-address>
+  <hr>
+
+  <!-- <div class="row form-group">
+    <div class="col-sm-6">
+      <label id="haveBCServicesCard" for="haveBCServicesCard" class='control-label' i18n="@@haveBCServicesCard">Do you have a BC Services Card?</label>
+
+      <div class="btn-group">
+        <label class="btn btn-default" (click)="hasBCServicesCard(true)" btnRadio="Left" [class.btn-radio]="applicant.hasBCServicesCard">Yes</label>
+        <label class="btn btn-default" (click)="hasBCServicesCard(false)" btnRadio="Middle" [class.btn-radio]="applicant.hasBCServicesCard === false">No</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="applicant.hasBCServicesCard">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for='bcServicesCard' i18n="@@bcServicesCard">BC Services Card Reference #</label>
+        <input type="text" class="form-control" name='bcServicesCard' id='bcServicesCard'>
+      </div>
+    </div>
+    <div class="col-md-4">
+
+      <h3><i class="fa fa-upload fa icon-upload" aria-hidden="true"></i> Upload your documents</h3>
+
+      <div>
+        Scan the document, or take a photo of it. Make sure that it&#8217;s:
+        <ul>
+          <li>The entire document, from corner to corner</li>
+          <li>At least 1000 pixels wide x 1500 pixels tall</li>
+          <li>Rotated correctly (not upside down or sideways)</li>
+          <li>In focus and easy to read</li>
+          <li>A JPG, PNG, GIF or BMP file (<strong>not a PDF</strong>)</li>
+        </ul>
+      </div>
+      <fpcare-file-uploader>
+        <span id="uploadInstruction" #uploadInstruction tabindex="0">Please upload required ID documents</span>
+      </fpcare-file-uploader>
+    </div>
+  </div>
+  <hr> -->
+
+  <div class='security-questions'>
+    <h2>Security Questions</h2>
+    <p>Please select at least 1 question and provide answer(s)</p>
+
+    <p>Ensure to record your responses to the security questions as these questions will be asked if you request a change to
+      your information or access in the future.</p>
+
+    <div class="row question-row"
+      *ngFor="let count of [1, 2, 3];">
+      <div class="col-sm-5 form-group">
+        <label for="securityQuestion{{count}}"
+          class='block-label'>Security Question {{count}}</label>
+        <!-- <select2
+          [data]="securityQuestions"
+          id='securityQuestion{{count}}'
+          [value]="selectedSecurityQuestions[count - 1].id"
+          (valueChanged)="onSecurityQuestionChange($event, count)"></select2> -->
+      </div>
+      <div class="col-sm-5 form-group">
+        <label for="securityAnswer{{count}}">Security Response {{count}}</label>
+        <input type="text"
+          class="form-control"
+          id='securityAnswer{{count}}'
+          name='securityAnswer{{count}}'
+          [attr.name]='"securityAnswer" + count'
+          [ngModel]='applicant.securityQuestions[count - 1]?.answer'
+          (ngModelChange)='onSecurityAnswerChange($event, count)'
+          fpcareRequired>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <fpcare-form-footer
+  (onContinue)='continue()'
+  (onBack)="back()"
+  [locked]="!canContinue()"></fpcare-form-footer>
+
+
+
+</form>

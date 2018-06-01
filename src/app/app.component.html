@@ -1,0 +1,33 @@
+<div id="wrap">
+  <header>
+    <div class="container-fluid">
+      <a href="http://www2.gov.bc.ca/" tabindex="-1">
+        <!-- TODO: Bundle image locally -->
+        <img class="header-logo"
+             tabindex="-1" alt="B.C. Government Logo"
+             src="https://cdn.rawgit.com/bcgov/mygovbc-bootstrap-theme/v0.2.0/dist/images/gov3_bc_logo.png">
+      </a>
+      <span class="title" role="banner" i18n="Main application header title shown on every screen|@@applicationHeader">FPCARE &mdash; Applicant Enrollment</span>
+    </div>
+  </header>
+
+  <main class="container-fluid">
+    <!-- <fpcare-progress-bar></fpcare-progress-bar> -->
+    <router-outlet></router-outlet>
+  </main>
+  <div id="pad"></div>
+</div>
+
+ <footer>
+  <nav class="navbar navbar-expand-md bg-primary">
+    <div class="container-fluid">
+      <ul class="nav navbar-nav">
+        <li><a class='na-link' href="http://www2.gov.bc.ca/gov/content/home/disclaimer" target="_blank">Disclaimer</a></li>
+        <li><a class='na-link' href="http://www2.gov.bc.ca/gov/content/home/privacy" target="_blank">Privacy</a></li>
+        <li><a class='na-link' href="http://www2.gov.bc.ca/gov/content/home/accessibility" target="_blank">Accessibility</a></li>
+        <li><a class='na-link' href="http://www2.gov.bc.ca/gov/content/home/copyright" target="_blank">Copyright</a></li>
+        <li><a class='na-link' href="http://www2.gov.bc.ca/gov/content/home/contact-us" target="_blank">Contact Us</a></li>
+      </ul>
+    </div>
+  </nav>
+</footer>

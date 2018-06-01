@@ -1,0 +1,12 @@
+<div class="row">
+    <div class="col" *ngFor="let step of maxStepsIterable; let stepIndex = index;">
+      <div class="mb-2">
+        <progressbar
+          [value]="(currentStep - 1) >= stepIndex ? '100' : '0'"
+          [max]="100"
+          [animate]="true"
+          >
+        </progressbar>
+      </div>
+    </div>
+  </div>

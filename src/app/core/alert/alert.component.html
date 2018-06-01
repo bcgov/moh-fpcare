@@ -1,0 +1,5 @@
+<alert type="{{type}}" dismissible="true" (onClose)="onClose()">
+  <i *ngIf="type === 'warning'" class='fa fa-exclamation-triangle text-warning'></i>
+
+  <ng-content></ng-content>
+</alert>

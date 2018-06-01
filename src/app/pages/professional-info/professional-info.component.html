@@ -1,0 +1,173 @@
+<fpcare-consent-modal (onConsented)="onConsented($event)"></fpcare-consent-modal>
+<form #formRef="ngForm"
+  novalidate
+  (submit)="continue()">
+  <h1>Professional Information</h1>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-8" #collegeNameContainer>
+      <div class="form-group">
+        <label for='collegeName'
+          i18n="@@ProfessionalCollegeName">Professional College Name</label>
+        <!-- <select2 #collegeName
+          name='collegeName'
+          id='collegeName'
+          [data]="collegeList"
+          (valueChanged)="onCollegeChange($event.value)"
+          [options]="{multiple: true, placeholder: 'Select a College'}"
+          [value]="applicant.college"
+          [disabled]="readonly"></select2> -->
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="applicant.goesToCollege()">
+    <div class="row" *ngFor="let collegeID of applicant.college">
+
+      <div class="panel panel-primary panel-clear">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {{getCollegeNameFromID(collegeID)  }}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for='licenseClass'
+                i18n="@@LicenseClass">License Class</label>
+              <input type="text"
+                class="form-control"
+                name='licenseClass'
+                id='licenseClass'
+                [disabled]="readonly"
+                [(ngModel)]="applicant.licenseClass"
+                fpcareRequired="required">
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for='licenseNumber'
+                i18n="@@LicenseNumber">License Number</label>
+              <input type="text"
+                class="form-control"
+                name='licenseNumber'
+                id='licenseNumber'
+                [disabled]="readonly"
+                [(ngModel)]="applicant.licenseNumber"
+                fpcareRequired="required">
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for='licenseExpiry'
+                i18n="@@ExpiryDateLicense">Expiry Date of License</label>
+              <fpcare-date name='licenseExpiry'
+                id='licenseExpiry'
+                [(date)]="applicant.licenseExpiry"
+                [showError]="showError"
+                [disabled]="readonly"
+                restrictDate="future"
+                [required]="true">
+              </fpcare-date>
+            </div>
+          </div>
+          <div class="col-sm-4"
+          *ngIf="collegeID === Colleges.CPSBC">
+          <div class="form-group">
+            <label for='mspBillingNumber'
+              i18n="@@MSPBillingNumber">MSP Billing Number</label>
+            <input type="text"
+              class="form-control"
+              name='mspBillingNumber'
+              id='mspBillingNumber'
+              [disabled]="readonly"
+              [(ngModel)]="applicant.MSPBillingNumber"
+              fpcareRequired="required">
+            </div>
+          </div>
+          <!-- Necessary for layout when validation errors are displayed -->
+          <div class="clearfix hidden-xs hidden-sm"></div>
+          <div class="col-sm-6" #advancedPracticeCertContainer *ngIf="collegeID === Colleges.CRNBC">
+            <div class="form-group">
+              <label for='advancedPracticeCerts'
+                i18n="@@AdvancedPracticeCerts">Advanced Practice Certification(s)</label>
+              <!-- <select2
+              [disabled]="readonly"
+              [data]="advancedPracticeCertsList"
+              [options]="{multiple: true, placeholder: 'Select a College'}"
+              (valueChanged)="onAdvancedPracticeCertChanged($event.value)"
+              [value]="applicant.advancedPracticeCerts"
+              name='advancedPracticeCerts'
+                id='advancedPracticeCerts'></select2> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+
+  <div class="row form-group"
+    *ngIf="applicant.goesToCollege(Colleges.None)">
+    <div class="col-sm-6">
+      <label id="deviceProvider"
+        for="deviceProvider"
+        class='control-label'
+        i18n="@@DeviceProvider">Are you a Device Provider?</label>
+      <fpcare-toggle [(data)]="applicant.isDeviceProvider"></fpcare-toggle>
+    </div>
+  </div>
+
+  <div class="row"
+    *ngIf="applicant.goesToCollege(Colleges.None) && applicant.isDeviceProvider === false">
+    <div class="col-sm-4">
+      <div class="form-group">
+        <label for='onBehalfOfJobTitle'
+          i18n="@@OnBehalfOfJobTitle">On-Behalf Of Job Title</label>
+        <!-- <select2 name='onBehalfOfJobTitle'
+          [disabled]="readonly"
+          id='onBehalfOfJobTitle'></select2> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-4">
+      <div class="form-group">
+        <label for='RequestedEndDate'
+          i18n="@@RequestedStartDate">Requested Access Start Date</label>
+        <fpcare-date name='RequestedStartDate'
+          id='RequestedStartDate'
+          [(date)]="applicant.requestStartDate"
+          [showError]="showError"
+          [required]="true"
+          [disabled]="readonly"
+          restrictDate="future"
+          [useCurrentDate]="true">
+        </fpcare-date>
+      </div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+      <div class="form-group">
+        <label for='RequestedEndDate'
+          i18n="@@RequestedEndDate">Access End Date (optional)</label>
+        <fpcare-date name='RequestedEndDate'
+          id='RequestedEndDate'
+          [(date)]="applicant.requestEndDate"
+          [showError]="showError"
+          [disabled]="readonly"
+          restrictDate="future"
+          [required]="false">
+        </fpcare-date>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <fpcare-form-footer
+    (onContinue)='continue()'
+    [disableBack]="true"
+    [locked]="!canContinue()"></fpcare-form-footer>
+
+</form>

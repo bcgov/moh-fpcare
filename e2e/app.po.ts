@@ -1,0 +1,287 @@
+/**
+ * This file contains all the classes for running e2e tests.  The classes are
+ * broken up by page (i.e. one for Professional Info page, one for Contact Info,
+ * etc.). The inheiritance structure is very straightforward, with each page
+ * class inheiriting from it's immediate predecessor creating a linear
+ * inheiritance structure. This is important so each class is capable of
+ * completing the previous pages, which will be necessary once validation is
+ * implemented.
+ */
+
+
+import { browser, element, by } from 'protractor';
+
+
+/**
+ * Base e2e test pages all other page classes should inheirit from.
+ * Responsibilities:
+ * - navigating through pages
+ * - accepting and closing info consent modal (but nothing more)
+ * - any future behaviour that will be necessary on all pages.
+ */
+export class BaseFPCarePage {
+  private continueElement;
+  private backElement;
+
+  constructor() {
+    this.continueElement = element(by.css('fpcare-form-footer .btn-primary'));
+    this.backElement = element(by.css('fpcare-form-footer .btn-default'));
+  }
+
+  /** Navigates to the component's related page. Defaults to the first page. */
+  navigateTo(): void {
+    browser.get('/');
+  }
+
+  /** Readies navigation to future pages by closing the info consent modal. */
+  ready(){
+    browser.get('/');
+    this.clickInfoConsentCheckbox();
+    this.clickModalSubmit();
+  }
+
+  canContinue() {
+    this.continueElement.isEnabled();
+  }
+
+  continue() {
+    this.continueElement.click();
+
+    // Doesn't seem necessary but other people required a sleep after navigating to new routes.
+    // browser.waitForAngular() OR browser.sleep(10);
+  }
+
+  back() {
+    return this.backElement.click();
+  }
+
+  get url() {
+    return browser.getCurrentUrl();
+  }
+
+
+  /** Necessary on all tests, since we always must click the checkbox on a new session */
+  clickInfoConsentCheckbox() {
+    return element(by.css('fpcare-consent-modal #agree')).click();
+  }
+
+  /** Necessary on all tests, since we always must click the checkbox on a new session */
+  clickModalSubmit() {
+    return element(by.css('fpcare-consent-modal .modal-footer .btn')).click();
+  }
+
+  /**
+   * Pauses browser execution
+   * @param ms Time to sleep in milliseconds
+   */
+  sleep(ms: number){
+    browser.sleep(ms);
+  }
+}
+
+/**
+ *
+ * Responsibilities:
+ * - Contains further tests for info consent modal
+ */
+export class ProfessionalInfoPage extends BaseFPCarePage {
+
+  getParagraphText() {
+    return element(by.css('app-root h1')).getText();
+  }
+
+  checkModalUnlocked() {
+    return element(by.css('fpcare-consent-modal .modal-footer .btn')).isEnabled();
+  }
+
+  checkModalDisplayed() {
+    return element(by.css('fpcare-consent-modal > .modal')).isDisplayed();
+  }
+}
+
+/**
+ * Fills out the Contact Info page, including contact info, address, and
+ * security questions. All the properties in this class match the form fields
+ */
+export class ContactInfoPage extends ProfessionalInfoPage {
+  firstName = 'Bill';
+  middleName = 'Henry';
+  lastName = 'Gates';
+  dateOfBirthDay = 11;
+  dayOfBirthYear = 1999;
+  phoneNumber = '250-555-1234';
+  email = 'billg@microsoft.com';
+  altPhoneNumber = '250-555-9999';
+  altEmail = 'billg@hotmail.com';
+
+  streetNum = '103';
+  suite = '345';
+  street = 'Yates';
+  city = 'Victoria';
+  province = 'British Columbia';
+  country = 'Canada';
+  securityAnswer1 = 'Steve Jobs';
+  securityAnswer2 = 'Joe';
+  securityAnswer3 = 'Nottinghamfordshire';
+
+  /** Navigates to contact-info page without completing previous pages */
+  navigateTo() {
+    browser.get('/');
+    this.clickInfoConsentCheckbox();
+    this.clickModalSubmit();
+    this.continue(); //site-access
+    this.continue(); //contact-info
+  }
+
+  /** Fills out everything on contact info page to pass validation. */
+  fillAllContactInfo(){
+    this.fillContactInfo();
+    this.fillAddressInfo();
+    this.fillSecurityQuestions();
+  }
+
+  /** Fills out the contact info section at top of page. */
+  fillContactInfo() {
+    element(by.css('#firstName')).sendKeys(this.firstName);
+    element(by.css('#middleName')).sendKeys(this.middleName);
+    element(by.css('#lastName')).sendKeys(this.lastName);
+    element.all(by.css('#dateOfBirth select option')).get(3).click();
+    element(by.css('#dateOfBirth .dayInput')).sendKeys(11);
+    element(by.css('#dateOfBirth .yearInput')).sendKeys(1999);
+    element(by.css('#phoneNumber')).sendKeys(this.phoneNumber);
+    element(by.css('#email')).sendKeys(this.email);
+    element(by.css('#altphoneNumber')).sendKeys(this.altPhoneNumber);
+    element(by.css('#altEmail')).sendKeys(this.altEmail);
+  }
+
+  /** Fills out address section in middle of page. */
+  fillAddressInfo() {
+    element(by.css('#streetNum')).sendKeys(this.streetNum);
+    element.all(by.css('#streetSuffix option')).get(2).click();
+    element(by.css('#suite')).sendKeys(this.suite);
+    element(by.css('fpcare-address input[name="street"]')).sendKeys(this.street);
+    element.all(by.css('#streetType option')).get(3).click();
+    element.all(by.css('#streetDirection option')).get(2).click();
+    element(by.css('fpcare-address input[name="city"]')).sendKeys(this.city);
+    element(by.css('fpcare-address input[name="residentialAddressProvince"]')).sendKeys(this.province);
+    element(by.css('fpcare-address input[name="residentialAddressCountry"]')).sendKeys(this.country);
+  }
+
+  /** Fills out security questions section at bottom of page. */
+  fillSecurityQuestions(){
+    element.all(by.css('#securityQuestion1 > select option')).get(3).click();
+    element.all(by.css('#securityQuestion2 > select option')).get(4).click();
+    element.all(by.css('#securityQuestion3 > select option')).get(5).click();
+    element(by.css('#securityAnswer1')).sendKeys(this.securityAnswer1);
+    element(by.css('#securityAnswer2')).sendKeys(this.securityAnswer2);
+    element(by.css('#securityAnswer3')).sendKeys(this.securityAnswer3);
+  }
+}
+
+ /**
+  * Fills out the Self Declaration page.
+  */
+export class SelfDeclarationPage extends ContactInfoPage {
+
+  // tslint:disable-next-line:max-line-length
+  declarationText = `Lorem ipsum dolor sit, amet consectetur adipisicing elit. In quas inventore consequuntur tempore facere exercitationem numquam necessitatibus nostrum eaque provident odio quasi, libero adipisci nihil magnam harum excepturi eos voluptatibus!`;
+
+  /** Navigates to self-declaration page without completing previous pages */
+  navigateTo() {
+    browser.get('/');
+    this.clickInfoConsentCheckbox();
+    this.clickModalSubmit();
+    this.continue(); //site-access
+    this.continue(); //contact-info
+    this.continue(); //self-declaration
+  }
+
+  /** Selects yes for all declarations and fills text. */
+  fillDeclarations(){
+    this.toggleAndFill('haveBeenSubjectOfOrderOrConviction');
+    this.toggleAndFill('haveBeenSuspendedOrCancelled');
+    this.toggleAndFill('haveHadLimitsImposed');
+    this.toggleAndFill('haveBeenSuspendedOrRevokedFromPharmaNet');
+    this.toggleAndFill('hasRevocationBeenResolved');
+  }
+
+  /**
+   * Selects "Yes" for a toggle, then fills out the details text input with lorem ipsum text.
+   * This function is very tightly coupled to the HTML structure of self-declaration.component.html
+   * The provided toggleID must:
+   *  - Belong to a sibling element immediately PRECEEDING fpcare-toggle
+   *  - When suffixed with "Details", match the ID of the displayed text input.
+   *
+   * @param toggleID must match ID of sibling to fpcare-toggle, and ${toggleID}Details must match ID of textarea.
+   */
+  private toggleAndFill(toggleID: string){
+    element.all(by.css(`#${toggleID} + fpcare-toggle .btn`)).first().click();
+    element(by.css(`#${toggleID}Details`)).sendKeys(this.declarationText);
+  }
+
+}
+
+/**
+ * AllFPCarePages is capable of running through the whole app. Since it inheirits
+ * from previous pages it can fill out data and then verify the results on the
+ * review submit page.
+ *
+ * AllFPCarePages Responsibilities:
+ * - The Review Submit page, since it contains all previous pages.
+ * - The User Acceptance page, since it's so minor.
+ */
+export class AllFPCarePages extends SelfDeclarationPage {
+
+ /** Navigates to review-submit page without completing previous pages */
+  navigateTo() {
+    browser.get('/');
+    this.clickInfoConsentCheckbox();
+    this.clickModalSubmit();
+    this.continue(); //site-access
+    this.continue(); //contact-info
+    this.continue(); //self-declaration
+    this.continue(); //user-acceptance
+    this.continue(); //review-submit
+  }
+
+  /** Navigates to review-submit while completing all previous pages */
+  navigateToAndFill(){
+    this.continue(); //site-access
+    this.continue(); //contact-info
+    this.fillAllContactInfo();
+    this.continue(); //self-declaration
+    this.fillDeclarations();
+    this.continue(); //user-acceptance
+    this.checkUserAcceptanceCheckbox();
+    this.continue(); //review-submit
+    this.checkAuthorizeCheckbox();
+  }
+
+  /** On the User-Acceptance page */
+  checkUserAcceptanceCheckbox(){
+    return element(by.css('app-user-acceptance #agree-acceptance')).click();
+  }
+
+  /** On Review-Submit page */
+  checkAuthorizeCheckbox(){
+    return element(by.css('app-review-submit #authorize')).click();
+  }
+
+  /** Simple find selector that restricts results to app-review-submit page. */
+  find(selector: string) {
+    return element(by.css(`app-review-submit ${selector}`)).getText();
+  }
+
+  /** Fills the captcha with incorrect text, expecting it to fail */
+  failCaptcha(){
+    element(by.css(`app-review-submit captcha #answer`)).sendKeys('Filler');
+  }
+
+
+
+
+
+
+}
+
+

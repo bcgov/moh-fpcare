@@ -1,0 +1,15 @@
+<nav>
+  <div class="progressBar">
+    <ul>
+      <li *ngFor="let item of progressBarList; let itemNum = index">
+        <a routerLink="{{item.routerLink}}"
+        [class.active]="isActive(item)"
+        [class.afterActive]="isAfterActive(item)"
+        [class.beforeActive]="isBeforeActiveRoute(item)">
+             <span class='progress-step'>{{itemNum + 1}}</span>
+             <span class='progress-title' [innerHTML]='item.displayName'></span>
+          </a>
+      </li>
+    </ul>
+  </div>
+</nav>

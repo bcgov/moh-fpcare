@@ -1,0 +1,90 @@
+<div class="miller-header d-flex justify-content-between p-3 my-3">
+  <span><a [routerLink]="backLink()">Dashboard</a> /
+    <strong *ngIf="IS_PEOPLE_TABLE">User Enrollment</strong>
+    <strong *ngIf="!IS_PEOPLE_TABLE">Site Enrollment</strong>
+  </span>
+
+  <span class='d-inline-flex align-items-center'>
+    <div class="form-check mb-2 mr-sm-2" *ngIf="changesMade">
+      <input class="form-check-input" type="checkbox" id="declaration" [(ngModel)]="declarationCheck">
+      <label class="form-check-label" for="declaration">
+        I declare the information I provided is accurate
+      </label>
+    </div>
+
+    <div class="mb-2 mr-sm-2 bg-info" *ngIf="saveSuccess">
+      Enrollment has been updated
+    </div>
+
+    <button type="button" class="btn btn-default mx-2" [disabled]="!declarationCheck">Cancel</button>
+    <button type="button" class="btn btn-primary mx-2" [disabled]="!declarationCheck" (click)="save()">Save</button>
+  </span>
+</div>
+
+<div class="miller-container">
+  <div class="miller-column" *ngFor="let column of columns; let colIndex = index;" [@loadInOut]>
+    <div class='miller-column-title'>
+
+      <!-- <h4>{{column.title}}</h4> -->
+      <!-- <h4>{{ buildBreadCrumb(column)  }}</h4> -->
+
+      <fpcare-expanding-search
+        (onChange)="filterColumn($event, colIndex)"
+        placeholder="{{column.title}}"
+        alwaysShow=true
+        class='mr-2'>
+      </fpcare-expanding-search>
+
+
+        <div class='d-flex align-items-center'>
+          <fpcare-add-user-button
+            *ngIf="column.title.toLowerCase() === 'people'"
+            iconOnly=true
+            class='fix-right'>
+          </fpcare-add-user-button>
+
+          <!-- Close button. Not in current designs, but absolutely necessary for mobile (otherwise there's no back!) -->
+          <i *ngIf="colIndex >= 1" (click)="onClickColTitle(column)" class="fa fa-times-circle close-button"></i>
+        </div>
+    </div>
+
+
+
+
+    <ul class="miller-items-container">
+
+      <!-- First Two Columns,  single-selection. -->
+      <ng-container *ngIf="colIndex !== 2">
+        <li class="miller-item" *ngFor="let item of column['items']" [ngClass]="{
+          'open': item.open,
+          'has-children': item.hasChildren,
+          'd-none': item.hidden && !item.open
+        }">
+          <a (click)="onItemClick(item)" class='miller-item-link'>
+            <span class="item-title">{{item.name}}</span>
+            <span class="icons-group d-flex">
+
+              <!-- TODO: Update these two. Currently they never work. We either need to pre-calculate hasAlert/hasWarning on parents based on children, or change the approach. -->
+                <i *ngIf="item.hasAlert" class="fa fa-exclamation-triangle text-danger"></i>
+                <i *ngIf="item.hasWarning"class="fa fa-exclamation-circle text-warning"></i>
+
+                <fpcare-info-button [targetId]="item.objectId" ></fpcare-info-button>
+            </span>
+          </a>
+        </li>
+      </ng-container>
+
+      <!-- Final Column, multi-selection plus custom logic. -->
+      <!-- TODO: Potentially split into two different components here, depending on if the final column is People or Sites. -->
+      <ng-container *ngIf="colIndex === 2">
+        <fpcare-miller-item-checkbox
+          [items]="column['items']"
+          [selectedSiteAccess]='getSelectedSiteAccess()'
+          (onPendingChanges)="onCheck($event)">
+        </fpcare-miller-item-checkbox>
+
+      </ng-container>
+
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div [ngSwitch]="this.size">
+
+    <form *ngSwitchCase="DatepickerSizes.DEFAULT">
+        <div class="input-group">
+            <input class="form-control" placeholder="Select a date"
+              ngx-mydatepicker name="mydate"
+              [(ngModel)]="model"
+              [options]="datepickerOptions"
+              #dp="ngx-mydatepicker"
+              (dateChanged)="onDateChanged($event)"
+              (click)="dp.toggleCalendar()"
+              [disabled]="disabled"/>
+
+            <span class="input-group-append">
+                <button type="button" class="btn btn-default" (click)="dp.toggleCalendar()">
+                    <i class="fa fa-calendar"></i>
+                </button>
+                <button type="button" class="btn btn-default" (click)="dp.clearDate()" [disabled]="disabled || !hasValidDate">
+                    <i class="fa fa-close"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+
+    <form *ngSwitchCase="DatepickerSizes.MINI">
+        <div class="input-group datepicker--mini">
+            <button type="button" class='btn btn-outline-primary btn-sm'
+              ngx-mydatepicker
+              name="mydate"
+              [(ngModel)]="model"
+              [options]="datepickerOptions"
+              #dp="ngx-mydatepicker"
+              (dateChanged)="onDateChanged($event)"
+              (click)="dp.toggleCalendar()"
+              [disabled]="disabled">
+              {{ model?.formatted || 'Select a date' }}
+            </button>
+            <input type="hidden" name="date" [value]="model?.formatted" />
+
+            <span class="input-group-append">
+                <button type="button" class="btn btn-outline-primary" (click)="dp.clearDate()" [disabled]="disabled || !hasValidDate" >
+                    <i class="fa fa-close"></i>
+                </button>
+            </span>
+        </div>
+    </form>
+</div>
+
+

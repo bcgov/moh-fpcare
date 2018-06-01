@@ -1,0 +1,21 @@
+<nav class="breadcrumb d-flex justify-content-between">
+  <span>
+    <a routerLink="/applicant/">Dashboard</a> / {{this.pageName}} </span>
+
+  <span class='d-flex'>
+    <a class='mx-3' *ngIf="this.previousPageLink" routerLink="{{ this.previousPageLink }}">
+      <i class="fa fa-arrow-circle-left fa-2x" aria-label="Previous page"></i>
+    </a>
+    <ng-container  *ngIf="this.nextPageLink; else backToDashboard" >
+      <a class='mx-3'routerLink="{{ this.nextPageLink }}">
+        <i class="fa fa-arrow-circle-right fa-2x" aria-label="Next page"></i>
+      </a>
+    </ng-container>
+  </span>
+</nav>
+
+<ng-template #backToDashboard>
+    <a class='mr-3' routerLink="/applicant">
+      <i class="fa fa-check-circle text-success fa-2x pull-right" aria-label="Back to Dashboard"></i>
+    </a>
+</ng-template>

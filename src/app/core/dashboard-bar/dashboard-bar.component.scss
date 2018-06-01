@@ -1,0 +1,22 @@
+@import 'variables.scss';
+
+.dashboard-container {
+  background: $gray-200;
+  padding: 1rem;
+  position: relative;
+  .nav {
+    display: flex;
+    justify-content: center;
+    & > button, & > a {
+      margin: 0 1rem;
+      flex-basis: 200px;
+    }
+  }
+
+  .fix-right {
+    position: absolute;
+    right: 1em;
+  }
+
+
+}

@@ -1,0 +1,31 @@
+<div bsModal #informationCollectionModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header modal-header-primary">
+        <h2 class="modal-title pull-left" i18n="@@InformationCollectionNotice">Information Collection Notice</h2>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Lorem ipsum dolor sit amet, graece graeci constituto mei ei. Dicunt electram splendide cum et, quod eros dissentias
+          nec ut, sit eu reque hendrerit. Lobortis facilisis ea pro, cum te accusata vulputate referrentur. Ea tacimates
+          consequuntur sit. Oporteat expetenda intellegam vis id, tamquam eloquentiam sea te. Usu simul habemus honestatis
+          ex, nam veritus insolens eu.
+        </p>
+        <p>Ius omnis tacimates intellegat eu, vel quod aperiri salutandi ei. Has eripuit equidem splendide ad. Ei ius delectus
+          singulis. Nisl facer mucius ius ad, no dictas pertinacia sea. Albucius volutpat adversarium id mel, qualisque salutatus
+          ut sit, tantas euripidis scribentur mea ad.</p>
+
+        <br>
+        <div class="checkbox checkbox-success checkbox-inline">
+          <input class="input-lg" id="agree" type="checkbox" [(ngModel)]="agreeCheck">
+          <label class="" for="agree"><strong i18n="@@InformationCollectionReadAndUnderstood">I have read and understand this information</strong></label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button [disabled]="!agreeCheck" class="btn btn-block btn-primary pull-left" type="submit" (click)="closeModal()">Continue</button>
+      </div>
+    </div>
+  </div>
+</div>

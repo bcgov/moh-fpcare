@@ -1,0 +1,29 @@
+@import 'variables.scss';
+
+code {
+  display: block;
+  margin: 0.5rem 0 1rem 0;
+}
+
+li code { display: inline;}
+
+#color-swatch {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+
+  code {
+    display: inline;
+    background: black;
+    color: #d2faff;
+    padding: 2px 3px;
+  }
+
+  & > div {
+    width: 200px;
+    height: 150px;
+    padding: 5px;
+    line-height: 150px;
+    text-align: center;
+  }
+}

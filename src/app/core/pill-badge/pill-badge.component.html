@@ -1,0 +1,20 @@
+<ng-container *ngFor="let badge of distinctBadges">
+
+  <span class="badge badge-pill badge-{{badge.level}}"
+    tooltip="{{badge.title}}"
+    container='body'
+    [isDisabled]='!iconOnly'>
+      <i class="fa" [ngClass]="{
+          'fa-exclamation-circle' : badge.level === 'warning',
+          'fa-exclamation-triangle' : badge.level === 'info' || badge.level === 'danger',
+          'fa-check' : badge.level === 'success'
+        }">
+      </i>
+
+      <span [ngClass]="{'sr-only': iconOnly}">{{badge.title}}</span>
+      <span *ngIf="badge.count > 1" class="count bg-{{badge.level}}">
+        {{badge.count}}
+      </span>
+  </span>
+
+</ng-container>

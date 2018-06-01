@@ -1,0 +1,18 @@
+// We must use ViewEncapsulation.None to modify the child, but in order to still
+// enforce encapsulation all rules go within the component selector
+fpcare-mini-progress-bar {
+  flex-basis: 100%;
+
+  // Fix a bug in ngx-bootstrap 2.0.2 where stacked progress bars don't stack on the same line.
+  .progress {
+    display: flex !important;
+  }
+
+  .progress-bar {
+    // background-color: orange !important;
+    &:not(:first-of-type) {
+      margin-left: 1.5rem;
+    }
+  }
+}
+

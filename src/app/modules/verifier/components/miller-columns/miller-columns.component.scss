@@ -1,0 +1,138 @@
+@import 'variables.scss';
+
+.miller-container {
+  display: flex;
+  // TODO: Ems?
+  // min-height: 400px;
+
+  position: relative;
+  perspective: 800px;
+}
+
+.miller-column {
+    // Mobile positioning
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100% !important;
+
+    // General positioning
+    flex: 1;
+    border: 1px #ccc solid;
+    overflow: auto;
+    margin: 0 10px;
+    background: $gray-100;
+    // background: $color-white; //Off white
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    @include media-breakpoint-up(md){
+      position: initial;
+      max-width: 33% !important;
+      &:first-of-type {
+        margin-left: 0;
+      }
+    }
+
+
+    // Added by Angular during animation
+    &.ng-animating {
+      z-index: 9999; //On top for mobile
+      @include media-breakpoint-up(md){
+        z-index: -1; // Slide in underneath for desktop
+      }
+    }
+}
+
+.miller-items-container {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  max-height: 25rem;
+  min-height: 25rem;
+  overflow-y: scroll;
+}
+
+
+.miller-item {
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px $gray-700 solid;
+  cursor: pointer;
+  position: relative;
+  background: $color-white; //Off white
+
+  &:hover {
+    background: $gray-100;
+  }
+
+  &.open, &.open:hover {
+    background-color: $gray-400;
+  }
+
+  .has-children {
+    color: red !important;
+  }
+}
+
+.miller-item-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1em;
+  text-decoration: none;
+}
+
+.item-title {
+  font-weight: 800;
+  font-size: $h4-font-size;
+}
+
+.miller-column-title {
+  padding: 1em;
+  font-size: $h4-font-size;
+  background: $gray-200;
+  border-bottom: 1px solid $gray-900;
+  // cursor: pointer;
+  margin-bottom: 0;
+  min-height: 4rem;
+  display: flex;
+  justify-content: space-between;
+  & > i.fa {
+    color: transparentize($color: $body-color, $amount: 0.25)
+  }
+
+  & > h4 {
+    margin-bottom: 0;
+    align-self: center;
+  }
+}
+
+.blank-column {
+  // Don't show as 'open' for mobile.
+  z-index: -100;
+  position: relative;
+  flex: 1;
+  // visibility: hidden; //TODO: ENABLE!
+
+  // DEMO PURPOSES ONLY! TODO: CAN BE REMOVED!
+  & > h2 {
+    position: absolute;
+    top: 0%;
+    font-size: 86px;
+    color: rgba(0, 51, 102, 0.075)
+  }
+}
+
+.icons-group {
+  font-size: 1.5rem;
+}
+
+.miller-header {
+  background: $gray-200;
+  align-items: center;
+}

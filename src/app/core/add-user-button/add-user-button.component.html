@@ -1,0 +1,102 @@
+<button *ngIf="!iconOnly" type="button" class="btn btn-outline-primary" (click)="openModal(template)">
+    Add User <i class="fa fa-user-plus"></i>
+</button>
+
+<button *ngIf="iconOnly" type="button" class='btn btn-default' (click)="openModal(template)">
+    <i class="fa fa-user-plus"></i>
+</button>
+
+
+
+<ng-template #template>
+    <div class="modal-header">
+        <h4 class="modal-title">Find and add a new user</h4>
+
+        <fpcare-mini-progress-bar [maxSteps]='maxProgressSteps' [currentStep]='currentProgressStep'>
+        </fpcare-mini-progress-bar>
+
+        <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+        </button> -->
+    </div>
+    <div class="modal-body">
+        <form class="form-inline align-items-start">
+            <div class="d-flex flex-column align-items-end">
+                <span class='d-flex flex-row'>
+                    <label for="lastName">Last Name</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="lastName" name="lastName" placeholder=""  [(ngModel)]="searchQuery.lastName" tabindex="1">
+                </span>
+
+                <span class='d-flex flex-row'>
+                    <label for="firstName">First Name</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="firstName" name="firstName" placeholder=""  tabindex="3" [(ngModel)]="searchQuery.firstName" >
+                </span>
+
+                <span class='d-flex flex-row'>
+                    <label for="DoB">Date of Birth</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="DoB" name="DoB" placeholder=""   [(ngModel)]="searchQuery.dateOfBirth" tabindex="5">
+                </span>
+                <span class='d-flex flex-row' *ngIf="showAdditionalFields">
+                  <label for="phone">Phone</label>
+                  <input type="text" class="form-control mb-2 mr-sm-2" id="phone" name="phone" placeholder=""   [(ngModel)]="searchQuery.phone" tabindex="5">
+                </span>
+            </div>
+            <div class="d-flex flex-column align-items-end">
+                <span class='d-flex flex-row'>
+                    <label for="middleName">Middle Name (optional)</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="middleName" name="middleName" placeholder=""  [(ngModel)]="searchQuery.middleName" tabindex="2">
+                </span>
+
+                <span class='d-flex flex-row'>
+                    <label for="fpcareUserID">FPCARE UserID</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="fpcareUserID" name="fpcareUserID" placeholder=""  [(ngModel)]="searchQuery.fpcareUserId"  tabindex="4">
+                </span>
+
+                <span class='d-flex flex-row' *ngIf="showAdditionalFields">
+                  <label for="email">Email</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="email" name="email" placeholder=""  tabindex="3" [(ngModel)]="searchQuery.email" >
+                </span>
+
+                <span class='d-flex flex-row' *ngIf="showAdditionalFields">
+                  <label for="postal">Postal Code</label>
+                    <input type="text" class="form-control mb-2 mr-sm-2" id="postal" name="postal" placeholder=""  tabindex="3" [(ngModel)]="searchQuery.postal" >
+                </span>
+
+            </div>
+        </form>
+
+
+      <ul class='list-group list-group-flush' *ngIf="showSearchResults">
+        <li class='list-group-item d-flex justify-content-between align-items-center' *ngFor="let person of searchResultsPeople">
+
+          <span>
+            <input type="checkbox" name="selectUser" id="selectUser" [(ngModel)]="addUserSelected">
+            <span>{{person.name}}</span>
+          </span>
+          <span class='d-flex justify-content-between align-items-center'>
+
+            <span class='d-inline-flex align-items-baseline mb-1'>Start
+              <fpcare-datepicker size='mini' dateFormat="yyyy/mm/dd" [date]="today" class='ml-1'></fpcare-datepicker>
+            </span>
+
+            <span class='d-inline-flex align-items-baseline mb-1'>End
+              <fpcare-datepicker size='mini' dateFormat="yyyy/mm/dd" (dateChange)="onSetEndDate($event, siteAccess)" class='ml-1'></fpcare-datepicker>
+            </span>
+
+          </span>
+        </li>
+      </ul>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" (click)="currentProgressStep = 0;">
+            Clear All
+        </button>
+        <button type="button" class="btn btn-primary" [disabled]="!canAddUser()" (click)="addUser()">
+            Add User
+        </button>
+        <button type="button" class="btn btn-default" [disabled]="!canFindUser()" (click)="findUser()">
+            Find User
+        </button>
+    </div>
+</ng-template>

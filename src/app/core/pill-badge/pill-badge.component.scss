@@ -1,0 +1,33 @@
+@import 'variables.scss';
+
+:host {
+  display: inline-flex;
+}
+
+.badge {
+  position: relative;
+  margin-right: 1em;
+  font-size: 0.8rem;
+  i { font-size: 0.9rem; }
+
+  // Slight increase from bootstrap
+  padding: 0.3em 0.7em;
+}
+
+.badge-warning {
+  border: 2px solid darken($color-warning, 25%);
+  i { color: darken($color-warning, 40%)}
+}
+
+.badge-danger {
+  border: 2px solid darken($color-danger, 10%);
+}
+
+.count {
+  position: absolute;
+  top: 0;
+  padding: 3px 5px;
+  border-radius: 100%;
+  transform: translateY(-40%);
+  box-shadow: 1px 1px 3px hsla(0, 0%, 5%, 0.45);
+}

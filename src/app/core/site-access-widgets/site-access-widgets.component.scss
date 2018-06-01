@@ -1,0 +1,92 @@
+@import 'variables.scss';
+
+
+// All top level styles will be GLOBAL! We use ViewEncapsulation.NONE here, so
+// put all styles specific to this component in this selector.
+fpcare-site-access-widgets {
+  // Note - A lot of the .card styles are in Overrides.scss, as they're meant to be global across user types.
+
+  .application-text {
+    white-space: nowrap;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 3rem);
+  }
+
+  .list-group, .card-body {
+    height: 17rem;
+    overflow-y: scroll;
+    position: relative;
+    .list-group-item {
+      min-height: 44px;
+    }
+  }
+
+  //  Custom scrollbars to show that it's always scrollable
+  // .list-group {
+  //   &::-webkit-scrollbar {
+  //     width: 3px;
+  //     height: 8px;
+  //     background-color: $gray-200;
+  //   }
+  //   &::-webkit-scrollbar-thumb {
+  //     background: $gray-500;
+  //   }
+  // }
+
+}
+
+// Global Styles
+
+.ngx-charts {
+  // Swap position of pie-chart and label
+  float: right !important;
+  // The difference between original label width and new label width.
+  // margin-right: -25px;
+  margin-right: -7.5%;
+}
+
+// Override stock styling to put legend on left side and have it full-height
+.legend-labels {
+  width: 100px !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  max-height: unset !important;
+  & > li:first-of-type {
+    padding-top: 1.75rem;
+  }
+
+}
+
+.chart-legend .legend-label {
+  color: $gray-700 !important;
+
+
+  .active .legend-label-text {
+    text-decoration: underline;
+  }
+
+  // Make the active element grow.
+
+  // The '.active' element when it's inactive
+  & > ngx-charts-legend-entry > span {
+    display: block; // For transitions below
+    transition: transform 0.2s;
+    -webkit-font-smoothing: subpixel-antialiased;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+  .active {
+    transition: transform 0.2s;
+    transform: translateY(-2.5px) scale(1.05) translateZ(0);
+  }
+}
+
+
+.pie-chart-container {
+  padding: 0;
+}
+

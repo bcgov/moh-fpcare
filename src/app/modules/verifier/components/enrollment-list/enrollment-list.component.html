@@ -1,0 +1,34 @@
+<div class="enrollment-list-controls bg-light">
+  <form class="form-inline">
+    <input class="form-control" type="search" placeholder="Search" aria-label="Search" (input)="search($event.target.value)">
+  </form>
+
+  <form class="form-inline">
+
+    <button class='btn btn-default mr-3' (click)="sort()">
+        <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+    </button>
+
+      <label for="enrollmentViewSelector" class='d-none d-sm-flex mr-0 mr-sm-2'>View</label>
+      <select id="enrollmentViewSelector" class="form-control enrollment-view-selector" [value]="viewTypeSelector" (change)="viewTypes($event.target.value)">
+          <option value="All">All</option>
+          <option *ngFor="let status of EnrollmentStatus" value="{{status}}">
+            {{status}}
+          </option>
+      </select>
+  </form>
+
+</div>
+
+
+<div class="enrollment-item-container">
+  <div class="enrollment-item-inner">
+    <fpcare-enrollment-row
+      *ngFor="let item of data"
+      [rowData]='item'
+      [primaryType]='primaryType'
+      (onRowOpened)='rowOpened($event)'>
+    </fpcare-enrollment-row>
+  </div>
+</div>
+

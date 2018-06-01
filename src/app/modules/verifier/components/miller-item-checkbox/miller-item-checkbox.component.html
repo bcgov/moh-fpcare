@@ -1,0 +1,38 @@
+<li class="miller-item" *ngFor="let item of items" [ngClass]="{
+  'open': item.open,
+  'has-children': item.hasChildren,
+  'd-none': item.hidden && !item.checked
+}">
+
+  <a (click)="onItemClick($event, item)" class='miller-item-link'>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="millerCheckbox{{item.objectId}}" [(ngModel)]='item.checked'>
+        <label class="form-check-label" for="millerCheckbox{{item.objectId}}">
+          <span class="item-title">{{item.name}}</span>
+        </label>
+    </div>
+
+
+    <span class="icons-group d-flex align-items-center">
+        <fpcare-pill-badge
+          *ngIf="getSiteAccessForItem(item)?.alert"
+          iconOnly=true
+          [alerts]="[getSiteAccessForItem(item)?.alert]">
+        </fpcare-pill-badge>
+
+        <!-- <i class="fa fa-info-circle text-muted ml-1"></i> -->
+        <fpcare-info-button [targetId]="item.objectId" ></fpcare-info-button>
+    </span>
+  </a>
+  <div *ngIf="getSiteAccessForItem(item)?.pendingChanges" class='d-flex justify-content-around' [@growVertical]>
+    <span class='d-inline-flex align-items-baseline mb-1'>Start
+      <fpcare-datepicker size='mini' dateFormat="yyyy/mm/dd"
+      [(date)]="today"
+      class='ml-1'></fpcare-datepicker>
+    </span>
+
+    <span class='d-inline-flex align-items-baseline mb-1'>End
+      <fpcare-datepicker size='mini' dateFormat="yyyy/mm/dd" class='ml-1'></fpcare-datepicker>
+    </span>
+  </div>
+</li>

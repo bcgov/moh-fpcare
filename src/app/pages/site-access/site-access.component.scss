@@ -1,0 +1,8 @@
+/**
+* If you are looking to style the smart-table, it's in Style.css
+* Due to Angular style scoping, most changes here won't take effect.
+*/
+ng2-smart-table {
+  //The plugin sets most text to 0.875em. We want a font-size of 14px, so we have to set it to 16px to achieve that.
+  font-size: 16px;
+}
