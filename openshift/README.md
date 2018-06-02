@@ -17,7 +17,7 @@ Verify angular-cli is installed by running `ng -v`. Since `ng -v` is dependent u
 
 ```bash
 git clone https://github.com/bcgov/moh-fpcare
-cd mod-fpcare
+cd moh-fpcare
 yarn
 npm start # Runs a local dev server
 ```
