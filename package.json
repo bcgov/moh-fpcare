@@ -36,6 +36,7 @@
     "moment": "2.22.1",
     "mydaterangepicker": "^4.2.1",
     "mygovbc-bootstrap-theme": "^0.4.0",
+    "ng2-sticky-kit": "5.0.0",
     "ngx-bootstrap": "3.0.0",
     "ngx-mydatepicker": "^2.4.4",
     "rx-dom": "^7.0.3",
