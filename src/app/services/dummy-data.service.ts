@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { Person } from '../models/person.model';
 import { Address } from '../models/address.model';
@@ -42,11 +41,6 @@ export class DummyDataService {
     return arr[Math.ceil(Math.random() * arr.length) - 1];
   }
 
-  private generateSiteName(siteName: string = "London Drugs"): string {
-    let id = Math.ceil(Math.random() * 8000)
-    return `${siteName} - ${id}`;
-  }
-
   private generatePersonName(): string {
     const firstNames = ['Bob', 'Alice', 'Fred', 'Ellen', 'James', 'Tom', 'Greg', 'Kate'];
     const lastNames = ['Hunt', 'Smith', 'Jones', 'Stewart', 'Mason'];
@@ -73,44 +67,7 @@ export class DummyDataService {
     return address;
   }
 
-
-  private generatePosUserId(): string {
-    const posIds = ['T', 'SJ', 'OA', 'KL', 'M'];
-    return `${this.getRandomElFromArray(posIds)}${Math.ceil(Math.random() * 8000)} `;
-
-  }
-
-  private generateProvisionedDate(): string{
-    const today = new Date();
-    const pastDate = new Date(2017, 1, 0);
-    return moment(this.randomDate(today, pastDate)).format('DD/MM/YYYY');
-  }
-
-  private generateStartDate(): string{
-    const today = new Date();
-    const pastDate = new Date(2017, 1, 0);
-    return moment(this.randomDate(today, pastDate)).format('DD/MM/YYYY');
-  }
-
-  private generateEndDate(): string{
-    const today = new Date();
-    const pastDate = new Date(2020, 1, 0);
-    return moment(this.randomDate(today, pastDate)).format('DD/MM/YYYY');
-  }
-
-  // Generates PEC for a Site
-  private generatePEC(){
-    return `BC00000A` + Math.ceil(Math.random() * 99);
-  }
-
-
   private randomDate(start: Date, end: Date): Date {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   }
-
-
-  private generateCollegeId (){
-    return 'P1 - ' + Math.ceil(Math.random() * 999999);
-  }
-
 }
