@@ -1,0 +1,12 @@
+@import 'variables.scss';
+
+.breadcrumb {
+
+  @include media-breakpoint-up(lg){
+    flex-wrap: nowrap;
+  }
+
+
+  display: flex;
+  justify-content: space-between;
+}

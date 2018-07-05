@@ -17,19 +17,22 @@ $h3-font-size: $font-size-base * 1.25; //17.5px
 $h4-font-size: $font-size-base * 1.072; //15px - need to match exactly
 $h5-font-size: $font-size-base * 1; //14px;
 $h6-font-size: $font-size-base * 0.85; //12px
+$h7-font-size: $font-size-base * 0.5;
+$h8-font-size: $font-size-base * 0.15;
 
 $container-max-widths: (
-    // Bootstrap 3 to 4: Customize container widths to match previous behaviour
-    // `sm`, a new BS4 container width. We set it high effectively disabling it.
-    sm: 719px, //orig: 540px;
-    md: 750px, //orig: 720px, increased for spacing of .progressBarType-account
+    sm: 540,
+    md: 720px,
     lg: 960px,
-    xl: 1170px //orig: 1140px, Bootstrap 3 to 4: Match BS3 container size
+    // xl: 1140px
+    xl: 1400px
 );
 
 //------------------------------------------------------------------------------
 // Custom Variables
 //------------------------------------------------------------------------------
+
+$container-gutter-size: 5rem;
 
 $color-primary: #036;
 $color-secondary: #fcba19;

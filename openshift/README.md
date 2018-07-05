@@ -1,4 +1,4 @@
-# Ministry of Health of the Province of British Columbia - Fair Pharmacare 
+# Ministry of Health of the Province of British Columbia - Fair PharmaCare 
 PharmaCare Revisions for Information Management Enhancements
 
 PharmaCare used [angular-scaffold](https://github.com/bcgov/angular-scaffold) as it's starting off point.  The original angular-scaffold readme can be found in `angular-scaffold-readme.md`.

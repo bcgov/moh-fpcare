@@ -2,24 +2,24 @@ import { TestBed, async } from '@angular/core/testing';
 import {
   RouterTestingModule
 } from '@angular/router/testing';
-
 import { AppComponent } from './app.component';
-import { ProgressBarComponent } from './core/progress-bar/progress-bar.component';
-import { ApplicantDataService } from './services/applicant-data.service';
+import { HeaderFooterModule } from './modules/header-footer/header-footer.module';
+import { UserService } from './services/user.service';
 import { DummyDataService } from './services/dummy-data.service';
+import { FPCareDataService } from './services/fpcare-data.service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         AppComponent,
-        ProgressBarComponent
       ],
       providers: [
-        ApplicantDataService,
-        DummyDataService
+        UserService,
+        DummyDataService,
+        FPCareDataService
       ],
-      imports: [RouterTestingModule]
+      imports: [RouterTestingModule, HeaderFooterModule]
     }).compileComponents();
   }));
 
@@ -33,6 +33,6 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('span.title').textContent).toContain('FPCARE — Applicant Enrollment');
+    expect(compiled.querySelector('span.title').textContent).toContain('Fair PharmaCare');
   }));
 });

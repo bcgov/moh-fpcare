@@ -214,3 +214,8 @@ thead tr.ng2-smart-titles .ng2-smart-th {padding-left: 0}
   .nowrap-lg { white-space: nowrap;}
   .wrap-lg { white-space: normal;}
 }
+
+
+button.disabled {
+  cursor: not-allowed;
+}

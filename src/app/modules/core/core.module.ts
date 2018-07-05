@@ -1,33 +1,32 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertComponent } from '../../core/alert/alert.component';
-import { PillBadgeComponent } from '../../core/pill-badge/pill-badge.component';
-import { DashboardBarComponent } from '../../core/dashboard-bar/dashboard-bar.component';
-import { SiteAccessWidgetsComponent } from '../../core/site-access-widgets/site-access-widgets.component';
-import { AlertModule, TooltipModule, ProgressbarModule } from 'ngx-bootstrap';
-import { AddUserButtonComponent } from '../../core/add-user-button/add-user-button.component';
-import { MiniProgressBarComponent } from '../../core/mini-progress-bar/mini-progress-bar.component';
-import { ExpandingSearchComponent } from '../../core/expanding-search/expanding-search.component';
+import { AlertComponent } from './components/alert/alert.component';
+import { AlertModule, TooltipModule, ProgressbarModule, ModalModule } from 'ngx-bootstrap';
+import { MiniProgressBarComponent } from './components/mini-progress-bar/mini-progress-bar.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FormsModule } from '@angular/forms';
-import { DatepickerComponent } from '../../app/core/datepicker/datepicker.component';
+import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { RouterModule } from '@angular/router';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
-import { FPCareDataModule } from '../fpcare-data/fpcare-data.module';
-// import { InfoButtonComponent } from '../verifier/components/user-info-button/user-info-button.component';
-import { FPCareToggleComponent } from '../../core/toggle/toggle.component';
+import { FPCareToggleComponent } from './components/toggle/toggle.component';
+import { PostalCodeComponent } from './components/postal-code/postal-code.component';
+import { PageFrameworkComponent } from './components/page-framework/page-framework.component';
+import { WizardProgressBarComponent } from './components/wizard-progress-bar/wizard-progress-bar.component';
+import { CoreBreadcrumbComponent } from './components/core-breadcrumb/core-breadcrumb.component';
+import { TextMaskModule } from 'angular2-text-mask';
+import { FormActionBarComponent } from './components/form-action-bar/form-action-bar.component';
 
 
 const componentList = [
   AlertComponent,
-  PillBadgeComponent,
-  DashboardBarComponent,
-  SiteAccessWidgetsComponent,
-  AddUserButtonComponent,
   MiniProgressBarComponent,
-  ExpandingSearchComponent,
   DatepickerComponent,
-  FPCareToggleComponent
+  FPCareToggleComponent,
+  PostalCodeComponent,
+  PageFrameworkComponent,
+  WizardProgressBarComponent,
+  CoreBreadcrumbComponent,
+  FormActionBarComponent,
 ]
 
 @NgModule({
@@ -40,9 +39,11 @@ const componentList = [
     ProgressbarModule.forRoot(),
     RouterModule,
     NgxMyDatePickerModule.forRoot(),
+    ModalModule.forRoot(),
+    TextMaskModule,
   ],
   declarations: [
-    componentList
+    componentList,
   ],
   exports: [
     componentList

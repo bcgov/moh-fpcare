@@ -12,48 +12,7 @@ p a {
    text-decoration: underline;
  }
 
-// Header, adds the gold bottom border and shadow
-header nav {
-  background-color: map-get($theme-colors, primary);;
-  border-bottom: 2px solid map-get($theme-colors, secondary);
 
-  -webkit-box-shadow: 0 3px 3px 1px rgba(51, 51, 51, 0.5);
-  -moz-box-shadow: 0 3px 3px 1px rgba(51, 51, 51, 0.5);
-  box-shadow: 0 3px 3px 1px rgba(51, 51, 51, 0.5);
-  margin-bottom: 20px;
-}
-
-header {
-  //Bootstrap 3 to 4: Change access of brand colours
-  background-color: $color-primary;
-  border-bottom: 2px solid #fcba19;
-  padding-top: 10px;
-  padding-bottom: 20px;
-
-  //Bootstrap 3 to 4: Using breakpoint mixin.
-  @include media-breakpoint-down(sm) {
-    padding-top: 2px;
-    padding-bottom: 8px;
-  }
-
-  .title {
-    font-size: 30px;
-    font-weight: bold;
-    color: #fff;
-    top: 7px;
-    position: relative;
-    white-space: nowrap;
-
-    //Bootstrap 3 to 4: Using breakpoint mixin.
-    @include media-breakpoint-down(xs){
-      font-size: 14px;
-    }
-  }
-}
-
-header .nav-link {
-  color: white !important;
-}
 
 .footer {
   width: 100%;
@@ -170,3 +129,54 @@ h1, h2, h3,
 .card {
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
+
+// This is for ngx-bootstrap's tooltip module.  This stops a flickering of the tooltip due to the mouse being over the tooltip.
+// https://github.com/valor-software/ngx-bootstrap/issues/3075
+.tooltip {
+  pointer-events: none;
+}
+
+
+.has-float-label {
+
+  > input, > select {
+    border: 1px solid $gray-400;
+    border-radius: 0.25rem;
+  }
+
+  > input.disabled, > input:disabled {
+    border-color: $gray-500;
+  }
+
+  > input:focus, > select:focus {
+    box-shadow: none !important; //Override Bootstrap styling for .form-control
+    border-color: $color-primary;
+  }
+
+  > span, label {
+    white-space: nowrap;
+
+    // Add padding, due to new border
+    left: 0.5em;
+  }
+
+  select.form-control:not([size]):not([multiple]) {
+    height: calc(2.5rem + 2px);
+  }
+}
+
+.has-float-label + .has-float-label {
+  margin-top: 0.5em;
+}
+
+
+.has-float-label input:placeholder-shown:not(:focus) + *, .has-float-label select:placeholder-shown:not(:focus) + *, .has-float-label textarea:placeholder-shown:not(:focus) + * {
+  // Shrink font from 150% to 125% and verticall center
+  font-size: 125%;
+  // opacity: .5; // Removed to meet accessibility standards
+  top: .5em;
+  opacity: 1; // Accessibility standards
+  color: #494949cc; // Font is eqivalent to opacity 0.8, meeting AA standard
+}
+
+

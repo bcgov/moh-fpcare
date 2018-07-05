@@ -1,0 +1,13 @@
+<label class="has-float-label">
+    <input type="text"
+      class="form-control prime-input-medium"
+      id="postal{{objectId}}"
+      name="postal"
+      [ngModel]='value'
+      (ngModelChange)="valueChange.emit($event)"
+      [textMask]="{mask: mask, pipe: upperCasePipe}"
+      [attr.placeholder]="disabled ? '' : ' '"
+      [attr.disabled]='disabled'
+    />
+    <input type="text" value="Fix - Commented out input">
+</label>

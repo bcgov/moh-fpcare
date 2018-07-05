@@ -1,2 +1,16 @@
 $bootstrap-sass-asset-helper: true;
 // @import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+@import 'variables.scss';
+
+.container-fluid {
+  padding: 0 $container-gutter-size;
+
+  @include media-breakpoint-down(md){
+    padding: 0 ($container-gutter-size / 2);
+  }
+
+  @include media-breakpoint-down(sm){
+    padding: 0 ($container-gutter-size / 5);
+  }
+}

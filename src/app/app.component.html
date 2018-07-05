@@ -1,18 +1,7 @@
 <div id="wrap">
-  <header>
-    <div class="container-fluid">
-      <a href="http://www2.gov.bc.ca/" tabindex="-1">
-        <!-- TODO: Bundle image locally -->
-        <img class="header-logo"
-             tabindex="-1" alt="B.C. Government Logo"
-             src="https://cdn.rawgit.com/bcgov/mygovbc-bootstrap-theme/v0.2.0/dist/images/gov3_bc_logo.png">
-      </a>
-      <span class="title" role="banner" i18n="Main application header title shown on every screen|@@applicationHeader">FPCARE &mdash; Applicant Enrollment</span>
-    </div>
-  </header>
+  <fpcare-header></fpcare-header>
 
   <main class="container-fluid">
-    <!-- <fpcare-progress-bar></fpcare-progress-bar> -->
     <router-outlet></router-outlet>
   </main>
   <div id="pad"></div>
