@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import {Person} from '../../../../models/person.model';
 
 @Component({
   selector: 'fpcare-children',
@@ -33,6 +34,27 @@ export class ChildrenPageComponent implements OnInit {
     return 'Skip this step';
   }
 
+  /**
+   * Adds person object to dependants list
+   */
+  addChild(){
+
+    const child: Person = new Person;
+
+    if ( this.fpcService.dependants ) {
+      // List of children exist
+      this.fpcService.dependants.push( child );
+      console.log( 'Next child' );
+    } else {
+      // Create new list for children
+      const result: Person[] = [];
+      result.push( child );
+      this.fpcService.dependants = result;
+      console.log( 'First child' );
+    }
+    // User cannot continue until information for child has be completed
+    this._canContinue = false;
+  }
   /**
    * Indicated whether or not applicant can continue process
    * @returns {boolean}

@@ -2,9 +2,15 @@
 
   <h1>Child Information</h1>
 
-  <div>
-    <h2>Your child's personal information</h2>
+  <h2>Your child's personal information</h2>
+
+  <!-- Repeat for each child -->
+  <div ng-controller="repeatController">
   </div>
+
+  <button class="btn btn-lg btn-block btn-default" (click)="addChild()">
+    Add Child
+  </button>
 
   <fpcare-form-action-bar
           [submitLabel]="buttonLabel()"
