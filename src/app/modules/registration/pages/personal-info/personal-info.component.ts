@@ -16,7 +16,7 @@ export class PersonalInfoPageComponent implements OnInit {
   private _canContinue = false;
 
   /** Format string for displaying dates in this component */
-  dateFormat: string = 'YYYY/MM/DD';
+  dateFormat: string = 'yyyy/mm/dd';
 
   constructor( private fpcService: FPCareDataService ) { }
 

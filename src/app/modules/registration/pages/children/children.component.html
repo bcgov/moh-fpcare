@@ -1,5 +1,15 @@
 <fpcare-page-framework layout='single'>
-  <p>
-    children works!
-  </p>
+
+  <h1>Child Information</h1>
+
+  <div>
+    <h2>Your child's personal information</h2>
+  </div>
+
+  <fpcare-form-action-bar
+          [submitLabel]="buttonLabel()"
+          [canContinue]="canContinue()"
+          (click)="continue()">
+  </fpcare-form-action-bar>
+
 </fpcare-page-framework>
