@@ -19,5 +19,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    // Purpose: Development - data set for personal information
+    this.fpcareDataService.applicant = this.dummyDataService.createApplicant();
+    this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
   }
 }

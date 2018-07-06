@@ -3,6 +3,7 @@ import { Person } from '../models/person.model';
 import { Address } from '../models/address.model';
 import * as moment from 'moment';
 
+
 /**
  * Responsible for generating dummy data, useful for development Not responsible
  * for *injecting* dummy data, must be called from components.
@@ -14,6 +15,28 @@ import * as moment from 'moment';
 export class DummyDataService {
 
   constructor() { }
+
+  // Applicant for test purpose - personal info
+  createApplicant(): Person {
+    const result: Person = new Person;
+
+    result.dateOfBirth = this.generateDateOfBirth();
+    console.log( 'Applicant DOB: ', moment( result.dateOfBirth ).format( 'YYYY/MM/DD' ) );
+    result.phn = this.generatePHN();
+
+    return result;
+  }
+
+  // Spouse for test purpose - personal info
+  createSpouse(): Person {
+    const result: Person = new Person;
+
+    result.dateOfBirth = this.generateDateOfBirth();
+    console.log( 'Spouse DOB: ', moment( result.dateOfBirth ).format( 'YYYY/MM/DD' ) );
+    result.phn = this.generatePHN();
+
+    return result;
+  }
 
   // -- Generating Models
   /** Returns an array of people with random names.*/
@@ -53,6 +76,11 @@ export class DummyDataService {
     const today = new Date();
     const pastDate = new Date(1970, 1, 0);
     return this.randomDate(today, pastDate);
+  }
+
+  private generatePHN(): string {
+    const phn = `${Math.ceil(Math.random() * 9999999999 )}`
+    return phn;
   }
 
   private generateAddress(): Address {

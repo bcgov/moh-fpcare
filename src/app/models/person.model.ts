@@ -103,7 +103,7 @@ export class Person extends Base {
    * @returns {string}
    */
   get phn(): string {
-    return this._phn;
+    return this._phn ? this._phn : '';
   }
 
   /**
@@ -119,7 +119,7 @@ export class Person extends Base {
    * @returns {string}
    */
   get sin(): string {
-    return this._sin;
+    return this._sin ? this._sin : '';
   }
 
   /**

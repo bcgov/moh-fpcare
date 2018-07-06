@@ -11,14 +11,26 @@ import { CompletePageComponent } from './pages/complete/complete.component';
 import { RegistrationRoutingModule } from './registration-routing.module';
 import { RegistrationContainerComponent } from './components/registration-container/registration-container.component';
 import { CoreModule } from '../core/core.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
+    FormsModule,
     CommonModule,
     RegistrationRoutingModule,
     CoreModule
   ],
-  declarations: [RegistrationContainerComponent, RegistrationRequirementsComponent, CalculatorPageComponent, EligibilityPageComponent, PersonalInfoPageComponent, ChildrenPageComponent, MailingAddressPageComponent, ReviewPageComponent, CompletePageComponent]
+  declarations: [
+    RegistrationContainerComponent,
+    RegistrationRequirementsComponent,
+    CalculatorPageComponent,
+    EligibilityPageComponent,
+    PersonalInfoPageComponent,
+    ChildrenPageComponent,
+    MailingAddressPageComponent,
+    ReviewPageComponent,
+    CompletePageComponent
+  ]
 })
 export class RegistrationModule {
 }

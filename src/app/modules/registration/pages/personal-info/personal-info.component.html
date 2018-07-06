@@ -19,35 +19,41 @@
     <div class="row">
       <div class="col-sm form-group">
         <label for="ap_firstnm">First Name</label>
-        <input class="form-control" type="text" id="ap_firstnm" name="ap_firstnm" [(ngModel)]="apFirstName">
+        <input class="form-control" type="text" id="ap_firstnm" name="ap_firstnm" [(ngModel)]="applicant.firstName">
       </div>
       <div class="col-sm form-group">
         <label for="ap_middlenm">Middle Name</label>
-        <input class="form-control" type="text" id="ap_middlenm" name="ap_middlenm" [(ngModel)]="apMiddleName">
+        <input class="form-control" type="text" id="ap_middlenm" name="ap_middlenm" [(ngModel)]="applicant.middleName">
       </div>
       <div class="col-sm form-group">
         <label for="ap_lastnm">Last Name</label>
-        <input class="form-control" type="text" id="ap_lastnm" name="ap_lastnm" [(ngModel)]="apLastName">
+        <input class="form-control" type="text" id="ap_lastnm" name="ap_lastnm" [(ngModel)]="applicant.lastName">
       </div>
     </div>
 
+    <!-- TODO: Date picker is not displaying date -->
+    <!-- TODO: Needs to have the clear button and ability to select removed disabled, similar to the prime mini date picker -->
+    <!-- TODO: Need Adam to look at this -->
     <div class="row">
       <div class="col-sm form-group">
-        <!-- TODO: Date picker shows blank calendar need to fix -->
+        <!-- DOB ready only field - set in previous page -->
         <label for="ap_dob">Birthdate</label>
         <fpcare-datepicker id="ap_dob"
-                [dateFormat]="dateFormat"
-                [(date)]="apDtOfBirth"
-                class="ml-1">
+                           [dateFormat]="dateFormat"
+                           [date]="applicant.dateOfBirth"
+                           clearButton="invisible"
+                           [disabled]="true"
+                           class="ml-1">
         </fpcare-datepicker>
       </div>
       <div class="col-sm form-group">
+        <!-- PHN ready only field - set in previous page -->
         <label for="ap_phn">PHN</label>
-        <input class="form-control" type="text" id="ap_phn" name="ap_phn" [(ngModel)]="apPhn">
+        <input disabled class="form-control" type="text" id="ap_phn" name="ap_phn" [ngModel]="applicant.phn">
       </div>
       <div class="col-sm form-group">
         <label for="ap_sin">SIN</label>
-        <input class="form-control" type="text" id="ap_sin" name="ap_sin" [(ngModel)]="apSin">
+        <input class="form-control" type="text" id="ap_sin" name="ap_sin" [(ngModel)]="applicant.sin">
       </div>
     </div>
   </div>
@@ -59,35 +65,38 @@
     <div class="row">
       <div class="col-sm form-group">
         <label for="sp_firstnm">First Name</label>
-        <input class="form-control" type="text" id="sp_firstnm" name="sp_firstnm" [(ngModel)]="spFirstName" >
+        <input class="form-control" type="text" id="sp_firstnm" name="sp_firstnm" [(ngModel)]="spouse.firstName" >
       </div>
       <div class="col-sm form-group">
         <label for="sp_middlenm">Middle Name</label>
-        <input class="form-control" type="text" id="sp_middlenm" name="sp_middlenm" [(ngModel)]="spMiddleName" >
+        <input class="form-control" type="text" id="sp_middlenm" name="sp_middlenm" [(ngModel)]="spouse.middleName" >
       </div>
       <div class="col-sm form-group">
         <label for="sp_lastnm">Last Name</label>
-        <input class="form-control" type="text" id="sp_lastnm" name="sp_lastnm" [(ngModel)]="spLastName" >
+        <input class="form-control" type="text" id="sp_lastnm" name="sp_lastnm" [(ngModel)]="spouse.lastName" >
       </div>
     </div>
 
     <div class="row">
       <div class="col-sm form-group">
-        <!-- TODO: Date picker shows blank calendar need to fix -->
+        <!-- DOB ready only field - set in previous page -->
         <label for="sp_dob">Birthdate</label>
         <fpcare-datepicker id="sp_dob"
                            [dateFormat]="dateFormat"
-                           [(date)]="spDtOfBirth"
+                           [date]="spouse.dateOfBirth"
+                           clearButton="invisible"
+                           [disabled]="true"
                            class="ml-1">
         </fpcare-datepicker>
       </div>
       <div class="col-sm form-group">
+        <!-- PHN ready only field - set in previous page -->
         <label for="sp_phn">PHN</label>
-        <input class="form-control" type="text" id="sp_phn" name="sp_phn" [(ngModel)]="spPhn">
+        <input disabled class="form-control" type="text" id="sp_phn" name="sp_phn" [(ngModel)]="spouse.phn">
       </div>
       <div class="col-sm form-group">
         <label for="sp_sin">SIN</label>
-        <input class="form-control" type="text" id="sp_sin" name="sp_sin" [(ngModel)]="spSin" >
+        <input class="form-control" type="text" id="sp_sin" name="sp_sin" [(ngModel)]="spouse.sin" >
       </div>
     </div>
   </div>
