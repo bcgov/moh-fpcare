@@ -1,5 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { INgxMyDpOptions, IMyDateModel, IMyDate } from 'ngx-mydatepicker';
+import {Component, OnInit, Input, Output, EventEmitter, SimpleChanges, ViewChild, OnChanges} from '@angular/core';
+import { INgxMyDpOptions, IMyDate, NgxMyDatePickerDirective } from 'ngx-mydatepicker';
+import * as moment from 'moment';
+import { Base } from '../base/base.class';
 
 
 /**
@@ -11,31 +13,68 @@ import { INgxMyDpOptions, IMyDateModel, IMyDate } from 'ngx-mydatepicker';
   templateUrl: './datepicker.component.html',
   styleUrls: ['./datepicker.component.scss']
 })
-export class DatepickerComponent implements OnInit {
+export class DatepickerComponent extends Base implements OnInit, OnChanges {
   /** Component size can be reduced, see Datepickersizes for options */
   @Input() size: DatepickerSizes = DatepickerSizes.DEFAULT;
-  @Input() date: IMyDate | Date;
-  @Output() dateChange = new EventEmitter<IMyDate | Date>();
+  @Input() date: Date;
+  @Output() dateChange = new EventEmitter<Date>();
   @Input() disabled: boolean;
+  @Input() labelText: string;
+
+
+  /** Dates **before** disableUntil will not be valid selections.  Maps to a ngx-mydatepicker option, but we convert IMyDate to Date  */
+  @Input() disableUntil: Date;
+
+  /** Dates **after** disableSince will not be valid selections.  Maps to a ngx-mydatepicker option, but we convert IMyDate to Date */
+  @Input() disableSince: Date;
+
+  /** Equivalent to setting disableBefore to tomorrow. */
+  @Input() onlyFutureDates: boolean;
+
+  /**
+   * Control visibility of the clear 'x' button on the mini datepicker.
+   *
+   * **'visible'** is default, button exists
+   *
+   * **'none'** means the element does not exist
+   *
+   * **'invisible'** means the element takes up space but is not visible / cannot be
+   * used.
+   *
+   * Invisible is useful when you want to make sure a datepicker is the same
+   * size as a visible one.
+   */
+  @Input() clearButton: 'visible' | 'invisible' | 'none' = 'visible';
+
+  /** Can only be used with DEFAULT datepickers (not mini). Similar to disabled,
+   * but use this when the datepicker will **always** stay disabled for the
+   * lifetime of the component.  There's a known issue with displaying dates
+   * when the datepicker starts off disabled. */
+  @Input() readOnly: boolean = false;
+
+
 
   /** Format for how to display the date to the user. */
   @Input() dateFormat: string = 'dd/mm/yyyy';
 
-  /** Short month labels used in formatted date string.  */
-  monthLabels: IMyMonthLabels = { 1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec' };
-
   /** Datetime model used to interface with ngx-datepicker. */
+  //model: any;
   model: any;
 
   // Make enum accessible in HTML
   DatepickerSizes: typeof DatepickerSizes = DatepickerSizes;
 
+  @ViewChild('dp') ngxdp: NgxMyDatePickerDirective;
+
   /** Default options for wrapped ngx-datepicker. */
   datepickerOptions: INgxMyDpOptions;
 
-  constructor() { }
+  constructor() {
+    super();
+   }
 
   convertDateToSimpleDate(date: Date):IMyDate {
+    if (date === null || date === undefined ) { return null }
     return {
       year: date.getFullYear(),
       month: date.getMonth() + 1,
@@ -43,23 +82,24 @@ export class DatepickerComponent implements OnInit {
     }
    }
   convertSimpleDateToDate(date: IMyDate):Date {
+    // When ngx-mydatepicker is cleared, it returns {year: 0, month: 0, day: 0}
+    if (date.year === 0){
+      return null;
+    }
     return new Date(date.year, date.month - 1, date.day);
   }
 
   isDate(x: any): x is Date {
+    if (!x) return false;
     return x.getDate !== undefined;
   }
-
-  isSimpleDate(x: any): x is IMyDate {
-    return x.year !== undefined;
-  }
-
 
   ngOnInit() {
 
     this.datepickerOptions = {
       dateFormat: this.dateFormat,
       sunHighlight: false,
+      appendSelectorToBody: true,
     };
 
     if (this.size === DatepickerSizes.MINI) {
@@ -67,91 +107,59 @@ export class DatepickerComponent implements OnInit {
       this.datepickerOptions.selectorHeight = '185px';
       this.datepickerOptions.selectorWidth = '201px';
     }
+
+    if (this.isDate(this.disableSince)){
+      this.datepickerOptions.disableSince = this.convertDateToSimpleDate(this.disableSince);
+    }
+
+    if (this.isDate(this.disableUntil)){
+      this.datepickerOptions.disableUntil = this.convertDateToSimpleDate(this.disableSince);
+    }
+
+    if (this.onlyFutureDates){
+      const today = new Date();
+      this.datepickerOptions.disableUntil = this.convertDateToSimpleDate(today);
+    }
+
+    this.model = {
+      jsDate: this.date,
+      date: this.convertDateToSimpleDate(this.date),
+    };
   }
 
   ngOnChanges(changes: SimpleChanges) {
-
-    if (this.date || this.date === null) { //Just not `undefined`
-
-      let date;
-      if (this.date === null){
-        date = null;
-      }
-      else {
-        date = this.isDate(this.date) ? this.convertDateToSimpleDate(this.date) : this.date;
-      }
-
-
-      this.model = {
-        date: this.date,
-        formatted: this.formatDate(date, this.dateFormat, this.monthLabels)
-      }
+    // Parent component has passed in null, so we have to manually clear the input. This leads to 2 change detection cycles.
+    // We could refactor it down to one, but the performance hit is minimal for such a simple component.
+    // console.log('ngOnChanges', changes);
+    if (this.date === null){
+      this.clearDate();
     }
-
   }
 
-  onDateChanged(event: IMyDateModel): void {
+  onDateChanged(event): void {
+    // console.log('onDateChanged', event);
+    if (event.jsdate || event.jsdate === null) {
+      // Always emit a Date (or null)
+      // console.log('onDateChanged EMIT');
+      this.dateChange.emit(event.jsdate);
+    }
+  }
 
-
-    if (event.date) {
-      let date = this.isDate(event.date) ? this.convertDateToSimpleDate(event.date) : event.date;
-
-
-      // User has cleared the date, so we want to return null.
-      if (date.year === 0 && date.month === 0 && date.day === 0) {
-        this.dateChange.emit(null);
-      }
-      else {
-        // Emit out same type they put in
-        this.dateChange.emit(event.date);
-      }
+  clearDate(){
+    if (this.ngxdp) {
+      // We don't need to emit here, because by changing date we'll trigger onDateChanged automatically.
+      this.date = null;
+      this.ngxdp.clearDate();
     }
   }
 
   get hasValidDate(): boolean {
     // Can be improved in the future, now we just check if we have a formatted date string.
-    return !!(this.model && this.model.formatted)
+    return !!(this.date)
   }
 
-  // Copied from ngx-datepicker to ensure formatting is identical. Let's us
-  // pre-generate formatted strings and avoid an update cycle loop in Angular.
-  // https://github.com/kekeh/ngx-mydatepicker/blob/3c59db9cb41efd134b0295e7082b009ea5e76430/src/ngx-my-date-picker/services/ngx-my-date-picker.util.service.ts
-  private formatDate(date: IMyDate, dateFormat: string, monthLabels: IMyMonthLabels): string {
-    const M = "m";
-    const MM = "mm";
-    const MMM = "mmm";
-    const D = "d";
-    const DD = "dd";
-    const YYYY = "yyyy";
-
-    if (this.date === null) {
-      return null;
-    }
-
-
-    let formatted: string = dateFormat.replace(YYYY, String(date.year));
-
-    if (dateFormat.indexOf(MMM) !== -1) {
-      formatted = formatted.replace(MMM, monthLabels[date.month]);
-    }
-    else if (dateFormat.indexOf(MM) !== -1) {
-      formatted = formatted.replace(MM, this.preZero(date.month));
-    }
-    else {
-      formatted = formatted.replace(M, String(date.month));
-    }
-
-    if (dateFormat.indexOf(DD) !== -1) {
-      formatted = formatted.replace(DD, this.preZero(date.day));
-    }
-    else {
-      formatted = formatted.replace(D, String(date.day));
-    }
-    return formatted;
-  }
-
-  private preZero(val: number): string {
-    return val < 10 ? "0" + val : String(val);
+  formatDate(date: Date): string{
+    return moment(date).format(this.dateFormat.toUpperCase());
   }
 
 }
@@ -159,10 +167,4 @@ export class DatepickerComponent implements OnInit {
 enum DatepickerSizes {
   MINI = "mini",
   DEFAULT = "default"
-}
-
-//FIXME: Bad! From vendor. Remove entrely?
-// https://github.com/kekeh/ngx-mydatepicker/blob/3c59db9cb41efd134b0295e7082b009ea5e76430/src/ngx-my-date-picker/interfaces/my-month-labels.interface.ts
-export interface IMyMonthLabels {
-  [month: number]: string;
 }
