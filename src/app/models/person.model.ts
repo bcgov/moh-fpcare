@@ -91,6 +91,38 @@ export class Person extends Base {
   }
 
   /**
+   * Set Personal Health Number for person
+   * @param {string} phn
+   */
+  set phn( phn: string ) {
+    this._phn = phn;
+  }
+
+  /**
+   * Gets Personal Health Number for person
+   * @returns {string}
+   */
+  get phn(): string {
+    return this._phn;
+  }
+
+  /**
+   * Set Social Insurance Number for person
+   * @param {string} phn
+   */
+  set sin( sin: string ) {
+    this._sin = sin;
+  }
+
+  /**
+   * Gets Social Insurance Number for person
+   * @returns {string}
+   */
+  get sin(): string {
+    return this._sin;
+  }
+
+  /**
    * Concatenates the first and last name together
    * @returns {string}
    */

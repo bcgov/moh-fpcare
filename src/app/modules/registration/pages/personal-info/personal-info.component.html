@@ -17,67 +17,77 @@
     <h2>Your Information</h2>
 
     <div class="row">
-      <div class="col-sm">
+      <div class="col-sm form-group">
         <label for="ap_firstnm">First Name</label>
-        <input type="text" id="ap_firstnm" name="ap_firstnm" maxLength="30"/>
+        <input class="form-control" type="text" id="ap_firstnm" name="ap_firstnm" [(ngModel)]="apFirstName">
       </div>
-      <div class="col-sm">
+      <div class="col-sm form-group">
         <label for="ap_middlenm">Middle Name</label>
-        <input type="text" id="ap_middlenm" name="ap_middlenm" maxLength="30"/>
+        <input class="form-control" type="text" id="ap_middlenm" name="ap_middlenm" [(ngModel)]="apMiddleName">
       </div>
-      <div class="col-sm">
+      <div class="col-sm form-group">
         <label for="ap_lastnm">Last Name</label>
-        <input type="text" id="ap_lastnm" name="ap_lastnm" maxLength="30"/>
+        <input class="form-control" type="text" id="ap_lastnm" name="ap_lastnm" [(ngModel)]="apLastName">
       </div>
     </div>
 
     <div class="row">
-      <div class="col-sm">
-        <label>Birthdate</label>
-        <!-- TODO: add datepicker -->
+      <div class="col-sm form-group">
+        <!-- TODO: Date picker shows blank calendar need to fix -->
+        <label for="ap_dob">Birthdate</label>
+        <fpcare-datepicker id="ap_dob"
+                [dateFormat]="dateFormat"
+                [(date)]="apDtOfBirth"
+                class="ml-1">
+        </fpcare-datepicker>
       </div>
-      <div class="col-sm">
+      <div class="col-sm form-group">
         <label for="ap_phn">PHN</label>
-        <input type="text" id="ap_phn" name="ap_phn" maxLength="13"/>
+        <input class="form-control" type="text" id="ap_phn" name="ap_phn" [(ngModel)]="apPhn">
       </div>
-      <div class="col-sm">
+      <div class="col-sm form-group">
         <label for="ap_sin">SIN</label>
-        <input type="text" id="ap_sin" name="ap_sin" maxLength="13"/>
+        <input class="form-control" type="text" id="ap_sin" name="ap_sin" [(ngModel)]="apSin">
       </div>
     </div>
   </div>
 
   <!-- Information required to complete this section - ONLY if indicated that the applicant has a spouse -->
-  <div>
+  <div *ngIf="hasSpouse()">
     <h2>Spouse Information</h2>
 
     <div class="row">
-      <div class="col-sm">
-        <label>First Name</label>
-        <input type="text" id="sp_firstnm" name="sp_firstnm" maxLength="30"/>
+      <div class="col-sm form-group">
+        <label for="sp_firstnm">First Name</label>
+        <input class="form-control" type="text" id="sp_firstnm" name="sp_firstnm" [(ngModel)]="spFirstName" >
       </div>
-      <div class="col-sm">
-        <label>Middle Name</label>
-        <input type="text" id="sp_middlenm" name="sp_middlenm" maxLength="30"/>
+      <div class="col-sm form-group">
+        <label for="sp_middlenm">Middle Name</label>
+        <input class="form-control" type="text" id="sp_middlenm" name="sp_middlenm" [(ngModel)]="spMiddleName" >
       </div>
-      <div class="col-sm">
-        <label>Last Name</label>
-        <input type="text" id="sp_lastnm" name="sp_lastnm" maxLength="30"/>
+      <div class="col-sm form-group">
+        <label for="sp_lastnm">Last Name</label>
+        <input class="form-control" type="text" id="sp_lastnm" name="sp_lastnm" [(ngModel)]="spLastName" >
       </div>
     </div>
 
     <div class="row">
-      <div class="col-sm">
-        <label>Birthdate</label>
-        <!-- TODO: add datepicker -->
+      <div class="col-sm form-group">
+        <!-- TODO: Date picker shows blank calendar need to fix -->
+        <label for="sp_dob">Birthdate</label>
+        <fpcare-datepicker id="sp_dob"
+                           [dateFormat]="dateFormat"
+                           [(date)]="spDtOfBirth"
+                           class="ml-1">
+        </fpcare-datepicker>
       </div>
-      <div class="col-sm">
-        <label>PHN</label>
-        <input type="text" id="sp_phn" name="sp_phn" maxLength="13"/>
+      <div class="col-sm form-group">
+        <label for="sp_phn">PHN</label>
+        <input class="form-control" type="text" id="sp_phn" name="sp_phn" [(ngModel)]="spPhn">
       </div>
-      <div class="col-sm">
-        <label>SIN</label>
-        <input type="text" id="sp_sin" name="sp_sin" maxLength="13"/>
+      <div class="col-sm form-group">
+        <label for="sp_sin">SIN</label>
+        <input class="form-control" type="text" id="sp_sin" name="sp_sin" [(ngModel)]="spSin" >
       </div>
     </div>
   </div>
