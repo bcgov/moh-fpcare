@@ -162,6 +162,10 @@ export class DatepickerComponent extends Base implements OnInit, OnChanges {
     return moment(date).format(this.dateFormat.toUpperCase());
   }
 
+  get formattedDate(): string {
+    return this.formatDate(this.date);
+  }
+
 }
 
 enum DatepickerSizes {

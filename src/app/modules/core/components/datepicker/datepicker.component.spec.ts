@@ -4,7 +4,7 @@ import { DatepickerComponent } from './datepicker.component';
 import {NgxMyDatePickerModule} from 'ngx-mydatepicker';
 import {FormsModule} from '@angular/forms';
 
-describe('DatepickerComponent', () => {
+fdescribe('DatepickerComponent', () => {
   let component: DatepickerComponent;
   let fixture: ComponentFixture<DatepickerComponent>;
   let today: Date;
@@ -59,6 +59,6 @@ describe('DatepickerComponent', () => {
     const y2k = new Date('January 1 2000');
     component.date = y2k;
     fixture.detectChanges();
-    expect(component.model.date).toBe('01/01/2000');
+    expect(component.formattedDate).toBe('01/01/2000');
   });
 });
