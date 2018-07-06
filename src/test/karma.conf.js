@@ -17,10 +17,10 @@ module.exports = function (config) {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
     files: [
-      
+
     ],
     preprocessors: {
-      
+
     },
     mime: {
       'text/x-typescript': ['ts','tsx']
@@ -29,13 +29,14 @@ module.exports = function (config) {
       dir: require('path').join(__dirname, 'coverage'), reports: [ 'html', 'lcovonly' ],
       fixWebpackSourcePaths: true
     },
-    
+
     reporters: config.angularCli && config.angularCli.codeCoverage
               ? ['progress', 'coverage-istanbul']
               // : ['progress', 'kjhtml'],
               : ['spec', 'kjhtml'],
-    specReporters : {
-      maxLogLines: 5,         // limit number of lines logged per test
+
+    specReporter: {
+      suppressSkipped: true,
       showSpecTiming: true // print the time elapsed for each spec
     },
 
