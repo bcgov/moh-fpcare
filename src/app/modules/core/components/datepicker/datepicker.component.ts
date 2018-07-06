@@ -73,15 +73,15 @@ export class DatepickerComponent extends Base implements OnInit, OnChanges {
     super();
    }
 
-  convertDateToSimpleDate(date: Date):IMyDate {
-    if (date === null || date === undefined ) { return null }
+  convertDateToSimpleDate(date: Date): IMyDate {
+    if (date === null || date === undefined ) { return null; }
     return {
       year: date.getFullYear(),
       month: date.getMonth() + 1,
       day: date.getDate(),
-    }
+    };
    }
-  convertSimpleDateToDate(date: IMyDate):Date {
+  convertSimpleDateToDate(date: IMyDate): Date {
     // When ngx-mydatepicker is cleared, it returns {year: 0, month: 0, day: 0}
     if (date.year === 0){
       return null;
@@ -155,7 +155,7 @@ export class DatepickerComponent extends Base implements OnInit, OnChanges {
 
   get hasValidDate(): boolean {
     // Can be improved in the future, now we just check if we have a formatted date string.
-    return !!(this.date)
+    return !!(this.date);
   }
 
   formatDate(date: Date): string{
@@ -169,6 +169,6 @@ export class DatepickerComponent extends Base implements OnInit, OnChanges {
 }
 
 enum DatepickerSizes {
-  MINI = "mini",
-  DEFAULT = "default"
+  MINI = 'mini',
+  DEFAULT = 'default'
 }
