@@ -41,8 +41,7 @@
         <fpcare-datepicker id="ap_dob"
                            [dateFormat]="dateFormat"
                            [date]="applicant.dateOfBirth"
-                           clearButton="invisible"
-                           [disabled]="true"
+                           [readOnly]='true'
                            class="ml-1">
         </fpcare-datepicker>
       </div>
@@ -84,8 +83,7 @@
         <fpcare-datepicker id="sp_dob"
                            [dateFormat]="dateFormat"
                            [date]="spouse.dateOfBirth"
-                           clearButton="invisible"
-                           [disabled]="true"
+                           [readOnly]='true'
                            class="ml-1">
         </fpcare-datepicker>
       </div>
