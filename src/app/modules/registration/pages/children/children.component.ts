@@ -14,11 +14,28 @@ export class ChildrenPageComponent implements OnInit {
    */
   private _canContinue = true;
 
+  /* Flag to disable the Add child button so that no more children can be
+   * added to list.  Currently a maximum of 18 children can be added to
+   * an account
+   */
+  private _disableAddChild = false;
+
   constructor( private fpcService: FPCareDataService ) { }
 
   ngOnInit() {
   }
 
+  get children(): Person[] {
+    return this.fpcService.dependants ? this.fpcService.dependants : [];
+  }
+
+  hasChildren(): boolean {
+    return this.fpcService.dependants ? true: false;
+  }
+
+  isAddDisabled(): boolean {
+    return this._disableAddChild;
+  }
   // Methods triggered by the form action bar
 
   /**
@@ -37,11 +54,11 @@ export class ChildrenPageComponent implements OnInit {
   /**
    * Adds person object to dependants list
    */
-  addChild(){
+  addChild() {
 
     const child: Person = new Person;
 
-    if ( this.fpcService.dependants ) {
+    if ( this.hasChildren() ) {
       // List of children exist
       this.fpcService.dependants.push( child );
       console.log( 'Next child' );
@@ -54,6 +71,10 @@ export class ChildrenPageComponent implements OnInit {
     }
     // User cannot continue until information for child has be completed
     this._canContinue = false;
+
+    if ( this.fpcService.dependants.length === 18 ) {
+      this._disableAddChild = true; // Maximum number of children added to account
+    }
   }
   /**
    * Indicated whether or not applicant can continue process
@@ -64,6 +85,6 @@ export class ChildrenPageComponent implements OnInit {
   }
 
   // TODO: Code functionality
-  continue() {
+  continue () {
   }
 }

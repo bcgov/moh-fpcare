@@ -1,16 +1,56 @@
-<fpcare-page-framework layout='single'>
+<fpcare-page-framework layout='default'>
 
   <h1>Child Information</h1>
 
   <h2>Your child's personal information</h2>
 
   <!-- Repeat for each child -->
-  <div ng-controller="repeatController">
+  <div *ngIf="hasChildren()">
+    <div *ngFor="let child of children">
+      <!--Array starts at 0 add one -->
+      <label>Child #{{children.indexOf(child)+1}}</label>
+      <div class="row">
+        <div class="col-sm form-group">
+          <label for="ch_firstnm">First Name</label>
+          <input class="form-control" type="text" id="ch_firstnm" name="ch_firstnm" [(ngModel)]="child.firstName" >
+        </div>
+        <div class="col-sm form-group">
+          <label for="ch_middlenm">Middle Name</label>
+          <input class="form-control" type="text" id="ch_middlenm" name="ch_middlenm" [(ngModel)]="child.middleName" >
+        </div>
+        <div class="col-sm form-group">
+          <label for="ch_lastnm">Last Name</label>
+          <input class="form-control" type="text" id="ch_lastnm" name="ch_lastnm" [(ngModel)]="child.lastName" >
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm form-group">
+          <label for="ch_dob">Birthdate</label>
+          <fpcare-datepicker id="sp_dob"
+                             [dateFormat]="dateFormat"
+                             [date]="child.dateOfBirth"
+                             class="ml-1">
+          </fpcare-datepicker>
+        </div>
+        <div class="col-sm form-group">
+          <label for="ch_phn">PHN</label>
+          <input class="form-control" type="text" id="ch_phn" name="ch_phn" [(ngModel)]="child.phn">
+        </div>
+        <div class="col-sm form-group"></div>
+        <!-- blank to ensure columns line up correctly -->
+      </div>
+    </div>
   </div>
 
-  <button class="btn btn-lg btn-block btn-default" (click)="addChild()">
+  <button class="btn btn-lg btn-block btn-default" (click)="addChild()" [disabled]="isAddDisabled()">
     Add Child
   </button>
+
+  <aside>
+    <strong>Child Info aside!</strong>
+    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque modi ipsum cumque tempore dolore explicabo libero, dolor dignissimos debitis minus voluptate quas culpa dolores atque inventore unde iure. Reiciendis, ea.
+  </aside>
 
   <fpcare-form-action-bar
           [submitLabel]="buttonLabel()"
