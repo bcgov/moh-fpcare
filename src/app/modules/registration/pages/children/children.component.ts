@@ -30,7 +30,7 @@ export class ChildrenPageComponent implements OnInit {
   }
 
   hasChildren(): boolean {
-    return this.fpcService.dependants ? true: false;
+    return this.fpcService.dependants ? true : false;
   }
 
   isAddDisabled(): boolean {
@@ -61,13 +61,11 @@ export class ChildrenPageComponent implements OnInit {
     if ( this.hasChildren() ) {
       // List of children exist
       this.fpcService.dependants.push( child );
-      console.log( 'Next child' );
     } else {
       // Create new list for children
       const result: Person[] = [];
       result.push( child );
       this.fpcService.dependants = result;
-      console.log( 'First child' );
     }
     // User cannot continue until information for child has be completed
     this._canContinue = false;
