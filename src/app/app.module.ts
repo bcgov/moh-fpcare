@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyDateRangePickerModule } from 'mydaterangepicker';
@@ -33,6 +32,7 @@ import { PhoneValidationComponent } from './validation/phone-validation/phone-va
 import { FPCareRequiredDirective } from './validation/fpcare-required.directive';
 import { RequiredValidationErrorsComponent } from './validation/required-validation/required-validation.component';
 import { HeaderFooterModule } from './modules/header-footer/header-footer.module';
+import { ValidationService } from './services/validation.service';
 
 
 @NgModule({
@@ -46,10 +46,6 @@ import { HeaderFooterModule } from './modules/header-footer/header-footer.module
     CalendarMonthValidatorDirective,
     CalendarFutureDatesDirective,
     FileUploaderComponent,
-    FPCareRequiredDirective,
-    RequiredValidationErrorsComponent,
-    PhoneValidationComponent,
-    EmailValidationComponent,
     DemoPageComponent,
     HomePageComponent,
     BlankPageComponent,
@@ -58,7 +54,6 @@ import { HeaderFooterModule } from './modules/header-footer/header-footer.module
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpModule,
     AppRoutingModule,
     FPCareDataModule.forRoot(),
     CoreModule,
@@ -74,12 +69,8 @@ import { HeaderFooterModule } from './modules/header-footer/header-footer.module
   providers: [
     UserService,
     DummyDataService,
-    FPCareDataService
-  ],
-  entryComponents: [
-    RequiredValidationErrorsComponent,
-    PhoneValidationComponent,
-    EmailValidationComponent,
+    FPCareDataService,
+    ValidationService
   ],
   bootstrap: [AppComponent]
 })

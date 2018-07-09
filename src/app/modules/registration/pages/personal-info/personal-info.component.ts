@@ -1,34 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterContentInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Person} from '../../../../models/person.model';
-import {DummyDataService} from '../../../../services/dummy-data.service';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import {Router} from '@angular/router';
+import {ValidationService} from '../../../../services/validation.service';
+import {FormValidationBase} from '../../../../models/form-validation-base';
 
 @Component({
   selector: 'fpcare-personal-info',
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss']
 })
-export class PersonalInfoPageComponent implements OnInit {
-
-  /* Flag to indicate whether or not the applicant can continue to next page
-   * Required fields must be completed, PHN and SIN must pass MOD validations
-   */
-  private _canContinue = false;
+export class PersonalInfoPageComponent extends FormValidationBase implements OnInit {
 
   /** Format string for displaying dates in this component */
   dateFormat: string = 'yyyy/mm/dd';
 
-  constructor( private fpcService: FPCareDataService ) { }
+  constructor( private fpcService: FPCareDataService
+             , private router: Router
+             , private validation: ValidationService ) {
+    super();
+  }
 
   ngOnInit() {
   }
 
-  // Applicant
+  /**
+   * Gets the applicant object
+   * @returns {Person}
+   */
   get applicant(): Person {
     return this.fpcService.applicant;
   }
 
-  // Spouse
+  /**
+   * Gets the spouse object
+   * @returns {Person}
+   */
   get spouse(): Person {
     return this.fpcService.spouse;
   }
@@ -49,10 +56,19 @@ export class PersonalInfoPageComponent implements OnInit {
    * @returns {boolean}
    */
   canContinue(): boolean {
-    return this._canContinue;
+
+    console.log( 'this._formValid ', this._formValid );
+    return !!this._formValid ;
   }
 
-  // TODO: Code functionality
+  /**
+   * Navigates to the next page
+   */
   continue() {
+
+    if ( this.canContinue() ) {
+      const link = '/registration/child-info';
+      this.router.navigate([link]);
+    }
   }
 }

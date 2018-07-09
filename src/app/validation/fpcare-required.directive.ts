@@ -106,6 +106,7 @@ export class FPCareRequiredDirective implements AfterViewInit {
   }
 
   setInvalid(validationComponent) {
+    console.log( 'SetInvalid ', this.formGroupElement );
     this.renderer.addClass(this.formGroupElement, this.ERROR_CLASS);
     const comp = this.addComponent(validationComponent);
   }
