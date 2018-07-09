@@ -21,7 +21,6 @@ export class DummyDataService {
     const result: Person = new Person;
 
     result.dateOfBirth = this.generateDateOfBirth();
-    console.log( 'Applicant DOB: ', moment( result.dateOfBirth ).format( 'YYYY/MM/DD' ) );
     result.phn = this.generatePHN();
 
     return result;
@@ -32,7 +31,6 @@ export class DummyDataService {
     const result: Person = new Person;
 
     result.dateOfBirth = this.generateDateOfBirth();
-    console.log( 'Spouse DOB: ', moment( result.dateOfBirth ).format( 'YYYY/MM/DD' ) );
     result.phn = this.generatePHN();
 
     return result;
