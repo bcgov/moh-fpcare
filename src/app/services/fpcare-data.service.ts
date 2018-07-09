@@ -10,17 +10,16 @@ export class FPCareDataService {
   /** Information for applicant's spouse */
   spouse: Person;
   /** Information for children related to applicant */
-  dependants: Person[];
+  dependants: Person[] = [];
+
+  MAX_DEPENDANTS = 18;
 
   /**
    * Indicates whether a spouse is present
    * @returns {boolean}
    */
   hasSpouse(): boolean {
-    if ( this.spouse ) {
-      return true;
-    }
-    return false;
+    return !!(this.spouse);
   }
 
   /**
@@ -28,9 +27,19 @@ export class FPCareDataService {
    * @returns {boolean}
    */
   hasChildren(): boolean {
-    if ( this.dependants ) {
-      return true;
+    return !!(this.dependants && this.dependants.length);
+  }
+
+  addChild() {
+    const child: Person = new Person;
+
+
+    if (this.canAddChild()){
+      this.dependants.push(child);
     }
-    return false;
+  }
+
+  canAddChild(){
+    return this.dependants.length <= this.MAX_DEPENDANTS;
   }
 }

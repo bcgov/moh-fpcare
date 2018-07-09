@@ -30,7 +30,7 @@ export class ChildrenPageComponent implements OnInit {
   }
 
   hasChildren(): boolean {
-    return this.fpcService.dependants ? true : false;
+    return this.fpcService.hasChildren();
   }
 
   isAddDisabled(): boolean {
@@ -55,24 +55,9 @@ export class ChildrenPageComponent implements OnInit {
    * Adds person object to dependants list
    */
   addChild() {
-
     const child: Person = new Person;
-
-    if ( this.hasChildren() ) {
-      // List of children exist
-      this.fpcService.dependants.push( child );
-    } else {
-      // Create new list for children
-      const result: Person[] = [];
-      result.push( child );
-      this.fpcService.dependants = result;
-    }
-    // User cannot continue until information for child has be completed
+    this.fpcService.addChild();
     this._canContinue = false;
-
-    if ( this.fpcService.dependants.length === 18 ) {
-      this._disableAddChild = true; // Maximum number of children added to account
-    }
   }
   /**
    * Indicated whether or not applicant can continue process
