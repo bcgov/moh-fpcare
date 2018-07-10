@@ -1,0 +1,47 @@
+<fpcare-page-framework layout='single'>
+
+  <div>
+    <h1>
+      Fair PharmaCare Registration Status Search
+    </h1>
+
+    <p>
+      To inquire about the status of your Fair PharmaCare registration, enter you Registration
+      Number.  If you do not have your registration number available, enter your Personal Health
+      Number, Birthdate and Mailing Postal Code.
+    </p>
+    <p>
+      If you registered by phone, a consent form has been mailed to you.  You will need to
+      complete and sign the consent form to check your income with the Canada Revenue Agency
+      (CRA) and confirm your level of financial assistance under Fair PharmaCare.  If you have
+      returned your consent form, please allow 4 weeks for processing.
+    </p>
+    <p>
+      If you registered by mail, please allow 6-8 weeks for us to process your application.
+    </p>
+  </div>
+
+  <form>
+    <h2>Your Information</h2>
+
+    <div *ngIf="useRegNumber">
+
+
+      <a href="javascript:void(0)" (click)="toggleInputData()">Use PHN Number</a>
+    </div>
+
+    <div *ngIf="!useRegNumber">
+      <a href="javascript:void(0)" (click)="toggleInputData()">Use Registration Number</a>
+
+    </div>
+
+
+  </form>
+
+
+  <fpcare-form-action-bar
+          [canContinue]="canContinue()"
+          (click)="continue()">
+  </fpcare-form-action-bar>
+
+</fpcare-page-framework>
