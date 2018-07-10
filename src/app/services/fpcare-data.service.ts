@@ -1,25 +1,75 @@
 import { Injectable } from '@angular/core';
 import {Person} from '../models/person.model';
+
 @Injectable()
 export class FPCareDataService {
 
   constructor() { }
 
   /** Applicant information */
-  applicant: Person;
+  private _applicant: Person;
   /** Information for applicant's spouse */
-  spouse: Person;
+  private _spouse: Person;
   /** Information for children related to applicant */
-  dependants: Person[] = [];
+  private _dependants: Person[] = [];
 
+  /** Maximum number of dependents on an account */
   MAX_DEPENDANTS = 18;
+
+  /**
+   * Gets the applicant object
+   * @returns {Person}
+   */
+  get applicant(): Person {
+    return this._applicant;
+  }
+
+  /**
+   * Sets the applicant object
+   * @param {Person} applicant
+   */
+  set applicant( applicant: Person ) {
+    this._applicant = applicant;
+  }
+
+  /**
+   * Gets the spouse object
+   * @returns {Person}
+   */
+  get spouse(): Person {
+    return this._spouse;
+  }
+
+  /**
+   * Sets the spouse object
+   * @param {Person} spouse
+   */
+  set spouse( spouse: Person ) {
+    this._spouse = spouse;
+  }
+
+  /**
+   * Gets list of dependants
+   * @returns {Person[]}
+   */
+  get dependants(): Person[] {
+    return this._dependants;
+  }
+
+  /**
+   * Sets the list of dependants
+   * @param {Person[]} children
+   */
+  set dependants( children: Person[] ) {
+    this._dependants = children;
+  }
 
   /**
    * Indicates whether a spouse is present
    * @returns {boolean}
    */
   hasSpouse(): boolean {
-    return !!(this.spouse);
+    return !!(this._spouse);
   }
 
   /**
@@ -27,19 +77,26 @@ export class FPCareDataService {
    * @returns {boolean}
    */
   hasChildren(): boolean {
-    return !!(this.dependants && this.dependants.length);
+    return !!(this._dependants && this._dependants.length);
   }
 
+  /**
+   * Adds a child to the dependants list
+   */
   addChild() {
     const child: Person = new Person;
 
 
     if (this.canAddChild()){
-      this.dependants.push(child);
+      this._dependants.push(child);
     }
   }
 
-  canAddChild(){
-    return this.dependants.length <= this.MAX_DEPENDANTS;
+  /**
+   * Indicated whether additional children can be added to the dependants list
+   * @returns {boolean}
+   */
+  canAddChild(): boolean {
+    return this._dependants.length <= this.MAX_DEPENDANTS;
   }
 }
