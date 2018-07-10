@@ -1,24 +1,25 @@
-import {AfterContentInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Person} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
+import {NgForm} from '@angular/forms';
 import {ValidationService} from '../../../../services/validation.service';
-import {FormValidationBase} from '../../../../models/form-validation-base';
 
 @Component({
   selector: 'fpcare-personal-info',
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss']
 })
-export class PersonalInfoPageComponent extends FormValidationBase implements OnInit {
+export class PersonalInfoPageComponent implements OnInit {
 
   /** Format string for displaying dates in this component */
   dateFormat: string = 'yyyy/mm/dd';
 
+  @ViewChild('formRef') form: NgForm;
+
   constructor( private fpcService: FPCareDataService
              , private router: Router
              , private validation: ValidationService ) {
-    super();
   }
 
   ngOnInit() {
@@ -57,8 +58,8 @@ export class PersonalInfoPageComponent extends FormValidationBase implements OnI
    */
   canContinue(): boolean {
 
-    console.log( 'this._formValid ', this._formValid );
-    return !!this._formValid ;
+    console.log( 'this.form ', this.form );
+    return !!this.form ;
   }
 
   /**
