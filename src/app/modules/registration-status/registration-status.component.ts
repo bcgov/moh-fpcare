@@ -9,19 +9,28 @@ export class RegistrationStatusComponent implements OnInit {
 
   private _canContinue = false;
 
-   private _useRegNumber = true;
+  private _useRegNumber = true;
+
+  // Temporary variable
+  public dob: Date; // TODO: Fix date module to accept undefined variable
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  /**
+   * Gets flag to indicated whether of not the Registration Number is to used for status search
+   * @returns {boolean}
+   */
   get useRegNumber(): boolean {
-    console.log( 'useRegNumber: ', this._useRegNumber );
     return !!this._useRegNumber;
   }
 
 
+  /**
+   * Toggles the useRegNumber flag
+   */
   toggleInputData() {
     this._useRegNumber = !this._useRegNumber;
   }

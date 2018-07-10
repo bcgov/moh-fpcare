@@ -21,23 +21,69 @@
     </p>
   </div>
 
-  <form>
-    <h2>Your Information</h2>
+  <!--div class="container-fluid bg-secondary"-->
+  <div class="row">
+    <div class="offset-md-3 col-md-6">
+      <h2>Your Information</h2>
+    </div>
+  </div>
 
-    <div *ngIf="useRegNumber">
+  <div *ngIf="!useRegNumber" class="row p-md-2">
+    <div class="offset-md-3 col-md-6">
+      <strong>
+        <a href="javascript:void(0)" (click)="toggleInputData()">Use Registration Number</a>
+      </strong>
+    </div>
+  </div>
 
 
-      <a href="javascript:void(0)" (click)="toggleInputData()">Use PHN Number</a>
+  <!--TODO: Fix grey background to be size of columns -->
+  <form class="bg-light p-md-2">
+
+    <div class="row form-group">
+      <div *ngIf="useRegNumber" class="offset-md-3 col-md-6">
+        <label for="regNumber">Registration Number</label>
+        <input class="form-control" type="text" id="regNumber" name="regNumber">
+      </div>
+      <div *ngIf="!useRegNumber" class="offset-md-3 col-md-6">
+        <label for="phn">PHN</label>
+        <input class="form-control" type="text" id="phn" name="phn">
+      </div>
     </div>
 
-    <div *ngIf="!useRegNumber">
-      <a href="javascript:void(0)" (click)="toggleInputData()">Use Registration Number</a>
-
+    <div *ngIf="!useRegNumber" class="row form-group">
+      <div class="offset-md-3 col-md-6">
+        <label>Birth Date</label>
+        <!--TODO:  Fix error that is happening with an undefined date -->
+        <fpcare-date
+                showError="true"
+                [date]="dob">
+        </fpcare-date>
+      </div>
     </div>
 
+    <div *ngIf="!useRegNumber" class="row form-group">
+      <div class="offset-md-3 col-md-6">
+        <label for="mail_pc">Mailing Postal Code</label>
+        <input class="form-control" type="text" id="mail_pc" name="mail_pc">
+      </div>
+    </div>
 
   </form>
 
+  <div *ngIf="useRegNumber" class="row p-md-2">
+    <div class="offset-md-3 col-md-6">
+      <strong>
+        <a href="javascript:void(0)" (click)="toggleInputData()">Use PHN Number</a>
+      </strong>
+    </div>
+  </div>
+
+  <div class="row p-md-2">
+    <div class="offset-md-3 col-md-6">
+      Placeholder for Captcha
+    </div>
+  </div>
 
   <fpcare-form-action-bar
           [canContinue]="canContinue()"
