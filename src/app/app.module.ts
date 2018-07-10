@@ -33,6 +33,7 @@ import { PhoneValidationComponent } from './validation/phone-validation/phone-va
 import { FPCareRequiredDirective } from './validation/fpcare-required.directive';
 import { RequiredValidationErrorsComponent } from './validation/required-validation/required-validation.component';
 import { HeaderFooterModule } from './modules/header-footer/header-footer.module';
+import { RegistrationStatusComponent } from './modules/registration-status/registration-status.component';
 
 
 @NgModule({
@@ -53,6 +54,7 @@ import { HeaderFooterModule } from './modules/header-footer/header-footer.module
     DemoPageComponent,
     HomePageComponent,
     BlankPageComponent,
+    RegistrationStatusComponent
   ],
   imports: [
     BrowserModule,
