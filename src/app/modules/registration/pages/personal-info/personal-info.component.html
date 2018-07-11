@@ -12,13 +12,14 @@
     </p>
   </div>
 
-  <form #formRef="ngForm" class="was-validated" novalidate>
+  <form #formRef="ngForm" validate>
     <!-- Information required to complete this section -->
     <div>
       <h2>Your Information</h2>
 
       <div class="row">
         <div class="col-sm form-group">
+          {{formRef.errors}}
           <label for="ap_firstnm">First Name</label>
           <input class="form-control"
                  type="text"
@@ -91,7 +92,7 @@
                  id="sp_firstnm"
                  name="sp_firstnm"
                  fpcareRequired
-                 [(ngModel)]="spouse.firstName" >
+                 [(ngModel)]="spouse.firstName">
         </div>
         <div class="col-sm form-group">
           <label for="sp_middlenm">Middle Name</label>

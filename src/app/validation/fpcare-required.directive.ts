@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, Input, HostListener, HostBinding, Renderer2, Inject,
-  ViewContainerRef, ChangeDetectorRef, ComponentRef, ComponentFactoryResolver, AfterViewInit
+  ViewContainerRef, ChangeDetectorRef, ComponentRef, ComponentFactoryResolver, AfterViewInit, forwardRef
 } from '@angular/core';
 
 
@@ -8,6 +8,8 @@ import { ValidationComponent } from './validation-component.interface';
 import { RequiredValidationErrorsComponent } from './required-validation/required-validation.component';
 import { PhoneValidationComponent } from './phone-validation/phone-validation.component';
 import { EmailValidationComponent } from './email-validation/email-validation.component';
+import {CalendarFutureDatesDirective} from '../modules/core/components/date/calendar-future-dates.validator';
+import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 
 
 /**
@@ -26,9 +28,14 @@ import { EmailValidationComponent } from './email-validation/email-validation.co
  * to `loadValidationComponents()`
  */
 @Directive({
-  selector: '[fpcareRequired]'
+  selector: '[fpcareRequired]',
+  providers: [
+    {
+      provide: NG_VALIDATORS, useExisting: FPCareRequiredDirective, multi: true
+    }
+  ]
 })
-export class FPCareRequiredDirective implements AfterViewInit {
+export class FPCareRequiredDirective implements AfterViewInit, Validator {
   private el: ElementRef;
   private input: ElementRef;
   private label: ElementRef;
@@ -61,9 +68,7 @@ export class FPCareRequiredDirective implements AfterViewInit {
       for=\'NAME\'> setup correctly for the input with fpcareRequired.`);
     }
     this.validationOptions = this.validationOptions || 'required';
-
     this.loadValidationComponents();
-
   }
 
   /** Loads the validation components based off of directive input. Add future validation options here. */
@@ -95,9 +100,33 @@ export class FPCareRequiredDirective implements AfterViewInit {
     this.validationComponents.forEach(this.runValidationComponent.bind(this));
   }
 
+  /**
+   * Validation the fields on page
+   * Note: validate must be on the form
+   * @param {AbstractControl} control
+   * @returns {{[p: string]: any} | null}
+   */
+  validate(control: AbstractControl): {[key: string]: any} | null {
+
+    const retObj = this.validationComponents.map( obj => {
+      if ( !obj.validate( this.input ) ) {
+        return obj.errorString;
+      }
+      return null;
+    }).filter( x => { return x; });
+
+    if ( retObj && retObj.length > 0 ) {
+      return retObj;
+    }
+    return null;
+  }
+
+
+
   /** Runs the logic of a given validation component */
-  private runValidationComponent(validationComponent: ValidationComponent): void {
-    if (!validationComponent.validate(this.input)) {
+  private runValidationComponent(validationComponent: ValidationComponent) {
+    const isValid = validationComponent.validate(this.input);
+    if ( !isValid ) {
       this.setInvalid(validationComponent);
     }
     else {
@@ -106,7 +135,6 @@ export class FPCareRequiredDirective implements AfterViewInit {
   }
 
   setInvalid(validationComponent) {
-    console.log( 'SetInvalid ', this.formGroupElement );
     this.renderer.addClass(this.formGroupElement, this.ERROR_CLASS);
     const comp = this.addComponent(validationComponent);
   }

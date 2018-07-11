@@ -1,8 +1,8 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, ViewChildren} from '@angular/core';
 import {Person} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
-import {NgForm} from '@angular/forms';
+import {NgForm, NgModelGroup} from '@angular/forms';
 import {ValidationService} from '../../../../services/validation.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class PersonalInfoPageComponent implements OnInit {
   /** Format string for displaying dates in this component */
   dateFormat: string = 'yyyy/mm/dd';
 
+  /** Form that contains fields to be validated */
   @ViewChild('formRef') form: NgForm;
 
   constructor( private fpcService: FPCareDataService
@@ -57,9 +58,7 @@ export class PersonalInfoPageComponent implements OnInit {
    * @returns {boolean}
    */
   canContinue(): boolean {
-
-    console.log( 'this.form ', this.form );
-    return !!this.form ;
+    return this.form.valid;
   }
 
   /**
