@@ -18,7 +18,6 @@ import { CalendarFieldFormatterDirective } from './modules/core/components/date/
 import { CalendarFutureDatesDirective } from './modules/core/components/date/calendar-future-dates.validator';
 import { CalendarMonthValidatorDirective } from './modules/core/components/date/calendar-month.validator';
 import { CalendarYearValidatorDirective } from './modules/core/components/date/calendar-year.validator';
-import { FPCareDateComponent } from './modules/core/components/date/date.component';
 import { FileUploaderComponent } from './modules/core/components/file-uploader/file-uploader.component';
 import { CoreModule } from './modules/core/core.module';
 import { FPCareDataModule } from './modules/fpcare-data/fpcare-data.module';
@@ -33,20 +32,11 @@ import { PhoneValidationComponent } from './validation/phone-validation/phone-va
 import { FPCareRequiredDirective } from './validation/fpcare-required.directive';
 import { RequiredValidationErrorsComponent } from './validation/required-validation/required-validation.component';
 import { HeaderFooterModule } from './modules/header-footer/header-footer.module';
-import { RegistrationStatusComponent } from './modules/registration-status/registration-status.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ConsentModalComponent,
-    FPCareDateComponent,
-    CalendarFieldFormatterDirective,
-    CalendarYearValidatorDirective,
-    CalendarDayValidatorDirective,
-    CalendarMonthValidatorDirective,
-    CalendarFutureDatesDirective,
-    FileUploaderComponent,
     FPCareRequiredDirective,
     RequiredValidationErrorsComponent,
     PhoneValidationComponent,
@@ -54,7 +44,6 @@ import { RegistrationStatusComponent } from './modules/registration-status/regis
     DemoPageComponent,
     HomePageComponent,
     BlankPageComponent,
-    RegistrationStatusComponent
   ],
   imports: [
     BrowserModule,

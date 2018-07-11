@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlankPageComponent } from './pages/blank-page/blank-page.component';
 import { DemoPageComponent } from './pages/demo-page/demo-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import {RegistrationStatusComponent} from './modules/registration-status/registration-status.component';
 
 const routes: Routes = [
 
@@ -29,11 +28,16 @@ const routes: Routes = [
   },
   {
     path: 'registration-status',
-    component: RegistrationStatusComponent,
-    data: {
-      breadcrumb: 'Status'
-    }
+    loadChildren: 'app/modules/registration-status/registration-status.module#RegistrationStatusModule'
   },
+
+  // {
+  //   path: 'registration-status',
+  //   component: RegistrationStatusComponent,
+  //   data: {
+  //     breadcrumb: 'Status'
+  //   }
+  // },
   {
     path: '**',
     redirectTo: '',

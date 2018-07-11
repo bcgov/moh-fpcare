@@ -14,7 +14,7 @@ export class RegistrationStatusComponent implements OnInit {
   // Temporary variable
   public dob: Date; // TODO: Fix date module to accept undefined variable
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
   }

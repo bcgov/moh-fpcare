@@ -15,6 +15,14 @@ import { WizardProgressBarComponent } from './components/wizard-progress-bar/wiz
 import { CoreBreadcrumbComponent } from './components/core-breadcrumb/core-breadcrumb.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { FormActionBarComponent } from './components/form-action-bar/form-action-bar.component';
+import { ConsentModalComponent } from './components/consent-modal/consent-modal.component';
+import { CalendarFieldFormatterDirective } from './components/date/calendar-field-formatter.directive';
+import { CalendarYearValidatorDirective } from './components/date/calendar-year.validator';
+import { CalendarDayValidatorDirective } from './components/date/calendar-day.validator';
+import { CalendarMonthValidatorDirective } from './components/date/calendar-month.validator';
+import { CalendarFutureDatesDirective } from './components/date/calendar-future-dates.validator';
+import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
+import { FPCareDateComponent } from './components/date/date.component';
 
 
 const componentList = [
@@ -27,6 +35,14 @@ const componentList = [
   WizardProgressBarComponent,
   CoreBreadcrumbComponent,
   FormActionBarComponent,
+  ConsentModalComponent,
+  CalendarFieldFormatterDirective,
+  CalendarYearValidatorDirective,
+  CalendarDayValidatorDirective,
+  CalendarMonthValidatorDirective,
+  CalendarFutureDatesDirective,
+  FileUploaderComponent,
+  FPCareDateComponent
 ]
 
 @NgModule({
