@@ -1,22 +1,31 @@
 import { Component, OnInit } from '@angular/core';
+import {Person} from '../../../models/person.model';
+import {Base} from '../../core/components/base/base.class';
 
 @Component({
   selector: 'fpcare-registration-status',
   templateUrl: './registration-status.component.html',
   styleUrls: ['./registration-status.component.scss']
 })
-export class RegistrationStatusComponent implements OnInit {
+export class RegistrationStatusComponent extends Base implements OnInit {
 
-  private _canContinue = false;
+  private _canContinue = false; // TODO: Remove one form set up
 
+  /** Flag to indicate what data needs to be collected for checking registration status */
   private _useRegNumber = true;
 
-  // Temporary variable
-  public dob: Date; // TODO: Fix date module to accept undefined variable
+  /** Applicant requesting registration status */
+  private _applicant: Person;
 
-  constructor() {}
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
+  }
+
+  get applicant(): Person {
+    return this._applicant;
   }
 
   /**

@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {Person} from '../../../../models/person.model';
-import {DummyDataService} from '../../../../services/dummy-data.service';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import {Base} from '../../../core/components/base/base.class';
 
 @Component({
   selector: 'fpcare-personal-info',
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss']
 })
-export class PersonalInfoPageComponent implements OnInit {
+export class PersonalInfoPageComponent extends Base implements OnInit {
 
   /* Flag to indicate whether or not the applicant can continue to next page
    * Required fields must be completed, PHN and SIN must pass MOD validations
@@ -18,7 +18,9 @@ export class PersonalInfoPageComponent implements OnInit {
   /** Format string for displaying dates in this component */
   dateFormat: string = 'yyyy/mm/dd';
 
-  constructor( private fpcService: FPCareDataService ) { }
+  constructor( private fpcService: FPCareDataService ) {
+    super();
+  }
 
   ngOnInit() {
   }

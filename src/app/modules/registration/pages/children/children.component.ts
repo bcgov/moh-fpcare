@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
+import {Base} from '../../../core/components/base/base.class';
 
 @Component({
   selector: 'fpcare-children',
   templateUrl: './children.component.html',
   styleUrls: ['./children.component.scss']
 })
-export class ChildrenPageComponent implements OnInit {
+export class ChildrenPageComponent extends Base implements OnInit {
 
   /* Flag to indicate whether or not the applicant can continue to next page
    * Required fields must be completed, PHN and SIN must pass MOD validations
@@ -20,7 +21,9 @@ export class ChildrenPageComponent implements OnInit {
    */
   private _disableAddChild = false;
 
-  constructor( private fpcService: FPCareDataService ) { }
+  constructor( private fpcService: FPCareDataService ) {
+    super();
+  }
 
   ngOnInit() {
   }

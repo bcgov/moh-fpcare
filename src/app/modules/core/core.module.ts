@@ -23,6 +23,7 @@ import { CalendarMonthValidatorDirective } from './components/date/calendar-mont
 import { CalendarFutureDatesDirective } from './components/date/calendar-future-dates.validator';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { FPCareDateComponent } from './components/date/date.component';
+import {BirthDateComponent} from './components/birthdate/birthdate.component';
 
 
 const componentList = [
@@ -42,7 +43,8 @@ const componentList = [
   CalendarMonthValidatorDirective,
   CalendarFutureDatesDirective,
   FileUploaderComponent,
-  FPCareDateComponent
+  FPCareDateComponent,
+  BirthDateComponent
 ]
 
 @NgModule({

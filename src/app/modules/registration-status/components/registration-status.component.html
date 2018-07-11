@@ -21,22 +21,18 @@
     </p>
   </div>
 
-  <!--div class="container-fluid bg-secondary"-->
-<div class="row">
-  <div class="offset-md-3 col-md-6">
-    <h2>Your Information</h2>
-    <div *ngIf="!useRegNumber">
-      <strong>
-        <a href="javascript:void(0)" (click)="toggleInputData()">Use Registration Number</a>
-      </strong>
+  <div class="row">
+    <div class="offset-md-3 col-md-6">
+      <h2>Your Information</h2>
+      <div *ngIf="!useRegNumber">
+        <strong>
+          <a href="javascript:void(0)" (click)="toggleInputData()">Use Registration Number</a>
+        </strong>
+      </div>
     </div>
   </div>
-</div>
 
-
-
-  <!--TODO: Fix grey background to be size of columns -->
-  
+  <!-- Use Registration Number to retrieve status -->
   <div class="row">
     <form class="bg-light p-md-2 offset-md-3 col-md-6">
   
@@ -55,10 +51,10 @@
         <div class="">
           <label>Birth Date</label>
           <!--TODO:  Fix error that is happening with an undefined date -->
-          <fpcare-date
+          <fpc-birthdate
                   showError="true"
-                  [date]="dob">
-          </fpcare-date>
+                  [person]="applicant">
+          </fpc-birthdate>
         </div>
       </div>
   
