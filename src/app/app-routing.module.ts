@@ -11,25 +11,37 @@ const routes: Routes = [
   {
     path: '',
     component: HomePageComponent,
-    data: { breadcrumb: "Home"}
+    data: { breadcrumb: 'Home'}
   },
   {
     path: 'demo',
     component: DemoPageComponent,
     data: {
-      breadcrumb: "Demo"
+      breadcrumb: 'Demo'
     }
   },
 
   // Lazy loading modules below
   {
-    path: "registration",
-    loadChildren: "app/modules/registration/registration.module#RegistrationModule"
+    path: 'registration',
+    loadChildren: 'app/modules/registration/registration.module#RegistrationModule'
   },
+  {
+    path: 'registration-status',
+    loadChildren: 'app/modules/registration-status/registration-status.module#RegistrationStatusModule'
+  },
+
+  // {
+  //   path: 'registration-status',
+  //   component: RegistrationStatusComponent,
+  //   data: {
+  //     breadcrumb: 'Status'
+  //   }
+  // },
   {
     path: '**',
     redirectTo: '',
-    pathMatch: "full",
+    pathMatch: 'full',
   }
 ];
 

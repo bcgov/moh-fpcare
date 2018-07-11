@@ -1,0 +1,94 @@
+<fpcare-page-framework layout='single'>
+
+  <div>
+    <h1>
+      Fair PharmaCare Registration Status Search
+    </h1>
+
+    <p>
+      To inquire about the status of your Fair PharmaCare registration, enter you Registration
+      Number.  If you do not have your registration number available, enter your Personal Health
+      Number, Birthdate and Mailing Postal Code.
+    </p>
+    <p>
+      If you registered by phone, a consent form has been mailed to you.  You will need to
+      complete and sign the consent form to check your income with the Canada Revenue Agency
+      (CRA) and confirm your level of financial assistance under Fair PharmaCare.  If you have
+      returned your consent form, please allow 4 weeks for processing.
+    </p>
+    <p>
+      If you registered by mail, please allow 6-8 weeks for us to process your application.
+    </p>
+  </div>
+
+  <!--div class="container-fluid bg-secondary"-->
+<div class="row">
+  <div class="offset-md-3 col-md-6">
+    <h2>Your Information</h2>
+    <div *ngIf="!useRegNumber">
+      <strong>
+        <a href="javascript:void(0)" (click)="toggleInputData()">Use Registration Number</a>
+      </strong>
+    </div>
+  </div>
+</div>
+
+
+
+  <!--TODO: Fix grey background to be size of columns -->
+  
+  <div class="row">
+    <form class="bg-light p-md-2 offset-md-3 col-md-6">
+  
+      <div class="form-group">
+        <div *ngIf="useRegNumber" class="">
+          <label for="regNumber">Registration Number</label>
+          <input class="form-control" type="text" id="regNumber" name="regNumber">
+        </div>
+        <div *ngIf="!useRegNumber">
+          <label for="phn">PHN</label>
+          <input class="form-control" type="text" id="phn" name="phn">
+        </div>
+      </div>
+  
+      <div *ngIf="!useRegNumber" class="form-group">
+        <div class="">
+          <label>Birth Date</label>
+          <!--TODO:  Fix error that is happening with an undefined date -->
+          <fpcare-date
+                  showError="true"
+                  [date]="dob">
+          </fpcare-date>
+        </div>
+      </div>
+  
+      <div *ngIf="!useRegNumber" class="form-group">
+        <div class="">
+          <label for="mail_pc">Mailing Postal Code</label>
+          <input class="form-control" type="text" id="mail_pc" name="mail_pc">
+        </div>
+      </div>
+  
+    </form>
+  </div>
+
+  <div *ngIf="useRegNumber" class="row p-md-2">
+    <div class="offset-md-3 col-md-6">
+      <strong>
+        <a href="javascript:void(0)" (click)="toggleInputData()">Use PHN Number</a>
+      </strong>
+    </div>
+  </div>
+
+  <div class="row p-md-2">
+    <div class="offset-md-3 col-md-6">
+      Placeholder for Captcha
+    </div>
+  </div>
+
+  <fpcare-form-action-bar
+          [canContinue]="canContinue()"
+          (click)="continue()">
+  </fpcare-form-action-bar>
+
+</fpcare-page-framework>

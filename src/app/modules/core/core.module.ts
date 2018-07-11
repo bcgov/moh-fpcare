@@ -19,6 +19,14 @@ import {FPCareRequiredDirective} from '../../validation/fpcare-required.directiv
 import {RequiredValidationErrorsComponent} from '../../validation/required-validation/required-validation.component';
 import {PhoneValidationComponent} from '../../validation/phone-validation/phone-validation.component';
 import {EmailValidationComponent} from '../../validation/email-validation/email-validation.component';
+import { ConsentModalComponent } from './components/consent-modal/consent-modal.component';
+import { CalendarFieldFormatterDirective } from './components/date/calendar-field-formatter.directive';
+import { CalendarYearValidatorDirective } from './components/date/calendar-year.validator';
+import { CalendarDayValidatorDirective } from './components/date/calendar-day.validator';
+import { CalendarMonthValidatorDirective } from './components/date/calendar-month.validator';
+import { CalendarFutureDatesDirective } from './components/date/calendar-future-dates.validator';
+import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
+import { FPCareDateComponent } from './components/date/date.component';
 
 
 const componentList = [
@@ -34,7 +42,15 @@ const componentList = [
   FPCareRequiredDirective,
   RequiredValidationErrorsComponent,
   PhoneValidationComponent,
-  EmailValidationComponent
+  EmailValidationComponent,
+  ConsentModalComponent,
+  CalendarFieldFormatterDirective,
+  CalendarYearValidatorDirective,
+  CalendarDayValidatorDirective,
+  CalendarMonthValidatorDirective,
+  CalendarFutureDatesDirective,
+  FileUploaderComponent,
+  FPCareDateComponent
 ]
 
 @NgModule({
