@@ -34,7 +34,7 @@
 
   <!-- Use Registration Number to retrieve status -->
   <div class="row">
-    <form #formRef class="bg-light p-md-2 offset-md-3 col-md-6" novalidate>
+    <form #formRef="ngForm" novalidate class="bg-light p-md-2 offset-md-3 col-md-6">
 
       <div *ngIf="useRegNumber" class="form-group">
         <label for="regNumber">Registration Number</label>

@@ -27,11 +27,12 @@
       <div class="row">
         <div class="col-sm form-group">
           <label for="ch_dob">Birthdate</label>
-          <fpcare-datepicker id="sp_dob"
-                             [dateFormat]="dateFormat"
-                             [date]="child.dateOfBirth"
-                             class="ml-1">
-          </fpcare-datepicker>
+          <fpcare-date
+                  id="ch_dob"
+                  [useCurrentDate]="false"
+                  [date]="child.dateOfBirth"
+                  [restrictDate]="past">
+          </fpcare-date>
         </div>
         <div class="col-sm form-group">
           <label for="ch_phn">PHN</label>

@@ -5,7 +5,6 @@ import { AlertModule, TooltipModule, ProgressbarModule, ModalModule } from 'ngx-
 import { MiniProgressBarComponent } from './components/mini-progress-bar/mini-progress-bar.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FormsModule } from '@angular/forms';
-import { DatepickerComponent } from './components/datepicker/datepicker.component';
 import { RouterModule } from '@angular/router';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { FPCareToggleComponent } from './components/toggle/toggle.component';
@@ -15,10 +14,10 @@ import { WizardProgressBarComponent } from './components/wizard-progress-bar/wiz
 import { CoreBreadcrumbComponent } from './components/core-breadcrumb/core-breadcrumb.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { FormActionBarComponent } from './components/form-action-bar/form-action-bar.component';
-import {FPCareRequiredDirective} from '../../validation/fpcare-required.directive';
-import {RequiredValidationErrorsComponent} from '../../validation/required-validation/required-validation.component';
-import {PhoneValidationComponent} from '../../validation/phone-validation/phone-validation.component';
-import {EmailValidationComponent} from '../../validation/email-validation/email-validation.component';
+import { FPCareRequiredDirective } from '../../validation/fpcare-required.directive';
+import { RequiredValidationErrorsComponent } from '../../validation/required-validation/required-validation.component';
+import { PhoneValidationComponent } from '../../validation/phone-validation/phone-validation.component';
+import { EmailValidationComponent } from '../../validation/email-validation/email-validation.component';
 import { ConsentModalComponent } from './components/consent-modal/consent-modal.component';
 import { CalendarFieldFormatterDirective } from './components/date/calendar-field-formatter.directive';
 import { CalendarYearValidatorDirective } from './components/date/calendar-year.validator';
@@ -32,7 +31,6 @@ import { FPCareDateComponent } from './components/date/date.component';
 const componentList = [
   AlertComponent,
   MiniProgressBarComponent,
-  DatepickerComponent,
   FPCareToggleComponent,
   PostalCodeComponent,
   PageFrameworkComponent,

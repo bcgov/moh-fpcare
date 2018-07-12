@@ -113,7 +113,7 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
       if (isInvalid){
         validationFailures[validationComponent.ERROR_STRING] = isInvalid;
       }
-    })
+    });
 
     if (Object.keys(validationFailures).length){
       return validationFailures;
