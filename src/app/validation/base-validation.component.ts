@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Input } from '@angular/core';
+import { ElementRef, Input } from '@angular/core';
 import { ValidationComponent, staticImplements } from './validation-component.interface';
 
 /**
@@ -21,6 +21,8 @@ import { ValidationComponent, staticImplements } from './validation-component.in
 export abstract class BaseValidationComponent {
   static regex: RegExp;
   @Input() public fieldName: string;
+
+  public static ERROR_STRING = 'base-validation';
 
   /**
    * Validates the input's value based on the classes regex. Does not

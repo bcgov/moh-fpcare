@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Person} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Base} from '../../../core/components/base/base.class';
+import {Router} from '@angular/router';
+import {NgForm} from '@angular/forms';
+import {ValidationService} from '../../../../services/validation.service';
 
 @Component({
   selector: 'fpcare-personal-info',
@@ -10,27 +13,33 @@ import {Base} from '../../../core/components/base/base.class';
 })
 export class PersonalInfoPageComponent extends Base implements OnInit {
 
-  /* Flag to indicate whether or not the applicant can continue to next page
-   * Required fields must be completed, PHN and SIN must pass MOD validations
-   */
-  private _canContinue = false;
-
   /** Format string for displaying dates in this component */
   dateFormat: string = 'yyyy/mm/dd';
 
-  constructor( private fpcService: FPCareDataService ) {
+  /** Form that contains fields to be validated */
+  @ViewChild('formRef') form: NgForm;
+
+  constructor( private fpcService: FPCareDataService
+             , private router: Router
+             , private validation: ValidationService ) {
     super();
   }
 
   ngOnInit() {
   }
 
-  // Applicant
+  /**
+   * Gets the applicant object
+   * @returns {Person}
+   */
   get applicant(): Person {
     return this.fpcService.applicant;
   }
 
-  // Spouse
+  /**
+   * Gets the spouse object
+   * @returns {Person}
+   */
   get spouse(): Person {
     return this.fpcService.spouse;
   }
@@ -51,10 +60,17 @@ export class PersonalInfoPageComponent extends Base implements OnInit {
    * @returns {boolean}
    */
   canContinue(): boolean {
-    return this._canContinue;
+    return this.form.valid;
   }
 
-  // TODO: Code functionality
+  /**
+   * Navigates to the next page
+   */
   continue() {
+
+    if ( this.canContinue() ) {
+      const link = '/registration/child-info';
+      this.router.navigate([link]);
+    }
   }
 }

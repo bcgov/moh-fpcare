@@ -10,4 +10,7 @@ import { BaseValidationComponent } from '../base-validation.component';
 @staticImplements<ValidationComponent>()
 export class PhoneValidationComponent extends BaseValidationComponent {
   static regex: RegExp = /^[2-9]{1}\d{2}[\-]?\d{3}[\-]?\d{4}$/;
+
+  public static ERROR_STRING = 'fpc-phone';
+
 }

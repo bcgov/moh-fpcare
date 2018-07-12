@@ -15,6 +15,10 @@ import { WizardProgressBarComponent } from './components/wizard-progress-bar/wiz
 import { CoreBreadcrumbComponent } from './components/core-breadcrumb/core-breadcrumb.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { FormActionBarComponent } from './components/form-action-bar/form-action-bar.component';
+import {FPCareRequiredDirective} from '../../validation/fpcare-required.directive';
+import {RequiredValidationErrorsComponent} from '../../validation/required-validation/required-validation.component';
+import {PhoneValidationComponent} from '../../validation/phone-validation/phone-validation.component';
+import {EmailValidationComponent} from '../../validation/email-validation/email-validation.component';
 import { ConsentModalComponent } from './components/consent-modal/consent-modal.component';
 import { CalendarFieldFormatterDirective } from './components/date/calendar-field-formatter.directive';
 import { CalendarYearValidatorDirective } from './components/date/calendar-year.validator';
@@ -36,6 +40,10 @@ const componentList = [
   WizardProgressBarComponent,
   CoreBreadcrumbComponent,
   FormActionBarComponent,
+  FPCareRequiredDirective,
+  RequiredValidationErrorsComponent,
+  PhoneValidationComponent,
+  EmailValidationComponent,
   ConsentModalComponent,
   CalendarFieldFormatterDirective,
   CalendarYearValidatorDirective,
@@ -65,6 +73,11 @@ const componentList = [
   ],
   exports: [
     componentList
-  ]
+  ],
+  entryComponents: [
+    RequiredValidationErrorsComponent,
+    PhoneValidationComponent,
+    EmailValidationComponent
+  ],
 })
 export class CoreModule { }
