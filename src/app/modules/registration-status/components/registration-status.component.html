@@ -34,7 +34,7 @@
 
   <!-- Use Registration Number to retrieve status -->
   <div class="row">
-    <form class="bg-light p-md-2 offset-md-3 col-md-6">
+    <form #formRef validate class="bg-light p-md-2 offset-md-3 col-md-6">
   
       <div class="form-group">
         <div *ngIf="useRegNumber" class="">
@@ -51,10 +51,9 @@
         <div class="">
           <label>Birth Date</label>
           <!--TODO:  Fix error that is happening with an undefined date -->
-          <fpc-birthdate
-                  showError="true"
-                  [person]="applicant">
-          </fpc-birthdate>
+          <fpcare-birthdate
+                  [dob]="applicant.dateOfBirth">
+          </fpcare-birthdate>
         </div>
       </div>
   

@@ -2,56 +2,24 @@ import {Component, Input, ViewChild, Output, EventEmitter, ChangeDetectorRef} fr
 import {NgForm} from '@angular/forms';
 import * as moment from 'moment';
 import {Person} from '../../../../models/person.model';
+import {FPCareDateComponent} from '../date/date.component';
+import {SimpleDate} from '../date/simple-date.interface';
 
 
 @Component({
-    selector: 'fpc-birthdate',
+    selector: 'fpcare-birthdate',
     templateUrl: './birthdate.component.html',
     styleUrls: ['./birthdate.component.scss']
 
 })
-export class BirthDateComponent {
+export class BirthDateComponent extends FPCareDateComponent {
 
-  // Create today for comparison in check later
-  today: any;
-  constructor( private cd: ChangeDetectorRef ) {
-   // super(cd);
-    this.today = moment();
-  }
-
-  @Input() person: Person;
-  @Input() showError: boolean;
-  @Output() onChange = new EventEmitter<any>();
+  @Output() onDateChange: EventEmitter<SimpleDate> = new EventEmitter<SimpleDate>();
+  @Input() dob: SimpleDate;
   @ViewChild('formRef') form: NgForm;
 
-  ngAfterViewInit(): void {
-    this.form.valueChanges.subscribe(values => {
-      this.onChange.emit(values);
-    });
-  }
-
-  setYearValueOnModel(value: number) {
-    this.person.dobYear = value;
-  }
-
-  setDayValueOnModel(value: number) {
-    this.person.dobDay = value;
-  }
-
-  /**
-   * Determine if date of birth is valid for the given person
-   *
-   * @returns {boolean}
-   */
-  isCorrectFormat(): boolean {
-
-    // Validate
-    if ( this.person &&
-         this.person.dateOfBirth ) { //TODO: check validity of date
-        return true;
-    }
-
-    return false;
+  constructor( ) {
+    super();
   }
 
 /*
@@ -107,9 +75,5 @@ export class BirthDateComponent {
   //      return true;
   //  }
 
-    /*
-isValid(): boolean {
-    return this.isCorrectFormat() && !this.isInTheFuture() && !this.tooFarInThePast() && this.ageCheck();
-}
-*/
+
 }

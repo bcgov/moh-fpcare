@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Person} from '../../../models/person.model';
 import {Base} from '../../core/components/base/base.class';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'fpcare-registration-status',
@@ -9,13 +10,13 @@ import {Base} from '../../core/components/base/base.class';
 })
 export class RegistrationStatusComponent extends Base implements OnInit {
 
-  private _canContinue = false; // TODO: Remove one form set up
+  @ViewChild('formRef') form: NgForm;
 
   /** Flag to indicate what data needs to be collected for checking registration status */
   private _useRegNumber = true;
 
   /** Applicant requesting registration status */
-  private _applicant: Person;
+  private _applicant: Person = new Person();
 
   constructor() {
     super();
@@ -36,7 +37,6 @@ export class RegistrationStatusComponent extends Base implements OnInit {
     return !!this._useRegNumber;
   }
 
-
   /**
    * Toggles the useRegNumber flag
    */
@@ -51,7 +51,7 @@ export class RegistrationStatusComponent extends Base implements OnInit {
    * @returns {boolean}
    */
   canContinue(): boolean {
-    return this._canContinue;
+    return this.form.valid;
   }
 
   // TODO: Code functionality

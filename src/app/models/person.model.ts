@@ -87,55 +87,8 @@ export class Person extends Base {
    * @returns {Date}
    */
   get dateOfBirth(): Date {
-    return this._dateOfBirth;
-  }
-
-  /**
-   *
-   * @param {number} year
-   */
-  set dobYear( year: number ) {
-    this._dateOfBirth.setFullYear( year );
-  }
-
-  /**
-   *
-   * @returns {number}
-   */
-  get dobYear(): number {
-    return this._dateOfBirth.getFullYear();
-  }
-
-  /**
-   *
-   * @param {number} month
-   */
-  set dobMonth( month: number ) {
-    this._dateOfBirth.setMonth( month );
-  }
-
-  /**
-   *
-   * @returns {number}
-   */
-  get dobMonth(): number {
-    return this._dateOfBirth.getMonth();
-  }
-
-  /**
-   *
-   * @param {number} day
-   */
-  set dobDay( day: number ) {
-    this._dateOfBirth.setDate( day );
-  }
-
-  /**
-   *
-   * @returns {number}
-   */
-  get dobDay(): number {
-    return this._dateOfBirth.getDate();
+    console.log( 'Get date of birth' );
+    return this._dateOfBirth ? this._dateOfBirth : new Date();
   }
 
   /**
