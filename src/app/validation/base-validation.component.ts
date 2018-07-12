@@ -22,7 +22,7 @@ export abstract class BaseValidationComponent {
   static regex: RegExp;
   @Input() public fieldName: string;
 
-  public static validationName = 'base-validation';
+  public static ERROR_STRING = 'base-validation';
 
   /**
    * Validates the input's value based on the classes regex. Does not

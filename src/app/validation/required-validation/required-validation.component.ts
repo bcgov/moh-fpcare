@@ -11,7 +11,7 @@ import { BaseValidationComponent } from '../base-validation.component';
 export class RequiredValidationErrorsComponent extends BaseValidationComponent {
   @Input() public fieldName = 'DEFAULT_FIELD_NAME'; //should be overwritten at runtime, but write unit tests to check!
 
-  public static errorString = { 'fpc-required': false };
+  public static ERROR_STRING = 'fpc-required';
 
   public static validate(el: ElementRef): boolean {
     return el.nativeElement.value.length > 0;

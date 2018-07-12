@@ -2,7 +2,7 @@ import { ElementRef } from '@angular/core';
 
 export interface ValidationComponent {
   fieldName?: string;
-  errorString?: {[key: string]: any};
+  ERROR_STRING: string;
   validate: (input: ElementRef) => boolean;
 }
 

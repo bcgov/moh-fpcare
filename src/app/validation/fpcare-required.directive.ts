@@ -108,16 +108,19 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
    */
   validate(control: AbstractControl): {[key: string]: any} | null {
 
-    const retObj = this.validationComponents.map( obj => {
-      if ( !obj.validate( this.input ) ) {
-        return obj.errorString;
+    /** An object matching the Angular spec of {validationError: false} for every failure. */
+    const validationFailures = {};
+    this.validationComponents.map(validationComponent => {
+      const isInvalid = !validationComponent.validate(this.input);
+      if (isInvalid){
+        validationFailures[validationComponent.ERROR_STRING] = isInvalid;
       }
-      return null;
-    }).filter( x => { return x; });
+    })
 
-    if ( retObj && retObj.length > 0 ) {
-      return retObj;
+    if (Object.keys(validationFailures).length){
+      return validationFailures;
     }
+
     return null;
   }
 
