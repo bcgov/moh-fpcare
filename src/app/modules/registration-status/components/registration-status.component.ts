@@ -51,6 +51,7 @@ export class RegistrationStatusComponent extends Base implements OnInit {
    * @returns {boolean}
    */
   canContinue(): boolean {
+    console.log( 'Form: ', this.form );
     return this.form.valid;
   }
 

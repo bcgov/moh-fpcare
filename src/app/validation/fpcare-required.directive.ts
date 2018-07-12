@@ -1,14 +1,12 @@
 import {
-  Directive, ElementRef, Input, HostListener, HostBinding, Renderer2, Inject,
-  ViewContainerRef, ChangeDetectorRef, ComponentRef, ComponentFactoryResolver, AfterViewInit, forwardRef
+  Directive, ElementRef, Input, HostListener, Renderer2, Inject,
+  ViewContainerRef, ChangeDetectorRef, ComponentRef, ComponentFactoryResolver, AfterViewInit
 } from '@angular/core';
-
 
 import { ValidationComponent } from './validation-component.interface';
 import { RequiredValidationErrorsComponent } from './required-validation/required-validation.component';
 import { PhoneValidationComponent } from './phone-validation/phone-validation.component';
 import { EmailValidationComponent } from './email-validation/email-validation.component';
-import {CalendarFutureDatesDirective} from '../modules/core/components/date/calendar-future-dates.validator';
 import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 
 
@@ -18,7 +16,8 @@ import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
  *
  * Example:
  * ```
- *    <div class="form-group" fpcareRequired="required,phone">
+ *    <div class="form-group">
+ *      <input fpcareRequired="required,phone">
  * ```
  *
  * A list of all options can be found in `loadValidationComponents()`
@@ -50,7 +49,6 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
   @Input('fpcareRequired') validationOptions: string;
 
   private validationComponents: ValidationComponent[] = [];
-
 
   constructor(input: ElementRef, private renderer: Renderer2,
     @Inject(ViewContainerRef) viewContainerRef,
@@ -124,12 +122,9 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
     return null;
   }
 
-
-
   /** Runs the logic of a given validation component */
   private runValidationComponent(validationComponent: ValidationComponent) {
-    const isValid = validationComponent.validate(this.input);
-    if ( !isValid ) {
+    if ( !validationComponent.validate(this.input) ) {
       this.setInvalid(validationComponent);
     }
     else {
@@ -194,7 +189,6 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
   private prepareComponent<T extends ValidationComponent>(componentClass): ComponentRef<T> {
     const factory = this.factoryResolver.resolveComponentFactory(componentClass);
     const component = factory.create(this.view.parentInjector) as ComponentRef<T>;
-    // (component.instance as ValidationComponent).fieldName = this.labelText;
     (component.instance as ValidationComponent).fieldName = this.labelText;
 
     return component;
@@ -209,7 +203,7 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
   /** Checks that fpcareRequired is attached to the right element and can identify the label. */
   private check(el: ElementRef): boolean {
     this.input = el;
-    this.label = new ElementRef(document.querySelector(`[for="${this.input.nativeElement.name}"]`));
+    this.label = new ElementRef(this.input.nativeElement.previousElementSibling);
 
     if (this.input.nativeElement === null || this.label.nativeElement === null) {
       console.error('FPCareRequiredDirective cannot find require label.', {

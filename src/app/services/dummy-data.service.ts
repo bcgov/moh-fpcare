@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Person } from '../models/person.model';
 import { Address } from '../models/address.model';
 import * as moment from 'moment';
+import {SimpleDate} from '../modules/core/components/date/simple-date.interface';
 
 
 /**
@@ -42,7 +43,7 @@ export class DummyDataService {
     const result: Person[] = [];
     const today = new Date();
     /** We want nearFuture show that they show up in Upcoming Renewals */
-    const nearFuture =  new Date(today.getFullYear(), today.getMonth() + 4, today.getDate())
+    const nearFuture =  new Date(today.getFullYear(), today.getMonth() + 4, today.getDate());
 
     for (let index = 0; index < count; index++) {
       const person = new Person();
@@ -50,7 +51,7 @@ export class DummyDataService {
       person.dateOfBirth = this.generateDateOfBirth();
       person.phone = '250-555-5555';
       person.address = this.generateAddress();
-      person.email = person.firstName[0].toLowerCase() + person.lastName.toLowerCase() + "@gmail.com";
+      person.email = person.firstName[0].toLowerCase() + person.lastName.toLowerCase() + '@gmail.com';
       result.push(person);
     }
 
@@ -65,19 +66,25 @@ export class DummyDataService {
   private generatePersonName(): string {
     const firstNames = ['Bob', 'Alice', 'Fred', 'Ellen', 'James', 'Tom', 'Greg', 'Kate'];
     const lastNames = ['Hunt', 'Smith', 'Jones', 'Stewart', 'Mason'];
-    const middleInitials = ['A', 'R', 'H', 'B', 'C', 'D']
+    const middleInitials = ['A', 'R', 'H', 'B', 'C', 'D'];
 
-    return `${this.getRandomElFromArray(firstNames)} ${this.getRandomElFromArray(middleInitials)} ${this.getRandomElFromArray(lastNames)}`
+    return `${this.getRandomElFromArray(firstNames)} ${this.getRandomElFromArray(middleInitials)} ${this.getRandomElFromArray(lastNames)}`;
   }
 
-  private generateDateOfBirth(): Date {
+  private generateDateOfBirth(): SimpleDate {
     const today = new Date();
     const pastDate = new Date(1970, 1, 0);
-    return this.randomDate(today, pastDate);
+    const dob = this.randomDate(today, pastDate);
+
+    return {
+      year: dob.getFullYear(),
+      month: dob.getMonth() - 1, //Moment starts month indice at 0.
+      day: dob.getDate()
+    };
   }
 
   private generatePHN(): string {
-    const phn = `${Math.ceil(Math.random() * 9999999999 )}`
+    const phn = `${Math.ceil(Math.random() * 9999999999 )}`;
     return phn;
   }
 

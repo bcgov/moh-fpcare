@@ -5,6 +5,7 @@ import {Base} from '../../../core/components/base/base.class';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {ValidationService} from '../../../../services/validation.service';
+import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 
 @Component({
   selector: 'fpcare-personal-info',
@@ -51,6 +52,12 @@ export class PersonalInfoPageComponent extends Base implements OnInit {
    */
   hasSpouse(): boolean {
     return this.fpcService.hasSpouse();
+  }
+
+  // Formatting functions
+  formatDate( dt: SimpleDate ): string {
+    const dtObj = new Date( dt.year, dt.month - 1, dt.day );
+    return this.fpcService.formatDate( dtObj );
   }
 
   // Methods triggered by the form action bar

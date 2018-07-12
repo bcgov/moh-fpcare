@@ -1,5 +1,6 @@
 import { Base } from './base.alias';
 import { Address } from './address.model';
+import {SimpleDate} from '../modules/core/components/date/simple-date.interface';
 
 /**
  * Information about person. Should be relevant to all people in app, from the
@@ -12,7 +13,8 @@ export class Person extends Base {
   private _middleName: string;
   private _lastName: string;
 
-  private _dateOfBirth: Date;
+  // initialize dob to nulls
+  private _dateOfBirth: SimpleDate = { year: null, month: null, day: null };
 
   // Personal Health Number (validation mod 11 check - reuse logic from old web app)
   private _phn: string;
@@ -20,9 +22,12 @@ export class Person extends Base {
   // Social Insurance Number (validation mod 10 check - reuse logic from old web app)
   private _sin: string;
 
+  // FPCare registration number
+  private _regNumber: string;
+
   // Contact information for person
   /* Mailing address for person */
-  address: Address;
+  address: Address = new Address();
   phone: PhoneNumber;
   email: string;
 
@@ -78,7 +83,7 @@ export class Person extends Base {
    * Set birth date for person
    * @param {Date} dob
    */
-  set dateOfBirth( dob: Date ) {
+  set dateOfBirth( dob: SimpleDate ) {
     this._dateOfBirth = dob;
   }
 
@@ -86,9 +91,8 @@ export class Person extends Base {
    * Gets birth date for person
    * @returns {Date}
    */
-  get dateOfBirth(): Date {
-    console.log( 'Get date of birth' );
-    return this._dateOfBirth ? this._dateOfBirth : new Date();
+  get dateOfBirth(): SimpleDate {
+    return this._dateOfBirth;
   }
 
   /**
@@ -121,6 +125,22 @@ export class Person extends Base {
    */
   get sin(): string {
     return this._sin ? this._sin : '';
+  }
+
+  /**
+   * Sets the Fair PharmaCare Registration Number
+   * @param {string} regNumber
+   */
+  set fpcRegNumber( regNumber: string ) {
+    this._regNumber = regNumber;
+  }
+
+  /**
+   * Gets the Fair PharmaCare Registration Number
+   * @returns {string}
+   */
+  get fpcRegNumber(): string {
+    return this._regNumber ? this._regNumber : '';
   }
 
   /**

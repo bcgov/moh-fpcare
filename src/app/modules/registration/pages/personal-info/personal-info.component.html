@@ -12,21 +12,20 @@
     </p>
   </div>
 
-  <form #formRef="ngForm" validate>
+  <form #formRef="ngForm" novalidate>
     <!-- Information required to complete this section -->
     <div>
       <h2>Your Information</h2>
 
       <div class="row">
         <div class="col-sm form-group">
-          {{formRef.errors}}
           <label for="ap_firstnm">First Name</label>
           <input class="form-control"
                  type="text"
                  id="ap_firstnm"
                  name="ap_firstnm"
                  fpcareRequired
-                 [(ngModel)]="applicant.firstName">
+                 [(ngModel)]="applicant.firstName"/>
         </div>
         <div class="col-sm form-group">
           <label for="ap_middlenm">Middle Name</label>
@@ -34,7 +33,7 @@
                  type="text"
                  id="ap_middlenm"
                  name="ap_middlenm"
-                 [(ngModel)]="applicant.middleName">
+                 [(ngModel)]="applicant.middleName"/>
         </div>
         <div class="col-sm form-group">
           <label for="ap_lastnm">Last Name</label>
@@ -43,7 +42,7 @@
                  id="ap_lastnm"
                  name="ap_lastnm"
                  fpcareRequired
-                 [(ngModel)]="applicant.lastName">
+                 [(ngModel)]="applicant.lastName"/>
         </div>
       </div>
 
@@ -51,13 +50,13 @@
         <div class="col-sm form-group">
           <!-- DOB ready only field - set in previous page -->
           <label for="ap_dob">Birthdate</label>
-          <fpcare-datepicker id="ap_dob"
-                             [dateFormat]="dateFormat"
-                             [date]="applicant.dateOfBirth"
-                             [readOnly]='true'
-                             class="ml-1">
-          </fpcare-datepicker>
+          <input class="form-control"
+                 id="ap_dob"
+                 name="ap_dob"
+                 disabled
+                 [value]="formatDate( applicant.dateOfBirth )"/>
         </div>
+
         <div class="col-sm form-group">
           <!-- PHN ready only field - set in previous page -->
           <label for="ap_phn">PHN</label>
@@ -117,12 +116,11 @@
         <div class="col-sm form-group">
           <!-- DOB ready only field - set in previous page -->
           <label for="sp_dob">Birthdate</label>
-          <fpcare-datepicker id="sp_dob"
-                             [dateFormat]="dateFormat"
-                             [date]="spouse.dateOfBirth"
-                             [readOnly]='true'
-                             class="ml-1">
-          </fpcare-datepicker>
+          <input class="form-control"
+                 id="sp_dob"
+                 name="sp_dob"
+                 disabled
+                 [value]="formatDate( spouse.dateOfBirth )"/>
         </div>
         <div class="col-sm form-group">
           <!-- PHN ready only field - set in previous page -->

@@ -34,34 +34,45 @@
 
   <!-- Use Registration Number to retrieve status -->
   <div class="row">
-    <form #formRef validate class="bg-light p-md-2 offset-md-3 col-md-6">
-  
-      <div class="form-group">
-        <div *ngIf="useRegNumber" class="">
-          <label for="regNumber">Registration Number</label>
-          <input class="form-control" type="text" id="regNumber" name="regNumber">
-        </div>
-        <div *ngIf="!useRegNumber">
-          <label for="phn">PHN</label>
-          <input class="form-control" type="text" id="phn" name="phn">
-        </div>
+    <form #formRef class="bg-light p-md-2 offset-md-3 col-md-6" novalidate>
+
+      <div *ngIf="useRegNumber" class="form-group">
+        <label for="regNumber">Registration Number</label>
+        <input class="form-control"
+               type="text"
+               id="regNumber"
+               name="regNumber"
+               fpcareRequired
+               [(ngModel)]="applicant.fpcRegNumber">
       </div>
-  
+
       <div *ngIf="!useRegNumber" class="form-group">
-        <div class="">
-          <label>Birth Date</label>
-          <!--TODO:  Fix error that is happening with an undefined date -->
-          <fpcare-birthdate
-                  [dob]="applicant.dateOfBirth">
-          </fpcare-birthdate>
-        </div>
+        <label for="phn">PHN</label>
+        <input class="form-control"
+               type="text"
+               id="phn"
+               name="phn"
+               fpcareRequired
+               [(ngModel)]="applicant.phn">
       </div>
-  
+
       <div *ngIf="!useRegNumber" class="form-group">
-        <div class="">
-          <label for="mail_pc">Mailing Postal Code</label>
-          <input class="form-control" type="text" id="mail_pc" name="mail_pc">
-        </div>
+        <label>Birth Date</label>
+        <fpcare-date
+                [useCurrentDate]="false"
+                [date]="applicant.dateOfBirth"
+                [restrictDate]="past">
+        </fpcare-date>
+      </div>
+
+      <div *ngIf="!useRegNumber" class="form-group">
+        <label for="mail_pc">Mailing Postal Code</label>
+        <input class="form-control"
+               type="text"
+               id="mail_pc"
+               name="mail_pc"
+               fpcareRequired
+               [(ngModel)]="applicant.address.postal">
       </div>
   
     </form>

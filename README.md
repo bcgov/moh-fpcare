@@ -56,3 +56,8 @@ Anything in an `<aside></aside>` will appear in the right columns if they exist.
   ></fpcare-form-action-bar>
 </fpcare-page-framework>
 ```
+
+### Dates
+
+Please use SimpleDate for all dates within code so that we do not encounter conversion issues between Date & SimpleDate.
+Date module uses SimpleDate.
