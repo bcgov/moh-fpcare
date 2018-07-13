@@ -8,6 +8,7 @@ import { RequiredValidationErrorsComponent } from './required-validation/require
 import { PhoneValidationComponent } from './phone-validation/phone-validation.component';
 import { EmailValidationComponent } from './email-validation/email-validation.component';
 import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
+import {PhnValidationComponent} from './phn-validation/phn-validation.component';
 
 
 /**
@@ -75,6 +76,7 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
 
       switch (opt.toLowerCase()) {
         case 'required':
+          console.log( 'required' );
           this.validationComponents.push(RequiredValidationErrorsComponent);
           break;
 
@@ -84,6 +86,11 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
 
         case 'email':
           this.validationComponents.push(EmailValidationComponent);
+          break;
+
+        case 'phn-check':
+          console.log( 'phn-check' );
+          this.validationComponents.push(PhnValidationComponent);
           break;
 
         default:
