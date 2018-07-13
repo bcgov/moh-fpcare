@@ -29,6 +29,7 @@ import { FPCareDateComponent } from './components/date/date.component';
 import {PhnValidationComponent} from '../../validation/phn-validation/phn-validation.component';
 import {SinValidationComponent} from '../../validation/sin-validation/sin-validation.component';
 import {RegNumberValidationComponent} from '../../validation/reg-number-validation/reg-number-validation.component';
+import {PcValidationComponent} from '../../validation/pc-validation/pc-validation.component';
 
 
 const componentList = [
@@ -47,6 +48,7 @@ const componentList = [
   PhnValidationComponent,
   SinValidationComponent,
   RegNumberValidationComponent,
+  PcValidationComponent,
   ConsentModalComponent,
   CalendarFieldFormatterDirective,
   CalendarYearValidatorDirective,
@@ -82,7 +84,8 @@ const componentList = [
     EmailValidationComponent,
     PhnValidationComponent,
     SinValidationComponent,
-    RegNumberValidationComponent
+    RegNumberValidationComponent,
+    PcValidationComponent
   ],
 })
 export class CoreModule { }

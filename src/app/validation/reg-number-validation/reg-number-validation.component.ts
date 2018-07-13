@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {staticImplements, ValidationComponent} from '../validation-component.interface';
-import {PhoneValidationComponent} from '../phone-validation/phone-validation.component';
 import {BaseValidationComponent} from '../base-validation.component';
 
 @Component({
@@ -10,7 +9,7 @@ import {BaseValidationComponent} from '../base-validation.component';
 })
 @staticImplements<ValidationComponent>()
 export class RegNumberValidationComponent extends BaseValidationComponent {
-  static regex: RegExp = /^[A]{1}\d{8}$/;
+  static regex: RegExp = /^A|a\d{8}$/;
 
   public static ERROR_STRING = 'fpc-regnumber';
 

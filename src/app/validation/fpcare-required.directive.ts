@@ -11,6 +11,7 @@ import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 import {PhnValidationComponent} from './phn-validation/phn-validation.component';
 import {SinValidationComponent} from './sin-validation/sin-validation.component';
 import {RegNumberValidationComponent} from './reg-number-validation/reg-number-validation.component';
+import {PcValidationComponent} from './pc-validation/pc-validation.component';
 
 
 /**
@@ -103,6 +104,11 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
         case 'regnum-check':
           console.log( 'regnum-check' );
           this.validationComponents.push(RegNumberValidationComponent);
+          break;
+
+        case 'postal-code':
+          console.log( 'postal-code' );
+          this.validationComponents.push(PcValidationComponent);
           break;
 
         default:
