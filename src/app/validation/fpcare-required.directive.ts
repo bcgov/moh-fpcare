@@ -9,6 +9,7 @@ import { PhoneValidationComponent } from './phone-validation/phone-validation.co
 import { EmailValidationComponent } from './email-validation/email-validation.component';
 import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 import {PhnValidationComponent} from './phn-validation/phn-validation.component';
+import {SinValidationComponent} from './sin-validation/sin-validation.component';
 
 
 /**
@@ -91,6 +92,11 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
         case 'phn-check':
           console.log( 'phn-check' );
           this.validationComponents.push(PhnValidationComponent);
+          break;
+
+        case 'sin-check':
+          console.log( 'sin-check' );
+          this.validationComponents.push(SinValidationComponent);
           break;
 
         default:

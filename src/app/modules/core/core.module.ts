@@ -27,6 +27,7 @@ import { CalendarFutureDatesDirective } from './components/date/calendar-future-
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { FPCareDateComponent } from './components/date/date.component';
 import {PhnValidationComponent} from '../../validation/phn-validation/phn-validation.component';
+import {SinValidationComponent} from '../../validation/sin-validation/sin-validation.component';
 
 
 const componentList = [
@@ -43,6 +44,7 @@ const componentList = [
   PhoneValidationComponent,
   EmailValidationComponent,
   PhnValidationComponent,
+  SinValidationComponent,
   ConsentModalComponent,
   CalendarFieldFormatterDirective,
   CalendarYearValidatorDirective,
@@ -76,7 +78,8 @@ const componentList = [
     RequiredValidationErrorsComponent,
     PhoneValidationComponent,
     EmailValidationComponent,
-    PhnValidationComponent
+    PhnValidationComponent,
+    SinValidationComponent
   ],
 })
 export class CoreModule { }

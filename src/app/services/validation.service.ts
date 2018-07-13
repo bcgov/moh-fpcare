@@ -22,7 +22,6 @@ export class ValidationService {
    * @param isBCPhn
    */
   static validatePHN (phn: string, isBCPhn: boolean = true, allowEmptyValue: boolean = false): boolean {
-    console.log( 'Validating PHN' );
     // pre req checks
     if (phn === null || phn === undefined || phn.trim().length < 1){
       return allowEmptyValue;
@@ -98,7 +97,7 @@ export class ValidationService {
    * @param {string} sin
    * @returns {boolean}
    */
-  validateSIN (sin: string): boolean {
+  static validateSIN (sin: string): boolean {
 
     // pre req checks
     if (sin === null || sin === undefined ||
