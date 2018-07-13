@@ -61,3 +61,23 @@ Anything in an `<aside></aside>` will appear in the right columns if they exist.
 
 Please use SimpleDate for all dates within code so that we do not encounter conversion issues between Date & SimpleDate.
 Date module uses SimpleDate.
+
+### Validation Module
+The fpcareRequired directive takes comma delimited input.  If no input added, then defaults to 'required'
+
+Current validation for input:
+required
+phn-check
+sin-check
+
+
+```html
+      <div class="form-group">
+        <label for="<input_id>">{Label Text}</label>
+        <input class="form-control"
+               id="<input_id - matches label 'for' value>"
+               fpcareRequired="required,phn-check"
+               ...>
+      </div>
+
+```
