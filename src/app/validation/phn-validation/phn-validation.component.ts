@@ -15,13 +15,9 @@ export class PhnValidationComponent extends BaseValidationComponent {
 
   public static ERROR_STRING = 'fpc-phn';
 
-  // Validation service to do the modCheck on PHN
-  private static _service = new ValidationService();
-
   public static validate(el: ElementRef): boolean {
-
     console.log( 'Validate PHN modCheck' );
-    return this._service.validatePHN( el.nativeElement.value, true );
+    return ValidationService.validatePHN( el.nativeElement.value, true );
   }
 
 }

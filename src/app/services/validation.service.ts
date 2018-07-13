@@ -21,7 +21,7 @@ export class ValidationService {
    * @param phn Empty value (null, undefined, empty string) are treated as invalid.
    * @param isBCPhn
    */
-  validatePHN (phn: string, isBCPhn: boolean = true, allowEmptyValue: boolean = false): boolean {
+  static validatePHN (phn: string, isBCPhn: boolean = true, allowEmptyValue: boolean = false): boolean {
     console.log( 'Validating PHN' );
     // pre req checks
     if (phn === null || phn === undefined || phn.trim().length < 1){
