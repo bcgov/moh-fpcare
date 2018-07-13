@@ -28,6 +28,7 @@ import { FileUploaderComponent } from './components/file-uploader/file-uploader.
 import { FPCareDateComponent } from './components/date/date.component';
 import {PhnValidationComponent} from '../../validation/phn-validation/phn-validation.component';
 import {SinValidationComponent} from '../../validation/sin-validation/sin-validation.component';
+import {RegNumberValidationComponent} from '../../validation/reg-number-validation/reg-number-validation.component';
 
 
 const componentList = [
@@ -45,6 +46,7 @@ const componentList = [
   EmailValidationComponent,
   PhnValidationComponent,
   SinValidationComponent,
+  RegNumberValidationComponent,
   ConsentModalComponent,
   CalendarFieldFormatterDirective,
   CalendarYearValidatorDirective,
@@ -79,7 +81,8 @@ const componentList = [
     PhoneValidationComponent,
     EmailValidationComponent,
     PhnValidationComponent,
-    SinValidationComponent
+    SinValidationComponent,
+    RegNumberValidationComponent
   ],
 })
 export class CoreModule { }
