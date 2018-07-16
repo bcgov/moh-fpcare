@@ -4,7 +4,6 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Base} from '../../../core/components/base/base.class';
 import {Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {ValidationService} from '../../../../services/validation.service';
 import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 
 @Component({
@@ -21,8 +20,7 @@ export class PersonalInfoPageComponent extends Base implements OnInit {
   @ViewChild('formRef') form: NgForm;
 
   constructor( private fpcService: FPCareDataService
-             , private router: Router
-             , private validation: ValidationService ) {
+             , private router: Router) {
     super();
   }
 
