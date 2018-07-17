@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Person } from '../models/person.model';
 import { Address } from '../models/address.model';
-import * as moment from 'moment';
 import {SimpleDate} from '../modules/core/components/date/simple-date.interface';
 
 
@@ -14,6 +13,8 @@ import {SimpleDate} from '../modules/core/components/date/simple-date.interface'
  */
 @Injectable()
 export class DummyDataService {
+
+  private _regStatusResponse;
 
   constructor() { }
 
@@ -56,6 +57,40 @@ export class DummyDataService {
     }
 
     return result;
+  }
+
+  /**
+   *
+   * @param {Person} request
+   * @returns {string}
+   */
+  submitRequestStatus( request: Person ) {
+
+    console.log( 'Submit Request Registration Status' );
+    if (request.fpcRegNumber) {
+      this._regStatusResponse = JSON.stringify(
+        {
+          'RegNumber': request.fpcRegNumber,
+          'Status': 'Your application is complete. We have mailed you a letter confirming your coverage.'
+        }
+      );
+    }
+    else {
+      this._regStatusResponse = JSON.stringify(
+        {
+          'PHN': request.phn,
+          'DOB': request.dateOfBirth,
+          'PC': request.address.postal,
+          'Status': 'Your application is complete. We have mailed you a letter confirming your coverage.'
+        }
+      );
+    }
+
+    console.log( 'response: ', this._regStatusResponse );
+  }
+
+  getStatusResponse(): string {
+    return this._regStatusResponse ? this._regStatusResponse : '' ;
   }
 
   // --- Helpers

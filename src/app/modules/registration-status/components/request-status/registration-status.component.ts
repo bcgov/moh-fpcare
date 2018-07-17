@@ -3,6 +3,7 @@ import {Person} from '../../../../models/person.model';
 import {Base} from '../../../core/components/base/base.class';
 import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
+import {DummyDataService} from '../../../../services/dummy-data.service';
 
 @Component({
   selector: 'fpcare-registration-status',
@@ -19,7 +20,8 @@ export class RegistrationStatusComponent extends Base implements OnInit {
   /** Applicant requesting registration status */
   private _applicant: Person = new Person();
 
-  constructor( private router: Router ) {
+  constructor( private router: Router
+             , private dummyDataService: DummyDataService ) {
     super();
   }
 
@@ -57,6 +59,10 @@ export class RegistrationStatusComponent extends Base implements OnInit {
 
   // TODO: Code functionality
   continue() {
+
+    // TODO: remove dummyservice when back-end is built
+    this.dummyDataService.submitRequestStatus( this._applicant );
+
     const link = '/registration-status/status-results';
     this.router.navigate([link]);
   }
