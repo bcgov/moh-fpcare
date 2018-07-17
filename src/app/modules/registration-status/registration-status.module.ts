@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RegistrationStatusRoutingModule } from './registration-status-routing.module';
-import { RegistrationStatusComponent } from './components/registration-status.component';
 import { CoreModule } from '../core/core.module';
 import { FormsModule } from '@angular/forms';
+import {RegistrationStatusComponent} from './components/request-status/registration-status.component';
+import { StatusResultsComponent } from './components/status-results/status-results.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { FormsModule } from '@angular/forms';
     RegistrationStatusRoutingModule
   ],
   declarations: [
-    RegistrationStatusComponent
+    RegistrationStatusComponent,
+    StatusResultsComponent
   ]
 })
 export class RegistrationStatusModule { }

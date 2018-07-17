@@ -9,7 +9,7 @@ import {BaseValidationComponent} from '../base-validation.component';
 })
 @staticImplements<ValidationComponent>()
 export class PcValidationComponent extends BaseValidationComponent {
-  static regex: RegExp = /^[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]$/;
+  static regex: RegExp = /^[A-Za-z][0-9][A-Za-z]\s?[0-9][A-Za-z][0-9]$/;
 
   public static ERROR_STRING = 'fpc-postalcode';
 

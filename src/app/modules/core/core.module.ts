@@ -30,6 +30,7 @@ import {PhnValidationComponent} from '../../validation/phn-validation/phn-valida
 import {SinValidationComponent} from '../../validation/sin-validation/sin-validation.component';
 import {RegNumberValidationComponent} from '../../validation/reg-number-validation/reg-number-validation.component';
 import {PcValidationComponent} from '../../validation/pc-validation/pc-validation.component';
+import { ResultsFrameworkComponent } from './components/results-framework/results-framework.component';
 
 
 const componentList = [
@@ -56,7 +57,8 @@ const componentList = [
   CalendarMonthValidatorDirective,
   CalendarFutureDatesDirective,
   FileUploaderComponent,
-  FPCareDateComponent
+  FPCareDateComponent,
+  ResultsFrameworkComponent
 ]
 
 @NgModule({

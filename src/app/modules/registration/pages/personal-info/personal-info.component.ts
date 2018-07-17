@@ -20,7 +20,7 @@ export class PersonalInfoPageComponent extends Base implements OnInit {
   @ViewChild('formRef') form: NgForm;
 
   constructor( private fpcService: FPCareDataService
-             , private router: Router) {
+             , private router: Router ) {
     super();
   }
 

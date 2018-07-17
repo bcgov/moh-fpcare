@@ -1,12 +1,17 @@
 import { Routes, RouterModule } from '@angular/router';
-import { RegistrationStatusComponent } from './components/registration-status.component';
 import { NgModule } from '@angular/core';
+import {RegistrationStatusComponent} from './components/request-status/registration-status.component';
+import {StatusResultsComponent} from './components/status-results/status-results.component';
 
 
 export const pageRoutes: Routes = [
     {
         path: 'status',
         component: RegistrationStatusComponent
+    },
+    {
+      path: 'status-results',
+      component: StatusResultsComponent
     },
     {
         path: '**',

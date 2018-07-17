@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Person} from '../../../models/person.model';
-import {Base} from '../../core/components/base/base.class';
+import {Person} from '../../../../models/person.model';
+import {Base} from '../../../core/components/base/base.class';
 import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'fpcare-registration-status',
@@ -18,7 +19,7 @@ export class RegistrationStatusComponent extends Base implements OnInit {
   /** Applicant requesting registration status */
   private _applicant: Person = new Person();
 
-  constructor() {
+  constructor( private router: Router ) {
     super();
   }
 
@@ -56,5 +57,7 @@ export class RegistrationStatusComponent extends Base implements OnInit {
 
   // TODO: Code functionality
   continue() {
+    const link = '/registration-status/status-results';
+    this.router.navigate([link]);
   }
 }
