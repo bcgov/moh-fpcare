@@ -5,27 +5,35 @@
   <h2>Your child's personal information</h2>
 
   <!-- Repeat for each child -->
-  <div *ngIf="hasChildren()">
-    <div *ngFor="let child of children">
-      <!--Array starts at 0 add one -->
-      <label>Child #{{children.indexOf(child)+1}}</label>
-      <div class="row">
-        <div class="col-sm form-group">
+  <div *ngIf="hasChildren()" class="row">
+    <form #formRef="ngForm" novalidate class="p-md-2 col-md-6">
+
+      <div *ngFor="let child of children">
+        <!--Array starts at 0 add one -->
+        <h2>Child #{{children.indexOf(child)+1}}</h2>
+        <div class="form-group">
           <label for="ch_firstnm">First Name</label>
-          <input class="form-control" type="text" id="ch_firstnm" name="ch_firstnm" [(ngModel)]="child.firstName" >
+          <input class="form-control"
+                 type="text"
+                 id="ch_firstnm"
+                 name="ch_firstnm"
+                 fpcareRequired
+                 [(ngModel)]="child.firstName" >
         </div>
-        <div class="col-sm form-group">
+        <div class="form-group">
           <label for="ch_middlenm">Middle Name</label>
           <input class="form-control" type="text" id="ch_middlenm" name="ch_middlenm" [(ngModel)]="child.middleName" >
         </div>
-        <div class="col-sm form-group">
+        <div class="form-group">
           <label for="ch_lastnm">Last Name</label>
-          <input class="form-control" type="text" id="ch_lastnm" name="ch_lastnm" [(ngModel)]="child.lastName" >
+          <input class="form-control"
+                 type="text"
+                 id="ch_lastnm"
+                 name="ch_lastnm"
+                 fpcareRequired
+                 [(ngModel)]="child.lastName" >
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm form-group">
+        <div class="form-group">
           <label for="ch_dob">Birthdate</label>
           <fpcare-date
                   id="ch_dob"
@@ -34,14 +42,17 @@
                   [restrictDate]="past">
           </fpcare-date>
         </div>
-        <div class="col-sm form-group">
+        <div class="form-group">
           <label for="ch_phn">PHN</label>
-          <input class="form-control" type="text" id="ch_phn" name="ch_phn" [(ngModel)]="child.phn">
+          <input class="form-control"
+                 type="text"
+                 id="ch_phn"
+                 name="ch_phn"
+                 fpcareRequired="required,phn-check"
+                 [(ngModel)]="child.phn">
         </div>
-        <div class="col-sm form-group"></div>
-        <!-- blank to ensure columns line up correctly -->
       </div>
-    </div>
+    </form>
   </div>
 
   <button class="btn btn-lg btn-block btn-default" (click)="addChild()" [disabled]="isAddDisabled()">

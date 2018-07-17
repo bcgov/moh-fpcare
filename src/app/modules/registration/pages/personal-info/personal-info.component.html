@@ -12,22 +12,22 @@
     </p>
   </div>
 
-  <form #formRef="ngForm" novalidate>
-    <!-- Information required to complete this section -->
-    <div>
+  <div class="row">
+    <form #formRef="ngForm" novalidate class="p-md-2 col-md-6">
+
+      <!-- Information required to complete this section -->
       <h2>Your Information</h2>
 
-      <div class="row">
-        <div class="col-sm form-group">
+        <div class="form-group">
           <label for="ap_firstnm">First Name</label>
           <input class="form-control"
-                 type="text"
-                 id="ap_firstnm"
-                 name="ap_firstnm"
-                 fpcareRequired
-                 [(ngModel)]="applicant.firstName"/>
+               type="text"
+               id="ap_firstnm"
+               name="ap_firstnm"
+               fpcareRequired
+               [(ngModel)]="applicant.firstName"/>
         </div>
-        <div class="col-sm form-group">
+        <div class="form-group">
           <label for="ap_middlenm">Middle Name</label>
           <input class="form-control"
                  type="text"
@@ -35,7 +35,7 @@
                  name="ap_middlenm"
                  [(ngModel)]="applicant.middleName"/>
         </div>
-        <div class="col-sm form-group">
+        <div class="form-group">
           <label for="ap_lastnm">Last Name</label>
           <input class="form-control"
                  type="text"
@@ -44,10 +44,7 @@
                  fpcareRequired
                  [(ngModel)]="applicant.lastName"/>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm form-group">
+        <div class="form-group">
           <!-- DOB ready only field - set in previous page -->
           <label for="ap_dob">Birthdate</label>
           <input class="form-control"
@@ -56,8 +53,7 @@
                  disabled
                  [value]="formatDate( applicant.dateOfBirth )"/>
         </div>
-
-        <div class="col-sm form-group">
+        <div class="form-group">
           <!-- PHN ready only field - set in previous page -->
           <label for="ap_phn">PHN</label>
           <input class="form-control"
@@ -67,7 +63,7 @@
                  disabled
                  [ngModel]="applicant.phn">
         </div>
-        <div class="col-sm form-group">
+        <div class="form-group">
           <label for="ap_sin">SIN</label>
           <input class="form-control"
                  type="text"
@@ -76,15 +72,11 @@
                  fpcareRequired="required,sin-check"
                  [(ngModel)]="applicant.sin">
         </div>
-      </div>
-    </div>
 
-    <!-- Information required to complete this section - ONLY if indicated that the applicant has a spouse -->
-    <div *ngIf="hasSpouse()">
-      <h2>Spouse Information</h2>
-
-      <div class="row">
-        <div class="col-sm form-group">
+      <!-- Information required to complete this section - ONLY if indicated that the applicant has a spouse -->
+      <div *ngIf="hasSpouse()">
+        <h2>Spouse Information</h2>
+        <div class="form-group">
           <label for="sp_firstnm">First Name</label>
           <input class="form-control"
                  type="text"
@@ -93,7 +85,7 @@
                  fpcareRequired
                  [(ngModel)]="spouse.firstName">
         </div>
-        <div class="col-sm form-group">
+        <div class="form-group">
           <label for="sp_middlenm">Middle Name</label>
           <input class="form-control"
                  type="text"
@@ -101,7 +93,7 @@
                  name="sp_middlenm"
                  [(ngModel)]="spouse.middleName" >
         </div>
-        <div class="col-sm form-group">
+        <div class="form-group">
           <label for="sp_lastnm">Last Name</label>
           <input class="form-control"
                  type="text"
@@ -110,10 +102,7 @@
                  fpcareRequired
                  [(ngModel)]="spouse.lastName" >
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-sm form-group">
+        <div class="form-group">
           <!-- DOB ready only field - set in previous page -->
           <label for="sp_dob">Birthdate</label>
           <input class="form-control"
@@ -122,7 +111,7 @@
                  disabled
                  [value]="formatDate( spouse.dateOfBirth )"/>
         </div>
-        <div class="col-sm form-group">
+        <div class="form-group">
           <!-- PHN ready only field - set in previous page -->
           <label for="sp_phn">PHN</label>
           <input class="form-control"
@@ -132,7 +121,7 @@
                  disabled
                  [(ngModel)]="spouse.phn">
         </div>
-        <div class="col-sm form-group">
+        <div class="form-group">
           <label for="sp_sin">SIN</label>
           <input class="form-control"
                  type="text"
@@ -142,8 +131,8 @@
                  [(ngModel)]="spouse.sin" >
         </div>
       </div>
-    </div>
-  </form>
+    </form>
+  </div>
 
   <aside>
     <strong>Personal Info aside!</strong>

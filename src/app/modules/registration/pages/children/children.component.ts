@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
 import {Base} from '../../../core/components/base/base.class';
+import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'fpcare-children',
@@ -10,18 +12,17 @@ import {Base} from '../../../core/components/base/base.class';
 })
 export class ChildrenPageComponent extends Base implements OnInit {
 
-  /* Flag to indicate whether or not the applicant can continue to next page
-   * Required fields must be completed, PHN and SIN must pass MOD validations
-   */
-  private _canContinue = true;
-
   /* Flag to disable the Add child button so that no more children can be
    * added to list.  Currently a maximum of 18 children can be added to
    * an account
    */
   private _disableAddChild = false;
 
-  constructor( private fpcService: FPCareDataService ) {
+  /** Form that contains fields to be validated */
+  @ViewChild('formRef') form: NgForm;
+
+  constructor( private fpcService: FPCareDataService
+             , private router: Router ) {
     super();
   }
 
@@ -47,7 +48,7 @@ export class ChildrenPageComponent extends Base implements OnInit {
    */
   buttonLabel(): string {
 
-    if ( this.fpcService.hasChildren() ) {
+    if ( this.hasChildren() ) {
       return 'Submit';
     }
 
@@ -60,17 +61,24 @@ export class ChildrenPageComponent extends Base implements OnInit {
   addChild() {
     const child: Person = new Person;
     this.fpcService.addChild();
-    this._canContinue = false;
   }
+
   /**
    * Indicated whether or not applicant can continue process
    * @returns {boolean}
    */
   canContinue(): boolean {
-    return this._canContinue;
+    // Form only appears if there are children
+    return (!!this.form) ? this.form.valid : !!!this.form;
   }
 
-  // TODO: Code functionality
+  /**
+   * Navigates to the next page
+   */
   continue () {
+    if ( this.canContinue() ) {
+      const link = '/registration/address';
+      this.router.navigate([link]);
+    }
   }
 }
