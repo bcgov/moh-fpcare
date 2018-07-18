@@ -14,25 +14,19 @@ export class StatusResultsComponent implements OnInit {
   constructor( private dummyDataService: DummyDataService ) { }
 
   ngOnInit() {
-    const str = this.dummyDataService.getStatusResponse();
-    console.log( 'str: ', str ? str : 'empty' );
+    this._jsonObj = this.dummyDataService.getStatusResponse();
+    console.log( 'jsonObj: ', this._jsonObj  );
 
-    if ( str ) {
-
-      this._jsonObj = JSON.parse( str );
-
-      if ( this._jsonObj.PHN ) {
-        this._useRegNumber = false;
-      }
+    if ( this._jsonObj.phn ) {
+      this._useRegNumber = false;
     }
+
   }
 
   get accountNumber(): string {
 
       if ( this._jsonObj ) {
-        console.log( 'Obj: ', this._jsonObj );
-        console.log( 'this._jsonObj.RegNumber: ', this._jsonObj.RegNumber )
-        return this._useRegNumber ? this._jsonObj.RegNumber : this._jsonObj.PHN;
+        return this._useRegNumber ? this._jsonObj.familyNumber : this._jsonObj.phn;
       }
     return '';
   }
@@ -42,6 +36,6 @@ export class StatusResultsComponent implements OnInit {
   }
 
   get status(): string {
-    return this._jsonObj ? this._jsonObj.Status : '';
+    return this._jsonObj ? this._jsonObj.status : '';
   }
 }

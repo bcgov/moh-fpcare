@@ -111,4 +111,27 @@ export class FPCareDataService {
   formatDate(date: Date, dateFormat: string = 'dd/mm/yyyy'): string {
     return moment(date).format( dateFormat.toUpperCase() );
   }
+
+  /**
+   * Convert the person structure into a JSON formatted request
+   *
+   * TODO:  This may changed once integrated service has been developed
+   * @param {Person} person
+   * @returns {string}
+   */
+  getStatusRequest( person: Person ): Object {
+
+    console.log( 'Get Request Registration Status' );
+
+    return {
+      'uuid': '',
+      'phn': person.phn,
+      'familyNumber': person.fpcRegNumber,
+      'dateOfBirth': person.dateOfBirth,
+      'postalCode': person.address.postal,
+      'benefitYear': '',
+      'clientApplication': '',
+      'status': ''
+    };
+  }
 }

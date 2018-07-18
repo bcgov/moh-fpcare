@@ -60,37 +60,19 @@ export class DummyDataService {
   }
 
   /**
-   *
-   * @param {Person} request
-   * @returns {string}
+   * JSON Object
+   * @param {Object} request
    */
-  submitRequestStatus( request: Person ) {
+  submitRequestStatus( request: Object ) {
 
-    console.log( 'Submit Request Registration Status' );
-    if (request.fpcRegNumber) {
-      this._regStatusResponse = JSON.stringify(
-        {
-          'RegNumber': request.fpcRegNumber,
-          'Status': 'Your application is complete. We have mailed you a letter confirming your coverage.'
-        }
-      );
-    }
-    else {
-      this._regStatusResponse = JSON.stringify(
-        {
-          'PHN': request.phn,
-          'DOB': request.dateOfBirth,
-          'PC': request.address.postal,
-          'Status': 'Your application is complete. We have mailed you a letter confirming your coverage.'
-        }
-      );
-    }
+    this._regStatusResponse = request;
+    this._regStatusResponse.status = 'Your application is complete. We have mailed you a letter confirming your coverage.';
 
     console.log( 'response: ', this._regStatusResponse );
   }
 
-  getStatusResponse(): string {
-    return this._regStatusResponse ? this._regStatusResponse : '' ;
+  getStatusResponse(): Object {
+    return this._regStatusResponse ? this._regStatusResponse : {} ;
   }
 
   // --- Helpers
