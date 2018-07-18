@@ -1,4 +1,4 @@
-<fpcare-page-framework layout='single'>
+<fpcare-page-framework layout='default'>
 
   <div>
     <h1>
@@ -21,76 +21,70 @@
     </p>
   </div>
 
-  <div class="row">
-    <div class="offset-md-3 col-md-6">
-      <h2>Your Information</h2>
-      <div *ngIf="!useRegNumber">
-        <strong>
-          <a href="javascript:void(0)" (click)="toggleInputData()">Use Registration Number</a>
-        </strong>
+  <div>
+    <h2 class="border-bottom">Your Information</h2>
+  </div>
+
+  <form #formRef="ngForm" novalidate>
+    <div class="row">
+      <div class="bg-light p-md-2 col-md-6">
+        <div class="form-group">
+          <label for="phn">Personal Health Number (PHN)</label>
+          <input class="form-control"
+                 type="text"
+                 id="phn"
+                 name="phn"
+                 fpcareRequired="required,phn-check"
+                 [(ngModel)]="applicant.phn">
+        </div>
+
+        <div class="form-group">
+          <label>Birth Date</label>
+          <fpcare-date
+                  [useCurrentDate]="false"
+                  [date]="applicant.dateOfBirth"
+                  [restrictDate]="past">
+          </fpcare-date>
+        </div>
+
+        <div class="form-group">
+          <label for="mail_pc">Mailing Postal Code</label>
+          <input class="form-control"
+                 type="text"
+                 id="mail_pc"
+                 name="mail_pc"
+                 fpcareRequired="required,postal-code"
+                 [(ngModel)]="applicant.address.postal">
+        </div>
+      </div>
+      <div class="col-md-1">
+        <strong>OR</strong>
+      </div>
+      <div class="col-md-5">
+        <div class="form-group p-md-2 bg-light">
+          <label for="regNumber">Registration Number</label>
+          <input class="form-control"
+                 type="text"
+                 id="regNumber"
+                 name="regNumber"
+                 fpcareRequired="required,regnum-check"
+                 [(ngModel)]="applicant.fpcRegNumber">
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 
-  <!-- Use Registration Number to retrieve status -->
-  <div class="row">
-    <form #formRef="ngForm" novalidate class="bg-light p-md-2 offset-md-3 col-md-6">
-
-      <div *ngIf="useRegNumber" class="form-group">
-        <label for="regNumber">Registration Number</label>
-        <input class="form-control"
-               type="text"
-               id="regNumber"
-               name="regNumber"
-               fpcareRequired="required,regnum-check"
-               [(ngModel)]="applicant.fpcRegNumber">
-      </div>
-
-      <div *ngIf="!useRegNumber" class="form-group">
-        <label for="phn">Personal Health Number (PHN)</label>
-        <input class="form-control"
-               type="text"
-               id="phn"
-               name="phn"
-               fpcareRequired="required,phn-check"
-               [(ngModel)]="applicant.phn">
-      </div>
-
-      <div *ngIf="!useRegNumber" class="form-group">
-        <label>Birth Date</label>
-        <fpcare-date
-                [useCurrentDate]="false"
-                [date]="applicant.dateOfBirth"
-                [restrictDate]="past">
-        </fpcare-date>
-      </div>
-
-      <div *ngIf="!useRegNumber" class="form-group">
-        <label for="mail_pc">Mailing Postal Code</label>
-        <input class="form-control"
-               type="text"
-               id="mail_pc"
-               name="mail_pc"
-               fpcareRequired="required,postal-code"
-               [(ngModel)]="applicant.address.postal">
-      </div>
-  
-    </form>
-  </div>
-
-  <div *ngIf="useRegNumber" class="row p-md-2">
-    <div class="offset-md-3 col-md-6">
-      <strong>
-        <a href="javascript:void(0)" (click)="toggleInputData()">Use PHN Number</a>
-      </strong>
-    </div>
-  </div>
 
   <div class="row p-md-2">
-    <div class="offset-md-3 col-md-6">
+    <div class="col-md-6 p-md-4">
       Placeholder for Captcha
     </div>
   </div>
+
+  <aside>
+    <strong>TODO</strong>
+    May need logic to handle when user touches all fields as the continue button will not enable.
+  </aside>
 
   <fpcare-form-action-bar
           [canContinue]="canContinue()"
