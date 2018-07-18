@@ -81,3 +81,9 @@ sin-check
       </div>
 
 ```
+
+### Style Class "todo"
+This class is used to put notes in <aside> so that other developer's can see what is remaining on page or if issues are
+encountered and require a solution that has not been identified.
+
+These items are to be removed when development is complete.
