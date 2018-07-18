@@ -10,6 +10,8 @@ export class ValidationService {
   public static MIN_PHN_LENGTH = 10;
   public static MAX_PHN_LENGTH = 13;
 
+  /** Maximux length of FPC Registation Number (1 letter + 8 digits) */
+  public static MAX_REGNUM_LENGTH = 9;
 
 
 

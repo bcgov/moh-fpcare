@@ -16,7 +16,15 @@ export class PhnValidationComponent extends BaseValidationComponent {
   public static ERROR_STRING = 'fpc-phn';
 
   public static validate(el: ElementRef): boolean {
-    return ValidationService.validatePHN( el.nativeElement.value, true );
+
+      const inputVal = el.nativeElement.value;
+
+      // check length
+      if ( inputVal.length > ValidationService.MAX_PHN_LENGTH ||
+           inputVal.length < ValidationService.MIN_PHN_LENGTH ) {
+        return false;
+      }
+    return ValidationService.validatePHN( inputVal, true );
   }
 
 }
