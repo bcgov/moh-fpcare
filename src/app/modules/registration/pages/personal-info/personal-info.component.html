@@ -12,70 +12,74 @@
     </p>
   </div>
 
-  <div class="row">
-    <form #formRef="ngForm" novalidate class="p-md-2 col-md-6">
 
-      <!-- Information required to complete this section -->
-      <h2>Your Information</h2>
+  <form #formRef="ngForm" novalidate>
 
-        <div class="form-group">
-          <label for="ap_firstnm">First Name</label>
-          <input class="form-control"
+    <!-- Information required to complete this section -->
+    <h2 class="border-bottom">Your Information</h2>
+
+    <div class="p-md-2 col-md-6">
+
+      <div class="form-group">
+        <label for="ap_firstnm">First Name</label>
+        <input class="form-control"
+             type="text"
+             id="ap_firstnm"
+             name="ap_firstnm"
+             fpcareRequired
+             [(ngModel)]="applicant.firstName"/>
+      </div>
+      <div class="form-group">
+        <label for="ap_middlenm">Middle Name</label>
+        <input class="form-control"
                type="text"
-               id="ap_firstnm"
-               name="ap_firstnm"
+               id="ap_middlenm"
+               name="ap_middlenm"
+               [(ngModel)]="applicant.middleName"/>
+      </div>
+      <div class="form-group">
+        <label for="ap_lastnm">Last Name</label>
+        <input class="form-control"
+               type="text"
+               id="ap_lastnm"
+               name="ap_lastnm"
                fpcareRequired
-               [(ngModel)]="applicant.firstName"/>
-        </div>
-        <div class="form-group">
-          <label for="ap_middlenm">Middle Name</label>
-          <input class="form-control"
-                 type="text"
-                 id="ap_middlenm"
-                 name="ap_middlenm"
-                 [(ngModel)]="applicant.middleName"/>
-        </div>
-        <div class="form-group">
-          <label for="ap_lastnm">Last Name</label>
-          <input class="form-control"
-                 type="text"
-                 id="ap_lastnm"
-                 name="ap_lastnm"
-                 fpcareRequired
-                 [(ngModel)]="applicant.lastName"/>
-        </div>
-        <div class="form-group">
-          <!-- DOB ready only field - set in previous page -->
-          <label for="ap_dob">Birthdate</label>
-          <input class="form-control"
-                 id="ap_dob"
-                 name="ap_dob"
-                 disabled
-                 [value]="formatDate( applicant.dateOfBirth )"/>
-        </div>
-        <div class="form-group">
-          <!-- PHN ready only field - set in previous page -->
-          <label for="ap_phn">PHN</label>
-          <input class="form-control"
-                 type="text"
-                 id="ap_phn"
-                 name="ap_phn"
-                 disabled
-                 [ngModel]="applicant.phn">
-        </div>
-        <div class="form-group">
-          <label for="ap_sin">SIN</label>
-          <input class="form-control"
-                 type="text"
-                 id="ap_sin"
-                 name="ap_sin"
-                 fpcareRequired="required,sin-check"
-                 [(ngModel)]="applicant.sin">
-        </div>
+               [(ngModel)]="applicant.lastName"/>
+      </div>
+      <div class="form-group">
+        <!-- DOB ready only field - set in previous page -->
+        <label for="ap_dob">Birthdate</label>
+        <input class="form-control"
+               id="ap_dob"
+               name="ap_dob"
+               disabled
+               [value]="formatDate( applicant.dateOfBirth )"/>
+      </div>
+      <div class="form-group">
+        <!-- PHN ready only field - set in previous page -->
+        <label for="ap_phn">PHN</label>
+        <input class="form-control"
+               type="text"
+               id="ap_phn"
+               name="ap_phn"
+               disabled
+               [ngModel]="applicant.phn">
+      </div>
+      <div class="form-group">
+        <label for="ap_sin">SIN</label>
+        <input class="form-control"
+               type="text"
+               id="ap_sin"
+               name="ap_sin"
+               fpcareRequired="required,sin-check"
+               [(ngModel)]="applicant.sin">
+      </div>
+    </div>
 
-      <!-- Information required to complete this section - ONLY if indicated that the applicant has a spouse -->
-      <div *ngIf="hasSpouse()">
-        <h2>Spouse Information</h2>
+    <!-- Information required to complete this section - ONLY if indicated that the applicant has a spouse -->
+    <div *ngIf="hasSpouse()">
+      <h2 class="border-bottom">Spouse Information</h2>
+      <div class="p-md-2 col-md-6">
         <div class="form-group">
           <label for="sp_firstnm">First Name</label>
           <input class="form-control"
@@ -131,8 +135,8 @@
                  [(ngModel)]="spouse.sin" >
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 
   <aside>
     <strong>Personal Info aside!</strong>
