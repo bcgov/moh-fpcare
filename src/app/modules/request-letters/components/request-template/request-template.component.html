@@ -1,0 +1,69 @@
+<fpcare-page-framework layout='default'>
+
+  <div>
+    <ng-content select="[title]"></ng-content>
+
+    <ng-content></ng-content>
+  </div>
+
+  <div>
+    <h2 class="border-bottom">Your Information</h2>
+  </div>
+
+  <form #formRef="ngForm" novalidate>
+    <div class="row">
+      <div class="bg-light p-md-2 col-md-6">
+        <div class="form-group">
+          <label for="phn">Personal Health Number (PHN)</label>
+          <input class="form-control"
+                 type="text"
+                 id="phn"
+                 name="phn"
+                 fpcareRequired="required,phn-check"
+                 [(ngModel)]="applicant.phn">
+        </div>
+
+        <div class="form-group">
+          <label>Birth Date</label>
+          <fpcare-date
+                  [useCurrentDate]="false"
+                  [date]="applicant.dateOfBirth"
+                  [restrictDate]="past">
+          </fpcare-date>
+        </div>
+
+        <div class="form-group">
+          <label for="mail_pc">Mailing Postal Code</label>
+          <input class="form-control"
+                 type="text"
+                 id="mail_pc"
+                 name="mail_pc"
+                 fpcareRequired="required,postal-code"
+                 [(ngModel)]="applicant.address.postal">
+        </div>
+      </div>
+    </div>
+  </form>
+
+
+  <div class="row p-md-2">
+    <div class="col-md-6 p-md-4">
+      Placeholder for Captcha
+    </div>
+  </div>
+
+  <aside>
+    <p class="todo">
+      <strong>TODO</strong>
+    <li>Need to add captcha to page</li>
+    <li>Add helper text for PHN and Registration Number to "aside"</li>
+    </p>
+  </aside>
+
+  <fpcare-form-action-bar
+          [submitLabel]="buttonLabel()"
+          [canContinue]="canContinue()"
+          (click)="continue()">
+  </fpcare-form-action-bar>
+
+</fpcare-page-framework>

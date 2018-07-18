@@ -29,14 +29,10 @@ const routes: Routes = [
     path: 'registration-status',
     loadChildren: 'app/modules/registration-status/registration-status.module#RegistrationStatusModule'
   },
-
-  // {
-  //   path: 'registration-status',
-  //   component: RegistrationStatusComponent,
-  //   data: {
-  //     breadcrumb: 'Status'
-  //   }
-  // },
+  {
+    path: 'request-letters',
+    loadChildren: 'app/modules/request-letters/request-letters.module#RequestLettersModule'
+  },
   {
     path: '**',
     redirectTo: '',
