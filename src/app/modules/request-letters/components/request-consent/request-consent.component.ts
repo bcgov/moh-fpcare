@@ -46,7 +46,7 @@ export class RequestConsentComponent extends  Base implements OnInit {
 
     if (canContinue) {
 
-      const link = '/request-letters/consent-results';
+      const link = '/consent-letter-results';
       this.router.navigate([link]);
     }
   }
