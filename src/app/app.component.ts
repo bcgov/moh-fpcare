@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DummyDataService } from './services/dummy-data.service';
 import { UserService } from './services/user.service';
 import { FPCareDataService } from './services/fpcare-data.service';
+import {Person} from './models/person.model';
 
 
 @Component({
@@ -21,7 +22,11 @@ export class AppComponent implements OnInit {
   ngOnInit() {
 
     // Purpose: Development - data set for personal information
-    this.fpcareDataService.applicant = this.dummyDataService.createApplicant();
-    this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
+    //this.fpcareDataService.applicant = this.dummyDataService.createApplicant();
+    //this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
+
+    // Registration - eligibility
+    this.fpcareDataService.applicant = new Person();
+    this.fpcareDataService.spouse = new Person();
   }
 }

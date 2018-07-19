@@ -1,19 +1,80 @@
-<fpcare-page-framework layout='single'>
+<fpcare-page-framework layout='default'>
 
-  <p>
-    eligibility works! in page framework
-  </p>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea autem eius qui quod illo vitae corrupti fugiat doloremque, architecto iure rem, mollitia officiis eligendi quisquam soluta culpa incidunt omnis dicta.</p>
-  <p>Cupiditate voluptatem numquam est voluptatibus? Distinctio, assumenda ipsum ipsam doloribus nihil odio ratione officiis accusamus recusandae tempora. Delectus, consequatur expedita natus mollitia exercitationem maiores officia asperiores saepe quam officiis unde?</p>
-  <p>Recusandae ad itaque nam eligendi suscipit blanditiis enim autem nobis rerum quos, voluptatum deleniti, alias adipisci tenetur est. Quo reprehenderit laborum eos at soluta sapiente exercitationem aliquid, quod numquam architecto.</p>
+  <h1>
+    Tell us a bit about who's applying for Fair PharmaCare coverage
+  </h1>
+
+  <div>
+    Enter each person's Personal Health Number as shown on your B.C. Services Card.
+  </div>
+
+  <form #formRef="ngForm" novalidate>
+
+    <h2 class="border-bottom">Your Information</h2>
+
+    <div class="p-md-2 col-md-6">
+      <div class="form-group">
+        <label for="ap_phn">PHN</label>
+        <input class="form-control"
+               type="text"
+               id="ap_phn"
+               name="ap_phn"
+               fpcareRequired="required,phn-check"
+               [(ngModel)]="applicant.phn">
+      </div>
+
+      <div class="form-group">
+        <label for="ap_dob">Birthdate</label>
+        <fpcare-date
+                id="ap_dob"
+                [useCurrentDate]="false"
+                [date]="applicant.dateOfBirth"
+                [restrictDate]="past">
+        </fpcare-date>
+      </div>
+    </div>
+
+    <div  *ngIf="hasSpouse()">
+
+      <h2 class="border-bottom">Spouse Information</h2>
+
+      <div class="p-md-2 col-md-6">
+        <div class="form-group">
+          <label for="ap_phn">PHN</label>
+          <input class="form-control"
+                 type="text"
+                 id="sp_phn"
+                 name="sp_phn"
+                 fpcareRequired="required,phn-check"
+                 [(ngModel)]="spouse.phn">
+        </div>
+
+        <div class="form-group">
+          <label for="sp_dob">Birthdate</label>
+          <fpcare-date
+                  id="sp_dob"
+                  [useCurrentDate]="false"
+                  [date]="spouse.dateOfBirth"
+                  [restrictDate]="past">
+          </fpcare-date>
+        </div>
+      </div>
+    </div>
+
+  </form>
 
   <aside>
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque modi ipsum cumque tempore dolore explicabo libero, dolor dignissimos debitis minus voluptate quas culpa dolores atque inventore unde iure. Reiciendis, ea.
+    <div class="todo">
+      <strong>TODO</strong>
+      <ul>
+        <li>Add helper text to "aside"</li>
+      </ul>
+    </div>
   </aside>
 
   <fpcare-form-action-bar
     [canContinue]="canContinue()"
-    (click)="continue()"
-  ></fpcare-form-action-bar>
+    (click)="continue()">
+  </fpcare-form-action-bar>
 
 </fpcare-page-framework>
