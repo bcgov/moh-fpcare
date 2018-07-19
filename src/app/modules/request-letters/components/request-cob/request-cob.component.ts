@@ -46,7 +46,7 @@ export class RequestCobComponent extends Base implements OnInit {
     console.log('cob: continue ', canContinue );
 
     if (canContinue) {
-      const link = '/request-letters/cob-results';
+      const link = '/cob-letter-results';
       this.router.navigate([link]);
     }
   }

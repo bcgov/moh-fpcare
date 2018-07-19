@@ -21,6 +21,11 @@ import { FPCareDataService } from './services/fpcare-data.service';
 import { UserService } from './services/user.service';
 import { HeaderFooterModule } from './modules/header-footer/header-footer.module';
 import { ValidationService } from './services/validation.service';
+import {RequestCobComponent} from './modules/request-letters/components/request-cob/request-cob.component';
+import {CobResultsComponent} from './modules/request-letters/components/cob-results/cob-results.component';
+import {RequestTemplateComponent} from './modules/request-letters/components/request-template/request-template.component';
+import {RequestConsentComponent} from './modules/request-letters/components/request-consent/request-consent.component';
+import {ConsentResultsComponent} from './modules/request-letters/components/consent-results/consent-results.component';
 
 
 @NgModule({
@@ -29,6 +34,11 @@ import { ValidationService } from './services/validation.service';
     DemoPageComponent,
     HomePageComponent,
     BlankPageComponent,
+    RequestTemplateComponent,
+    RequestCobComponent,
+    RequestConsentComponent,
+    CobResultsComponent,
+    ConsentResultsComponent
   ],
   imports: [
     BrowserModule,
