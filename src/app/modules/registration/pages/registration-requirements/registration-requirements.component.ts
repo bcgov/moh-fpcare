@@ -13,8 +13,12 @@ export class RegistrationRequirementsComponent implements OnInit {
   ngOnInit() {
   }
 
-  continue(){
+  // Methods triggered by the form action bar
+
+  /**
+   * Navigates to the next page
+   */
+  continue() {
     this.router.navigate(['registration/financial']);
   }
-
 }

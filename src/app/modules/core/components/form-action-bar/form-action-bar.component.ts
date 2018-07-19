@@ -6,7 +6,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./form-action-bar.component.scss']
 })
 export class FormActionBarComponent implements OnInit {
-  @Input() submitLabel: string = "Submit";
+  @Input() submitLabel: string = "Continue";
   @Input() canContinue: boolean = true;
   @Output() click: EventEmitter<any> = new EventEmitter<any>();
 

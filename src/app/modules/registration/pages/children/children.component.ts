@@ -49,7 +49,7 @@ export class ChildrenPageComponent extends Base implements OnInit {
   buttonLabel(): string {
 
     if ( this.hasChildren() ) {
-      return 'Submit';
+      return 'Continue';
     }
 
     return 'Skip this step';

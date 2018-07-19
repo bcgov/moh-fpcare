@@ -1,19 +1,70 @@
 <fpcare-page-framework layout='default'>
 
-  <p>
-    registration-requirements works!
-  </p>
+  <h1>Register for Fair PharmaCare</h1>
+  <div>
+    <h2 class="border-bottom">What you need:</h2>
+    <div>
+        To complete your registration online, you will need to provide information about you (registrant), your family,
+        and your spouse.  You must use a compatible web browser.
+      <h3>Application</h3>
+      <div>
+        For each person in your application, you will need to give us their:
+        <ul class="mt-2">
+          <li>Personal Health Number</li>
+          <li>Date of Birth</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h2 class="border-bottom">Registrant and Spouse</h2>
+    <div>
+      For you and your spouse, you will also need to give use your:
+      <ul>
+        <li>Social Insurance Number</li>
+        <li>
+          Net Income (Line 236) from your Tax Return or from your Notice of Assessment from two years ago.
+          <div class="font-italic text-muted ml-4">
+            Example: If you are registering in 2019, use your 2017 tax return information;  If you are registering in
+            2020, use your 2018 tax return information.
+          </div>
+        </li>
+        <li>
+          If applicable, the amount of any income from a Registered Disability Savings Plan (RDSP) from Line 125 of your
+          Income Tax Return from two years ago.
+        </li>
+      </ul>
+    </div>
+  </div>
 
   <aside>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates incidunt commodi alias obcaecati et repellendus dolores voluptas. Ex facilis corrupti beatae, sequi velit optio debitis voluptas dolorem perferendis iure! Eius!</p>
-    <p>Excepturi quaerat quia laborum sunt. Esse inventore perspiciatis, incidunt dignissimos in mollitia modi hic corrupti rerum dolorem nobis possimus quaerat quisquam nemo quis temporibus voluptas eos! Nihil officia asperiores voluptatum!</p>
-    <p>Quaerat delectus deserunt doloremque ipsum aliquid earum illum reiciendis ad, et, velit, repellendus minima similique? Sit aut ullam laboriosam aperiam atque cum, sed maxime doloremque veritatis, nam quaerat, rem dolore.</p>
+    <div class="todo">
+      <strong>TODO</strong>
+      <ul>
+        <li>Add URL - online registration right for you</li>
+        <li>Hi-Fi mockup looks like italic fonts are smaller not sure - need to confirm</li>
+      </ul>
+    </div>
+    <p>
+      Have you read our information about who should register online?  If not, visit
+      <a href="javascript:void(0)">
+        online registration right for you?
+      </a>
+    </p>
+    <p>
+      Each screen has a navigation bar.  Use these buttons to move forward or backward through the screens.  Please do
+      not use the Back, Forward and Home buttons of your Web browser.
+    </p>
+    <p>
+      The first screen is a checklist of the information you will need to give us.  In addition to the checklist, there
+      are 6-8 more screens.  The entire registration process is estimated to take less than 30 minutes, and needs to be
+      completed in a single session to be saved.
+    </p>
   </aside>
 
 
-  <a (click)="continue()">
-    <button class="btn btn-block btn-lg btn-secondary">
-      Register for Fair PharmaCare
-    </button>
-  </a>
+  <fpcare-form-action-bar
+          (click)="continue()">
+  </fpcare-form-action-bar>
+
 </fpcare-page-framework>
