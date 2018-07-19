@@ -11,6 +11,9 @@ import {Person} from '../../../../models/person.model';
 })
 export class EligibilityPageComponent extends AbstractFormComponent implements OnInit {
 
+  /** Indicates whether or not the same PHN has been used for spouse */
+  private _uniquePhnError = false;
+
   constructor( protected router: Router
              , private fpcareDataService: FPCareDataService ) {
     super( router );
@@ -36,6 +39,14 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
   }
 
   /**
+   *
+   * @returns {boolean}
+   */
+  hasUniquePhnError(): boolean {
+    return this._uniquePhnError;
+  }
+
+  /**
    * Flag indicating presence of spouse
    * Displays spouse information section if true, otherwise it's hidden
    * @returns {boolean}
@@ -49,14 +60,22 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    * @returns {boolean}
    */
   canContinue(): boolean {
-    return this.form.valid;
+
+    // Check PHNs are unique
+    if ( this.hasSpouse()  && !!this.applicant.phn && !!this.spouse.phn ) {
+      this._uniquePhnError = (this.applicant.phn === this.spouse.phn) ? true : false ;
+    }
+    return this.form.valid && !this._uniquePhnError;
   }
 
   /**
    * Navigates to next page
    */
   continue(): void {
-    this.navigate('registration/personal-info');
+
+    if ( this.canContinue() ) {
+      this.navigate('registration/personal-info');
+    }
   }
 
 }

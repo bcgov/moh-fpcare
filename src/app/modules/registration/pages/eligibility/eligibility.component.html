@@ -49,6 +49,10 @@
                  [(ngModel)]="spouse.phn">
         </div>
 
+        <div *ngIf="hasUniquePhnError()" role="alert" aria-live="assertive">
+          <div class="text-danger">This PHN was already used for registrant.</div>
+        </div>
+
         <div class="form-group">
           <label for="sp_dob">Birthdate</label>
           <fpcare-date
@@ -68,6 +72,7 @@
       <strong>TODO</strong>
       <ul>
         <li>Add helper text to "aside"</li>
+        <li>Check Registrant's and Spouse have different PHNs</li>
       </ul>
     </div>
   </aside>
