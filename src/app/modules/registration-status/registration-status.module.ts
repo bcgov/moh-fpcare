@@ -4,7 +4,7 @@ import { RegistrationStatusRoutingModule } from './registration-status-routing.m
 import { CoreModule } from '../core/core.module';
 import { FormsModule } from '@angular/forms';
 import {RegistrationStatusComponent} from './components/request-status/registration-status.component';
-import { StatusResultsComponent } from './components/status-results/status-results.component';
+import {StatusResultsComponent} from './components/status-results/status-results.component';
 
 
 @NgModule({
