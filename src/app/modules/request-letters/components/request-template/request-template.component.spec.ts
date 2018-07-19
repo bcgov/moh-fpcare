@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { RequestTemplateComponent } from './request-template.component';
+import {RequestTemplateComponent} from './request-template.component';
 
 describe('RequestTemplateComponent', () => {
   let component: RequestTemplateComponent;

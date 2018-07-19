@@ -52,17 +52,19 @@
   </form>
 
   <aside>
-    <p class="todo">
-      <strong>TODO</strong>
-    <li>Need to add captcha to page</li>
-    <li>Add helper text for PHN and Registration Number to "aside"</li>
-    </p>
+    <div class="todo">
+        <strong>TODO</strong>
+        <ul>
+            <li>Need to add captcha to page</li>
+            <li>Add helper text for PHN and Registration Number to "aside"</li>
+        </ul>
+    </div>
   </aside>
 
   <fpcare-form-action-bar
-          [submitLabel]="pageTitle"
+          [submitLabel]="buttonLabel"
           [canContinue]="canContinue()"
-          (click)="onClick()">
+          (click)="continue()">
   </fpcare-form-action-bar>
 
 </fpcare-page-framework>

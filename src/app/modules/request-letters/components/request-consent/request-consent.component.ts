@@ -15,15 +15,18 @@ export class RequestConsentComponent extends  Base implements OnInit {
   /** Applicant requesting registration status */
   private _applicant: Person = new Person();
 
-  constructor( private router: Router
-    , private fpcareDataService: FPCareDataService
-    , private dummyDataService: DummyDataService ) {
+  constructor( private fpcareDataService: FPCareDataService
+             , private dummyDataService: DummyDataService ) {
     super();
   }
 
   ngOnInit() {
   }
 
+  /**
+   * Object for recording registrant's information
+   * @returns {Person}
+   */
   get applicant(): Person {
     return this._applicant;
   }
@@ -37,17 +40,10 @@ export class RequestConsentComponent extends  Base implements OnInit {
   }
 
   /**
-   *
-   * @param {boolean} canContinue
+   * Page to navaigate to on continue
+   * @returns {string}
    */
-  continue( canContinue: boolean ) {
-
-    console.log('consent: continue ', canContinue );
-
-    if (canContinue) {
-
-      const link = '/consent-letter-results';
-      this.router.navigate([link]);
-    }
+  get nextPg(): string {
+    return '/cob-letter-results';
   }
 }

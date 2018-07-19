@@ -1,32 +1,33 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Person} from '../../../../models/person.model';
-import {Base} from '../../../core/components/base/base.class';
-import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
 import {DummyDataService} from '../../../../services/dummy-data.service';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 
 @Component({
   selector: 'fpcare-registration-status',
   templateUrl: './registration-status.component.html',
   styleUrls: ['./registration-status.component.scss']
 })
-export class RegistrationStatusComponent extends Base implements OnInit {
-
-  @ViewChild('formRef') form: NgForm;
+export class RegistrationStatusComponent extends AbstractFormComponent implements OnInit {
 
   /** Applicant requesting registration status */
   private _applicant: Person = new Person();
 
-  constructor( private router: Router
+  constructor( protected router: Router
              , private fpcareDataService: FPCareDataService
              , private dummyDataService: DummyDataService ) {
-    super();
+    super( router );
   }
 
   ngOnInit() {
   }
 
+  /**
+   * Structure to record data for request
+   * @returns {Person}
+   */
   get applicant(): Person {
     return this._applicant;
   }

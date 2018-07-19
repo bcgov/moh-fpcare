@@ -4,13 +4,14 @@ import {Person} from '../../../../models/person.model';
 import {Base} from '../../../core/components/base/base.class';
 import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
+import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 
 @Component({
   selector: 'fpcare-children',
   templateUrl: './children.component.html',
   styleUrls: ['./children.component.scss']
 })
-export class ChildrenPageComponent extends Base implements OnInit {
+export class ChildrenPageComponent extends AbstractFormComponent implements OnInit {
 
   /* Flag to disable the Add child button so that no more children can be
    * added to list.  Currently a maximum of 18 children can be added to
@@ -18,29 +19,37 @@ export class ChildrenPageComponent extends Base implements OnInit {
    */
   private _disableAddChild = false;
 
-  /** Form that contains fields to be validated */
-  @ViewChild('formRef') form: NgForm;
-
   constructor( private fpcService: FPCareDataService
-             , private router: Router ) {
-    super();
+             , protected router: Router ) {
+    super( router );
   }
 
   ngOnInit() {
   }
 
+  /**
+   *
+   * @returns {Person[]}
+   */
   get children(): Person[] {
     return this.fpcService.dependants ? this.fpcService.dependants : [];
   }
 
+  /**
+   *
+   * @returns {boolean}
+   */
   hasChildren(): boolean {
     return this.fpcService.hasChildren();
   }
 
+  /**
+   *
+   * @returns {boolean}
+   */
   isAddDisabled(): boolean {
     return this._disableAddChild;
   }
-  // Methods triggered by the form action bar
 
   /**
    * Label for button depending on the whether the applicant has children
@@ -62,6 +71,8 @@ export class ChildrenPageComponent extends Base implements OnInit {
     const child: Person = new Person;
     this.fpcService.addChild();
   }
+
+  // Methods triggered by the form action bar
 
   /**
    * Indicated whether or not applicant can continue process

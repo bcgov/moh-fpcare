@@ -1,21 +1,23 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Person} from '../../../../models/person.model';
+import {AbstractFormComponent} from '../../../../models/abstract-form-component';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'fpcare-request-template',
   templateUrl: './request-template.component.html',
   styleUrls: ['./request-template.component.scss']
 })
-export class RequestTemplateComponent implements OnInit {
-
-  @ViewChild('formRef') form: NgForm;
+export class RequestTemplateComponent extends AbstractFormComponent implements OnInit {
 
   @Input() applicant: Person;
-  @Input() pageTitle: string;
-  @Output() onContinue: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Input() buttonLabel: string;
+  @Input() nextPg: string;
 
-  constructor() { }
+  constructor( protected router: Router ) {
+    super( router );
+  }
 
   ngOnInit() {
   }
@@ -30,7 +32,7 @@ export class RequestTemplateComponent implements OnInit {
     return ( this.form.valid );
   }
 
-  onClick() {
-    this.onContinue.emit( this.canContinue() );
+  continue() {
+    this.router.navigate([this.nextPg] );
   }
 }

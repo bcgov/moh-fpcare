@@ -1,27 +1,23 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Person} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
-import {Base} from '../../../core/components/base/base.class';
 import {Router} from '@angular/router';
-import {NgForm} from '@angular/forms';
 import {SimpleDate} from '../../../core/components/date/simple-date.interface';
+import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 
 @Component({
   selector: 'fpcare-personal-info',
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss']
 })
-export class PersonalInfoPageComponent extends Base implements OnInit {
+export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit {
 
   /** Format string for displaying dates in this component */
   dateFormat: string = 'yyyy/mm/dd';
 
-  /** Form that contains fields to be validated */
-  @ViewChild('formRef') form: NgForm;
-
   constructor( private fpcService: FPCareDataService
-             , private router: Router ) {
-    super();
+             , protected router: Router ) {
+    super( router );
   }
 
   ngOnInit() {
