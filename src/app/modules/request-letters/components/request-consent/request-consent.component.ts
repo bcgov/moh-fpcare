@@ -1,5 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import {Person} from '../../../../models/person.model';
 import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
@@ -7,11 +6,11 @@ import {DummyDataService} from '../../../../services/dummy-data.service';
 import {Base} from '../../../core/components/base/base.class';
 
 @Component({
-  selector: 'fpcare-request-cob',
-  templateUrl: './request-cob.component.html',
-  styleUrls: ['./request-cob.component.scss']
+  selector: 'fpcare-request-consent',
+  templateUrl: './request-consent.component.html',
+  styleUrls: ['./request-consent.component.scss']
 })
-export class RequestCobComponent extends Base implements OnInit {
+export class RequestConsentComponent extends  Base implements OnInit {
 
   /** Applicant requesting registration status */
   private _applicant: Person = new Person();
@@ -34,7 +33,7 @@ export class RequestCobComponent extends Base implements OnInit {
    * @returns {string}
    */
   get buttonLabel(): string {
-    return 'Request Confirmation';
+    return 'Request Consent';
   }
 
   /**
@@ -43,10 +42,11 @@ export class RequestCobComponent extends Base implements OnInit {
    */
   continue( canContinue: boolean ) {
 
-    console.log('cob: continue ', canContinue );
+    console.log('consent: continue ', canContinue );
 
     if (canContinue) {
-      const link = '/request-letters/cob-results';
+
+      const link = '/request-letters/consent-results';
       this.router.navigate([link]);
     }
   }

@@ -43,14 +43,13 @@
         </div>
       </div>
     </div>
-  </form>
-
-
-  <div class="row p-md-2">
-    <div class="col-md-6 p-md-4">
-      Placeholder for Captcha
+    
+    <div class="row p-md-2">
+      <div class="col-md-6 p-md-4">
+        Placeholder for Captcha
+      </div>
     </div>
-  </div>
+  </form>
 
   <aside>
     <p class="todo">
@@ -61,9 +60,9 @@
   </aside>
 
   <fpcare-form-action-bar
-          [submitLabel]="buttonLabel()"
+          [submitLabel]="pageTitle"
           [canContinue]="canContinue()"
-          (click)="continue()">
+          (click)="onClick()">
   </fpcare-form-action-bar>
 
 </fpcare-page-framework>

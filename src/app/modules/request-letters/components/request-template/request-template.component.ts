@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Person} from '../../../../models/person.model';
 
@@ -12,18 +12,12 @@ export class RequestTemplateComponent implements OnInit {
   @ViewChild('formRef') form: NgForm;
 
   @Input() applicant: Person;
+  @Input() pageTitle: string;
+  @Output() onContinue: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() { }
 
   ngOnInit() {
-  }
-
-  /**
-   * Label for button depending on the whether the applicant has children
-   * @returns {string}
-   */
-  buttonLabel(): string {
-    return 'Request Confirmation';
   }
 
   // Methods triggered by the form action bar
@@ -33,11 +27,10 @@ export class RequestTemplateComponent implements OnInit {
    * @returns {boolean}
    */
   canContinue(): boolean {
-    return this.form.valid;
+    return ( this.form.valid );
   }
 
-  // TODO: Code functionality
-  continue() {
-
+  onClick() {
+    this.onContinue.emit( this.canContinue() );
   }
 }
