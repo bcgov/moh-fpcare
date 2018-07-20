@@ -1,9 +1,10 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
+import {Component, DoCheck, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {Person} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
 import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
+import {FPCareDateComponent} from '../../../core/components/date/date.component';
 
 @Component({
   selector: 'fpcare-personal-info',
@@ -11,6 +12,9 @@ import {AbstractFormComponent} from '../../../../models/abstract-form-component'
   styleUrls: ['./personal-info.component.scss']
 })
 export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit, DoCheck {
+
+  /** Access to date component */
+  @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
   /** Format string for displaying dates in this component */
   dateFormat: string = 'yyyy/mm/dd';
@@ -27,7 +31,20 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * Detect changes, check if form is valid
    */
   ngDoCheck() {
-    this._canContinue = this.form.valid;
+
+    let valid = this.form.valid;
+
+    valid = valid && !!this.dobForm;
+    if ( !!this.dobForm ) {
+      valid = valid && (this.dobForm.map(x => {
+        if (x.required && x.isValid()) {
+          return x.form.valid;
+        }
+      })
+        .filter(x => x !== true).length === 0);
+    }
+
+    this._canContinue = valid;
   }
 
   /**

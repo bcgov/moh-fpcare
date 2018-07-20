@@ -44,6 +44,6 @@ export class RequestConsentComponent extends  Base implements OnInit {
    * @returns {string}
    */
   get nextPg(): string {
-    return '/cob-letter-results';
+    return '/request-letter/consent-results';
   }
 }

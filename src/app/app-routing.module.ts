@@ -35,19 +35,19 @@ const routes: Routes = [
   },
   // These pages need to be directed to homepage in the event the URL is unknown -- BEGIN
   {
-    path: 'request-cob-letter',
+    path: 'request-letter/cob',
     component: RequestCobComponent
   },
   {
-    path: 'cob-letter-results',
+    path: 'request-letter/cob-results',
     component: CobResultsComponent
   },
   {
-    path: 'request-consent-letter',
+    path: 'request-letter/consent',
     component: RequestConsentComponent
   },
   {
-    path: 'consent-letter-results',
+    path: 'request-letter/consent-results',
     component: ConsentResultsComponent
   },
   // -- END
