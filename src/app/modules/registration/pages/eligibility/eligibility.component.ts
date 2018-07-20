@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { Router } from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
+import {ControlContainer, NgForm} from '@angular/forms';
 
 @Component({
   selector: 'fpcare-eligibility',
@@ -73,6 +74,9 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    */
   continue(): void {
 
+    console.log( 'Form: ', this.form );
+
+    console.log('form value', this.form.value);
     if ( this.canContinue() ) {
       this.navigate('registration/personal-info');
     }
