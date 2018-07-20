@@ -1,17 +1,16 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, DoCheck, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
-import {Base} from '../../../core/components/base/base.class';
-import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
+import {FPCareDateComponent} from '../../../core/components/date/date.component';
 
 @Component({
   selector: 'fpcare-children',
   templateUrl: './children.component.html',
   styleUrls: ['./children.component.scss']
 })
-export class ChildrenPageComponent extends AbstractFormComponent implements OnInit {
+export class ChildrenPageComponent extends AbstractFormComponent implements OnInit, DoCheck {
 
   /* Flag to disable the Add child button so that no more children can be
    * added to list.  Currently a maximum of 18 children can be added to
@@ -19,12 +18,35 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   private _disableAddChild = false;
 
+  /** Access to date component */
+  @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
+
   constructor( private fpcService: FPCareDataService
              , protected router: Router ) {
     super( router );
   }
 
   ngOnInit() {
+  }
+
+  /**
+   * Detect changes, check if form is valid
+   */
+  ngDoCheck() {
+
+    let valid = (!!this.form) ? this.form.valid : !!!this.form;
+
+    valid = valid && !!this.dobForm;
+    if ( !!this.dobForm ) {
+      valid = valid && (this.dobForm.map(x => {
+        if (x.required && x.isValid()) {
+          return x.form.valid;
+        }
+      })
+        .filter(x => x !== true).length === 0);
+    }
+
+    this._canContinue = valid;
   }
 
   /**
@@ -73,15 +95,6 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   }
 
   // Methods triggered by the form action bar
-
-  /**
-   * Indicated whether or not applicant can continue process
-   * @returns {boolean}
-   */
-  canContinue(): boolean {
-    // Form only appears if there are children
-    return (!!this.form) ? this.form.valid : !!!this.form;
-  }
 
   /**
    * Navigates to the next page

@@ -1,16 +1,19 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import { AbstractFormComponent } from '../../../../models/abstract-form-component';
-import { Router } from '@angular/router';
+import {Component, DoCheck, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {AbstractFormComponent} from '../../../../models/abstract-form-component';
+import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
-import {ControlContainer, NgForm} from '@angular/forms';
+import {FPCareDateComponent} from '../../../core/components/date/date.component';
 
 @Component({
   selector: 'fpcare-eligibility',
   templateUrl: './eligibility.component.html',
   styleUrls: ['./eligibility.component.scss']
 })
-export class EligibilityPageComponent extends AbstractFormComponent implements OnInit {
+export class EligibilityPageComponent extends AbstractFormComponent implements OnInit, DoCheck {
+
+  /** Access to date component */
+  @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
   /** Indicates whether or not the same PHN has been used for spouse */
   private _uniquePhnError = false;
@@ -21,6 +24,33 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
   }
 
   ngOnInit() {
+  }
+
+  /**
+   * Detect changes, check if form is valid
+   */
+  ngDoCheck() {
+
+    let valid = this.form.valid;
+
+    // Check PHNs are unique
+    if ( this.hasSpouse() && !!this.applicant.phn && !!this.spouse.phn) {
+
+      this._uniquePhnError = (this.applicant.phn === this.spouse.phn) ? true : false;
+      valid = valid && !this._uniquePhnError;
+    }
+
+    valid = valid && !!this.dobForm;
+    if ( !!this.dobForm ) {
+      valid = valid && (this.dobForm.map(x => {
+        if (x.required && x.isValid()) {
+          return x.form.valid;
+        }
+      })
+        .filter(x => x !== true).length === 0);
+    }
+
+    this._canContinue = valid;
   }
 
   /**
@@ -57,29 +87,11 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
   }
 
   /**
-   * Indicates whether user can proceed to next page
-   * @returns {boolean}
-   */
-  canContinue(): boolean {
-
-    // Check PHNs are unique
-    if ( this.hasSpouse()  && !!this.applicant.phn && !!this.spouse.phn ) {
-      this._uniquePhnError = (this.applicant.phn === this.spouse.phn) ? true : false ;
-    }
-    return this.form.valid && !this._uniquePhnError;
-  }
-
-  /**
    * Navigates to next page
    */
   continue(): void {
-
-    console.log( 'Form: ', this.form );
-
-    console.log('form value', this.form.value);
     if ( this.canContinue() ) {
       this.navigate('registration/personal-info');
     }
   }
-
 }

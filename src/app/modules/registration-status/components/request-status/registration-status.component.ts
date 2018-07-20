@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 import {Person} from '../../../../models/person.model';
 import {Router} from '@angular/router';
 import {DummyDataService} from '../../../../services/dummy-data.service';
@@ -10,7 +10,7 @@ import {AbstractFormComponent} from '../../../../models/abstract-form-component'
   templateUrl: './registration-status.component.html',
   styleUrls: ['./registration-status.component.scss']
 })
-export class RegistrationStatusComponent extends AbstractFormComponent implements OnInit {
+export class RegistrationStatusComponent extends AbstractFormComponent implements OnInit, DoCheck {
 
   /** Applicant requesting registration status */
   private _applicant: Person = new Person();
@@ -25,6 +25,13 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   }
 
   /**
+   * Detect changes, check if form is valid
+   */
+  ngDoCheck() {
+    this._canContinue = this.form.valid;
+  }
+
+  /**
    * Structure to record data for request
    * @returns {Person}
    */
@@ -34,15 +41,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
 
   // Methods triggered by the form action bar
-
-  /**
-   * Indicated whether or not applicant can continue process
-   * @returns {boolean}
-   */
-  canContinue(): boolean {
-    return this.form.valid;
-  }
-
   // TODO: Code functionality
   continue() {
 

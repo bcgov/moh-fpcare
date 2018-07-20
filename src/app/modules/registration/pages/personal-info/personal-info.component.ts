@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, DoCheck, OnInit} from '@angular/core';
 import {Person} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
@@ -10,7 +10,7 @@ import {AbstractFormComponent} from '../../../../models/abstract-form-component'
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss']
 })
-export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit {
+export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit, DoCheck {
 
   /** Format string for displaying dates in this component */
   dateFormat: string = 'yyyy/mm/dd';
@@ -21,6 +21,13 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   }
 
   ngOnInit() {
+  }
+
+  /**
+   * Detect changes, check if form is valid
+   */
+  ngDoCheck() {
+    this._canContinue = this.form.valid;
   }
 
   /**
@@ -55,14 +62,6 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   }
 
   // Methods triggered by the form action bar
-
-  /**
-   * Indicated whether or not applicant can continue process
-   * @returns {boolean}
-   */
-  canContinue(): boolean {
-    return this.form.valid;
-  }
 
   /**
    * Navigates to the next page

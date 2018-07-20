@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {Component, DoCheck, Input, OnInit} from '@angular/core';
 import {Person} from '../../../../models/person.model';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {Router} from '@angular/router';
@@ -9,7 +8,7 @@ import {Router} from '@angular/router';
   templateUrl: './request-template.component.html',
   styleUrls: ['./request-template.component.scss']
 })
-export class RequestTemplateComponent extends AbstractFormComponent implements OnInit {
+export class RequestTemplateComponent extends AbstractFormComponent implements OnInit, DoCheck {
 
   @Input() applicant: Person;
   @Input() buttonLabel: string;
@@ -22,17 +21,18 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   ngOnInit() {
   }
 
-  // Methods triggered by the form action bar
-
   /**
-   * Indicated whether or not applicant can continue process
-   * @returns {boolean}
+   * Detect changes, check if form is valid
    */
-  canContinue(): boolean {
-    return ( this.form.valid );
+  ngDoCheck() {
+    this._canContinue = this.form.valid;
   }
 
+  // Methods triggered by the form action bar
+
   continue() {
-    this.router.navigate([this.nextPg] );
+    if ( this.canContinue() ) {
+      this.router.navigate([this.nextPg]);
+    }
   }
 }
