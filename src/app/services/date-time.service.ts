@@ -21,7 +21,7 @@ export class DateTimeService {
 
   // Formatting functions
   formatSimpleDate(  dt: SimpleDate ): string {
-    const dtObj = new Date( dt.year, dt.month - 1, dt.day );
+    const dtObj = new Date( dt.year, dt.month, dt.day );
     return this.formatDate( dtObj );
   }
 }

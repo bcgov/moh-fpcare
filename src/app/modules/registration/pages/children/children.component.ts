@@ -12,12 +12,6 @@ import {FPCareDateComponent} from '../../../core/components/date/date.component'
 })
 export class ChildrenPageComponent extends AbstractFormComponent implements OnInit, DoCheck {
 
-  /* Flag to disable the Add child button so that no more children can be
-   * added to list.  Currently a maximum of 18 children can be added to
-   * an account
-   */
-  private _disableAddChild = false;
-
   /** Access to date component */
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
@@ -36,14 +30,18 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
     let valid = (!!this.form) ? this.form.valid : !!!this.form;
 
+    console.log( 'valid Form: ', valid );
+
     valid = valid && !!this.dobForm;
     if ( !!this.dobForm ) {
-      valid = valid && (this.dobForm.map(x => {
+      const dobList = this.dobForm.map(x => {
         if (x.required && x.isValid()) {
           return x.form.valid;
         }
       })
-        .filter(x => x !== true).length === 0);
+        .filter(x => x !== true);
+
+      valid = valid && (dobList.length === 0);
     }
 
     this._canContinue = valid;
@@ -54,7 +52,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * @returns {Person[]}
    */
   get children(): Person[] {
-    return this.fpcService.dependants ? this.fpcService.dependants : [];
+    return this.fpcService.dependants;
   }
 
   /**
@@ -70,7 +68,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * @returns {boolean}
    */
   isAddDisabled(): boolean {
-    return this._disableAddChild;
+    return !this.fpcService.canAddChild();
   }
 
   /**
@@ -90,7 +88,6 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * Adds person object to dependants list
    */
   addChild() {
-    const child: Person = new Person;
     this.fpcService.addChild();
   }
 

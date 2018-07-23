@@ -17,7 +17,15 @@ export class SinValidationComponent extends BaseValidationComponent {
   public static ERROR_STRING = 'fpc-sin';
 
   public static validate(el: ElementRef): boolean {
-    return ValidationService.validateSIN( el.nativeElement.value );
+    const inputVal = el.nativeElement.value;
+
+    // Empty field
+    if (inputVal == null || inputVal.length < 1) {
+      return true;
+    }
+    //TODO: Uncomment when issues resolved
+    //return ValidationService.validateSIN( inputVal );
+    return true;
   }
 
 }

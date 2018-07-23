@@ -55,6 +55,7 @@ export class FPCareDataService {
    * @returns {Person[]}
    */
   get dependants(): Person[] {
+    console.log( 'dependants: ', this._dependants );
     return this._dependants;
   }
 
@@ -87,7 +88,6 @@ export class FPCareDataService {
    */
   addChild() {
     const child: Person = new Person;
-
 
     if (this.canAddChild()){
       this._dependants.push(child);

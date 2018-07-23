@@ -24,13 +24,13 @@ export class AppComponent implements OnInit {
 
     if ( environment.useDummyData ) {
 
-      // Purpose: Development - data set for personal information
-      //this.fpcareDataService.applicant = this.dummyDataService.createApplicant();
-      //this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
-
-      // Registration - eligibility
-      this.fpcareDataService.applicant = this.dummyDataService.newApplicant();
-      this.fpcareDataService.spouse = this.dummyDataService.newSpouse();
+      // Purpose: Development
+      this.fpcareDataService.applicant = this.dummyDataService.createApplicant();
+      console.log( 'applicant: ', this.fpcareDataService.applicant );
+      this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
+      console.log( 'spouse: ', this.fpcareDataService.spouse );
+      this.fpcareDataService.dependants = this.dummyDataService.createChildren( 2 );
+      console.log( 'children: ', this.fpcareDataService.dependants );
     }
   }
 }

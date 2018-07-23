@@ -19,53 +19,44 @@ export class DummyDataService {
   constructor() { }
 
   // Applicant for test purpose - personal info
-  createApplicant(): Person {
-    const result: Person = new Person;
-
-    result.dateOfBirth = this.generateDateOfBirth();
-    result.phn = this.generatePHN();
-
-    return result;
-  }
-
-  newApplicant(): Person {
-    return new Person;
+  createApplicant( populated: boolean = true ): Person {
+    return populated ? this.createAdult() : new Person();
   }
 
   // Spouse for test purpose - personal info
-  createSpouse(): Person {
+  createSpouse( populated: boolean = true ): Person {
+    return populated ? this.createAdult() : new Person();
+  }
+
+  createAdult(): Person {
     const result: Person = new Person;
 
+    result.name = this.generatePersonName();
     result.dateOfBirth = this.generateDateOfBirth();
     result.phn = this.generatePHN();
+    result.sin = this.generateSIN();
 
     return result;
   }
 
-  newSpouse(): Person {
-    return new Person;
-  }
-
-  // -- Generating Models
-  /** Returns an array of people with random names.*/
-  createPeople(count): Person[] {
-    const result: Person[] = [];
-    const today = new Date();
-    /** We want nearFuture show that they show up in Upcoming Renewals */
-    const nearFuture =  new Date(today.getFullYear(), today.getMonth() + 4, today.getDate());
+  // Applicant for test purpose - personal info
+  createChildren( count: number ): Person[] {
+    const result: Person [] = [];
 
     for (let index = 0; index < count; index++) {
       const person = new Person();
       person.name = this.generatePersonName();
-      person.dateOfBirth = this.generateDateOfBirth();
-      person.phone = '250-555-5555';
-      person.address = this.generateAddress();
-      person.email = person.firstName[0].toLowerCase() + person.lastName.toLowerCase() + '@gmail.com';
+      person.dateOfBirth = this.generateDateOfBirth( 1, 19 );
+      person.phn = this.generatePHN();
       result.push(person);
     }
 
+
     return result;
   }
+
+  // -- Generating Models
+  /** Returns an array of people with random names.*/
 
   /**
    * JSON Object
@@ -96,14 +87,15 @@ export class DummyDataService {
     return `${this.getRandomElFromArray(firstNames)} ${this.getRandomElFromArray(middleInitials)} ${this.getRandomElFromArray(lastNames)}`;
   }
 
-  private generateDateOfBirth(): SimpleDate {
+  private generateDateOfBirth( minAge: number = 20, maxAge: number = 80): SimpleDate {
     const today = new Date();
-    const pastDate = new Date(1970, 1, 0);
-    const dob = this.randomDate(today, pastDate);
+    const minDate = new Date( today.getFullYear() - minAge, 1, today.getDate() - 10);
+    const maxDate = new Date( today.getFullYear() - maxAge, 1, today.getDate() - 10);
+    const dob = this.randomDate( minDate, maxDate );
 
     return {
       year: dob.getFullYear(),
-      month: dob.getMonth() - 1, //Moment starts month indice at 0.
+      month: dob.getMonth(),
       day: dob.getDate()
     };
   }
@@ -111,6 +103,11 @@ export class DummyDataService {
   private generatePHN(): string {
     const phn = `${Math.ceil(Math.random() * 9999999999 )}`;
     return phn;
+  }
+
+  private generateSIN(): string {
+    const sin = `${Math.ceil(Math.random() * 699999999 )}`;
+    return sin;
   }
 
   private generateAddress(): Address {

@@ -29,7 +29,9 @@ export class PhnValidationComponent extends BaseValidationComponent {
          inputVal.length < ValidationService.MIN_PHN_LENGTH ) {
       return false;
     }
-    return ValidationService.validatePHN( inputVal, true );
+    //TODO: Uncomment when issues resolved
+    //return ValidationService.validatePHN( inputVal, true );
+    return true;
   }
 
 }
