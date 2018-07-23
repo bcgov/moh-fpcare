@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {Person} from '../models/person.model';
-import * as moment from 'moment';
 
 @Injectable()
 export class FPCareDataService {
@@ -103,16 +102,6 @@ export class FPCareDataService {
     return this._dependants.length <= this.MAX_DEPENDANTS;
   }
 
-
-  /**
-   * Converts date to a data string of a specified format (e.g. YYYY/MM/DD)
-   * @param {Date} date
-   * @param {string} dateFormat
-   * @returns {string}
-   */
-  formatDate(date: Date, dateFormat: string = 'dd/mm/yyyy'): string {
-    return moment(date).format( dateFormat.toUpperCase() );
-  }
 
   /**
    * Convert the person structure into a JSON formatted request

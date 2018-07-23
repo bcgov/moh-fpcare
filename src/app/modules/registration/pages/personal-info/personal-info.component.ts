@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
+import {DateTimeService} from '../../../../services/date-time.service';
 
 @Component({
   selector: 'fpcare-personal-info',
@@ -16,10 +17,9 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   /** Access to date component */
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
-  /** Format string for displaying dates in this component */
-  dateFormat: string = 'yyyy/mm/dd';
 
   constructor( private fpcService: FPCareDataService
+             , private dateTimeService: DateTimeService
              , protected router: Router ) {
     super( router );
   }
@@ -75,7 +75,23 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   // Formatting functions
   formatDate( dt: SimpleDate ): string {
     const dtObj = new Date( dt.year, dt.month - 1, dt.day );
-    return this.fpcService.formatDate( dtObj );
+    return this.dateTimeService.formatDate( dtObj );
+  }
+
+  /**
+   *
+   * @returns {string}
+   */
+  getApplicantDob(): string {
+    return this.dateTimeService.formatSimpleDate( this.applicant.dateOfBirth );
+  }
+
+  /**
+   *
+   * @returns {string}
+   */
+  getSpouseDob(): string {
+    return this.dateTimeService.formatSimpleDate( this.spouse.dateOfBirth );
   }
 
   // Methods triggered by the form action bar

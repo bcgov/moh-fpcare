@@ -52,7 +52,7 @@
                id="ap_dob"
                name="ap_dob"
                disabled
-               [value]="formatDate( applicant.dateOfBirth )"/>
+               [value]="getApplicantDob()"/>
       </div>
       <div class="form-group">
         <!-- PHN ready only field - set in previous page -->
@@ -112,7 +112,7 @@
                  id="sp_dob"
                  name="sp_dob"
                  disabled
-                 [value]="formatDate( spouse.dateOfBirth )"/>
+                 [value]="getSpouseDob()"/>
         </div>
         <div class="form-group">
           <!-- PHN ready only field - set in previous page -->
