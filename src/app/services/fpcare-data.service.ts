@@ -22,6 +22,7 @@ export class FPCareDataService {
    * @returns {Person}
    */
   get applicant(): Person {
+    /** If Person Object does not exist, create new Object **/
     return this._applicant;
   }
 
@@ -38,6 +39,7 @@ export class FPCareDataService {
    * @returns {Person}
    */
   get spouse(): Person {
+    /** If Person Object does not exist, create new Object **/
     return this._spouse;
   }
 

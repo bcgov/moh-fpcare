@@ -16,11 +16,11 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   /** Access to date component */
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
-  /** Applicant requesting registration status */
-  private _applicant: Person = new Person();
-
   private _disableRegNum = false;
   private _disablePhn = false;
+
+  /** New person object to store data for request */
+  private _applicant = new Person();
 
   constructor( protected router: Router
              , private fpcareDataService: FPCareDataService
@@ -36,29 +36,48 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    */
   ngDoCheck() {
 
-    if ( !!!this.applicant.fpcRegNumber &&
-         !!!this.applicant.phn &&
-         !!!this.applicant.address.postal &&
-         this.isDobEmpty()) {
-      // empty fields
-      this._disableRegNum = false;
-      this._disablePhn = false;
+    if ( this.form.dirty || this.form.touched ||
+       ( !!this.dobForm && this.dobForm.map(x => {
+         if (x.form.dirty || x.form.touched) {
+           return x;
+         }
+       }).filter( x => x ).length > 0 ) ) {
+      console.log( 'Form touched or dirty' );
+      if ( this._disablePhn && (!!!this.applicant.fpcRegNumber ||
+        (!!this.applicant.fpcRegNumber && this.applicant.fpcRegNumber.length < 1)) ) {
 
-      console.log('Form: ', this.form);
-      // Reset for to Pristine/Untouched
-      // TODO: Figure out how to clear errors if set
-      this.form.resetForm();
-      if ( !!this.dobForm ) {
-        this.dobForm.map(x => { x.form.resetForm(); } );
+        console.log( 'Reg Number touched' );
+        this._disablePhn = false;
+        this.form.resetForm(); // set form back to pristine/untouched
+      } else if ( this._disableRegNum && (!!!this.applicant.phn ||
+        (!!this.applicant.phn && this.applicant.phn.length < 1)) &&
+        (!!!this.applicant.address.postal ||
+        (!!this.applicant.address.postal && this.applicant.address.postal.length < 1)) &&
+         this.isDobEmpty() ) {
+
+        console.log( 'PHN criteria touched' );
+        this._disableRegNum = false;
+        this.form.resetForm(); // set form back to pristine/untouched
+        if ( !!this.dobForm ) {
+          this.dobForm.map(x => { x.form.resetForm(); } );
+        }
+      } else if ( !!this.applicant.fpcRegNumber ) {
+
+        // Use FPC Registration Number
+        console.log( 'Use FPC Reg Number');
+        this._disableRegNum = false;
+        this._disablePhn = true;
+      } else if (this.applicant.phn || this.applicant.address.postal || !this.isDobEmpty()) {
+        // Use PHN, DOB & postal code
+
+        console.log( 'Use PHN criteria');
+        this._disableRegNum = true;
+        this._disablePhn = false;
+      } else {
+        console.log('else case');
       }
-    } else if ( !!this.applicant.fpcRegNumber ) {
-      // Use FPC Registration Number
-      this._disableRegNum = false;
-      this._disablePhn = true;
     } else {
-      // Use PHN, DOB & postal code
-      this._disableRegNum = true;
-      this._disablePhn = false;
+      console.log( 'pristine form');
     }
 
     let valid = this.form.valid;
@@ -116,7 +135,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
     if (this.canContinue()) {
 
-      const request = this.fpcareDataService.getStatusRequest(this._applicant);
+      const request = this.fpcareDataService.getStatusRequest(this.applicant);
 
       console.log('JSON object: ', request);
       // TODO: remove dummyservice when back-end is built

@@ -26,7 +26,7 @@ export class AppComponent implements OnInit {
     //this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
 
     // Registration - eligibility
-    this.fpcareDataService.applicant = new Person();
-    this.fpcareDataService.spouse = new Person();
+    this.fpcareDataService.applicant = this.dummyDataService.newApplicant();
+    this.fpcareDataService.spouse = this.dummyDataService.newSpouse();
   }
 }

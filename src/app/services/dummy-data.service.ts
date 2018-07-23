@@ -28,6 +28,10 @@ export class DummyDataService {
     return result;
   }
 
+  newApplicant(): Person {
+    return new Person;
+  }
+
   // Spouse for test purpose - personal info
   createSpouse(): Person {
     const result: Person = new Person;
@@ -36,6 +40,10 @@ export class DummyDataService {
     result.phn = this.generatePHN();
 
     return result;
+  }
+
+  newSpouse(): Person {
+    return new Person;
   }
 
   // -- Generating Models
