@@ -35,7 +35,8 @@
                  id="phn"
                  name="phn"
                  fpcareRequired="required,phn-check"
-                 [(ngModel)]="applicant.phn">
+                 [(ngModel)]="applicant.phn"
+                 [disabled]="disablePhn()">
         </div>
 
         <div class="form-group">
@@ -43,7 +44,8 @@
           <fpcare-date
                   [useCurrentDate]="false"
                   [date]="applicant.dateOfBirth"
-                  [restrictDate]="past">
+                  [restrictDate]="past"
+                  [disabled]="disablePhn()">
           </fpcare-date>
         </div>
 
@@ -54,7 +56,8 @@
                  id="mail_pc"
                  name="mail_pc"
                  fpcareRequired="required,postal-code"
-                 [(ngModel)]="applicant.address.postal">
+                 [(ngModel)]="applicant.address.postal"
+                 [disabled]="disablePhn()">
         </div>
       </div>
       <div class="col-md-1">
@@ -68,7 +71,8 @@
                  id="regNumber"
                  name="regNumber"
                  fpcareRequired="required,regnum-check"
-                 [(ngModel)]="applicant.fpcRegNumber">
+                 [(ngModel)]="applicant.fpcRegNumber"
+                 [disabled]="disableRegNum()">
         </div>
       </div>
     </div>
@@ -84,12 +88,9 @@
     <div class="todo">
       <strong>TODO</strong>
       <ul>
-        <li>May need logic to handle when user touches all fields as the continue button will not enable.
-          - Decision: to disable the inputs/errors - eg. if use reg number, PHN/DOB/PC will be disabled & vice versa
-          Need way to disable inputs not in use as cannot enable button - investigate
-        </li>
         <li>Need to add captcha to page</li>
         <li>Add helper text for PHN and Registration Number to "aside"</li>
+        <li>Issue: if reset form when field cleared - errors still displayed under field</li>
       </ul>
     </div>
   </aside>

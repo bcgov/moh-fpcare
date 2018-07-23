@@ -19,6 +19,9 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   /** Applicant requesting registration status */
   private _applicant: Person = new Person();
 
+  private _disableRegNum = false;
+  private _disablePhn = false;
+
   constructor( protected router: Router
              , private fpcareDataService: FPCareDataService
              , private dummyDataService: DummyDataService ) {
@@ -32,19 +35,47 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    * Detect changes, check if form is valid
    */
   ngDoCheck() {
+
+    if ( !!!this.applicant.fpcRegNumber &&
+         !!!this.applicant.phn &&
+         !!!this.applicant.address.postal &&
+         this.isDobEmpty()) {
+      // empty fields
+      this._disableRegNum = false;
+      this._disablePhn = false;
+
+      console.log('Form: ', this.form);
+      // Reset for to Pristine/Untouched
+      // TODO: Figure out how to clear errors if set
+      this.form.resetForm();
+      if ( !!this.dobForm ) {
+        this.dobForm.map(x => { x.form.resetForm(); } );
+      }
+    } else if ( !!this.applicant.fpcRegNumber ) {
+      // Use FPC Registration Number
+      this._disableRegNum = false;
+      this._disablePhn = true;
+    } else {
+      // Use PHN, DOB & postal code
+      this._disableRegNum = true;
+      this._disablePhn = false;
+    }
+
     let valid = this.form.valid;
 
-    console.log( 'form: (valid)', this.form.valid )
+    if (!this._disablePhn) {
 
-    valid = valid && !!this.dobForm;
-    if ( !!this.dobForm ) {
-      valid = valid && (this.dobForm.map(x => {
-        if (x.required && x.isValid()) {
-          return x.form.valid;
-        }
-      })
-        .filter(x => x !== true).length === 0);
-    }
+      valid = valid && !!this.dobForm;
+      if (!!this.dobForm) {
+        const dobForm = (this.dobForm.map(x => {
+          if (x.isValid()) {
+            return x.form.valid;
+          }
+        })
+          .filter(x => x !== true).length === 0);
+        valid = valid && dobForm;
+      }
+  }
 
     this._canContinue = valid;
   }
@@ -57,18 +88,42 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     return this._applicant;
   }
 
+  isDobEmpty(): boolean {
+    return ( (this.applicant.dateOfBirth.year === null || this.applicant.dateOfBirth.year === 0 ) &&
+       (this.applicant.dateOfBirth.month === null || this.applicant.dateOfBirth.month === 0 ) &&
+       (this.applicant.dateOfBirth.day === null || this.applicant.dateOfBirth.day === 0 ) ) ? true : false ;
+  }
+
+  /**
+   * Disable Registration Number field
+   * @returns {boolean}
+   */
+  disableRegNum(): boolean {
+    return this._disableRegNum;
+  }
+
+  /**
+   * Disable PHN, DOB, & postal code fields
+   * @returns {boolean}
+   */
+  disablePhn(): boolean {
+    return this._disablePhn;
+  }
 
   // Methods triggered by the form action bar
   // TODO: Code functionality
-  continue() {
+  continue(): void {
 
-    const request = this.fpcareDataService.getStatusRequest( this._applicant );
+    if (this.canContinue()) {
 
-    console.log( 'JSON object: ', request );
-    // TODO: remove dummyservice when back-end is built
-    this.dummyDataService.submitRequestStatus( request );
+      const request = this.fpcareDataService.getStatusRequest(this._applicant);
 
-    const link = '/registration-status/status-results';
-    this.router.navigate([link]);
+      console.log('JSON object: ', request);
+      // TODO: remove dummyservice when back-end is built
+      this.dummyDataService.submitRequestStatus(request);
+
+      const link = '/registration-status/status-results';
+      this.router.navigate([link]);
+    }
   }
 }

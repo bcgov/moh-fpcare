@@ -22,6 +22,8 @@ export class RegNumberValidationComponent extends BaseValidationComponent {
    */
   public static validate(input: ElementRef): boolean {
     const inputVal = input.nativeElement.value;
+
+    // empty field
     if (inputVal == null || inputVal.length < 1) {
       return true;
     }

@@ -17,13 +17,18 @@ export class PhnValidationComponent extends BaseValidationComponent {
 
   public static validate(el: ElementRef): boolean {
 
-      const inputVal = el.nativeElement.value;
+    const inputVal = el.nativeElement.value;
 
-      // check length
-      if ( inputVal.length > ValidationService.MAX_PHN_LENGTH ||
-           inputVal.length < ValidationService.MIN_PHN_LENGTH ) {
-        return false;
-      }
+    // Empty field
+    if (inputVal == null || inputVal.length < 1) {
+      return true;
+    }
+
+    // check length
+    if ( inputVal.length > ValidationService.MAX_PHN_LENGTH ||
+         inputVal.length < ValidationService.MIN_PHN_LENGTH ) {
+      return false;
+    }
     return ValidationService.validatePHN( inputVal, true );
   }
 
