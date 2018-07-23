@@ -3,6 +3,7 @@ import { DummyDataService } from './services/dummy-data.service';
 import { UserService } from './services/user.service';
 import { FPCareDataService } from './services/fpcare-data.service';
 import {Person} from './models/person.model';
+import {environment} from '../environments/environment';
 
 
 @Component({
@@ -21,12 +22,15 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
-    // Purpose: Development - data set for personal information
-    //this.fpcareDataService.applicant = this.dummyDataService.createApplicant();
-    //this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
+    if ( environment.useDummyData ) {
 
-    // Registration - eligibility
-    this.fpcareDataService.applicant = this.dummyDataService.newApplicant();
-    this.fpcareDataService.spouse = this.dummyDataService.newSpouse();
+      // Purpose: Development - data set for personal information
+      //this.fpcareDataService.applicant = this.dummyDataService.createApplicant();
+      //this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
+
+      // Registration - eligibility
+      this.fpcareDataService.applicant = this.dummyDataService.newApplicant();
+      this.fpcareDataService.spouse = this.dummyDataService.newSpouse();
+    }
   }
 }
