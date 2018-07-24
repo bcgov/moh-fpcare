@@ -72,26 +72,20 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
     return this.fpcService.hasSpouse();
   }
 
-  // Formatting functions
-  formatDate( dt: SimpleDate ): string {
-    const dtObj = new Date( dt.year, dt.month - 1, dt.day );
-    return this.dateTimeService.formatDate( dtObj );
-  }
-
   /**
-   *
+   * Retrieves the applicant's date of birth as a string
    * @returns {string}
    */
   getApplicantDob(): string {
-    return this.dateTimeService.formatSimpleDate( this.applicant.dateOfBirth );
+    return this.dateTimeService.convertSimpleDateToStr( this.applicant.dateOfBirth );
   }
 
   /**
-   *
+   * Retrieves the spouse's date of birth as a string
    * @returns {string}
    */
   getSpouseDob(): string {
-    return this.dateTimeService.formatSimpleDate( this.spouse.dateOfBirth );
+    return this.dateTimeService.convertSimpleDateToStr( this.spouse.dateOfBirth );
   }
 
   // Methods triggered by the form action bar

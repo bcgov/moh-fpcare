@@ -46,7 +46,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   }
 
   /**
-   *
+   * Retrieves the list of children
    * @returns {Person[]}
    */
   get children(): Person[] {
@@ -54,7 +54,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   }
 
   /**
-   *
+   * Indicates whether or not applicant has children
    * @returns {boolean}
    */
   hasChildren(): boolean {

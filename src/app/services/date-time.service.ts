@@ -19,8 +19,12 @@ export class DateTimeService {
     return moment(date).format( dateFormat.toUpperCase() );
   }
 
-  // Formatting functions
-  formatSimpleDate(  dt: SimpleDate ): string {
+  /**
+   * Convert the Simple Date object to string
+   * @param {SimpleDate} dt
+   * @returns {string}
+   */
+  convertSimpleDateToStr( dt: SimpleDate ): string {
     const dtObj = new Date( dt.year, dt.month, dt.day );
     return this.formatDate( dtObj );
   }

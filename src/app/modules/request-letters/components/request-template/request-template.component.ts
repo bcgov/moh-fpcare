@@ -46,7 +46,9 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   }
 
   // Methods triggered by the form action bar
-
+  /**
+   * Navigates to the next page
+   */
   continue() {
     if ( this.canContinue() ) {
       this.router.navigate([this.nextPg]);

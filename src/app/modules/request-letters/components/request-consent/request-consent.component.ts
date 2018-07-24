@@ -32,7 +32,7 @@ export class RequestConsentComponent extends  Base implements OnInit {
   }
 
   /**
-   * Label for button depending on the whether the applicant has children
+   * Label for button
    * @returns {string}
    */
   get buttonLabel(): string {
@@ -40,7 +40,7 @@ export class RequestConsentComponent extends  Base implements OnInit {
   }
 
   /**
-   * Page to navaigate to on continue
+   * Page to navigate to on continue
    * @returns {string}
    */
   get nextPg(): string {

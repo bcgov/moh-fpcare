@@ -31,7 +31,7 @@ export class RequestCobComponent extends Base implements OnInit {
   }
 
   /**
-   * Label for button depending on the whether the applicant has children
+   * Label for button
    * @returns {string}
    */
   get buttonLabel(): string {

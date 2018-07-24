@@ -107,6 +107,10 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     return this._applicant;
   }
 
+  /**
+   * Indicates whether or not the date of birth is empty
+   * @returns {boolean}
+   */
   isDobEmpty(): boolean {
     return ( (this.applicant.dateOfBirth.year === null || this.applicant.dateOfBirth.year === 0 ) &&
        (this.applicant.dateOfBirth.month === null || this.applicant.dateOfBirth.month === 0 ) &&
@@ -130,7 +134,11 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   }
 
   // Methods triggered by the form action bar
-  // TODO: Code functionality
+  /**
+   * Navigates to the next page
+   *
+   * TODO: Code functionality
+   */
   continue(): void {
 
     if (this.canContinue()) {
