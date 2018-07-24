@@ -17,6 +17,8 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   /** Access to date component */
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
+  /** Indicates whether or not the same SIN has been used for spouse */
+  private _uniqueSinError = false;
 
   constructor( private fpcService: FPCareDataService
              , private dateTimeService: DateTimeService
@@ -33,6 +35,13 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   ngDoCheck() {
 
     let valid = this.form.valid;
+
+    // Check SINs are unique
+    if ( this.hasSpouse() && !!this.applicant.sin && !!this.spouse.sin) {
+
+      this._uniqueSinError = (this.applicant.sin === this.spouse.sin) ? true : false;
+      valid = valid && !this._uniqueSinError;
+    }
 
     valid = valid && !!this.dobForm;
     if ( !!this.dobForm ) {
@@ -86,6 +95,14 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    */
   getSpouseDob(): string {
     return this.dateTimeService.convertSimpleDateToStr( this.spouse.dateOfBirth );
+  }
+
+  /**
+   * Indicates whether the SINs are the same
+   * @returns {boolean}
+   */
+  hasUniqueSinError(): boolean {
+    return this._uniqueSinError;
   }
 
   // Methods triggered by the form action bar

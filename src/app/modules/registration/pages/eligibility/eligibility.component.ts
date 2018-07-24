@@ -70,7 +70,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
   }
 
   /**
-   *
+   * Indicates whether the PHNs are the same
    * @returns {boolean}
    */
   hasUniquePhnError(): boolean {

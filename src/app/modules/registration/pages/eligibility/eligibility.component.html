@@ -47,10 +47,9 @@
                  name="sp_phn"
                  fpcareRequired="required,phn-check"
                  [(ngModel)]="spouse.phn"/>
-        </div>
-
-        <div *ngIf="hasUniquePhnError()" role="alert" aria-live="assertive">
-          <div class="text-danger">This PHN was already used for registrant.</div>
+          <div *ngIf="hasUniquePhnError()" role="alert" aria-live="assertive">
+            <div class="text-danger">This PHN was already used for registrant.</div>
+          </div>
         </div>
 
         <div class="form-group">

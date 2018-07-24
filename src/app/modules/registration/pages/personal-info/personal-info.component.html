@@ -113,6 +113,9 @@
                  name="sp_sin"
                  fpcareRequired="required,sin-check"
                  [(ngModel)]="spouse.sin"/>
+          <div *ngIf="hasUniqueSinError()" role="alert" aria-live="assertive">
+            <div class="text-danger">This SIN was already used for registrant.</div>
+          </div>
         </div>
         <div class="form-group">
           <!-- DOB ready only field - set in previous page -->
@@ -142,6 +145,9 @@
       <strong>TODO</strong>
       <ul>
         <li>Link the Medical Services Plan and Canada Revenue Agency to URLs</li>
+        <li>Need to verify Name not more than 30 characters & start w/ letters followed by letter(s),
+          hyphen, period, apostrophe, blank characters</li>
+        <li>ENABLE SIN CHECK VERIFICATION module</li>
       </ul>
     </div>
     <p><strong>Personal Info aside!</strong>
