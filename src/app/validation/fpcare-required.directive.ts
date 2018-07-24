@@ -112,6 +112,13 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
     });
   }
 
+  ngAfterViewChecked(){
+    // If a component has the 'disabled' attribute on it we want to remove all error messages and have the element pass validation.
+    const isDisabled = !!this.input.nativeElement.attributes.disabled;
+    if (isDisabled){
+      this.validationComponents.map(this.setValid.bind(this));
+    }
+  }
   @HostListener('keyup')
   @HostListener('blur')
   onKey() {
