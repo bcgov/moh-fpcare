@@ -55,7 +55,6 @@ export class FPCareDataService {
    * @returns {Person[]}
    */
   get dependants(): Person[] {
-    console.log( 'dependants: ', this._dependants );
     return this._dependants;
   }
 

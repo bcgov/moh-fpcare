@@ -20,7 +20,7 @@
                  id="phn"
                  name="phn"
                  fpcareRequired="required,phn-check"
-                 [(ngModel)]="applicant.phn">
+                 [(ngModel)]="applicant.phn"/>
         </div>
 
         <div class="form-group">
@@ -28,7 +28,7 @@
           <fpcare-date
                   [useCurrentDate]="false"
                   [date]="applicant.dateOfBirth"
-                  [restrictDate]="past">
+                  [restrictDate]="'past'">
           </fpcare-date>
         </div>
 
@@ -39,7 +39,7 @@
                  id="mail_pc"
                  name="mail_pc"
                  fpcareRequired="required,postal-code"
-                 [(ngModel)]="applicant.address.postal">
+                 [(ngModel)]="applicant.address.postal"/>
         </div>
       </div>
     </div>

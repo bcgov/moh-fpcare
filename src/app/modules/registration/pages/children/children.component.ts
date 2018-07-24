@@ -30,8 +30,6 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
     let valid = (!!this.form) ? this.form.valid : !!!this.form;
 
-    console.log( 'valid Form: ', valid );
-
     valid = valid && !!this.dobForm;
     if ( !!this.dobForm ) {
       const dobList = this.dobForm.map(x => {
@@ -64,7 +62,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   }
 
   /**
-   *
+   * Determine whether or not to disable the add child button
    * @returns {boolean}
    */
   isAddDisabled(): boolean {
@@ -77,11 +75,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   get buttonLabel(): string {
 
-    if ( this.hasChildren() ) {
-      return 'Continue';
-    }
-
-    return 'Skip this step';
+    return ( this.hasChildren() ) ? 'Continue' : 'Skip this step';
   }
 
   /**
@@ -89,6 +83,14 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   addChild() {
     this.fpcService.addChild();
+  }
+
+  /**
+   * Remove a child from the list
+   * @param {Person} child
+   */
+  removeChild( idx: number ) {
+    this.children.splice( idx, 1 );
   }
 
   // Methods triggered by the form action bar

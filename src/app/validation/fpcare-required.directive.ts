@@ -79,7 +79,6 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
 
       switch (opt.toLowerCase()) {
         case 'required':
-          console.log( 'required' );
           this.validationComponents.push(RequiredValidationErrorsComponent);
           break;
 
@@ -92,22 +91,18 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
           break;
 
         case 'phn-check':
-          console.log( 'phn-check' );
           this.validationComponents.push(PhnValidationComponent);
           break;
 
         case 'sin-check':
-          console.log( 'sin-check' );
           this.validationComponents.push(SinValidationComponent);
           break;
 
         case 'regnum-check':
-          console.log( 'regnum-check' );
           this.validationComponents.push(RegNumberValidationComponent);
           break;
 
         case 'postal-code':
-          console.log( 'postal-code' );
           this.validationComponents.push(PcValidationComponent);
           break;
 

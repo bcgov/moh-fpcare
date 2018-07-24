@@ -18,6 +18,7 @@ export class PhnValidationComponent extends BaseValidationComponent {
   public static validate(el: ElementRef): boolean {
 
     const inputVal = el.nativeElement.value;
+    console.log( 'phn-check: NEED TO UNCOMMENT ValidationService.validatePHN()' );
 
     // Empty field
     if (inputVal == null || inputVal.length < 1) {

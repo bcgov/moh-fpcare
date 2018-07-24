@@ -19,6 +19,8 @@ export class SinValidationComponent extends BaseValidationComponent {
   public static validate(el: ElementRef): boolean {
     const inputVal = el.nativeElement.value;
 
+    console.log( 'sin-check: NEED TO UNCOMMENT ValidationService.validateSIN()' );
+
     // Empty field
     if (inputVal == null || inputVal.length < 1) {
       return true;

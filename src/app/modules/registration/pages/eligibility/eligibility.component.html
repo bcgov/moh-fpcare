@@ -20,7 +20,7 @@
                id="ap_phn"
                name="ap_phn"
                fpcareRequired="required,phn-check"
-               [(ngModel)]="applicant.phn">
+               [(ngModel)]="applicant.phn"/>
       </div>
 
       <div class="form-group">
@@ -29,7 +29,7 @@
                 id="ap_dob"
                 [useCurrentDate]="false"
                 [date]="applicant.dateOfBirth"
-                [restrictDate]="past">
+                [restrictDate]="'past'">
         </fpcare-date>
       </div>
     </div>
@@ -46,7 +46,7 @@
                  id="sp_phn"
                  name="sp_phn"
                  fpcareRequired="required,phn-check"
-                 [(ngModel)]="spouse.phn">
+                 [(ngModel)]="spouse.phn"/>
         </div>
 
         <div *ngIf="hasUniquePhnError()" role="alert" aria-live="assertive">
@@ -59,7 +59,7 @@
                   id="sp_dob"
                   [useCurrentDate]="false"
                   [date]="spouse.dateOfBirth"
-                  [restrictDate]="past">
+                  [restrictDate]="'past'">
           </fpcare-date>
         </div>
       </div>
