@@ -12,6 +12,7 @@ import { RegistrationRoutingModule } from './registration-routing.module';
 import { RegistrationContainerComponent } from './components/registration-container/registration-container.component';
 import { CoreModule } from '../core/core.module';
 import { FormsModule } from '@angular/forms';
+import { RegResultsComponent } from './pages/reg-results/reg-results.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { FormsModule } from '@angular/forms';
     ChildrenPageComponent,
     MailingAddressPageComponent,
     ReviewPageComponent,
-    CompletePageComponent
+    CompletePageComponent,
+    RegResultsComponent
   ]
 })
 export class RegistrationModule {

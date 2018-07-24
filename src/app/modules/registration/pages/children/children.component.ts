@@ -75,7 +75,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * Label for button depending on the whether the applicant has children
    * @returns {string}
    */
-  buttonLabel(): string {
+  get buttonLabel(): string {
 
     if ( this.hasChildren() ) {
       return 'Continue';

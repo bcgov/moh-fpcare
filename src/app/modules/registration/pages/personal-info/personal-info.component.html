@@ -46,6 +46,15 @@
                [(ngModel)]="applicant.lastName"/>
       </div>
       <div class="form-group">
+        <label for="ap_sin">SIN</label>
+        <input class="form-control"
+               type="text"
+               id="ap_sin"
+               name="ap_sin"
+               fpcareRequired="required,sin-check"
+               [(ngModel)]="applicant.sin">
+      </div>
+      <div class="form-group">
         <!-- DOB ready only field - set in previous page -->
         <label for="ap_dob">Birthdate</label>
         <input class="form-control"
@@ -63,15 +72,6 @@
                name="ap_phn"
                disabled
                [ngModel]="applicant.phn">
-      </div>
-      <div class="form-group">
-        <label for="ap_sin">SIN</label>
-        <input class="form-control"
-               type="text"
-               id="ap_sin"
-               name="ap_sin"
-               fpcareRequired="required,sin-check"
-               [(ngModel)]="applicant.sin">
       </div>
     </div>
 
@@ -106,6 +106,15 @@
                  [(ngModel)]="spouse.lastName" >
         </div>
         <div class="form-group">
+          <label for="sp_sin">SIN</label>
+          <input class="form-control"
+                 type="text"
+                 id="sp_sin"
+                 name="sp_sin"
+                 fpcareRequired="required,sin-check"
+                 [(ngModel)]="spouse.sin" >
+        </div>
+        <div class="form-group">
           <!-- DOB ready only field - set in previous page -->
           <label for="sp_dob">Birthdate</label>
           <input class="form-control"
@@ -123,15 +132,6 @@
                  name="sp_phn"
                  disabled
                  [(ngModel)]="spouse.phn">
-        </div>
-        <div class="form-group">
-          <label for="sp_sin">SIN</label>
-          <input class="form-control"
-                 type="text"
-                 id="sp_sin"
-                 name="sp_sin"
-                 fpcareRequired="required,sin-check"
-                 [(ngModel)]="spouse.sin" >
         </div>
       </div>
     </div>

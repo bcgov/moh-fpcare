@@ -1,3 +1,63 @@
-<p>
-  complete works!
-</p>
+<fpcare-page-framework layout='single'>
+
+  <div>
+    <h1>Give permission for your income tax information to be checked</h1>
+  </div>
+
+  <div>
+    <h2 class="border-bottom">Declaration and Consent</h2>
+    <p>
+      I consent to allow the Canada Revenue Agency to release information from my income tax returns and other
+      required taxpayer information to the B.C. Ministry of Health and Health Insurance BC.
+    </p>
+    <p>
+      The information provided will be used solely to determine, verify and  administer my and/or family's Fair
+      PharmaCare Plan coverage, but may be aggregated for planning and evaluation purposes.
+    </p>
+    <p>
+      I understand my information will be collected, used and disclosed in accordance with the British Columbia
+      Pharmaceutical Services Act and Freedom of Information and Protection Privacy Act. It will not be disclosed to
+      any persons without my consent.
+    </p>
+    <p>
+      This consent is valid for the two taxation years before the year in which I sign this document, for the year
+      in which I sign it and for each following taxation year in which I and/or my family am eligible for the Fair
+      PharmaCare Plan.
+    </p>
+    <p>
+      I understand that I can withdraw this consent at any time by writing to Health Insurance BC, PO Box 9655 Stn
+      Prov Govt, Victoria BC V8W 9P2.
+    </p>
+  </div>
+
+  <form #formRef="ngForm" novalidate>
+    <div class="p-md-2 col-md-6 p-md-2">
+      <h3>
+        {{applicant.name}}, do you agree?
+      </h3>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-control form-check-input" id="ap_agree" name="ap_agree">
+        <label class="form-check-label" for="ap_agree">Yes, I agree</label>
+      </div>
+    </div>
+    <div *ngIf="hasSpouse()" class="p-md-2 col-md-6 p-md-2">
+      <h3>
+        {{spouse.name}}, do you agree?
+      </h3>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-control form-check-input" id="sp_agree" name="sp_agree">
+        <label class="form-check-label" for="sp_agree">Yes, I agree</label>
+      </div>
+    </div>
+
+    <div class="col-md-6 p-md-4">
+      Placeholder for Captcha
+    </div>
+  </form>
+
+  <fpcare-form-action-bar
+          [submitLabel]="buttonLabel"
+          [canContinue]="canContinue()"
+          (click)="continue()">
+  </fpcare-form-action-bar>
+</fpcare-page-framework>
