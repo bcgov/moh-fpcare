@@ -1,15 +1,58 @@
+
+<div>
+  PLACE HOLDER FOR ANNUAL DEDUCTIBLE INFORMATION
+
+  <div class="todo">
+    Mockup appears to have this information span entire page - outside framework on this page
+  </div>
+</div>
+
 <fpcare-page-framework layout='double'>
 
-    <p>
-      review works! in page framework
-    </p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea autem eius qui quod illo vitae corrupti fugiat doloremque, architecto iure rem, mollitia officiis eligendi quisquam soluta culpa incidunt omnis dicta.</p>
-    <p>Cupiditate voluptatem numquam est voluptatibus? Distinctio, assumenda ipsum ipsam doloribus nihil odio ratione officiis accusamus recusandae tempora. Delectus, consequatur expedita natus mollitia exercitationem maiores officia asperiores saepe quam officiis unde?</p>
-    <p>Recusandae ad itaque nam eligendi suscipit blanditiis enim autem nobis rerum quos, voluptatum deleniti, alias adipisci tenetur est. Quo reprehenderit laborum eos at soluta sapiente exercitationem aliquid, quod numquam architecto.</p>
+  <div>
+  <h2>Applicant Information
+    <i class="fa fa-pencil float-right pointer" aria-hidden="true"></i>
+  </h2>
+    <div class="bg-light">
+      <div>Name</div>
+      <div>Personal Health Number</div>
+      <div>Birthdate</div>
+      <div>Social Insurance Number</div>
+    </div>
+
+  </div>
+
+  <div>
+    <h2>Spouse Information
+      <i class="fa fa-pencil float-right pointer" aria-hidden="true"></i>
+    </h2>
+  </div>
+
+  <div>
+    <h2>Child Information
+      <i class="fa fa-pencil float-right pointer" aria-hidden="true"></i>
+    </h2>
+
+  </div>
+
+  <div>
+    <h2>Contact Information
+      <i class="fa fa-pencil float-right pointer" aria-hidden="true"></i>
+    </h2>
+
+  </div>
+
+  <aside>
+    <div>
+      <h2>Financial Information
+        <i class="fa fa-pencil float-right pointer" aria-hidden="true"></i>
+      </h2>
+    </div>
+  </aside>
+
+  <fpcare-form-action-bar
+          [canContinue]="canContinue()"
+          (click)="continue()">
+  </fpcare-form-action-bar>
   
-    <aside>
-      <strong>Review aside!</strong>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque modi ipsum cumque tempore dolore explicabo libero, dolor dignissimos debitis minus voluptate quas culpa dolores atque inventore unde iure. Reiciendis, ea.
-    </aside>
-  
-  </fpcare-page-framework>
+</fpcare-page-framework>
