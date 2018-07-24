@@ -8,47 +8,47 @@
   <form #formRef="ngForm" novalidate class="p-md-2 col-md-6">
     <div *ngIf="hasChildren()" class="row">
 
-      <div *ngFor="let child of children">
+      <div *ngFor="let child of children; let i = index;">
         <!--Array starts at 0 add one -->
         <h2>Child #{{children.indexOf(child)+1}}</h2>
 
         <div class="form-group">
-          <label for="ch_firstnm">First Name</label>
+          <label for="ch_firstnm_{{i}}">First Name</label>
           <input class="form-control"
                  type="text"
-                 id="ch_firstnm"
-                 name="ch_firstnm"
+                 id="ch_firstnm_{{i}}"
+                 name="ch_firstnm_{{i}}"
                  fpcareRequired
                  [(ngModel)]="child.firstName">
         </div>
         <div class="form-group">
-          <label for="ch_middlenm">Middle Name</label>
-          <input class="form-control" type="text" id="ch_middlenm" name="ch_middlenm" [(ngModel)]="child.middleName" >
+          <label for="ch_middlenm_{{i}}">Middle Name</label>
+          <input class="form-control" type="text" id="ch_middlenm_{{i}}" name="ch_middlenm_{{i}}" [(ngModel)]="child.middleName" >
         </div>
         <div class="form-group">
-          <label for="ch_lastnm">Last Name</label>
+          <label for="ch_lastnm_{{i}}">Last Name</label>
           <input class="form-control"
                  type="text"
-                 id="ch_lastnm"
-                 name="ch_lastnm"
+                 id="ch_lastnm_{{i}}"
+                 name="ch_lastnm_{{i}}"
                  fpcareRequired
                  [(ngModel)]="child.lastName" >
         </div>
         <div class="form-group">
-          <label for="ch_dob">Birthdate</label>
+          <label for="ch_dob_{{i}}">Birthdate</label>
           <fpcare-date
-                  id="ch_dob"
+                  id="ch_dob_{{i}}"
                   [useCurrentDate]="false"
                   [date]="child.dateOfBirth"
                   [restrictDate]="past">
           </fpcare-date>
         </div>
         <div class="form-group">
-          <label for="ch_phn">PHN</label>
+          <label for="ch_phn_{{i}}">PHN</label>
           <input class="form-control"
                  type="text"
-                 id="ch_phn"
-                 name="ch_phn"
+                 id="ch_phn_{{i}}"
+                 name="ch_phn_{{i}}"
                  fpcareRequired="required,phn-check"
                  [(ngModel)]="child.phn">
         </div>
