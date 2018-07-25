@@ -20,7 +20,7 @@ export class DummyDataService {
 
   // Applicant for test purpose - personal info
   createApplicant( populated: boolean = true ): Person {
-    return populated ? this.createAdult() : new Person();
+    return populated ? this.createAdult( true ) : new Person();
   }
 
   // Spouse for test purpose - personal info
@@ -28,13 +28,18 @@ export class DummyDataService {
     return populated ? this.createAdult() : new Person();
   }
 
-  createAdult(): Person {
+  createAdult( setAddress: boolean = false ): Person {
     const result: Person = new Person;
 
     result.name = this.generatePersonName();
     result.dateOfBirth = this.generateDateOfBirth();
     result.phn = this.generatePHN();
     result.sin = this.generateSIN();
+
+    // Populate address in person object
+    if ( setAddress ) {
+      result.address = this.generateAddress();
+    }
 
     return result;
   }

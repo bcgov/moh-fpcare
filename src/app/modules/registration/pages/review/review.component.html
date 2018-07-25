@@ -11,43 +11,135 @@
 
   <div>
   <h2>Applicant Information
-    <i class="fa fa-pencil float-right pointer" aria-hidden="true"></i>
+    <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editPersonalInfo()"></i>
   </h2>
     <div class="bg-light">
-      <div>Name</div>
-      <div>Personal Health Number</div>
-      <div>Birthdate</div>
-      <div>Social Insurance Number</div>
+      <div class="row p-md-1">
+        <div class="col-md-6">Name</div>
+        <div class="col-md-6">{{applicant.name}}</div>
+      </div>
+      <div class="row p-md-1">
+        <div class="col-md-6">Personal Health Number</div>
+        <div class="col-md-6">{{applicant.phn}}</div>
+      </div>
+      <div class="row p-md-1">
+        <div class="col-md-6">Birthdate</div>
+        <div class="col-md-6">{{getApplicantDob()}}</div>
+      </div>
+      <div class="row p-md-1">
+        <div class="col-md-6">Social Insurance Number</div>
+        <div class="col-md-6">{{applicant.sin}}</div>
+      </div>
     </div>
-
   </div>
 
-  <div>
+  <div *ngIf="hasSpouse()">
     <h2>Spouse Information
-      <i class="fa fa-pencil float-right pointer" aria-hidden="true"></i>
+      <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editPersonalInfo()"></i>
     </h2>
+    <div class="bg-light">
+      <div class="row p-md-1">
+        <div class="col-md-6">Name</div>
+        <div class="col-md-6">{{spouse.name}}</div>
+      </div>
+      <div class="row p-md-1">
+        <div class="col-md-6">Personal Health Number</div>
+        <div class="col-md-6">{{spouse.phn}}</div>
+      </div>
+      <div class="row p-md-1">
+        <div class="col-md-6">Birthdate</div>
+        <div class="col-md-6">{{getSpouseDob()}}</div>
+      </div>
+      <div class="row p-md-1">
+        <div class="col-md-6">Social Insurance Number</div>
+        <div class="col-md-6">{{spouse.sin}}</div>
+      </div>
+    </div>
   </div>
 
-  <div>
+  <div *ngIf="hasChildren()">
     <h2>Child Information
-      <i class="fa fa-pencil float-right pointer" aria-hidden="true"></i>
+      <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editChildInfo()"></i>
     </h2>
-
+    <div class="bg-light" *ngFor="let child of children">
+      <div class="row p-md-1">
+        <div class="col-md-6">Name</div>
+        <div class="col-md-6">{{child.name}}</div>
+      </div>
+      <div class="row p-md-1">
+        <div class="col-md-6">Personal Health Number</div>
+        <div class="col-md-6">{{child.phn}}</div>
+      </div>
+      <div class="row p-md-1">
+        <div class="col-md-6">Birthdate</div>
+        <div class="col-md-6">{{getChildDob(child)}}</div>
+      </div>
+      <!-- Space between next child for readibility -->
+      <br *ngIf="children.length - 1 !== children.indexOf(child)"/>
+    </div>
   </div>
 
   <div>
     <h2>Contact Information
-      <i class="fa fa-pencil float-right pointer" aria-hidden="true"></i>
+      <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editContactInfo()"></i>
     </h2>
-
+    <div class="bg-light">
+      <div class="row p-md-1">
+        <div class="col-md-6">Mailing Address</div>
+        <div class="col-md-6">{{applicant.address.street}}</div>
+      </div>
+      <div class="row p-md-1">
+        <div class="col-md-6 offset-md-6">{{applicant.address.city}}, {{applicant.address.province}}</div>
+      </div>
+      <div class="row p-md-1">
+        <div class="col-md-6 offset-md-6">{{applicant.address.postal}}</div>
+      </div>
+      <div class="row p-md-1">
+        <div class="col-md-6 offset-md-6">{{applicant.address.country}}</div>
+      </div>
+    </div>
   </div>
 
   <aside>
     <div>
       <h2>Financial Information
-        <i class="fa fa-pencil float-right pointer" aria-hidden="true"></i>
+        <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editFinancialInfo()"></i>
       </h2>
+      <div class="bg-light">
+        <div class="row p-md-1">
+          <div class="col-md-6">Your net annual income</div>
+          <div class="col-md-6"></div>
+        </div>
+        <div class="row p-md-1">
+          <div class="col-md-6">Spouse/common-law partner</div>
+          <div *ngIf="hasSpouse()" class="col-md-6">Yes</div>
+          <div *ngIf="!hasSpouse()" class="col-md-6">No</div>
+        </div>
+        <div class="row p-md-1">
+          <div class="col-md-6">Spouse's annual income</div>
+          <div class="col-md-6"></div>
+        </div>
+        <div class="row p-md-1">
+          <div class="col-md-6">Registered disability Savings Plan amount</div>
+          <div class="col-md-6"></div>
+        </div>
+        <div class="row p-md-1">
+          <div class="col-md-6">Total deductions</div>
+          <div class="col-md-6"></div>
+        </div>
+        <div class="row p-md-1">
+          <div class="col-md-6">Adjusted incom</div>
+          <div class="col-md-6"></div>
+        </div>
+      </div>
     </div>
+
+  <div class="todo p-md-4">
+    <strong>TODO:</strong>
+    <ul>
+      <li>Create object for finance so that info can be displayed</li>
+    </ul>
+  </div>
   </aside>
 
   <fpcare-form-action-bar

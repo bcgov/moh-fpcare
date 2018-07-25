@@ -37,7 +37,7 @@ export abstract class AbstractFormComponent extends Base {
   }
 
   /** Navigates to a route then automatically scrolls to the top of the page. */
-  navigate(url: string){
+  protected navigate(url: string){
       this.router.navigate([url])
       .then((data) => {
           window.scrollTo({ top: 0, behavior: 'smooth' });

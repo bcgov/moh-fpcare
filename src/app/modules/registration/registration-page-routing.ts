@@ -9,11 +9,11 @@ import { ReviewPageComponent } from './pages/review/review.component';
 
 export const pageRoutes: Routes = [
     {
-        path: "financial",
+        path: 'financial',
         component: CalculatorPageComponent
     },
     {
-        path: "eligibility",
+        path: 'eligibility',
         component: EligibilityPageComponent
     },
     {
@@ -21,11 +21,11 @@ export const pageRoutes: Routes = [
         component: PersonalInfoPageComponent
     },
     {
-        path: "child-info",
+        path: 'child-info',
         component: ChildrenPageComponent
     },
     {
-        path: "address",
+        path: 'address',
         component: MailingAddressPageComponent
     },
     {
@@ -33,7 +33,7 @@ export const pageRoutes: Routes = [
         component: ReviewPageComponent
     },
     {
-        path: "authorize",
+        path: 'authorize',
         component: CompletePageComponent
     },
 ];
