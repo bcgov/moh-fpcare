@@ -26,6 +26,7 @@ import {CobResultsComponent} from './modules/request-letters/components/cob-resu
 import {RequestTemplateComponent} from './modules/request-letters/components/request-template/request-template.component';
 import {RequestConsentComponent} from './modules/request-letters/components/request-consent/request-consent.component';
 import {ConsentResultsComponent} from './modules/request-letters/components/consent-results/consent-results.component';
+import {DateTimeService} from './services/date-time.service';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import {ConsentResultsComponent} from './modules/request-letters/components/cons
     UserService,
     DummyDataService,
     FPCareDataService,
-    ValidationService
+    ValidationService,
+    DateTimeService
   ],
   bootstrap: [AppComponent]
 })

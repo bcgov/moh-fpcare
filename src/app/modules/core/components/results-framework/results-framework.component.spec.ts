@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ResultsFrameworkComponent } from './results-framework.component';
+import {PageFrameworkComponent} from '../page-framework/page-framework.component';
 
 describe('ResultsFrameworkComponent', () => {
   let component: ResultsFrameworkComponent;
@@ -8,7 +9,10 @@ describe('ResultsFrameworkComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ResultsFrameworkComponent ]
+      declarations: [
+        PageFrameworkComponent,
+        ResultsFrameworkComponent
+      ]
     })
     .compileComponents();
   }));
