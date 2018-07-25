@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PersonalInfoPageComponent } from './personal-info.component';
 import { CoreModule } from '../../../core/core.module';
+import {FormsModule} from '@angular/forms';
+import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import {DateTimeService} from '../../../../services/date-time.service';
 
 describe('PersonalInfoComponent', () => {
   let component: PersonalInfoPageComponent;
@@ -9,8 +12,17 @@ describe('PersonalInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PersonalInfoPageComponent ],
-      imports: [ CoreModule ]
+      declarations: [
+        PersonalInfoPageComponent
+      ],
+      imports: [
+        CoreModule,
+        FormsModule
+      ],
+      providers: [
+        FPCareDataService,
+        DateTimeService
+      ]
     })
     .compileComponents();
   }));

@@ -1,5 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {RequestConsentComponent} from './request-consent.component';
+import {CoreModule} from '../../../core/core.module';
+import {RequestTemplateComponent} from '../request-template/request-template.component';
+import {FormsModule} from '@angular/forms';
+import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import {DummyDataService} from '../../../../services/dummy-data.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 
 describe('RequestConsentComponent', () => {
@@ -8,7 +14,19 @@ describe('RequestConsentComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequestConsentComponent ]
+      declarations: [
+        RequestConsentComponent,
+        RequestTemplateComponent
+      ],
+      imports: [
+        CoreModule,
+        FormsModule,
+        RouterTestingModule
+      ],
+      providers: [
+        FPCareDataService,
+        DummyDataService
+      ]
     })
     .compileComponents();
   }));

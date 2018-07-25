@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReviewPageComponent } from './review.component';
 import { CoreModule } from '../../../core/core.module';
+import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import {DateTimeService} from '../../../../services/date-time.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('ReviewComponent', () => {
   let component: ReviewPageComponent;
@@ -10,7 +13,14 @@ describe('ReviewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ ReviewPageComponent ],
-      imports: [ CoreModule ]
+      imports: [
+        CoreModule,
+        RouterTestingModule
+      ],
+      providers: [
+        FPCareDataService,
+        DateTimeService
+      ]
     })
     .compileComponents();
   }));

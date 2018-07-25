@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CobResultsComponent } from './cob-results.component';
+import {CoreModule} from '../../../core/core.module';
 
 describe('CobResultsComponent', () => {
   let component: CobResultsComponent;
@@ -8,7 +9,12 @@ describe('CobResultsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CobResultsComponent ]
+      declarations: [
+        CobResultsComponent
+      ],
+      imports: [
+        CoreModule
+      ]
     })
     .compileComponents();
   }));

@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EligibilityPageComponent } from './eligibility.component';
 import { CoreModule } from '../../../core/core.module';
 import { RouterTestingModule } from '@angular/router/testing';
+import {FormsModule} from '@angular/forms';
+import {FPCareDataService} from '../../../../services/fpcare-data.service';
 
 describe('EligibilityComponent', () => {
   let component: EligibilityPageComponent;
@@ -10,8 +12,17 @@ describe('EligibilityComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EligibilityPageComponent ],
-      imports: [ CoreModule, RouterTestingModule ]
+      declarations: [
+        EligibilityPageComponent
+      ],
+      imports: [
+        CoreModule,
+        RouterTestingModule,
+        FormsModule
+      ],
+      providers: [
+        FPCareDataService
+      ]
     })
     .compileComponents();
   }));

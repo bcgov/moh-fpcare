@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import {RequestTemplateComponent} from './request-template.component';
+import {FormsModule} from '@angular/forms';
+import {CoreModule} from '../../../core/core.module';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('RequestTemplateComponent', () => {
   let component: RequestTemplateComponent;
@@ -7,7 +10,12 @@ describe('RequestTemplateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RequestTemplateComponent ]
+      declarations: [RequestTemplateComponent],
+      imports: [
+        CoreModule,
+        FormsModule,
+        RouterTestingModule
+      ]
     })
     .compileComponents();
   }));
