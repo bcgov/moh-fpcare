@@ -3,15 +3,14 @@ import {
   ViewContainerRef, ChangeDetectorRef, ComponentRef, ComponentFactoryResolver, AfterViewInit
 } from '@angular/core';
 
-import { ValidationComponent } from './validation-component.interface';
-import { RequiredValidationErrorsComponent } from './required-validation/required-validation.component';
-import { PhoneValidationComponent } from './phone-validation/phone-validation.component';
-import { EmailValidationComponent } from './email-validation/email-validation.component';
+import {ValidationComponent} from './validation-component.interface';
+import {RequiredValidationErrorsComponent} from './required-validation/required-validation.component';
 import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 import {PhnValidationComponent} from './phn-validation/phn-validation.component';
 import {SinValidationComponent} from './sin-validation/sin-validation.component';
 import {RegNumberValidationComponent} from './reg-number-validation/reg-number-validation.component';
 import {PcValidationComponent} from './pc-validation/pc-validation.component';
+import {NameValidationComponent} from './name-validation/name-validation.component';
 
 
 /**
@@ -39,7 +38,7 @@ import {PcValidationComponent} from './pc-validation/pc-validation.component';
   ]
 })
 export class FPCareRequiredDirective implements AfterViewInit, Validator {
-  private el: ElementRef;
+  //private el: ElementRef;
   private input: ElementRef;
   private label: ElementRef;
   private view: ViewContainerRef;
@@ -82,14 +81,6 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
           this.validationComponents.push(RequiredValidationErrorsComponent);
           break;
 
-        case 'phone':
-          this.validationComponents.push(PhoneValidationComponent);
-          break;
-
-        case 'email':
-          this.validationComponents.push(EmailValidationComponent);
-          break;
-
         case 'phn-check':
           this.validationComponents.push(PhnValidationComponent);
           break;
@@ -104,6 +95,10 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
 
         case 'postal-code':
           this.validationComponents.push(PcValidationComponent);
+          break;
+
+        case 'name-check':
+          this.validationComponents.push(NameValidationComponent);
           break;
 
         default:
@@ -189,6 +184,7 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
   private get labelText() {
     return this.label.nativeElement.textContent;
   }
+
 
   /** Returns the div.form-group parent, which _should_ be the direct parent. */
   private get formGroupElement(): ElementRef {

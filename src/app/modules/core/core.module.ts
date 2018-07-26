@@ -16,8 +16,6 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { FormActionBarComponent } from './components/form-action-bar/form-action-bar.component';
 import { FPCareRequiredDirective } from '../../validation/fpcare-required.directive';
 import { RequiredValidationErrorsComponent } from '../../validation/required-validation/required-validation.component';
-import { PhoneValidationComponent } from '../../validation/phone-validation/phone-validation.component';
-import { EmailValidationComponent } from '../../validation/email-validation/email-validation.component';
 import { ConsentModalComponent } from './components/consent-modal/consent-modal.component';
 import { CalendarFieldFormatterDirective } from './components/date/calendar-field-formatter.directive';
 import { CalendarYearValidatorDirective } from './components/date/calendar-year.validator';
@@ -31,6 +29,7 @@ import {SinValidationComponent} from '../../validation/sin-validation/sin-valida
 import {RegNumberValidationComponent} from '../../validation/reg-number-validation/reg-number-validation.component';
 import {PcValidationComponent} from '../../validation/pc-validation/pc-validation.component';
 import { ResultsFrameworkComponent } from './components/results-framework/results-framework.component';
+import {NameValidationComponent} from '../../validation/name-validation/name-validation.component';
 
 
 const componentList = [
@@ -44,12 +43,11 @@ const componentList = [
   FormActionBarComponent,
   FPCareRequiredDirective,
   RequiredValidationErrorsComponent,
-  PhoneValidationComponent,
-  EmailValidationComponent,
   PhnValidationComponent,
   SinValidationComponent,
   RegNumberValidationComponent,
   PcValidationComponent,
+  NameValidationComponent,
   ConsentModalComponent,
   CalendarFieldFormatterDirective,
   CalendarYearValidatorDirective,
@@ -82,12 +80,11 @@ const componentList = [
   ],
   entryComponents: [
     RequiredValidationErrorsComponent,
-    PhoneValidationComponent,
-    EmailValidationComponent,
     PhnValidationComponent,
     SinValidationComponent,
     RegNumberValidationComponent,
-    PcValidationComponent
+    PcValidationComponent,
+    NameValidationComponent
   ],
 })
 export class CoreModule { }

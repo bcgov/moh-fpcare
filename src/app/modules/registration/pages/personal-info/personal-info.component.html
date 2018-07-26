@@ -25,7 +25,7 @@
              type="text"
              id="ap_firstnm"
              name="ap_firstnm"
-             fpcareRequired
+             fpcareRequired="required,name-check"
              [(ngModel)]="applicant.firstName"/>
       </div>
       <div class="form-group">
@@ -42,7 +42,7 @@
                type="text"
                id="ap_lastnm"
                name="ap_lastnm"
-               fpcareRequired
+               fpcareRequired="required,name-check"
                [(ngModel)]="applicant.lastName"/>
       </div>
       <div class="form-group">
@@ -85,7 +85,7 @@
                  type="text"
                  id="sp_firstnm"
                  name="sp_firstnm"
-                 fpcareRequired
+                 fpcareRequired="required,name-check"
                  [(ngModel)]="spouse.firstName"/>
         </div>
         <div class="form-group">
@@ -102,7 +102,7 @@
                  type="text"
                  id="sp_lastnm"
                  name="sp_lastnm"
-                 fpcareRequired
+                 fpcareRequired="required,name-check"
                  [(ngModel)]="spouse.lastName"/>
         </div>
         <div class="form-group">
@@ -144,8 +144,7 @@
     <div class="todo">
       <ul>
         <li>Link the Medical Services Plan and Canada Revenue Agency to URLs</li>
-        <li>Need to verify Name not more than 30 characters & start w/ letters followed by letter(s),
-          hyphen, period, apostrophe, blank characters</li>
+        <li>Need way to separate length messaage from invalid characters</li>
         <li>ENABLE SIN CHECK VERIFICATION module</li>
       </ul>
     </div>
