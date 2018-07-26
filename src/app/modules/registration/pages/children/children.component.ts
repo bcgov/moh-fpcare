@@ -28,7 +28,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   ngDoCheck() {
 
-    let valid = (!!this.form) ? this.form.valid : !!this.form;
+    let valid = ( !this.hasChildren() ) ? true : ( !!this.form && this.form.valid );
 
     valid = valid && !!this.dobForm;
     if ( !!this.dobForm ) {

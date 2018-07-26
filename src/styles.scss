@@ -1,4 +1,8 @@
 // TODO: Remove at end of development - to be used it leave notes of issues encountered
+.todo:before {
+  content: 'TODO';
+}
+
 .todo {
   color: red;
   font-size: 1em;

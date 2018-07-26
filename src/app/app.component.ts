@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { DummyDataService } from './services/dummy-data.service';
 import { UserService } from './services/user.service';
 import { FPCareDataService } from './services/fpcare-data.service';
-import {Person} from './models/person.model';
 import {environment} from '../environments/environment';
 
 

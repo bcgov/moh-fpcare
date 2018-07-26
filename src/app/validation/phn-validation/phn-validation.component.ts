@@ -2,6 +2,7 @@ import {Component, ElementRef, Input} from '@angular/core';
 import {staticImplements, ValidationComponent} from '../validation-component.interface';
 import {BaseValidationComponent} from '../base-validation.component';
 import {ValidationService} from '../../services/validation.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'fpcare-phn-validation',
@@ -18,7 +19,6 @@ export class PhnValidationComponent extends BaseValidationComponent {
   public static validate(el: ElementRef): boolean {
 
     const inputVal = el.nativeElement.value;
-    console.log( 'phn-check: NEED TO UNCOMMENT ValidationService.validatePHN()' );
 
     // Empty field
     if (inputVal == null || inputVal.length < 1) {
@@ -30,9 +30,8 @@ export class PhnValidationComponent extends BaseValidationComponent {
          inputVal.length < ValidationService.MIN_PHN_LENGTH ) {
       return false;
     }
-    //TODO: Uncomment when issues resolved
-    //return ValidationService.validatePHN( inputVal, true );
-    return true;
+
+    return (environment.modChecksOn) ? ValidationService.validatePHN( inputVal, true ) : true;
   }
 
 }

@@ -6,4 +6,5 @@
 export const environment = {
   production: false,
   useDummyData: true,
+  modChecksOn: false
 };

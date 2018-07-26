@@ -56,7 +56,6 @@ export class DummyDataService {
       result.push(person);
     }
 
-
     return result;
   }
 
@@ -100,7 +99,7 @@ export class DummyDataService {
 
     return {
       year: dob.getFullYear(),
-      month: dob.getMonth(),
+      month: (dob.getMonth() === 0) ? dob.getMonth() + 1 : dob.getMonth(),
       day: dob.getDate()
     };
   }

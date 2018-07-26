@@ -2,6 +2,7 @@ import {Component, ElementRef, Input, OnInit} from '@angular/core';
 import {staticImplements, ValidationComponent} from '../validation-component.interface';
 import {ValidationService} from '../../services/validation.service';
 import {BaseValidationComponent} from '../base-validation.component';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'fpcare-sin-validation',
@@ -11,7 +12,6 @@ import {BaseValidationComponent} from '../base-validation.component';
 @staticImplements<ValidationComponent>( )
 export class SinValidationComponent extends BaseValidationComponent {
 
-
   @Input() public fieldName = 'DEFAULT_FIELD_NAME'; //should be overwritten at runtime, but write unit tests to check!
 
   public static ERROR_STRING = 'fpc-sin';
@@ -19,15 +19,13 @@ export class SinValidationComponent extends BaseValidationComponent {
   public static validate(el: ElementRef): boolean {
     const inputVal = el.nativeElement.value;
 
-    console.log( 'sin-check: NEED TO UNCOMMENT ValidationService.validateSIN()' );
 
     // Empty field
     if (inputVal == null || inputVal.length < 1) {
       return true;
     }
-    //TODO: Uncomment when issues resolved
-    //return ValidationService.validateSIN( inputVal );
-    return true;
+
+    return (environment.modChecksOn) ? ValidationService.validateSIN( inputVal ) : true;
   }
 
 }
