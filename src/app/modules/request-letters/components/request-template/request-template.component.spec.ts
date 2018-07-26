@@ -3,6 +3,9 @@ import {RequestTemplateComponent} from './request-template.component';
 import {FormsModule} from '@angular/forms';
 import {CoreModule} from '../../../core/core.module';
 import {RouterTestingModule} from '@angular/router/testing';
+import {DummyDataService} from '../../../../services/dummy-data.service';
+
+const dummyDataService = new DummyDataService();
 
 describe('RequestTemplateComponent', () => {
   let component: RequestTemplateComponent;
@@ -10,7 +13,9 @@ describe('RequestTemplateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [RequestTemplateComponent],
+      declarations: [
+        RequestTemplateComponent
+      ],
       imports: [
         CoreModule,
         FormsModule,
@@ -23,6 +28,7 @@ describe('RequestTemplateComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(RequestTemplateComponent);
     component = fixture.componentInstance;
+    component.applicant = dummyDataService.createAdult();
     fixture.detectChanges();
   });
 

@@ -1,7 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { FPCareDataService } from './fpcare-data.service';
 import {DummyDataService} from './dummy-data.service';
-import {Injectable} from '@angular/core';
 
 const dummyDataService = new DummyDataService();
 
@@ -12,7 +11,8 @@ const dummyDataService = new DummyDataService();
 export const fPCareDataServiceStub: Partial<FPCareDataService> = {
   applicant: dummyDataService.createAdult(),
   spouse: dummyDataService.createAdult(),
-  hasSpouse: () => { return true; }
+  hasSpouse: () => { return true; },
+  hasChildren: () => { return false; }
 }
 
 describe('FPCareDataService', () => {

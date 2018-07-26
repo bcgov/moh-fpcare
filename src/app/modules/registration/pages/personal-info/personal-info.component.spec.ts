@@ -5,6 +5,8 @@ import { CoreModule } from '../../../core/core.module';
 import {FormsModule} from '@angular/forms';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {DateTimeService} from '../../../../services/date-time.service';
+import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.spec';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('PersonalInfoComponent', () => {
   let component: PersonalInfoPageComponent;
@@ -17,10 +19,11 @@ describe('PersonalInfoComponent', () => {
       ],
       imports: [
         CoreModule,
-        FormsModule
+        FormsModule,
+        RouterTestingModule
       ],
       providers: [
-        FPCareDataService,
+        { provide: FPCareDataService, useValue: fPCareDataServiceStub },
         DateTimeService
       ]
     })
