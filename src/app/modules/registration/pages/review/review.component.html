@@ -86,16 +86,16 @@
     <div class="bg-light">
       <div class="row p-md-1">
         <div class="col-md-6">Mailing Address</div>
-        <div class="col-md-6">{{applicant.address.street}}</div>
+        <div class="col-md-6">{{getStreet()}}</div>
       </div>
       <div class="row p-md-1">
-        <div class="col-md-6 offset-md-6">{{applicant.address.city}}, {{applicant.address.province}}</div>
+        <div class="col-md-6 offset-md-6">{{getCity()}}, {{getProvince()}}</div>
       </div>
       <div class="row p-md-1">
-        <div class="col-md-6 offset-md-6">{{applicant.address.postal}}</div>
+        <div class="col-md-6 offset-md-6">{{getPostalCode()}}</div>
       </div>
       <div class="row p-md-1">
-        <div class="col-md-6 offset-md-6">{{applicant.address.country}}</div>
+        <div class="col-md-6 offset-md-6">{{getCountry()}}</div>
       </div>
     </div>
   </div>

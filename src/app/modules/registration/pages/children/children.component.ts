@@ -87,7 +87,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
   /**
    * Remove a child from the list
-   * @param {Person} child
+   * @param {idx} number
    */
   removeChild( idx: number ) {
     this.children.splice( idx, 1 );
@@ -100,8 +100,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   continue () {
     if ( this.canContinue() ) {
-      const link = '/registration/address';
-      this.router.navigate([link]);
+      this.navigate( '/registration/address' );
     }
   }
 }

@@ -28,8 +28,7 @@ export class Person extends Base {
   // Contact information for person
   /* Mailing address for person */
   address: Address = new Address();
-  phone: PhoneNumber;
-  email: string;
+  updAddress: Address;
 
   /**
    * Set first name for person

@@ -1,5 +1,89 @@
-<fpcare-page-framework layout='single'>
-  <p>
-    mailing-address works!
-  </p>
+<fpcare-page-framework layout='default'>
+
+  <h1>Mailing Address</h1>
+  <div class="p-md-2">
+    This information is used to confirm your identity and also to mail out Fair PharmaCare letters.
+  </div>
+
+  <form #formRef="ngForm" novalidate>
+    <div class="p-md-2 col-md-6">
+      <div class="form-group">
+        <label for="mail_pc">Mailing Postal Code</label>
+        <input class="form-control"
+               type="text"
+               id="mail_pc"
+               name="mail_pc"
+               fpcareRequired="required,postal-code"
+               [(ngModel)]="applicant.address.postal" />
+      </div>
+    </div>
+
+    <!-- Displays when Postal Code does not match FPCare records -->
+    <div *ngIf="isPostalCodeValid()">
+      <h2 class="border-bottom">
+        Update Your Mailing Address
+      </h2>
+      <div class="p-md-2 col-md-6">
+        <div class="form-group">
+          <label for="street">Street</label>
+          <input class="form-control"
+                 type="text"
+                 id="street"
+                 name="street"
+                 fpcareRequired
+                 [(ngModel)]="applicant.updAddress.street" />
+        </div>
+        <div class="form-group">
+          <label for="city">City</label>
+          <input class="form-control"
+                 type="text"
+                 id="city"
+                 name="city"
+                 fpcareRequired
+                 [(ngModel)]="applicant.updAddress.city" />
+        </div>
+        <div class="form-group">
+          <label for="province">Province</label>
+          <input class="form-control"
+                 type="text"
+                 id="province"
+                 name="province"
+                 fpcareRequired
+                 [(ngModel)]="applicant.updAddress.province" />
+        </div>
+        <div class="form-group">
+          <label for="postalcode">Postal Code</label>
+          <input class="form-control"
+                 type="text"
+                 id="postalcode"
+                 name="postalcode"
+                 fpcareRequired="required,postal-code"
+                 [(ngModel)]="applicant.updAddress.postal" />
+        </div>
+        <div class="form-group">
+          <label for="country">Country</label>
+          <input class="form-control"
+                 type="text"
+                 id="country"
+                 name="country"
+                 fpcareRequired
+                 [(ngModel)]="applicant.updAddress.country" />
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <aside>
+    <div class="todo">
+      <ul>
+        <li>Confirm this uses default page framework</li>
+      </ul>
+    </div>
+  </aside>
+
+  <fpcare-form-action-bar
+          [canContinue]="canContinue()"
+          (click)="continue()">
+  </fpcare-form-action-bar>
+
 </fpcare-page-framework>

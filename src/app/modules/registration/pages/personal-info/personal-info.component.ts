@@ -2,7 +2,6 @@ import {Component, DoCheck, OnInit, QueryList, ViewChildren} from '@angular/core
 import {Person} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
-import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {DateTimeService} from '../../../../services/date-time.service';
@@ -39,7 +38,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
     // Check SINs are unique
     if ( this.hasSpouse() && !!this.applicant.sin && !!this.spouse.sin) {
 
-      this._uniqueSinError = (this.applicant.sin === this.spouse.sin) ? true : false;
+      this._uniqueSinError = (this.applicant.sin === this.spouse.sin);
       valid = valid && !this._uniqueSinError;
     }
 
@@ -113,8 +112,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   continue() {
 
     if ( this.canContinue() ) {
-      const link = '/registration/child-info';
-      this.router.navigate([link]);
+      this.navigate( '/registration/child-info' );
     }
   }
 }

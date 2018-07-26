@@ -36,7 +36,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
     // Check PHNs are unique
     if ( this.hasSpouse() && !!this.applicant.phn && !!this.spouse.phn) {
 
-      this._uniquePhnError = (this.applicant.phn === this.spouse.phn) ? true : false;
+      this._uniquePhnError = (this.applicant.phn === this.spouse.phn);
       valid = valid && !this._uniquePhnError;
     }
 

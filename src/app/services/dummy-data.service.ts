@@ -20,7 +20,7 @@ export class DummyDataService {
 
   // Applicant for test purpose - personal info
   createApplicant( populated: boolean = true ): Person {
-    return populated ? this.createAdult( true ) : new Person();
+    return populated ? this.createAdult( true, true ) : new Person();
   }
 
   // Spouse for test purpose - personal info
@@ -28,7 +28,7 @@ export class DummyDataService {
     return populated ? this.createAdult() : new Person();
   }
 
-  createAdult( setAddress: boolean = false ): Person {
+  createAdult( setAddress: boolean = false, setUpdAddress: boolean = false ): Person {
     const result: Person = new Person;
 
     result.name = this.generatePersonName();
@@ -39,6 +39,11 @@ export class DummyDataService {
     // Populate address in person object
     if ( setAddress ) {
       result.address = this.generateAddress();
+    }
+
+    // Populate update address in person object
+    if ( setUpdAddress ) {
+      result.updAddress = this.generateAddress();
     }
 
     return result;
@@ -116,10 +121,11 @@ export class DummyDataService {
 
   private generateAddress(): Address {
     const streetNames = ['Kings', 'Main', 'Fort', 'Yates', 'Douglas'];
+    const postalCodes = ['V8R 1R9', 'V8R 2W0', 'V8E 2T9', 'V6R 0N2', 'V6E 2N9'];
     const address = new Address();
 
-    address.street = `${Math.ceil(Math.random() * 8000)} ${this.getRandomElFromArray(streetNames)} St.`;
-    address.postal = 'V8R 2N9';
+    address.street = `${Math.ceil(Math.random() * 8000)} ${this.getRandomElFromArray( streetNames )} St.`;
+    address.postal = `${this.getRandomElFromArray( postalCodes )}`;
     address.country = 'Canada';
     address.province = 'British Columbia';
     address.city = 'Victoria';

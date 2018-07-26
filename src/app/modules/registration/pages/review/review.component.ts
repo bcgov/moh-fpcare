@@ -115,6 +115,46 @@ export class ReviewPageComponent extends Base implements OnInit {
     this.navigate( 'financial' );
   }
 
+  /**
+   *
+   * @returns {string}
+   */
+  getStreet(): string {
+    return  this.isAddressUpdated ? this.applicant.updAddress.street : '';
+  }
+
+  /**
+   *
+   * @returns {string}
+   */
+  getCity(): string {
+    return  this.isAddressUpdated ? this.applicant.updAddress.city : '';
+  }
+
+  /**
+   *
+   * @returns {string}
+   */
+  getProvince(): string {
+    return  this.isAddressUpdated ? this.applicant.updAddress.province : '';
+  }
+
+  /**
+   *
+   * @returns {string}
+   */
+  getCountry(): string {
+    return  this.isAddressUpdated ? this.applicant.updAddress.country : '';
+  }
+
+  /**
+   *
+   * @returns {string}
+   */
+  getPostalCode(): string {
+    return  this.isAddressUpdated ? this.applicant.updAddress.postal : '';
+  }
+
   // Methods triggered by the form action bar
 
   /** Determines if the Continue button is disabled */
@@ -127,6 +167,14 @@ export class ReviewPageComponent extends Base implements OnInit {
    */
   continue() {
     this.navigate( 'authorize' );
+  }
+
+  /**
+   *
+   * @returns {boolean}
+   */
+  isAddressUpdated(): boolean {
+    return !!this.applicant.updAddress;
   }
 
   /** Navigates to a route then automatically scrolls to the top of the page. */
