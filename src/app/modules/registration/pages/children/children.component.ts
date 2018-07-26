@@ -4,6 +4,7 @@ import {Person} from '../../../../models/person.model';
 import {Router} from '@angular/router';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
+import {ValidationService} from '../../../../services/validation.service';
 
 @Component({
   selector: 'fpcare-children',
@@ -15,7 +16,11 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   /** Access to date component */
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
+  /** Indicates whether or not the same PHNs has been used for another family member */
+  private _uniquePhnError = false;
+
   constructor( private fpcService: FPCareDataService
+             , private validationService: ValidationService
              , protected router: Router ) {
     super( router );
   }
@@ -42,6 +47,14 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
       valid = valid && (dobList.length === 0);
     }
 
+    if ( this.hasChildren() ) {
+
+      // Check that PHNs are unique
+      this._uniquePhnError = !this.validationService.isUnique( this.familyPhnList );
+
+      valid = valid && !this._uniquePhnError;
+    }
+
     this._canContinue = valid;
   }
 
@@ -59,6 +72,25 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   hasChildren(): boolean {
     return this.fpcService.hasChildren();
+  }
+
+  /**
+   *
+   * @param {Person} child
+   * @returns {boolean}
+   */
+  hasUniquePhnError( child: Person ): boolean {
+
+    if ( this._uniquePhnError ) {
+      // Is this the PHN that is duplicated
+      const list = this.familyPhnList.filter( x => { return x === child.phn; } );
+
+      if ( list.length > 1 ) {
+        // This PHN is duplicated
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -102,5 +134,20 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
     if ( this.canContinue() ) {
       this.navigate( '/registration/address' );
     }
+  }
+
+  /**
+   *
+   * @returns {string[]}
+   */
+  private get familyPhnList(): string [] {
+    const phnList = this.children.map( x => x.phn );
+    phnList.push( this.fpcService.applicant.phn );
+
+    if ( this.fpcService.hasSpouse() ) {
+      phnList.push(this.fpcService.spouse.phn);
+    }
+
+    return phnList;
   }
 }

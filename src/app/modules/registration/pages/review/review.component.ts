@@ -116,7 +116,7 @@ export class ReviewPageComponent extends Base implements OnInit {
   }
 
   /**
-   *
+   * Retrieve the updated street address
    * @returns {string}
    */
   getStreet(): string {
@@ -124,7 +124,7 @@ export class ReviewPageComponent extends Base implements OnInit {
   }
 
   /**
-   *
+   * Retrieve the updated city for address
    * @returns {string}
    */
   getCity(): string {

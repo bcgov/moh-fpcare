@@ -6,6 +6,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import {FormsModule} from '@angular/forms';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.spec';
+import {ValidationService} from '../../../../services/validation.service';
 
 describe('EligibilityComponent', () => {
   let component: EligibilityPageComponent;
@@ -23,6 +24,7 @@ describe('EligibilityComponent', () => {
       ],
       providers: [
         { provide: FPCareDataService, useValue: fPCareDataServiceStub },
+        ValidationService
       ]
     })
     .compileComponents();

@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
+import {ValidationService} from '../../../../services/validation.service';
 
 @Component({
   selector: 'fpcare-eligibility',
@@ -19,7 +20,8 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
   private _uniquePhnError = false;
 
   constructor( protected router: Router
-             , private fpcareDataService: FPCareDataService ) {
+             , private fpcareDataService: FPCareDataService
+             , private validationService: ValidationService ) {
     super( router );
   }
 
@@ -33,13 +35,6 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
 
     let valid = this.form.valid;
 
-    // Check PHNs are unique
-    if ( this.hasSpouse() && !!this.applicant.phn && !!this.spouse.phn) {
-
-      this._uniquePhnError = (this.applicant.phn === this.spouse.phn);
-      valid = valid && !this._uniquePhnError;
-    }
-
     valid = valid && !!this.dobForm;
     if ( !!this.dobForm ) {
       valid = valid && (this.dobForm.map(x => {
@@ -48,6 +43,17 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
         }
       })
         .filter(x => x !== true).length === 0);
+    }
+
+    // Check PHNs are unique
+    if ( this.hasSpouse() ) {
+
+      const phnList: string[] = [];
+
+      phnList.push( this.applicant.phn );
+      phnList.push( this.spouse.phn );
+      this._uniquePhnError = !this.validationService.isUnique( phnList );
+      valid = valid && !this._uniquePhnError;
     }
 
     this._canContinue = valid;

@@ -7,6 +7,7 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {DateTimeService} from '../../../../services/date-time.service';
 import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.spec';
 import {RouterTestingModule} from '@angular/router/testing';
+import {ValidationService} from '../../../../services/validation.service';
 
 describe('PersonalInfoComponent', () => {
   let component: PersonalInfoPageComponent;
@@ -24,7 +25,8 @@ describe('PersonalInfoComponent', () => {
       ],
       providers: [
         { provide: FPCareDataService, useValue: fPCareDataServiceStub },
-        DateTimeService
+        DateTimeService,
+        ValidationService
       ]
     })
     .compileComponents();

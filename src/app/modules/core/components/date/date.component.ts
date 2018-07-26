@@ -41,7 +41,6 @@ export class FPCareDateComponent extends Base implements OnInit {
   }
 
   setYearValueOnModel(value: string) {
-    console.log( 'year: ', value );
     if (value) {
       this.date.year = parseInt(value, 10);
     } else {
@@ -51,7 +50,6 @@ export class FPCareDateComponent extends Base implements OnInit {
   }
 
   setDayValueOnModel(value: string) {
-    console.log( 'day: ', value );
     if (value) {
       this.date.day = parseInt(value, 10);
     } else {
@@ -61,7 +59,6 @@ export class FPCareDateComponent extends Base implements OnInit {
   }
 
   setMonthValueOnModel(value: string) {
-    console.log( 'month: ', value );
     if (value) {
       this.date.month = parseInt(value, 10);
     } else {

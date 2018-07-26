@@ -3,6 +3,7 @@ import {AbstractFormComponent} from '../../../../models/abstract-form-component'
 import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
+import {Address} from '../../../../models/address.model';
 
 @Component({
   selector: 'fpcare-mailing-address',
@@ -12,7 +13,7 @@ import {Person} from '../../../../models/person.model';
 export class MailingAddressPageComponent extends AbstractFormComponent implements OnInit, DoCheck {
 
   constructor( private fpcService: FPCareDataService
-    , protected router: Router ) {
+             , protected router: Router ) {
     super( router );
   }
 
@@ -39,6 +40,8 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    * @returns {boolean}
    */
   isPostalCodeValid(): boolean {
+    // business logic required to determine whether PC is valid - for dev purposes show update address
+    this.applicant.updAddress = new Address();
     return true;
   }
 

@@ -13,10 +13,17 @@ export class ValidationService {
   /** Maximux length of FPC Registation Number (1 letter + 8 digits) */
   public static MAX_REGNUM_LENGTH = 9;
 
-
-
   constructor() { }
 
+  /**
+   * Determines whether the entries in the list are unique
+   * @param {string[]} list
+   * @returns {boolean}
+   */
+  isUnique( list: string[] ): boolean {
+    const uniqueList = list.filter( this.filterUnique );
+    return ( uniqueList.length === list.length );
+  }
 
   /**
    *
@@ -149,5 +156,17 @@ export class ValidationService {
 
     // All done!
     return true;
+  }
+
+  // PRIVATE METHODS
+  /**
+   * Filters unique items
+   * @param x
+   * @param i
+   * @param a
+   * @returns {boolean}
+   */
+  private filterUnique(x, i, a): boolean {
+    return x && a.indexOf( x ) === i;
   }
 }

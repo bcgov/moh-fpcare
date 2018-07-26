@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {DateTimeService} from '../../../../services/date-time.service';
+import {ValidationService} from '../../../../services/validation.service';
 
 @Component({
   selector: 'fpcare-personal-info',
@@ -21,6 +22,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
 
   constructor( private fpcService: FPCareDataService
              , private dateTimeService: DateTimeService
+             , private validationService: ValidationService
              , protected router: Router ) {
     super( router );
   }
@@ -33,12 +35,15 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    */
   ngDoCheck() {
 
+    const sinList: string[] = [];
     let valid = this.form.valid;
 
     // Check SINs are unique
-    if ( this.hasSpouse() && !!this.applicant.sin && !!this.spouse.sin) {
+    if ( this.hasSpouse() ) {
 
-      this._uniqueSinError = (this.applicant.sin === this.spouse.sin);
+      sinList.push( this.applicant.sin );
+      sinList.push( this.spouse.sin );
+      this._uniqueSinError = !this.validationService.isUnique( sinList );
       valid = valid && !this._uniqueSinError;
     }
 
