@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Person} from '../../../../models/person.model';
-import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
-import {DummyDataService} from '../../../../services/dummy-data.service';
 import {Base} from '../../../core/components/base/base.class';
 
 @Component({
@@ -12,11 +10,7 @@ import {Base} from '../../../core/components/base/base.class';
 })
 export class RequestConsentComponent extends  Base implements OnInit {
 
-  /** Applicant requesting registration status */
-  private _applicant: Person = new Person();
-
-  constructor( private fpcareDataService: FPCareDataService
-             , private dummyDataService: DummyDataService ) {
+  constructor( private fpcareDataService: FPCareDataService ) {
     super();
   }
 
@@ -28,7 +22,7 @@ export class RequestConsentComponent extends  Base implements OnInit {
    * @returns {Person}
    */
   get applicant(): Person {
-    return this._applicant;
+    return this.fpcareDataService.applicant;
   }
 
   /**

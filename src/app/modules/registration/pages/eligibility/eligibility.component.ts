@@ -35,7 +35,6 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
 
     let valid = this.form.valid;
 
-    valid = valid && !!this.dobForm;
     if ( !!this.dobForm ) {
       valid = valid && (this.dobForm.map(x => {
         if (x.required && x.isValid()) {

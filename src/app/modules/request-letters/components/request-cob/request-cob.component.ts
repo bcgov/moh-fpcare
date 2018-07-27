@@ -11,11 +11,7 @@ import {Base} from '../../../core/components/base/base.class';
 })
 export class RequestCobComponent extends Base implements OnInit {
 
-  /** Applicant requesting registration status */
-  private _applicant: Person = new Person();
-
-  constructor( private fpcareDataService: FPCareDataService
-             , private dummyDataService: DummyDataService ) {
+  constructor( private fpcareDataService: FPCareDataService ) {
     super();
   }
 
@@ -27,7 +23,7 @@ export class RequestCobComponent extends Base implements OnInit {
    * @returns {Person}
    */
   get applicant(): Person {
-    return this._applicant;
+    return this.fpcareDataService.applicant;
   }
 
   /**

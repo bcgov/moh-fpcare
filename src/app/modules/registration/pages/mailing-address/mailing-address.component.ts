@@ -13,7 +13,7 @@ import {Address} from '../../../../models/address.model';
 export class MailingAddressPageComponent extends AbstractFormComponent implements OnInit, DoCheck {
 
   // Variable to indicate whether the postal code matches the one on file
-  private _postalCodeMatch = false;
+  private _postalCodeMatch = true;
 
   constructor( private fpcService: FPCareDataService
              , protected router: Router ) {
@@ -44,6 +44,10 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   isPostalCodeMatch(): boolean {
     // business logic required to determine whether PC is valid - for dev purposes show update address
+
+    if ( !this._postalCodeMatch ) {
+      this.applicant.updAddress = new Address();
+    }
 
     this.applicant.updatedAddress = !this._postalCodeMatch; // Flag to indicate address is updated
 

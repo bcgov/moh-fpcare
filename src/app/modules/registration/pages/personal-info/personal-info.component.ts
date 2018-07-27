@@ -47,7 +47,6 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
       valid = valid && !this._uniqueSinError;
     }
 
-    valid = valid && !!this.dobForm;
     if ( !!this.dobForm ) {
       valid = valid && (this.dobForm.map(x => {
         if (x.required && x.isValid()) {

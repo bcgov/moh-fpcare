@@ -19,9 +19,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   private _disableRegNum = false;
   private _disablePhn = false;
 
-  /** New person object to store data for request */
-  private _applicant = new Person();
-
   constructor( protected router: Router
              , private fpcareDataService: FPCareDataService
              , private dummyDataService: DummyDataService ) {
@@ -104,7 +101,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    * @returns {Person}
    */
   get applicant(): Person {
-    return this._applicant;
+    return this.fpcareDataService.applicant;
   }
 
   /**

@@ -37,7 +37,6 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
     let valid = ( !this.hasChildren() ) ? true : ( !!this.form && this.form.valid );
 
-    valid = valid && !!this.dobForm;
     if ( !!this.dobForm ) {
       const dobList = this.dobForm.map(x => {
         if (x.required && x.isValid()) {

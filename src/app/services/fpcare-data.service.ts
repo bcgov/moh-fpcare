@@ -4,8 +4,6 @@ import {Person} from '../models/person.model';
 @Injectable()
 export class FPCareDataService {
 
-  constructor() { }
-
   /** Applicant information */
   private _applicant: Person;
   /** Information for applicant's spouse */
@@ -15,6 +13,11 @@ export class FPCareDataService {
 
   /** Maximum number of dependents on an account */
   MAX_DEPENDANTS = 18;
+
+  constructor() {
+    // Create applicant
+    this._applicant = new Person();
+  }
 
   /**
    * Gets the applicant object
@@ -75,6 +78,13 @@ export class FPCareDataService {
   }
 
   /**
+   * Adds a spouse
+   */
+  addSpouse() {
+    this._spouse = new Person();
+  }
+
+  /**
    * Indicates whether a children are present
    * @returns {boolean}
    */
@@ -86,7 +96,7 @@ export class FPCareDataService {
    * Adds a child to the dependants list
    */
   addChild() {
-    const child: Person = new Person;
+    const child: Person = new Person();
 
     if (this.canAddChild()){
       this._dependants.push(child);
