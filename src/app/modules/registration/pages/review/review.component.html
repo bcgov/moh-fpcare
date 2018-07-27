@@ -83,7 +83,13 @@
     <h2>Contact Information
       <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editContactInfo()"></i>
     </h2>
-    <div class="bg-light">
+    <div *ngIf="!isAddressUpdated()" class="bg-light">
+      <div class="row p-md-1">
+        <div class="col-md-6">Mailing Address</div>
+        <div class="col-md-6">{{getPostalCode()}}</div>
+      </div>
+    </div>
+    <div *ngIf="isAddressUpdated()" class="bg-light">
       <div class="row p-md-1">
         <div class="col-md-6">Mailing Address</div>
         <div class="col-md-6">{{getStreet()}}</div>

@@ -9,8 +9,8 @@ const dummyDataService = new DummyDataService();
  * @type {{applicant: Person; spouse: Person; hasSpouse: () => boolean}}
  */
 export const fPCareDataServiceStub: Partial<FPCareDataService> = {
-  applicant: dummyDataService.createAdult(),
-  spouse: dummyDataService.createAdult(),
+  applicant: dummyDataService.createApplicant(),
+  spouse: dummyDataService.createSpouse(),
   hasSpouse: () => { return true; },
   hasChildren: () => { return false; }
 }

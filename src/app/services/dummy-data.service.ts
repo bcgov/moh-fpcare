@@ -44,6 +44,7 @@ export class DummyDataService {
     // Populate update address in person object
     if ( setUpdAddress ) {
       result.updAddress = this.generateAddress();
+      result.updatedAddress = true;
     }
 
     return result;

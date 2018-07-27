@@ -29,6 +29,23 @@ export class Person extends Base {
   /* Mailing address for person */
   address: Address = new Address();
   updAddress: Address;
+  private _updatedAddress: boolean = false;
+
+  /**
+   *
+   * @param {boolean} updated
+   */
+  set updatedAddress( updated: boolean ) {
+    this._updatedAddress = updated;
+  }
+
+  /**
+   *
+   * @returns {boolean}
+   */
+  isAdressUpdated(): boolean {
+    return this._updatedAddress;
+  }
 
   /**
    * Set first name for person

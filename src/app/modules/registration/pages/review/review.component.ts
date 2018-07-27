@@ -88,28 +88,28 @@ export class ReviewPageComponent extends Base implements OnInit {
   }
 
   /**
-   *
+   * Link to Eligibility page so applicant can edit data
    */
   editPersonalInfo() {
     this.navigate( 'eligibility' );
   }
 
   /**
-   *
+   * Link to Child Information page so applicant can edit data
    */
   editChildInfo() {
     this.navigate( 'child-info' );
   }
 
   /**
-   *
+   * Link to Address page so applicant can edit data
    */
   editContactInfo() {
     this.navigate( 'address' );
   }
 
   /**
-   *
+   * Link to Financial page so applicant can edit data
    */
   editFinancialInfo() {
     this.navigate( 'financial' );
@@ -120,7 +120,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getStreet(): string {
-    return  this.isAddressUpdated ? this.applicant.updAddress.street : '';
+    return  this.isAddressUpdated() ? this.applicant.updAddress.street : this.applicant.address.street ;
   }
 
   /**
@@ -128,7 +128,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getCity(): string {
-    return  this.isAddressUpdated ? this.applicant.updAddress.city : '';
+    return  this.isAddressUpdated() ? this.applicant.updAddress.city : this.applicant.address.city;
   }
 
   /**
@@ -136,7 +136,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getProvince(): string {
-    return  this.isAddressUpdated ? this.applicant.updAddress.province : '';
+    return  this.isAddressUpdated() ? this.applicant.updAddress.province : this.applicant.address.province;
   }
 
   /**
@@ -144,7 +144,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getCountry(): string {
-    return  this.isAddressUpdated ? this.applicant.updAddress.country : '';
+    return  this.isAddressUpdated() ? this.applicant.updAddress.country : this.applicant.address.country;
   }
 
   /**
@@ -152,7 +152,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getPostalCode(): string {
-    return  this.isAddressUpdated ? this.applicant.updAddress.postal : '';
+    return  this.isAddressUpdated() ? this.applicant.updAddress.postal : this.applicant.address.postal ;
   }
 
   // Methods triggered by the form action bar
@@ -174,7 +174,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {boolean}
    */
   isAddressUpdated(): boolean {
-    return !!this.applicant.updAddress;
+    return this.applicant.isAdressUpdated();
   }
 
   /** Navigates to a route then automatically scrolls to the top of the page. */

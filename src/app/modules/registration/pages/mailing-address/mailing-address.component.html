@@ -19,7 +19,7 @@
     </div>
 
     <!-- Displays when Postal Code does not match FPCare records -->
-    <div *ngIf="isPostalCodeValid()">
+    <div *ngIf="!isPostalCodeMatch()">
       <h2 class="border-bottom">
         Update Your Mailing Address
       </h2>
@@ -76,7 +76,8 @@
   <aside>
     <div class="todo">
       <ul>
-        <li>Confirm this uses default page framework</li>
+        <li>Add helper text to "aside"</li>
+        <li>Need logic to compare postal code to determine whether address needs to be updated</li>
       </ul>
     </div>
   </aside>
