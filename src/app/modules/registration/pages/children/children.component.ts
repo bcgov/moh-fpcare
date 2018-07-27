@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ValidationService} from '../../../../services/validation.service';
+import {DateTimeService} from '../../../../services/date-time.service';
 
 @Component({
   selector: 'fpcare-children',
@@ -21,6 +22,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
   constructor( private fpcService: FPCareDataService
              , private validationService: ValidationService
+             , private dateTimeService: DateTimeService
              , protected router: Router ) {
     super( router );
   }
@@ -53,6 +55,15 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
       this._uniquePhnError = !this.validationService.isUnique( this.familyPhnList );
 
       valid = valid && !this._uniquePhnError;
+
+      // Check that individuals are allowed on Parents FPC account
+      const notLegitDep = this.children.map( x => {
+        if (!this.isLegitDependant(x) ) {
+          return x;
+        }
+      }).filter( x => x );
+
+      valid = valid && ( notLegitDep.length === 0 );
     }
 
     this._canContinue = valid;
@@ -91,6 +102,16 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
       }
     }
     return false;
+  }
+
+  /**
+   * Determines whether individual is a legitiment dependant
+   * Individuals who are more than 25 years old cannot be on parents FPCare account
+   * @returns {boolean}
+   */
+  isLegitDependant( child: Person ): boolean {
+    const age = this.dateTimeService.getAge( child.dateOfBirth );
+    return ( age < 25 );
   }
 
   /**

@@ -48,6 +48,9 @@
                   [date]="child.dateOfBirth"
                   [restrictDate]="'past'">
           </fpcare-date>
+          <div *ngIf="!isLegitDependant(child)" role="alert" aria-live="assertive">
+            <div class="text-danger">Individual is too old.</div>
+          </div>
         </div>
         <div class="form-group">
           <label for="ch_phn_{{i}}">PHN</label>
@@ -73,8 +76,7 @@
     <div class="todo">
       <ul>
         <li>Add helper text to "aside"</li>
-        <li>Need way to separate length messaage from invalid characters</li>
-        <li>Need to verify dependants are not older than 25 years</li>
+        <li>Need way to separate length messaage from invalid charcters</li>
         <li>ENABLE PHN CHECK VERIFICATION module</li>
       </ul>
     </div>

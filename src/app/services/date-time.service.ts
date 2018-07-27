@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import {SimpleDate} from '../modules/core/components/date/simple-date.interface';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DateTimeService {
 
   constructor() { }
@@ -27,5 +25,25 @@ export class DateTimeService {
   convertSimpleDateToStr( dt: SimpleDate ): string {
     const dtObj = new Date( dt.year, dt.month, dt.day );
     return this.formatDate( dtObj );
+  }
+
+  /**
+   * Convert date to a Date object
+   * @param {SimpleDate} dt
+   * @returns {Date}
+   */
+  convertSimpleDateToDate( dt: SimpleDate ): Date {
+    return new Date( dt.year, dt.month, dt.day );
+  }
+
+  /**
+   * Calculates the age from date of birth
+   * @param {SimpleDate} dob
+   * @returns {Number}
+   */
+  getAge( dob: SimpleDate ): Number {
+    const today = new Date();
+    const dobDt = this.convertSimpleDateToDate( dob );
+    return moment( today ).diff( dobDt, 'year' );
   }
 }
