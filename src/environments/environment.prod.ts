@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
   useDummyData: false,
-  modChecksOn: true
+  modChecksOn: true,
+  baseAPIUrl: 'https://reqres.in/api/',
 };

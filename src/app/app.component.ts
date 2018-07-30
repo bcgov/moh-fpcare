@@ -3,6 +3,7 @@ import { DummyDataService } from './services/dummy-data.service';
 import { UserService } from './services/user.service';
 import { FPCareDataService } from './services/fpcare-data.service';
 import {environment} from '../environments/environment';
+import { ApiService } from './services/api-service.service';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class AppComponent implements OnInit {
 
   constructor(private userService: UserService,
     private dummyDataService: DummyDataService,
-    private fpcareDataService: FPCareDataService ) {
+    private fpcareDataService: FPCareDataService,
+    private apiService: ApiService ) {
   }
 
   ngOnInit() {
@@ -25,11 +27,19 @@ export class AppComponent implements OnInit {
 
       // Purpose: Development
       this.fpcareDataService.applicant = this.dummyDataService.createApplicant();
-      console.log( 'applicant: ', this.fpcareDataService.applicant );
+      // console.log( 'applicant: ', this.fpcareDataService.applicant );
       this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
-      console.log( 'spouse: ', this.fpcareDataService.spouse );
+      // console.log( 'spouse: ', this.fpcareDataService.spouse );
       this.fpcareDataService.dependants = this.dummyDataService.createChildren( 2 );
-      console.log( 'children: ', this.fpcareDataService.dependants );
+      // console.log( 'children: ', this.fpcareDataService.dependants );
     }
+
+
+    // Test API End to End works. In the future we will store the calendar data in a service as it's necessary for the app.
+
+    this.apiService.getBenefitYear().subscribe(data => {
+      console.log('ApiService getCalendar', data);
+    });
+
   }
 }

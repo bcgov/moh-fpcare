@@ -27,6 +27,7 @@ import {RequestTemplateComponent} from './modules/request-letters/components/req
 import {RequestConsentComponent} from './modules/request-letters/components/request-consent/request-consent.component';
 import {ConsentResultsComponent} from './modules/request-letters/components/consent-results/consent-results.component';
 import {DateTimeService} from './services/date-time.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import {DateTimeService} from './services/date-time.service';
     BsDropdownModule.forRoot(),
     MyDateRangePickerModule,
     ButtonsModule.forRoot(),
-    HeaderFooterModule
+    HeaderFooterModule,
+    HttpClientModule
   ],
   providers: [
     UserService,
