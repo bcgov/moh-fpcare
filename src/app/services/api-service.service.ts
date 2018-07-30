@@ -1,37 +1,34 @@
+import { AbstractHttpService } from './abstract-api-service';
+
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { throwError } from 'rxjs';
-// import { environment } from ''
+import { LogService } from './log.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class ApiService extends AbstractHttpService {
 
-  /** Base API URL, loaded via angular environment variables when the service is initialized. */
-  protected baseAPIUrl: string;
+  protected headers: HttpHeaders = new HttpHeaders({test: '123fpclog'});
 
-  constructor(private http: HttpClient) { 
-    this.baseAPIUrl = environment.baseAPIUrl;
-  }
-
-  // private get(){}
-
-  protected get headers(): Headers {
-    // return new Headers({token: token});
-    return;
+  constructor(protected http: HttpClient, public logService: LogService){
+    super(http);
   }
 
   public getBenefitYear(){
-    const url = this.baseAPIUrl + 'users/';
     // Final URL is below, but we would call a different URL as we're calling a service which is setup with certs.
     // URL: https://d2fpcaresvc.maximusbc.ca/fpcareIntegration/rest/getBenefitYear
-    return this.http.get(url);
+    const url = environment.baseAPIUrl + 'users/';
+
+    // return this.http.get(url); // MINIMUM TESTABLE VERSION
+    return this.get(url);
   }
 
-  private handleError(error: HttpErrorResponse){
-    if (error.error instanceof ErrorEvent){
+  protected handleError(error: HttpErrorResponse) {
+    if (error.error instanceof ErrorEvent) {
       //Client-side / network error occured
       console.error('An error occured: ', error.error.message);
     }
@@ -40,9 +37,10 @@ export class ApiService {
       console.error(`Backend returned error code: ${error.status}.  Error body: ${error.error}`);
     }
 
-    // TODO: LOG THE ERROR TO LOG SERVICE!
+    this.logService.logError(error);
 
     // A user facing erorr message /could/ go here; we shouldn't log dev info through the throwError observable
     return throwError('Something went wrong with the network request.');
   }
+
 }

@@ -30,7 +30,7 @@ export abstract class BaseValidationComponent {
    *
    * @param input An ElementRef, or mocked class with input.nativeElement.value defined.
    */
-  public static validate(input: ElementRef): boolean {
+  public static validate(input: ElementRef<HTMLInputElement>): boolean {
     const inputVal = input.nativeElement.value;
     if (inputVal == null || inputVal.length < 1) {
       return true;

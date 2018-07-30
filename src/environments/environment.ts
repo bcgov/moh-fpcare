@@ -10,4 +10,11 @@ export const environment = {
   
   /** Base url for all API requests. Note: This should be a relative URL, not absolute, so it can properly map to dev/test/prod. */
   baseAPIUrl: 'https://reqres.in/api/',
+
+  loggingURL: 'https://reqres.in/api/',
+
+  /** Log HTTP requests from our API and Log services into the console */
+  logHTTPRequestsToConsole: true,
+  
+
 };

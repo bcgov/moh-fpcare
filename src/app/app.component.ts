@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DummyDataService } from './services/dummy-data.service';
 import { UserService } from './services/user.service';
 import { FPCareDataService } from './services/fpcare-data.service';
-import {environment} from '../environments/environment';
+import {environment} from 'environments/environment';
 import { ApiService } from './services/api-service.service';
 
 
@@ -35,11 +35,14 @@ export class AppComponent implements OnInit {
     }
 
 
-    // Test API End to End works. In the future we will store the calendar data in a service as it's necessary for the app.
 
+  }
+
+  request() {
+    // Test API End to End works. In the future we will store the calendar data in a service as it's necessary for the app.
+    // Remove after testing complete
     this.apiService.getBenefitYear().subscribe(data => {
       console.log('ApiService getCalendar', data);
     });
-
   }
 }

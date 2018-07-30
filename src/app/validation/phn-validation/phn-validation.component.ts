@@ -2,7 +2,7 @@ import {Component, ElementRef, Input} from '@angular/core';
 import {staticImplements, ValidationComponent} from '../validation-component.interface';
 import {BaseValidationComponent} from '../base-validation.component';
 import {ValidationService} from '../../services/validation.service';
-import {environment} from '../../../environments/environment';
+import {environment} from 'environments/environment';
 
 @Component({
   selector: 'fpcare-phn-validation',
