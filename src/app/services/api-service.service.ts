@@ -21,7 +21,7 @@ export class ApiService extends AbstractHttpService {
   public getBenefitYear(){
     // Final URL is below, but we would call a different URL as we're calling a service which is setup with certs.
     // URL: https://d2fpcaresvc.maximusbc.ca/fpcareIntegration/rest/getBenefitYear
-    const url = environment.baseAPIUrl + 'users/';
+    const url = environment.baseAPIUrl + 'getCalendar/';
 
     // return this.http.get(url); // MINIMUM TESTABLE VERSION
     return this.get(url);
@@ -37,7 +37,7 @@ export class ApiService extends AbstractHttpService {
       console.error(`Backend returned error code: ${error.status}.  Error body: ${error.error}`);
     }
 
-    this.logService.logError(error);
+    // this.logService.logError(error);
 
     // A user facing erorr message /could/ go here; we shouldn't log dev info through the throwError observable
     return throwError('Something went wrong with the network request.');
