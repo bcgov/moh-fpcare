@@ -5,7 +5,7 @@ FROM nginx:mainline
 RUN apt-get update && apt-get install openssl
 
 # Copy our OpenShift s2i scripts over to default location
-CMD cat ./s2i/bin/run
+CMD cat ./s2i/bin/run | echo
 COPY ./s2i/bin/ /usr/libexec/s2i/
 
 # Expose this variable to OpenShift
