@@ -24,7 +24,15 @@ export class ApiService extends AbstractHttpService {
     const url = environment.baseAPIUrl + 'getCalendar/';
 
     // return this.http.get(url); // MINIMUM TESTABLE VERSION
-    return this.get(url);
+    return this.post(url, {
+      uuid: '1234563434',
+      clientName: 'ppiwebuser',
+      benefitYear: '2018',
+      processDate: '20180720',
+      taxYear: '2018',
+      regStatusCode: ' ',
+      regStatusMsg: ' ',
+    });
   }
 
   protected handleError(error: HttpErrorResponse) {
