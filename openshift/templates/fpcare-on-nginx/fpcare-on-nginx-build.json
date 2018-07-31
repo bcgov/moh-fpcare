@@ -55,7 +55,7 @@
             "from": {
               "kind": "ImageStreamTag",
               "name": "nginx-runtime:latest",
-              "namespace": "openshift"
+              "namespace": "moh-fpcare-tools"
             }
           }
         },
