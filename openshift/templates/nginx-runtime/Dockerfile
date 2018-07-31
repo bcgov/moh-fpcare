@@ -5,8 +5,6 @@ FROM nginx:mainline
 RUN apt-get update && apt-get install openssl
 
 # Copy our OpenShift s2i scripts over to default location
-RUN echo "testing $PWD"
-COPY ./s2i/bin/ /tmp
 COPY ./s2i/bin/ /usr/libexec/s2i/
 
 # Expose this variable to OpenShift
