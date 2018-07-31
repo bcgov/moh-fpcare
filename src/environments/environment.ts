@@ -9,9 +9,9 @@ export const environment = {
   modChecksOn: false,
   
   /** Base url for all API requests. Note: This should be a relative URL, not absolute, so it can properly map to dev/test/prod. */
-  baseAPIUrl: '/msp/api/',
+  baseAPIUrl: '/fpcare/api/',
 
-  loggingURL: '/msp/api/logging',
+  loggingURL: '/fpcare/api/logging',
 
   /** Log HTTP requests from our API and Log services into the console */
   logHTTPRequestsToConsole: true,
