@@ -11,7 +11,7 @@ export const environment = {
   modChecksOn: false,
 
   /** Base url for all API requests. Note: This should be a relative URL, not absolute, so it can properly map to dev/test/prod. */
-  baseAPIUrl: '/fpcare/api/',
+  baseAPIUrl: '/fpcare/api/fpcareIntegration/rest/',
   /** UNTESTED! URL for log service */
   loggingURL: '/fpcare/api/logging',
   /** The URL that we supply to the MyGovBC-CAPTCHA-Widget */

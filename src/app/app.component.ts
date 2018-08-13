@@ -17,8 +17,7 @@ export class AppComponent implements OnInit {
 
   constructor(private userService: UserService,
     private dummyDataService: DummyDataService,
-    private fpcareDataService: FPCareDataService,
-    private apiService: ApiService ) {
+    private fpcareDataService: FPCareDataService) {
   }
 
   ngOnInit() {
@@ -32,17 +31,12 @@ export class AppComponent implements OnInit {
       // console.log( 'spouse: ', this.fpcareDataService.spouse );
       this.fpcareDataService.dependants = this.dummyDataService.createChildren( 2 );
       // console.log( 'children: ', this.fpcareDataService.dependants );
+
+      this.fpcareDataService.benefitYear = 2018;
+      this.fpcareDataService.taxYear = this.fpcareDataService.benefitYear - 2;
     }
 
 
 
-  }
-
-  request() {
-    // Test API End to End works. In the future we will store the calendar data in a service as it's necessary for the app.
-    // Remove after testing complete
-    this.apiService.getBenefitYear().subscribe(data => {
-      console.log('ApiService getCalendar', data);
-    });
   }
 }

@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { AbstractHttpService } from "./abstract-api-service";
+import { AbstractHttpService } from './abstract-api-service';
 import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LogService extends AbstractHttpService {
-  protected headers: HttpHeaders = new HttpHeaders({ test: '123fpclog' });
+  protected _headers: HttpHeaders = new HttpHeaders({ test: '123fpclog' });
 
   constructor(protected http: HttpClient) {
     super(http);

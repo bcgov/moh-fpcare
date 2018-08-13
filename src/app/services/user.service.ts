@@ -11,7 +11,7 @@ export class UserService {
 
 
   get user(): User {
-    return this._user
+    return this._user;
   }
 
 }

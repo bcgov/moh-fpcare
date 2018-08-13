@@ -16,31 +16,70 @@ export class ApiService extends AbstractHttpService {
    *  Default hardcoded header values.  Note: Authentication headers are added
    *  at runtime in the httpOptions() method.
    */
-  protected headers: HttpHeaders = new HttpHeaders({angular: 'FPC-API-Service'});
-  private token: string;
+  protected _headers: HttpHeaders = new HttpHeaders({angular: 'FPC-API-Service'});
+  private _token: string;
+  private _clientName: string = 'ppiwebuser';
 
   constructor(protected http: HttpClient, public logService: LogService){
     super(http);
   }
 
   public getBenefitYear(){
-    const url = environment.baseAPIUrl + 'fpcareIntegration/rest/getCalendar';
+    const url = environment.baseAPIUrl + 'getCalendar';
 
     return this.post(url, {
       uuid: '1234876',
-      clientName: 'ppiwebuser',
+      clientName: this._clientName,
       processDate: '20180720', // Necesssary param. Need to figure out how to generate, and WHY.
     });
   }
 
   public setCaptchaToken(token: string){
-    this.token = token;
-    this.headers = this.headers.append('X-Authorization', `Bearer ${this.token}`);
+    this._token = token;
+    this._headers = this._headers.append('X-Authorization', `Bearer ${this._token}`);
     console.log('ApiService token set:', {
-      token: this.token,
-      headers: this.headers,
+      token: this._token,
+      headers: this._headers,
     });
 
+  }
+
+  /**
+   * Request application registration status using the FPC Registration Number
+   * @param {string} regNumber
+   * @param {number} benefitYear
+   * @returns {Observable<HttpResponse>}
+   */
+  public statusCheckFamNumber( regNumber: string, benefitYear: number ) {
+    const url = environment.baseAPIUrl + 'statusCheckFamNumber';
+
+    return this.post(url, {
+      uuid: '1234876',
+      clientName: this._clientName,
+      benefitYear: benefitYear,
+      famNumber: regNumber
+    });
+  }
+
+  /**
+   * Request application registration status using the Personal Health Number, Date of birth, and postal code
+   * @param {string} phn
+   * @param {string} dob
+   * @param {string} postalCode
+   * @param {number} benefitYear
+   * @returns {Observable<HttpResponse>}
+   */
+  public statusCheckPHN( phn: string, dob: string, postalCode: string, benefitYear: number ) {
+    const url = environment.baseAPIUrl + 'statusCheckPhn';
+
+    return this.post(url, {
+      uuid: '1234876',
+      clientName: this._clientName,
+      benefitYear: benefitYear,
+      phn: phn,
+      postalCode: postalCode,
+      dateOfBirth: dob
+    });
   }
 
   protected handleError(error: HttpErrorResponse) {

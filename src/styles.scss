@@ -8,6 +8,16 @@
   font-size: 1em;
 }
 
+.devApiTest:before {
+  content: 'DEVELOPMENT NETWORK TESTS (check console)';
+}
+
+.devApiTest {
+  color: darkorange;
+  font-size: 1em;
+}
+// END OF DEV css
+
 .pointer {
   cursor: pointer;
 }

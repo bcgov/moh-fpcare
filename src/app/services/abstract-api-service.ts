@@ -10,7 +10,7 @@ export abstract class AbstractHttpService {
   constructor(protected http: HttpClient) { }
 
   /** The headers to send along with every GET and POST. */
-  protected abstract headers: HttpHeaders;
+  protected abstract _headers: HttpHeaders;
 
   /**
    * Makes a GET request to the specified URL, using headers and HTTP options specified in their respective methods.
@@ -43,7 +43,7 @@ export abstract class AbstractHttpService {
   /** The HttpOptions object that Angular takes for GET and POST requests. Used in every HTTP request from this service. */
   protected get httpOptions() {
     return {
-      headers: this.headers
+      headers: this._headers
     };
   }
 
