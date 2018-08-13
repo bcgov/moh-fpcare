@@ -5,10 +5,10 @@
 
 export const environment = {
   production: false,
-  useDummyData: true,
+  useDummyData: false,
 
   /** Enable modulo based validation, i.e. PHN and SIN number checks */
-  modChecksOn: false,
+  modChecksOn: true,
 
   /** Base url for all API requests. Note: This should be a relative URL, not absolute, so it can properly map to dev/test/prod. */
   baseAPIUrl: '/fpcare/api/fpcareIntegration/rest/',

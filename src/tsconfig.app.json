@@ -6,18 +6,10 @@
     "baseUrl": "",
     "types": []
   },
-  // "include": [
-    
   // Necessary because MyGovBC-Captcha-Widget returns raw TS files rather than
   // the compiled assets, which is bad practice.  Because we set files, we must
   // also set include back to a default state otherwise it would _only_ use the
   // specified files. 
-  // https://github.com/angular/angular-cli/issues/8284 
-  //   "../node_modules/mygovbc-captcha-widget"
-  // ],
-  // "paths" :{
-  //   "mygovbc-captcha-widget" : ["../node_modules/mygovbc-captcha-widget"]
-  // },
   "files": [
     "../node_modules/mygovbc-captcha-widget/src/app/captcha-data.service.ts",
     "../node_modules/mygovbc-captcha-widget/src/app/captcha/captcha.component.ts"
@@ -31,5 +23,3 @@
     "**/*.spec.ts"
   ]
 }
-
-// '/home2/adam.coard/dev/moh-fpcare/node_modules/mygovbc-captcha-widget.ts' not found.

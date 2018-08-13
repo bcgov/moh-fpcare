@@ -26,7 +26,8 @@
   </div>
 
   <form #formRef="ngForm" novalidate>
-    <div class="row">
+    <div class="row container-fluid">
+      <!-- container fluid helps us for mobile, so content doesn't split past gutters -->
       <div class="bg-light p-md-2 col-md-6">
         <div class="form-group">
           <label for="phn">Personal Health Number (PHN)</label>
@@ -60,8 +61,8 @@
                  [disabled]="disablePhn()">
         </div>
       </div>
-      <div class="col-md-1">
-        <strong>OR</strong>
+      <div class="col-md-1 or-col text-center">
+        or
       </div>
       <div class="col-md-5">
         <div class="form-group p-md-2 bg-light">
@@ -77,25 +78,33 @@
       </div>
     </div>
     <div class="row p-md-2">
-        <div class="col-md-6 p-md-4">
-          
+        <div class="col-md-6">
           <captcha [apiBaseUrl]="captchaApiBaseUrl" [nonce]="nonce"
           (onValidToken)="setToken($event)"></captcha>
-
         </div>
     </div>
   </form>
 
 
   <aside>
+
+    <div>
+      <h5>PHN</h5>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+      <h5>Registration Number</h5>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+
     <div class="todo">
       <ul>
-        <li>Need to add captcha to page</li>
-        <li>Add helper text for PHN and Registration Number to "aside"</li>
+        <!-- <li>Need to add captcha to page</li> -->
+        <!-- <li>Add helper text for PHN and Registration Number to "aside"</li> -->
         <li>ENABLE PHN CHECK VERIFICATION module</li>
-        <li>Fix positioning of "or"</li>
+        <!-- <li>Fix positioning of "or"</li> -->
         <li>Styling of bottom bar</li>
-        <li>CAPTCHA positioning (padding/margin)</li>
+        <!-- <li>CAPTCHA positioning (padding/margin)</li> -->
+        <li>Disable dummy data (env variable)</li>
       </ul>
     </div>
   </aside>

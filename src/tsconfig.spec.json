@@ -12,7 +12,9 @@
   },
   "files": [
     "test.ts",
-    "polyfills.ts"
+    "polyfills.ts",
+    "../node_modules/mygovbc-captcha-widget/src/app/captcha-data.service.ts",
+    "../node_modules/mygovbc-captcha-widget/src/app/captcha/captcha.component.ts"
   ],
   "include": [
     "**/*.spec.ts",

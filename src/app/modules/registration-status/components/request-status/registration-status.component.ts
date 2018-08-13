@@ -21,6 +21,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
   private _disableRegNum = false;
   private _disablePhn = false;
+  private _hasToken = false;
 
   constructor(protected router: Router,
               private fpcareDataService: FPCareDataService,
@@ -44,11 +45,11 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
           return x;
         }
       }).filter(x => x).length > 0)) {
-      console.log('Form touched or dirty');
+      // console.log('Form touched or dirty');
       if (this._disablePhn && (!!!this.applicant.fpcRegNumber ||
         (!!this.applicant.fpcRegNumber && this.applicant.fpcRegNumber.length < 1))) {
 
-        console.log('Reg Number touched');
+        // console.log('Reg Number touched');
         this._disablePhn = false;
         this.form.resetForm(); // set form back to pristine/untouched
       } else if (this._disableRegNum && (!!!this.applicant.phn ||
@@ -57,7 +58,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
           (!!this.applicant.address.postal && this.applicant.address.postal.length < 1)) &&
         this.isDobEmpty()) {
 
-        console.log('PHN criteria touched');
+        // console.log('PHN criteria touched');
         this._disableRegNum = false;
         this.form.resetForm(); // set form back to pristine/untouched
         if (!!this.dobForm) {
@@ -66,20 +67,20 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
       } else if (!!this.applicant.fpcRegNumber) {
 
         // Use FPC Registration Number
-        console.log('Use FPC Reg Number');
+        // console.log('Use FPC Reg Number');
         this._disableRegNum = false;
         this._disablePhn = true;
       } else if (this.applicant.phn || this.applicant.address.postal || !this.isDobEmpty()) {
         // Use PHN, DOB & postal code
 
-        console.log('Use PHN criteria');
+        // console.log('Use PHN criteria');
         this._disableRegNum = true;
         this._disablePhn = false;
       } else {
-        console.log('else case');
+        // console.log('else case');
       }
     } else {
-      console.log('pristine form');
+      // console.log('pristine form');
     }
 
     let valid = this.form.valid;
@@ -98,7 +99,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
       }
     }
 
-    this._canContinue = valid;
+    this._canContinue = (valid && this._hasToken);
   }
 
   /**
@@ -129,7 +130,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    * @returns {boolean}
    */
   disableRegNum(): boolean {
-    return this._disableRegNum;
+    return this._disableRegNum || !!this.applicant.phn;
   }
 
   /**
@@ -137,10 +138,11 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    * @returns {boolean}
    */
   disablePhn(): boolean {
-    return this._disablePhn;
+    return this._disablePhn || !!this.applicant.fpcRegNumber;
   }
 
   setToken(token): void {
+    this._hasToken = true;
     this.apiService.setCaptchaToken(token);
   }
 

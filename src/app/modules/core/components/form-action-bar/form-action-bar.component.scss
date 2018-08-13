@@ -3,13 +3,10 @@
     display: flex;
     justify-content: flex-end;
     padding: 1em;
-    // background: $color-primary;
-    background: $gray-200;
-    border-top: 2px solid $color-secondary;
+    background: linear-gradient(#efefef, #d0d0d1);
     position: fixed;
     bottom: 0;
     z-index: 10;
-    border-radius: 8px 8px 0 0; // Round the top two corners matching .btn-lg
     box-shadow: transparentize($color: $gray-700, $amount: 0.8) 1px 3px 7px 3px;
 
     // Positioning  values match .container-fluid in app.component.scss

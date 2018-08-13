@@ -119,6 +119,13 @@ html {
   }
 }
 
+html, body {
+  background-color: $gray;
+  // Content colour is determined in page framework
+}
+label {
+  font-weight: bold;
+}
 
 
 //TODO: Move below to new file - 'additions.scss'?
