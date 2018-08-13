@@ -12,6 +12,10 @@ p a {
    text-decoration: underline;
  }
 
+ .bg-light {
+    // Need to use !important because BS4
+    background-color: darken($gray-100, 1) !important;
+ }
 
 
 .footer {

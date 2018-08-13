@@ -1,14 +1,22 @@
 .monthSelect {
-  width: 125px !important;
-  display: inline !important;
+  flex-basis: 125px !important;
+  flex-grow: 3;
+  height: 35px;
+  margin-right: 5%;
 }
 .dayInput {
-  width: 50px !important;
-  display: inline !important;
+  flex-basis: 50px !important;
+  flex-grow: 1;
+  height: 35px;
+  margin-right: 5%;
 }
 .yearInput {
-  width: 75px !important;
-  display: inline !important;
+  flex-basis: 75px !important;
+  flex-grow: 2;
+  height: 35px;
+}
+.error-container {
+  flex-basis: 100% !important;
 }
 
 /* Remove spinners */
@@ -18,4 +26,10 @@ input[type=number]::-webkit-outer-spin-button {
   -moz-appearance: none;
   appearance: none;
   margin: 0;
+}
+
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }

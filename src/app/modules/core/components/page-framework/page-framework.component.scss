@@ -3,6 +3,10 @@
 fpcare-page-framework {
   background: $white;
   display: block;
+
+  // Consistent spacing at the bottom of every page
+  padding-bottom: 5rem;
+  margin-bottom: 5rem;
 }
 
 .separator {

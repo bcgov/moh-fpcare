@@ -2,6 +2,7 @@ import {Component, ElementRef} from '@angular/core';
 import {staticImplements, ValidationComponent} from '../validation-component.interface';
 import {BaseValidationComponent} from '../base-validation.component';
 import {ValidationService} from '../../services/validation.service';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'fpcare-reg-number-validation',
@@ -29,11 +30,12 @@ export class RegNumberValidationComponent extends BaseValidationComponent {
     }
 
     // check length
-    if ( inputVal.length > ValidationService.MAX_REGNUM_LENGTH ) {
+    if ( inputVal.length > ValidationService.MAX_REGNUM_LENGTH ||
+        inputVal.length < ValidationService.MAX_REGNUM_LENGTH ) {
       return false;
     }
 
-    return this.regex.test( inputVal );
+    return (environment.modChecksOn) ? this.regex.test( inputVal ) : true;
   }
 
 }

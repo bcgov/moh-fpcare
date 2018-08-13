@@ -28,7 +28,7 @@
   <form #formRef="ngForm" novalidate>
     <div class="row container-fluid">
       <!-- container fluid helps us for mobile, so content doesn't split past gutters -->
-      <div class="bg-light p-md-2 col-md-6 order-sm-last order-md-first">
+      <div class="bg-light rounded p-md-2 col-md-6 order-sm-last order-md-first">
         <div class="form-group">
           <label for="phn">Personal Health Number (PHN)</label>
           <input class="form-control"
@@ -65,7 +65,7 @@
         or
       </div>
       <div class="col-md-5 order-sm-first order-md-last">
-        <div class="form-group p-md-2 bg-light">
+        <div class="form-group p-md-2 bg-light rounded">
           <label for="regNumber">Registration Number</label>
           <input class="form-control"
                  type="text"
@@ -77,8 +77,8 @@
         </div>
       </div>
     </div>
-    <div class="row container-fluid">
-        <div class="px-2">
+    <div class="row container-fluid mt-md-3">
+        <div class="px-3 px-md-2">
           <captcha [apiBaseUrl]="captchaApiBaseUrl" [nonce]="nonce"
           (onValidToken)="setToken($event)"></captcha>
         </div>
@@ -98,13 +98,16 @@
 
     <div class="todo">
       <ul>
-        <!-- <li>Need to add captcha to page</li> -->
-        <!-- <li>Add helper text for PHN and Registration Number to "aside"</li> -->
+        <li>Make sure can't continue with incomplete fields for Reg #, e.g. just 'A'</li>
+        <li>Don't show Reg # validation errors while user is still filling out line (show errors on blur)</li>
+        <li>Force date component errors on next line</li>
+        <!-- <li>Need to add captcha to page</li>
+        <li>Add helper text for PHN and Registration Number to "aside"</li>
         <li>ENABLE PHN CHECK VERIFICATION module</li>
-        <!-- <li>Fix positioning of "or"</li> -->
+        <li>Fix positioning of "or"</li>
         <li>Styling of bottom bar</li>
-        <!-- <li>CAPTCHA positioning (padding/margin)</li> -->
-        <li>Disable dummy data (env variable)</li>
+        <li>CAPTCHA positioning (padding/margin)</li>
+        <li>Disable dummy data (env variable)</li> -->
       </ul>
     </div>
   </aside>

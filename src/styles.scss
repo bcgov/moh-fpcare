@@ -183,6 +183,12 @@ Special accessibility class to hide things like labels but still have the readab
   background-color: #294266;
 }
 
+.btn-primary.disabled,
+.btn-primary:disabled {
+  background-color: transparentize($color-primary, 0.5);
+  border-color: transparent;
+}
+
 // Style select2 to match look and feel of other form elements
 select2 {
   display: block;
