@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import {Person} from '../models/person.model';
 
+/**
+ * FPCareDataService is responsible for storing and searching data. It is not
+ * responsible for retrieving data (i.e. no HTTP requests here). It includes
+ * business logic insofar as it applies to all data, but on the whole business
+ * logic constraints should happen in the models themselves.
+ */
 @Injectable()
 export class FPCareDataService {
 
@@ -116,6 +122,7 @@ export class FPCareDataService {
    * Convert the person structure into a JSON formatted request
    *
    * TODO:  This may changed once integrated service has been developed
+   * NOTE: This function will likely be completely removed as DataService is not responsible for retrieving data, only storing/searching it.
    * @param {Person} person
    * @returns {string}
    */

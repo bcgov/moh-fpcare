@@ -12,27 +12,35 @@ import { LogService } from './log.service';
 })
 export class ApiService extends AbstractHttpService {
 
-  protected headers: HttpHeaders = new HttpHeaders({test: '123fpclog'});
+  /**
+   *  Default hardcoded header values.  Note: Authentication headers are added
+   *  at runtime in the httpOptions() method.
+   */
+  protected headers: HttpHeaders = new HttpHeaders({angular: 'FPC-API-Service'});
+  private token: string;
 
   constructor(protected http: HttpClient, public logService: LogService){
     super(http);
   }
 
   public getBenefitYear(){
-    // Final URL is below, but we would call a different URL as we're calling a service which is setup with certs.
-    // URL: https://d2fpcaresvc.maximusbc.ca/fpcareIntegration/rest/getBenefitYear
-    const url = environment.baseAPIUrl + 'getCalendar/';
+    const url = environment.baseAPIUrl + 'fpcareIntegration/rest/getCalendar';
 
-    // return this.http.get(url); // MINIMUM TESTABLE VERSION
     return this.post(url, {
-      uuid: '1234563434',
+      uuid: '1234876',
       clientName: 'ppiwebuser',
-      benefitYear: '2018',
-      processDate: '20180720',
-      taxYear: '2018',
-      regStatusCode: ' ',
-      regStatusMsg: ' ',
+      processDate: '20180720', // Necesssary param. Need to figure out how to generate, and WHY.
     });
+  }
+
+  public setCaptchaToken(token: string){
+    this.token = token;
+    this.headers = this.headers.append('X-Authorization', `Bearer ${this.token}`);
+    console.log('ApiService token set:', {
+      token: this.token,
+      headers: this.headers,
+    });
+
   }
 
   protected handleError(error: HttpErrorResponse) {

@@ -6,15 +6,18 @@
 export const environment = {
   production: false,
   useDummyData: true,
+
+  /** Enable modulo based validation, i.e. PHN and SIN number checks */
   modChecksOn: false,
-  
+
   /** Base url for all API requests. Note: This should be a relative URL, not absolute, so it can properly map to dev/test/prod. */
   baseAPIUrl: '/fpcare/api/',
-
+  /** UNTESTED! URL for log service */
   loggingURL: '/fpcare/api/logging',
+  /** The URL that we supply to the MyGovBC-CAPTCHA-Widget */
+  captchaApiBaseUrl: '/fpcare/api/captcha',
 
-  /** Log HTTP requests from our API and Log services into the console */
+  /** console.log() HTTP requests from our API and Log services */
   logHTTPRequestsToConsole: true,
-  
 
 };

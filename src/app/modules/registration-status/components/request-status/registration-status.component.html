@@ -78,7 +78,10 @@
     </div>
     <div class="row p-md-2">
         <div class="col-md-6 p-md-4">
-          Placeholder for Captcha
+          
+          <captcha [apiBaseUrl]="captchaApiBaseUrl" [nonce]="nonce"
+          (onValidToken)="setToken($event)"></captcha>
+
         </div>
     </div>
   </form>
@@ -90,6 +93,9 @@
         <li>Need to add captcha to page</li>
         <li>Add helper text for PHN and Registration Number to "aside"</li>
         <li>ENABLE PHN CHECK VERIFICATION module</li>
+        <li>Fix positioning of "or"</li>
+        <li>Styling of bottom bar</li>
+        <li>CAPTCHA positioning (padding/margin)</li>
       </ul>
     </div>
   </aside>
