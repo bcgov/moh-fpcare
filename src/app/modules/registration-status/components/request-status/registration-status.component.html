@@ -28,7 +28,7 @@
   <form #formRef="ngForm" novalidate>
     <div class="row container-fluid">
       <!-- container fluid helps us for mobile, so content doesn't split past gutters -->
-      <div class="bg-light p-md-2 col-md-6">
+      <div class="bg-light p-md-2 col-md-6 order-sm-last order-md-first">
         <div class="form-group">
           <label for="phn">Personal Health Number (PHN)</label>
           <input class="form-control"
@@ -64,7 +64,7 @@
       <div class="col-md-1 or-col text-center">
         or
       </div>
-      <div class="col-md-5">
+      <div class="col-md-5 order-sm-first order-md-last">
         <div class="form-group p-md-2 bg-light">
           <label for="regNumber">Registration Number</label>
           <input class="form-control"
@@ -77,8 +77,8 @@
         </div>
       </div>
     </div>
-    <div class="row p-md-2">
-        <div class="col-md-6">
+    <div class="row container-fluid">
+        <div class="px-2">
           <captcha [apiBaseUrl]="captchaApiBaseUrl" [nonce]="nonce"
           (onValidToken)="setToken($event)"></captcha>
         </div>
