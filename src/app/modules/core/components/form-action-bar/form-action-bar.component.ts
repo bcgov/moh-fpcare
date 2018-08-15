@@ -16,4 +16,10 @@ export class FormActionBarComponent implements OnInit {
   ngOnInit() {
   }
 
+  onClick($event){
+    this.click.emit($event);
+    $event.stopPropagation();
+    return false;
+  }
+
 }

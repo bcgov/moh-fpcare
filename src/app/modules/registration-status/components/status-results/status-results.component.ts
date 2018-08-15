@@ -1,41 +1,47 @@
 import { Component, OnInit } from '@angular/core';
 import {DummyDataService} from '../../../../services/dummy-data.service';
+import { ResponseStoreService } from '../../../../services/response-store.service';
 
 @Component({
   selector: 'fpcare-status-results',
   templateUrl: './status-results.component.html',
   styleUrls: ['./status-results.component.scss']
 })
-export class StatusResultsComponent implements OnInit {
-  private _useRegNumber = true;
-  private _jsonObj;
+export class StatusResultsComponent  {
+  private _isRegNumber: boolean = false;
 
-  // Test: DummyDataService - to be removed once service created
-  constructor( private dummyDataService: DummyDataService ) { }
+  constructor( private responseStore: ResponseStoreService ) { }
 
-  ngOnInit() {
-    this._jsonObj = this.dummyDataService.getStatusResponse();
-    console.log( 'jsonObj: ', this._jsonObj  );
+  get hasPHN(): boolean {
+    return !!this.responseStore.statusCheckPHN;
+  }
 
-    if ( this._jsonObj.phn ) {
-      this._useRegNumber = false;
-    }
-
+  get hasReg(): boolean {
+    return !!this.responseStore.statusCheckRegNumber;
   }
 
   get accountNumber(): string {
+    if (this.hasReg){
+      return this.responseStore.statusCheckRegNumber.regNumber;
+    }
+    
+    if (this.hasPHN){
+      // return this.responseStore.statusCheckPHN.
+      return 'TODO! NEED PROPER RESPONSE';
+    }
 
-      if ( this._jsonObj ) {
-        return this._useRegNumber ? this._jsonObj.familyNumber : this._jsonObj.phn;
-      }
     return '';
   }
 
-  get useRegNumber(): boolean {
-    return this._useRegNumber;
-  }
-
   get status(): string {
-    return this._jsonObj ? this._jsonObj.status : '';
+    if (this.hasReg){
+      return this.responseStore.statusCheckRegNumber.regStatusMsg;
+    }
+
+    if (this.hasPHN){
+      return this.responseStore.statusCheckPHN.regStatusMsg;
+    }
+
+    return '';
   }
 }

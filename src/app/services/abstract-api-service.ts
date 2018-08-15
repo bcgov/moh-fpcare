@@ -1,8 +1,8 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { HttpResponse } from 'selenium-webdriver/http';
+// import { HttpResponse } from 'selenium-webdriver/http';
 
 
 export abstract class AbstractHttpService {
@@ -22,12 +22,17 @@ export abstract class AbstractHttpService {
     return this.setupRequest(observable);
   }
 
-  protected post(url, body) {
+  //toDO - SETtle on one, testing for now
+  protected post<T>(url, body): Observable<T> {
+  // protected post<T>(url, body): Observable<HttpResponse<T>> {
     const observable = this.http.post(url, body, this.httpOptions);
+    // this.http.post
     return this.setupRequest(observable);
   }
 
-  protected setupRequest(observable: Observable<HttpResponse>): Observable<HttpResponse> {
+  // TODO - Re-add typing!
+  // protected setupRequest(observable: Observable<HttpResponse>): Observable<HttpResponse> {
+    protected setupRequest(observable ){
     // All failed requests should trigger the abstract method handleError
     observable = observable.pipe(catchError(this.handleError));
     // Optionally add console logging

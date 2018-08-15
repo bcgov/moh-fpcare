@@ -1,9 +1,8 @@
 @import 'variables.scss';
 
 .or-col {
-    @include media-breakpoint-up(md){
-        margin-top: 2rem;
-    }
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     font-weight: bold;
     font-size: 2rem;
 }

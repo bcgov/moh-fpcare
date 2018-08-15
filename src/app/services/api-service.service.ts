@@ -1,10 +1,14 @@
 import { AbstractHttpService } from './abstract-api-service';
 
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { environment } from 'environments/environment';
-import { throwError } from 'rxjs';
+import { throwError, Observable } from 'rxjs';
 import { LogService } from './log.service';
+import { UUID } from 'angular2-uuid';
+import * as moment from 'moment';
+import { BenefitYearPayload } from 'app/models/api.model';
+
 
 
 @Injectable({
@@ -24,13 +28,15 @@ export class ApiService extends AbstractHttpService {
     super(http);
   }
 
-  public getBenefitYear(){
+  // TODO! TYPE API RESPONSES! Work is above.
+  // public getBenefitYear(processDate = this.getProcessDate()): Observable<HttpResponse<BenefitYearPayload>> {
+  public getBenefitYear(processDate = this.getProcessDate()) {
     const url = environment.baseAPIUrl + 'getCalendar';
 
-    return this.post(url, {
-      uuid: '1234876',
+    return this.post<BenefitYearPayload>(url, {
+      uuid: this.generateUUID(),
       clientName: this._clientName,
-      processDate: '20180720', // Necesssary param. Need to figure out how to generate, and WHY.
+      processDate: processDate,
     });
   }
 
@@ -50,14 +56,14 @@ export class ApiService extends AbstractHttpService {
    * @param {number} benefitYear
    * @returns {Observable<HttpResponse>}
    */
-  public statusCheckFamNumber( regNumber: string, benefitYear: number ) {
+  public statusCheckFamNumber( input: { regNumber: string, benefitYear: string } ) {
     const url = environment.baseAPIUrl + 'statusCheckFamNumber';
 
     return this.post(url, {
-      uuid: '1234876',
+      uuid: this.generateUUID(),
       clientName: this._clientName,
-      benefitYear: benefitYear,
-      famNumber: regNumber
+      benefitYear: input.benefitYear,
+      famNumber: input.regNumber
     });
   }
 
@@ -69,16 +75,18 @@ export class ApiService extends AbstractHttpService {
    * @param {number} benefitYear
    * @returns {Observable<HttpResponse>}
    */
-  public statusCheckPHN( phn: string, dob: string, postalCode: string, benefitYear: number ) {
+  // public statusCheckPHN( phn: string, dob: string, postalCode: string, benefitYear: number ) {
+  // TODO TODO TODO: UPDATE JSDOCS
+  public statusCheckPHN( input: {phn: string, dob: string, postalCode: string, benefitYear: string} ) {
     const url = environment.baseAPIUrl + 'statusCheckPhn';
 
     return this.post(url, {
-      uuid: '1234876',
+      uuid: this.generateUUID(),
       clientName: this._clientName,
-      benefitYear: benefitYear,
-      phn: phn,
-      postalCode: postalCode,
-      dateOfBirth: dob
+      benefitYear: input.benefitYear,
+      phn: input.phn,
+      postalCode: input.postalCode,
+      dateOfBirth: input.dob
     });
   }
 
@@ -96,6 +104,17 @@ export class ApiService extends AbstractHttpService {
 
     // A user facing erorr message /could/ go here; we shouldn't log dev info through the throwError observable
     return throwError('Something went wrong with the network request.');
+  }
+
+  private generateUUID(): string {
+    return UUID.UUID().toString();
+  }
+
+  /**
+   * Returns current date in YYYYMMDD, e.g. '20180801'
+   */
+  private getProcessDate(): string {
+    return moment().format('YYYYMMDD');
   }
 
 }

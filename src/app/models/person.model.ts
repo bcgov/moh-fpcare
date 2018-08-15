@@ -112,6 +112,13 @@ export class Person extends Base {
   }
 
   /**
+   * Returns DoB in YYYYMMDD format, used by API.
+   */
+  get dateOfBirthShort(): string {
+    return `${this._dateOfBirth.year}${this._dateOfBirth.month}${this._dateOfBirth.day}`;
+  }
+
+  /**
    * Set Personal Health Number for person
    * @param {string} phn
    */

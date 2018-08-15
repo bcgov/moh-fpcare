@@ -18,9 +18,9 @@ export class FPCareDataService {
   private _dependants: Person[] = [];
 
   /** FPC benefit year - calendar year */
-  private _benefitYear: number;
+  public benefitYear: string;
   /** FPC tax year is 2 years prior to benefit year */
-  private _taxYear: number;
+  public taxYear: string;
 
   /** Maximum number of dependents on an account */
   MAX_DEPENDANTS = 18;
@@ -120,38 +120,6 @@ export class FPCareDataService {
    */
   canAddChild(): boolean {
     return this._dependants.length <= this.MAX_DEPENDANTS;
-  }
-
-  /**
-   * Set the benefit year for Fair PharmaCare coverage
-   * @param {number} year
-   */
-  set benefitYear( year: number ) {
-    this._benefitYear = year;
-  }
-
-  /**
-   * Get the benefit year for Fair PharmaCare coverage
-   * @returns {number}
-   */
-  get benefitYear(): number {
-    return this._benefitYear;
-  }
-
-  /**
-   * Set the taxation year for Fair PharmaCare coverage
-   * @param {number} year
-   */
-  set taxYear( year: number ) {
-    this._taxYear = year;
-  }
-
-  /**
-   * Get the taxation year for Fair PharmaCare coverage
-   * @returns {number}
-   */
-  get taxYear(): number {
-    return this._taxYear;
   }
 
   /**

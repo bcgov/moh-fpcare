@@ -29,10 +29,10 @@ header {
     font-weight: bold;
     color: #fff;
     white-space: nowrap;
+    align-self: center;
 
-    //Bootstrap 3 to 4: Using breakpoint mixin.
     @include media-breakpoint-down(xs){
-      font-size: 14px;
+      font-size: 24px;
     }
   }
 }
@@ -49,4 +49,12 @@ header .nav-link {
   display: block;
   width: 3px;
   margin: 0 1em;
+}
+
+
+// A little Flexbox hack for vertical spacing when the items wrap to a new row.
+// For mobile.
+.header-container {
+  margin-top: -1em;
+  & > .d-flex { margin-top: 1em; }
 }

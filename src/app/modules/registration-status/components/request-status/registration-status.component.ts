@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, DoCheck, OnInit, QueryList, ViewChild } from '@angular/core';
 import { Person } from '../../../../models/person.model';
 import { Router } from '@angular/router';
 import { DummyDataService } from '../../../../services/dummy-data.service';
@@ -7,26 +7,29 @@ import { AbstractFormComponent } from '../../../../models/abstract-form-componen
 import { FPCareDateComponent } from '../../../core/components/date/date.component';
 import { environment } from 'environments/environment';
 import { ApiService } from '../../../../services/api-service.service';
+import { ResponseStoreService } from '../../../../services/response-store.service';
+import { StatusCheckPHNPayload, StatusCheckRegNumberPayload } from 'app/models/api.model';
 
 @Component({
   selector: 'fpcare-registration-status',
   templateUrl: './registration-status.component.html',
   styleUrls: ['./registration-status.component.scss']
 })
-export class RegistrationStatusComponent extends AbstractFormComponent implements OnInit, DoCheck {
+export class RegistrationStatusComponent extends AbstractFormComponent implements OnInit {
 
   /** Access to date component */
-  @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
+  @ViewChild(FPCareDateComponent) dobForm: FPCareDateComponent;
   public captchaApiBaseUrl;
 
   private _disableRegNum = false;
   private _disablePhn = false;
-  private _hasToken = false;
+  private _hasToken = true; //TODO: REVERT TO FALSE
 
   constructor(protected router: Router,
               private fpcareDataService: FPCareDataService,
-              private dummyDataService: DummyDataService,
-              private apiService: ApiService) {
+              // private dummyDataService: DummyDataService,
+              private apiService: ApiService,
+              private responseStore: ResponseStoreService) {
     super(router);
   }
 
@@ -34,73 +37,20 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
   }
 
-  /**
-   * Detect changes, check if form is valid
-   */
-  ngDoCheck() {
 
-    if (this.form.dirty || this.form.touched ||
-      (!!this.dobForm && this.dobForm.map(x => {
-        if (x.form.dirty || x.form.touched) {
-          return x;
-        }
-      }).filter(x => x).length > 0)) {
-      // console.log('Form touched or dirty');
-      if (this._disablePhn && (!!!this.applicant.fpcRegNumber ||
-        (!!this.applicant.fpcRegNumber && this.applicant.fpcRegNumber.length < 1))) {
-
-        // console.log('Reg Number touched');
-        this._disablePhn = false;
-        this.form.resetForm(); // set form back to pristine/untouched
-      } else if (this._disableRegNum && (!!!this.applicant.phn ||
-        (!!this.applicant.phn && this.applicant.phn.length < 1)) &&
-        (!!!this.applicant.address.postal ||
-          (!!this.applicant.address.postal && this.applicant.address.postal.length < 1)) &&
-        this.isDobEmpty()) {
-
-        // console.log('PHN criteria touched');
-        this._disableRegNum = false;
-        this.form.resetForm(); // set form back to pristine/untouched
-        if (!!this.dobForm) {
-          this.dobForm.map(x => { x.form.resetForm(); });
-        }
-      } else if (!!this.applicant.fpcRegNumber) {
-
-        // Use FPC Registration Number
-        // console.log('Use FPC Reg Number');
-        this._disableRegNum = false;
-        this._disablePhn = true;
-      } else if (this.applicant.phn || this.applicant.address.postal || !this.isDobEmpty()) {
-        // Use PHN, DOB & postal code
-
-        // console.log('Use PHN criteria');
-        this._disableRegNum = true;
-        this._disablePhn = false;
-      } else {
-        // console.log('else case');
-      }
-    } else {
-      // console.log('pristine form');
-    }
-
+  canContinue(): boolean {
+    // return this._canContinue;
     let valid = this.form.valid;
 
-    if (!this._disablePhn) {
-
-      valid = valid && !!this.dobForm;
-      if (!!this.dobForm) {
-        const dobForm = (this.dobForm.map(x => {
-          if (x.isValid()) {
-            return x.form.valid;
-          }
-        })
-          .filter(x => x !== true).length === 0);
-        valid = valid && dobForm;
-      }
+    // We have to explicitly check the DateComponent validity as it doesn't bubble to this.form.
+    if (this.disableRegNum()){
+      valid = valid && this.dobForm.form.valid;
     }
 
-    this._canContinue = (valid && this._hasToken);
+    return (valid && this._hasToken);
   }
+
+
 
   /**
    * Structure to record data for request
@@ -120,9 +70,10 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    * @returns {boolean}
    */
   isDobEmpty(): boolean {
-    return ((this.applicant.dateOfBirth.year === null || this.applicant.dateOfBirth.year === 0) &&
-      (this.applicant.dateOfBirth.month === null || this.applicant.dateOfBirth.month === 0) &&
-      (this.applicant.dateOfBirth.day === null || this.applicant.dateOfBirth.day === 0)) ? true : false;
+    return Object.keys(this.applicant.dateOfBirth)
+      .map(key => this.applicant.dateOfBirth[key])
+      .filter(x => x) // Filter out null/undefined
+      .length === 0;
   }
 
   /**
@@ -130,7 +81,8 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    * @returns {boolean}
    */
   disableRegNum(): boolean {
-    return this._disableRegNum || !!this.applicant.phn;
+    const hasDateOfBirth = !this.isDobEmpty();
+    return !!this.applicant.phn || hasDateOfBirth || !!this.applicant.address.postal;
   }
 
   /**
@@ -138,7 +90,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    * @returns {boolean}
    */
   disablePhn(): boolean {
-    return this._disablePhn || !!this.applicant.fpcRegNumber;
+    return !!this.applicant.fpcRegNumber;
   }
 
   setToken(token): void {
@@ -154,16 +106,42 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    */
   continue(): void {
 
-    if (this.canContinue()) {
+    console.log('continue clicked');
+    if (!this.canContinue()) {
+      return;
+    };
 
-      const request = this.fpcareDataService.getStatusRequest(this.applicant);
-
-      console.log('JSON object: ', request);
-      // TODO: remove dummyservice when back-end is built
-      this.dummyDataService.submitRequestStatus(request);
-
-      const link = '/registration-status/status-results';
-      this.router.navigate([link]);
+    // const request = this.fpcareDataService.getStatusRequest(this.applicant);
+    let subscription;
+    if (this.disableRegNum()){
+      subscription = this.apiService.statusCheckPHN({
+        phn: this.applicant.phn,
+        benefitYear: this.fpcareDataService.benefitYear,
+        dob: this.applicant.dateOfBirthShort,
+        postalCode: this.applicant.address.postal
+      });
     }
+    else {
+      subscription = this.apiService.statusCheckFamNumber({
+        benefitYear: this.fpcareDataService.benefitYear,
+        regNumber: this.applicant.fpcRegNumber
+      });
+    }
+
+      subscription.subscribe(response => {
+        if (this.disableRegNum()){
+          this.responseStore.statusCheckPHN = new StatusCheckPHNPayload(response);
+        }
+        else {
+          this.responseStore.statusCheckRegNumber = new StatusCheckRegNumberPayload(response);
+        }
+
+        console.log('statuscheck done', this.responseStore.statusCheckPHN, this.responseStore.statusCheckRegNumber);
+
+        const link = '/registration-status/status-results';
+        this.router.navigate([link]);
+      });
+
+  
   }
 }

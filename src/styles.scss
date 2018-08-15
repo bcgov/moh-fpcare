@@ -1,11 +1,20 @@
 // TODO: Remove at end of development - to be used it leave notes of issues encountered
 .todo:before {
-  content: 'TODO';
+  content: 'TODO - Hover to Show';
+  font-size: 1rem;
+  &:hover { color: Green; }
 }
 
 .todo {
   color: red;
-  font-size: 1em;
+  font-size: 0;
+  &:hover {
+    font-size: 12px;
+    .done { font-size: 10px; }
+  }
+  .done {
+    text-decoration: line-through;
+  }
 }
 
 .devApiTest:before {

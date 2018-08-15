@@ -37,8 +37,9 @@ export class HomePageComponent implements OnInit {
   checkStatusPHN() {
     // Test API End to End works.
     // Remove after testing complete
-    this.apiService.statusCheckPHN( '9373028835', '19741123', 'V8V8V8', this.fpcareDataService.benefitYear ).subscribe(data => {
-      console.log('ApiService statusCheckFamNumber', data);
-    });
+    console.error('todo! commented out');
+    // this.apiService.statusCheckPHN( '9373028835', '19741123', 'V8V8V8', this.fpcareDataService.benefitYear ).subscribe(data => {
+    //   console.log('ApiService statusCheckFamNumber', data);
+    // });
   }
 }

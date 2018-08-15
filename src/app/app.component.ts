@@ -4,6 +4,7 @@ import { UserService } from './services/user.service';
 import { FPCareDataService } from './services/fpcare-data.service';
 import {environment} from 'environments/environment';
 import { ApiService } from './services/api-service.service';
+import { BenefitYearPayload } from 'app/models/api.model';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class AppComponent implements OnInit {
 
   constructor(private userService: UserService,
     private dummyDataService: DummyDataService,
-    private fpcareDataService: FPCareDataService) {
+    private fpcareDataService: FPCareDataService,
+    private apiService: ApiService) {
   }
 
   ngOnInit() {
@@ -32,9 +34,25 @@ export class AppComponent implements OnInit {
       this.fpcareDataService.dependants = this.dummyDataService.createChildren( 2 );
       // console.log( 'children: ', this.fpcareDataService.dependants );
 
-      this.fpcareDataService.benefitYear = 2018;
-      this.fpcareDataService.taxYear = this.fpcareDataService.benefitYear - 2;
+      this.fpcareDataService.benefitYear = '2018';
+      this.fpcareDataService.taxYear = '2016';
     }
+    else {
+      //Since we're not using Dummy data, get real data from API
+      this.apiService.getBenefitYear().subscribe(response => {
+        const payload = new BenefitYearPayload(response);
+        // console.log('payload', payload.success, payload)
+
+        if (payload.success){
+          this.fpcareDataService.benefitYear = payload.benefitYear;
+          this.fpcareDataService.benefitYear = payload.taxYear;
+        }
+      });
+    }
+
+
+
+  
 
 
 

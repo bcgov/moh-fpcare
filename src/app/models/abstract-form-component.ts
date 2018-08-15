@@ -13,8 +13,6 @@ export abstract class AbstractFormComponent extends Base {
   disabled: boolean;
   /** What happens when the user clicks the continue button. Generally navigating to another page. */
   abstract continue(): void;
-  /** Implement Lifecyle hook to do form validations to determine whether or not the process can continue */
-  abstract ngDoCheck();
 
   /** Access to the form elements for validation */
   @ViewChild('formRef') form: NgForm;
