@@ -42,4 +42,7 @@ export class StatusCheckRegNumberPayload extends ServerPayload {
 
 export class StatusCheckPHNPayload extends ServerPayload {
 
+    constructor(payload){
+        super(payload);
+    }
 }

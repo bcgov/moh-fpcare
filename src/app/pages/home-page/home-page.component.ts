@@ -29,9 +29,9 @@ export class HomePageComponent implements OnInit {
   checkStatusRegNum() {
     // Test API End to End works.
     // Remove after testing complete
-    this.apiService.statusCheckFamNumber( 'A127653497', this.fpcareDataService.benefitYear ).subscribe(data => {
-      console.log('ApiService statusCheckFamNumber', data);
-    });
+    // this.apiService.statusCheckFamNumber( 'A127653497', this.fpcareDataService.benefitYear ).subscribe(data => {
+    //   console.log('ApiService statusCheckFamNumber', data);
+    // });
   }
 
   checkStatusPHN() {
