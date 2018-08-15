@@ -3,13 +3,23 @@ enum RegStatusCode {
     ERROR = '1'
 }
 
-export class ServerPayload {
+export interface PayloadInterface {
+    regStatusCode: RegStatusCode;
+    regStatusMsg: string;
+    uuid: string;
+}
+
+export interface BenefitYearInterface extends PayloadInterface {
+    benefitYear: string;
+    taxYear: string;
+}
+
+export class ServerPayload implements PayloadInterface {
     regStatusCode: RegStatusCode;
     regStatusMsg: string;
     uuid: string;
 
-    // TODO: Refactor this so it iterates and we don't have to explicitly list each.
-    constructor(payload) {
+    constructor(payload: PayloadInterface) {
         this.regStatusCode = payload.regStatusCode;
         this.regStatusMsg = payload.regStatusMsg;
         this.uuid = payload.uuid;
@@ -20,10 +30,10 @@ export class ServerPayload {
     }
 }
 
-export class BenefitYearPayload extends ServerPayload {
+export class BenefitYearPayload extends ServerPayload implements BenefitYearInterface {
     benefitYear: string;
     taxYear: string;
-    constructor(payload) {
+    constructor(payload: BenefitYearInterface) {
         super(payload);
         this.benefitYear = payload.benefitYear;
         this.taxYear = payload.taxYear;
@@ -41,8 +51,10 @@ export class StatusCheckRegNumberPayload extends ServerPayload {
 }
 
 export class StatusCheckPHNPayload extends ServerPayload {
+    phn: string;
 
     constructor(payload){
         super(payload);
+        this.phn = payload.phn;
     }
 }

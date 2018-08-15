@@ -23,7 +23,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
   private _disableRegNum = false;
   private _disablePhn = false;
-  private _hasToken = true; //TODO: REVERT TO FALSE
+  private _hasToken = false;
 
   constructor(protected router: Router,
               private fpcareDataService: FPCareDataService,
@@ -35,6 +35,11 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
   ngOnInit() {
     this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
+
+    // Bypass the CAPTCHA if not production.
+    if (!environment.production){
+      this._hasToken = true;
+    }
   }
 
 
@@ -102,7 +107,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   /**
    * Navigates to the next page
    *
-   * TODO: Code functionality
    */
   continue(): void {
 
@@ -111,9 +115,9 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
       return;
     };
 
-    // const request = this.fpcareDataService.getStatusRequest(this.applicant);
+    // Setup the request
     let subscription;
-    if (this.disableRegNum()){
+    if (this.disableRegNum()) {
       subscription = this.apiService.statusCheckPHN({
         phn: this.applicant.phn,
         benefitYear: this.fpcareDataService.benefitYear,
@@ -128,20 +132,18 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
       });
     }
 
-      subscription.subscribe(response => {
-        if (this.disableRegNum()){
-          this.responseStore.statusCheckPHN = new StatusCheckPHNPayload(response);
-        }
-        else {
-          this.responseStore.statusCheckRegNumber = new StatusCheckRegNumberPayload(response);
-        }
+    // Trigger the HTTP request
+    subscription.subscribe(response => {
+      if (this.disableRegNum()) {
+        this.responseStore.statusCheckPHN = new StatusCheckPHNPayload(response);
+      }
+      else {
+        this.responseStore.statusCheckRegNumber = new StatusCheckRegNumberPayload(response);
+      }
+      const link = '/registration-status/status-results';
+      this.router.navigate([link]);
+    });
 
-        console.log('statuscheck done', this.responseStore.statusCheckPHN, this.responseStore.statusCheckRegNumber);
 
-        const link = '/registration-status/status-results';
-        this.router.navigate([link]);
-      });
-
-  
   }
 }

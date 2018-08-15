@@ -8,7 +8,6 @@ import { ResponseStoreService } from '../../../../services/response-store.servic
   styleUrls: ['./status-results.component.scss']
 })
 export class StatusResultsComponent  {
-  private _isRegNumber: boolean = false;
 
   constructor( private responseStore: ResponseStoreService ) { }
 
@@ -24,10 +23,9 @@ export class StatusResultsComponent  {
     if (this.hasReg){
       return this.responseStore.statusCheckRegNumber.regNumber;
     }
-    
+
     if (this.hasPHN){
-      // return this.responseStore.statusCheckPHN.
-      return 'TODO! NEED PROPER RESPONSE';
+      return this.responseStore.statusCheckPHN.phn;
     }
 
     return '';

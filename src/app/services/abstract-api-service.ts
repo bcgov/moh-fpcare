@@ -16,23 +16,18 @@ export abstract class AbstractHttpService {
    * Makes a GET request to the specified URL, using headers and HTTP options specified in their respective methods.
    * @param url Target URL to make the GET request
    */
-  protected get(url) {
+  protected get<T>(url): Observable<T> {
     /** The HTTP request observer with always on error handling */
     const observable = this.http.get(url, this.httpOptions);
     return this.setupRequest(observable);
   }
 
-  //toDO - SETtle on one, testing for now
   protected post<T>(url, body): Observable<T> {
-  // protected post<T>(url, body): Observable<HttpResponse<T>> {
     const observable = this.http.post(url, body, this.httpOptions);
-    // this.http.post
     return this.setupRequest(observable);
   }
 
-  // TODO - Re-add typing!
-  // protected setupRequest(observable: Observable<HttpResponse>): Observable<HttpResponse> {
-    protected setupRequest(observable ){
+  protected setupRequest<T>(observable: Observable<any> ): Observable<T> {
     // All failed requests should trigger the abstract method handleError
     observable = observable.pipe(catchError(this.handleError));
     // Optionally add console logging

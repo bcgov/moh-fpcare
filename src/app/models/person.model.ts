@@ -1,6 +1,7 @@
 import { Base } from './base.alias';
 import { Address } from './address.model';
 import {SimpleDate} from '../modules/core/components/date/simple-date.interface';
+import * as moment from 'moment';
 
 /**
  * Information about person. Should be relevant to all people in app, from the
@@ -115,7 +116,11 @@ export class Person extends Base {
    * Returns DoB in YYYYMMDD format, used by API.
    */
   get dateOfBirthShort(): string {
-    return `${this._dateOfBirth.year}${this._dateOfBirth.month}${this._dateOfBirth.day}`;
+    return moment()
+      .date(this._dateOfBirth.day)
+      .month(this._dateOfBirth.month - 1) //moment is 0 indexed, SimpleDate is not
+      .year(this._dateOfBirth.year)
+      .format('YYYYMMDD');
   }
 
   /**

@@ -7,7 +7,7 @@ import { throwError, Observable } from 'rxjs';
 import { LogService } from './log.service';
 import { UUID } from 'angular2-uuid';
 import * as moment from 'moment';
-import { BenefitYearPayload } from 'app/models/api.model';
+import { BenefitYearPayload, BenefitYearInterface } from 'app/models/api.model';
 
 
 
@@ -29,11 +29,10 @@ export class ApiService extends AbstractHttpService {
   }
 
   // TODO! TYPE API RESPONSES! Work is above.
-  // public getBenefitYear(processDate = this.getProcessDate()): Observable<HttpResponse<BenefitYearPayload>> {
   public getBenefitYear(processDate = this.getProcessDate()) {
     const url = environment.baseAPIUrl + 'getCalendar';
 
-    return this.post<BenefitYearPayload>(url, {
+    return this.post<BenefitYearInterface>(url, {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       processDate: processDate,
@@ -52,8 +51,8 @@ export class ApiService extends AbstractHttpService {
 
   /**
    * Request application registration status using the FPC Registration Number
-   * @param {string} regNumber
-   * @param {number} benefitYear
+   *
+   * @param {{regNumber: string, benefitYear: string}} input
    * @returns {Observable<HttpResponse>}
    */
   public statusCheckFamNumber( input: { regNumber: string, benefitYear: string } ) {
@@ -68,15 +67,13 @@ export class ApiService extends AbstractHttpService {
   }
 
   /**
-   * Request application registration status using the Personal Health Number, Date of birth, and postal code
-   * @param {string} phn
-   * @param {string} dob
-   * @param {string} postalCode
-   * @param {number} benefitYear
-   * @returns {Observable<HttpResponse>}
+   * Request application registration status using the Personal Health Number,
+   * Date of birth, and postal code
+   *
+   * @param {{phn: string, dob: string, postalCode: string, benefitYear: string}} input
+   * @returns
+   * @memberof ApiService
    */
-  // public statusCheckPHN( phn: string, dob: string, postalCode: string, benefitYear: number ) {
-  // TODO TODO TODO: UPDATE JSDOCS
   public statusCheckPHN( input: {phn: string, dob: string, postalCode: string, benefitYear: string} ) {
     const url = environment.baseAPIUrl + 'statusCheckPhn';
 
