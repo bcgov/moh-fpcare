@@ -2,14 +2,17 @@
   <h1 title>Fair PharmaCare Registration Status Search Results</h1>
 
   <div *ngIf='response; else noResponse'>
-    <h2>
-      <ng-container *ngIf="response.error">
-        <i class="fa fa-exclamation-triangle text-warning"></i> Attention, something went wrong.
-      </ng-container>
-      Your status for {{ hasReg ? 'Registration' : 'PHN'}} Number {{accountNumber}} is:
+    <h2 *ngIf="response.error" class="text-danger"><i class="fa fa-exclamation-triangle"></i> Attention, there was an error.</h2>
+    <h2>Your status for {{ hasReg ? 'Registration' : 'PHN'}} Number {{accountNumber}} is:
     </h2>
     <ul>
-      <li>{{ status }}</li>
+      <!--
+        Using innerHTML bypasses angular's security sanitzation, so we can
+        directly include links.  This is safe only because we know we control
+        the messages coming back and no user supplied content will ever appear
+        here.
+      -->
+      <li [innerHTML]="status"></li>
     </ul>
   </div>
 

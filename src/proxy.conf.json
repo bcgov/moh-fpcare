@@ -1,10 +1,4 @@
 {
-    "/msp/api": {
-        "target": "https://moh-fpcare-dev.pathfinder.gov.bc.ca/api",
-        "changeOrigin": true,
-        "secure": false,
-        "logLevel": "debug"
-    },
     "/fpcare/api/": {
         "target": "https://moh-fpcare-dev.pathfinder.gov.bc.ca/",
         "changeOrigin": true,

@@ -34,17 +34,13 @@ export class StatusResultsComponent {
     if (this.hasPHN) {
       return this.responseStore.statusCheckPHN.phn;
     }
-
-    // return '';
   }
 
 
   get status(): string {
     if (this.response) {
-      return this.response.regStatusMsg;
+      return this.response.message;
     }
-
-    // return '';
   }
 
 

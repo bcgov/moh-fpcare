@@ -8,7 +8,7 @@ import { FPCareDateComponent } from '../../../core/components/date/date.componen
 import { environment } from 'environments/environment';
 import { ApiService } from '../../../../services/api-service.service';
 import { ResponseStoreService } from '../../../../services/response-store.service';
-import { StatusCheckPHNPayload, StatusCheckRegNumberPayload } from 'app/models/api.model';
+import { StatusCheckPHNPayload, StatusCheckRegNumberPayload, StatusCheckPHN, StatusCheckRegNum } from 'app/models/api.model';
 
 @Component({
   selector: 'fpcare-registration-status',
@@ -27,7 +27,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
   constructor(protected router: Router,
               private fpcareDataService: FPCareDataService,
-              // private dummyDataService: DummyDataService,
               private apiService: ApiService,
               private responseStore: ResponseStoreService) {
     super(router);
@@ -37,7 +36,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
 
     // Bypass the CAPTCHA if not production.
-    if (!environment.production){
+    if (environment.production === false){
       this._hasToken = true;
     }
   }
@@ -137,10 +136,10 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     // Trigger the HTTP request
     subscription.subscribe(response => {
       if (this.disableRegNum()) {
-        this.responseStore.statusCheckPHN = new StatusCheckPHNPayload(response);
+        this.responseStore.statusCheckPHN = new StatusCheckPHNPayload(response as StatusCheckPHN);
       }
       else {
-        this.responseStore.statusCheckRegNumber = new StatusCheckRegNumberPayload(response);
+        this.responseStore.statusCheckRegNumber = new StatusCheckRegNumberPayload(response as StatusCheckRegNum);
       }
       this.loading = false;
       const link = '/registration-status/status-results';

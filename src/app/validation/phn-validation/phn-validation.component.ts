@@ -17,8 +17,12 @@ export class PhnValidationComponent extends BaseValidationComponent {
   public static ERROR_STRING = 'fpc-phn';
 
   public static validate(el: ElementRef): boolean {
-
     const inputVal = el.nativeElement.value;
+
+    // Set the max chars a user can input.
+    if (el.nativeElement.maxLength !== ValidationService.MAX_PHN_LENGTH){
+      el.nativeElement.maxLength = ValidationService.MAX_PHN_LENGTH;
+    }
 
     // Empty field
     if (inputVal == null || inputVal.length < 1) {

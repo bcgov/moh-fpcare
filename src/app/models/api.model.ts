@@ -14,15 +14,29 @@ export interface BenefitYearInterface extends PayloadInterface {
     taxYear: string;
 }
 
+export interface StatusCheckRegNum extends PayloadInterface {
+    famNumber: string;
+    benefitYear: string;
+}
+
+export interface StatusCheckPHN extends PayloadInterface {
+    benefitYear: string;
+    phn: string;
+    dateOfBirth: string;
+    postalCode: string;
+}
+
 export class ServerPayload implements PayloadInterface {
     regStatusCode: RegStatusCode;
     regStatusMsg: string;
     uuid: string;
+    private _message: string;
 
     constructor(payload: PayloadInterface) {
         this.regStatusCode = payload.regStatusCode;
         this.regStatusMsg = payload.regStatusMsg;
         this.uuid = payload.uuid;
+        this._message = this.processMessage(payload.regStatusMsg);
     }
 
     get success(): boolean {
@@ -33,16 +47,20 @@ export class ServerPayload implements PayloadInterface {
         return this.regStatusCode === RegStatusCode.ERROR;
     }
 
-    // TODO: In the future will have to convert links and parse the message.
-    // Message should always display what we we want to the user.
+    /**
+     * The human readable message to display to the user. It can be either an
+     * message or success message.
+     */
     get message(): string {
-        // if (this.success) return this.regStatusMsg;
-        return this.regStatusMsg;
+        return this._message;
     }
 
-    // get errorMessage(): string {
-    //     if (this.error) return this.regStatusMsg;
-    // }
+    private processMessage(msg: string): string {
+        // Note: using `href` here isn't ideal as it triggers a complete reload
+        // of the Angular app. I tried using routerLink``, but angular stripped
+        // it out.
+        return msg.replace('<link to Registration Page>', '<a href="registration/requirements">Registration Page');
+    }
 }
 
 export class BenefitYearPayload extends ServerPayload implements BenefitYearInterface {
@@ -55,11 +73,13 @@ export class BenefitYearPayload extends ServerPayload implements BenefitYearInte
     }
 }
 
+// Because we rename famNum to regNum, this does NOT implement the interface but
+// the constructor param still does.
 export class StatusCheckRegNumberPayload extends ServerPayload {
     //Corresponds to famNumber from API
     regNumber: string;
 
-    constructor(payload) {
+    constructor(payload: StatusCheckRegNum) {
         super(payload);
         this.regNumber = payload.famNumber;
     }
@@ -68,7 +88,7 @@ export class StatusCheckRegNumberPayload extends ServerPayload {
 export class StatusCheckPHNPayload extends ServerPayload {
     phn: string;
 
-    constructor(payload){
+    constructor(payload: StatusCheckPHN) {
         super(payload);
         this.phn = payload.phn;
     }

@@ -38,10 +38,10 @@ h5, .h5 {
 
 
 .aside-col aside {
+  background: $gray;
+  padding: 1em;
+  border-radius: 5px;
   @include media-breakpoint-up(md){
-    background: $gray;
-    padding: 1em;
-    border-radius: 5px;
     margin-top: 1rem; // Align with the top of the title (for desktop)
   }
 }

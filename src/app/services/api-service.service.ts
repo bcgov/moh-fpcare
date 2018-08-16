@@ -7,7 +7,7 @@ import { throwError, Observable } from 'rxjs';
 import { LogService } from './log.service';
 import { UUID } from 'angular2-uuid';
 import * as moment from 'moment';
-import { BenefitYearPayload, BenefitYearInterface } from 'app/models/api.model';
+import { BenefitYearInterface, StatusCheckPHN, StatusCheckRegNum } from 'app/models/api.model';
 
 
 
@@ -53,12 +53,12 @@ export class ApiService extends AbstractHttpService {
    * Request application registration status using the FPC Registration Number
    *
    * @param {{regNumber: string, benefitYear: string}} input
-   * @returns {Observable<HttpResponse>}
+   * @returns {Observable<StatusCheckRegNum>}
    */
-  public statusCheckFamNumber( input: { regNumber: string, benefitYear: string } ) {
+  public statusCheckFamNumber( input: { regNumber: string, benefitYear: string } ): Observable<StatusCheckRegNum> {
     const url = environment.baseAPIUrl + 'statusCheckFamNumber';
 
-    return this.post(url, {
+    return this.post<StatusCheckRegNum>(url, {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       benefitYear: input.benefitYear,
@@ -71,13 +71,12 @@ export class ApiService extends AbstractHttpService {
    * Date of birth, and postal code
    *
    * @param {{phn: string, dob: string, postalCode: string, benefitYear: string}} input
-   * @returns
-   * @memberof ApiService
+   * @returns {Observable<StatusCheckPHN>}
    */
-  public statusCheckPHN( input: {phn: string, dob: string, postalCode: string, benefitYear: string} ) {
+  public statusCheckPHN( input: {phn: string, dob: string, postalCode: string, benefitYear: string} ): Observable<StatusCheckPHN> {
     const url = environment.baseAPIUrl + 'statusCheckPhn';
 
-    return this.post(url, {
+    return this.post<StatusCheckPHN>(url, {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       benefitYear: input.benefitYear,
