@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import {DummyDataService} from '../../../../services/dummy-data.service';
+import { DummyDataService } from '../../../../services/dummy-data.service';
 import { ResponseStoreService } from '../../../../services/response-store.service';
+import { StatusCheckPHNPayload, StatusCheckRegNumberPayload } from '../../../../models/api.model';
 
+/**
+ * Displays data in ResponseStore.statusCheckPHN or statusCheckRegNumber. This
+ * component assumes one and only one of those responses is set. Bugs may occur
+ * if both are set.
+ */
 @Component({
   selector: 'fpcare-status-results',
   templateUrl: './status-results.component.html',
   styleUrls: ['./status-results.component.scss']
 })
-export class StatusResultsComponent  {
+export class StatusResultsComponent {
 
-  constructor( private responseStore: ResponseStoreService ) { }
+  constructor(private responseStore: ResponseStoreService) { }
 
   get hasPHN(): boolean {
     return !!this.responseStore.statusCheckPHN;
@@ -20,26 +26,37 @@ export class StatusResultsComponent  {
   }
 
   get accountNumber(): string {
-    if (this.hasReg){
+    //We can't use `this.response` here because we need the unique fields for each different type
+    if (this.hasReg) {
       return this.responseStore.statusCheckRegNumber.regNumber;
     }
 
-    if (this.hasPHN){
+    if (this.hasPHN) {
       return this.responseStore.statusCheckPHN.phn;
     }
 
-    return '';
+    // return '';
   }
 
+
   get status(): string {
-    if (this.hasReg){
-      return this.responseStore.statusCheckRegNumber.regStatusMsg;
+    if (this.response) {
+      return this.response.regStatusMsg;
     }
 
-    if (this.hasPHN){
-      return this.responseStore.statusCheckPHN.regStatusMsg;
+    // return '';
+  }
+
+
+  get response(): StatusCheckPHNPayload | StatusCheckRegNumberPayload {
+    if (this.hasReg) {
+      return this.responseStore.statusCheckRegNumber;
     }
 
-    return '';
+    if (this.hasPHN) {
+      return this.responseStore.statusCheckPHN;
+    }
+
+    return null;
   }
 }

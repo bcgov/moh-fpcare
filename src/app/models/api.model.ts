@@ -28,6 +28,21 @@ export class ServerPayload implements PayloadInterface {
     get success(): boolean {
         return this.regStatusCode === RegStatusCode.SUCCESS;
     }
+
+    get error(): boolean {
+        return this.regStatusCode === RegStatusCode.ERROR;
+    }
+
+    // TODO: In the future will have to convert links and parse the message.
+    // Message should always display what we we want to the user.
+    get message(): string {
+        // if (this.success) return this.regStatusMsg;
+        return this.regStatusMsg;
+    }
+
+    // get errorMessage(): string {
+    //     if (this.error) return this.regStatusMsg;
+    // }
 }
 
 export class BenefitYearPayload extends ServerPayload implements BenefitYearInterface {

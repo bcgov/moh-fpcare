@@ -1,5 +1,10 @@
 <div class="form-action-bar">
-    <button class="btn btn-lg btn-primary submit" (click)="onClick($event)" [ngClass]="{disabled: !canContinue}">
-      {{submitLabel}}
+    <button class="btn btn-lg btn-primary submit" (click)="onClick($event)" [ngClass]="{disabled: !canContinue || isLoading}">
+      <ng-container *ngIf="!isLoading; else loadingSpinner"> {{submitLabel}} </ng-container>
+      
     </button>
 </div>
+
+<ng-template #loadingSpinner>
+    <i class="fa fa-spinner fa-pulse fa-fw"></i>
+</ng-template>

@@ -11,6 +11,8 @@ export abstract class AbstractFormComponent extends Base {
 
   /** Disables all inputs (todo: not implemented) */
   disabled: boolean;
+  /** Show or hide the loading spinner as required, should be passed to form action bar. */
+  loading: boolean = false;
   /** What happens when the user clicks the continue button. Generally navigating to another page. */
   abstract continue(): void;
 

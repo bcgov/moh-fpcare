@@ -6,6 +6,9 @@
 }
 
 .todo {
+  // Temporarily removing prior to deploy.  Note - we eventually want this
+  // controlled by environment variable, but that's taken some time.
+  display: none !important; 
   color: red;
   font-size: 0;
   &:hover {

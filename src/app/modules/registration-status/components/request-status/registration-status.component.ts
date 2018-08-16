@@ -115,6 +115,8 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
       return;
     };
 
+    this.loading = true;
+
     // Setup the request
     let subscription;
     if (this.disableRegNum()) {
@@ -140,6 +142,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
       else {
         this.responseStore.statusCheckRegNumber = new StatusCheckRegNumberPayload(response);
       }
+      this.loading = false;
       const link = '/registration-status/status-results';
       this.router.navigate([link]);
     });

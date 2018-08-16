@@ -1,11 +1,22 @@
 <fpcare-results-framework>
   <h1 title>Fair PharmaCare Registration Status Search Results</h1>
 
-  <div>
-    <h2>Your status for {{ hasReg ? 'Registration' : 'PHN'}} Number {{accountNumber}} is:</h2>
-    <li>
-      {{ status }}
-    </li>
+  <div *ngIf='response; else noResponse'>
+    <h2>
+      <ng-container *ngIf="response.error">
+        <i class="fa fa-exclamation-triangle text-warning"></i> Attention, something went wrong.
+      </ng-container>
+      Your status for {{ hasReg ? 'Registration' : 'PHN'}} Number {{accountNumber}} is:
+    </h2>
+    <ul>
+      <li>{{ status }}</li>
+    </ul>
   </div>
 
 </fpcare-results-framework>
+
+
+<!-- There's no response object - user hasn't submitted the HTTP request. -->
+<ng-template #noResponse>
+  <h2>Something went wrong.</h2>
+</ng-template>

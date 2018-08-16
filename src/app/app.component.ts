@@ -41,7 +41,6 @@ export class AppComponent implements OnInit {
       //Since we're not using Dummy data, get real data from API
       this.apiService.getBenefitYear().subscribe(response => {
         const payload = new BenefitYearPayload(response);
-        console.log('response success? should be undefined?', response.benefitYear);
 
         if (payload.success){
           this.fpcareDataService.benefitYear = payload.benefitYear;

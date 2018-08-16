@@ -6,8 +6,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./form-action-bar.component.scss']
 })
 export class FormActionBarComponent implements OnInit {
-  @Input() submitLabel: string = "Continue";
+  @Input() submitLabel: string = 'Continue';
   @Input() canContinue: boolean = true;
+  @Input() isLoading: boolean = false;
   @Output() click: EventEmitter<any> = new EventEmitter<any>();
 
 
@@ -17,7 +18,9 @@ export class FormActionBarComponent implements OnInit {
   }
 
   onClick($event){
-    this.click.emit($event);
+    if (!this.isLoading && this.canContinue){
+      this.click.emit($event);
+    }
     $event.stopPropagation();
     return false;
   }
