@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
 
         if (payload.success){
           this.fpcareDataService.benefitYear = payload.benefitYear;
-          this.fpcareDataService.benefitYear = payload.taxYear;
+          this.fpcareDataService.taxYear = payload.taxYear;
         }
       });
     }
