@@ -1,4 +1,4 @@
-enum RegStatusCode {
+export enum RegStatusCode {
     SUCCESS = '0',
     ERROR = '1'
 }
@@ -7,11 +7,17 @@ export interface PayloadInterface {
     regStatusCode: RegStatusCode;
     regStatusMsg: string;
     uuid: string;
+
+    /** Never used by Angular app, but will be in responses */
+    clientName?: string;
 }
 
 export interface BenefitYearInterface extends PayloadInterface {
     benefitYear: string;
     taxYear: string;
+
+    /** Part of input params. Never consumed by Angular app */
+    processDate?: string;
 }
 
 export interface StatusCheckRegNum extends PayloadInterface {
@@ -24,6 +30,14 @@ export interface StatusCheckPHN extends PayloadInterface {
     phn: string;
     dateOfBirth: string;
     postalCode: string;
+}
+
+export interface ReprintLetter extends PayloadInterface {
+    benefitYear: string;
+    phn: string;
+    dateOfBirth: string;
+    postalCode: string;
+    letterType; string;
 }
 
 export class ServerPayload implements PayloadInterface {
@@ -92,4 +106,16 @@ export class StatusCheckPHNPayload extends ServerPayload {
         super(payload);
         this.phn = payload.phn;
     }
+}
+
+
+export class ReprintLetterPayload extends ServerPayload {
+  phn: string;
+  letterType: string;
+
+  constructor(payload: ReprintLetter) {
+    super(payload);
+    this.phn = payload.phn;
+    this.letterType = payload.letterType;
+  }
 }

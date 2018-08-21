@@ -1,7 +1,6 @@
-import { Component, DoCheck, OnInit, QueryList, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { Person } from '../../../../models/person.model';
 import { Router } from '@angular/router';
-import { DummyDataService } from '../../../../services/dummy-data.service';
 import { FPCareDataService } from '../../../../services/fpcare-data.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { FPCareDateComponent } from '../../../core/components/date/date.component';
@@ -9,21 +8,23 @@ import { environment } from 'environments/environment';
 import { ApiService } from '../../../../services/api-service.service';
 import { ResponseStoreService } from '../../../../services/response-store.service';
 import { StatusCheckPHNPayload, StatusCheckRegNumberPayload, StatusCheckPHN, StatusCheckRegNum } from 'app/models/api.model';
+import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
 
 @Component({
   selector: 'fpcare-registration-status',
   templateUrl: './registration-status.component.html',
   styleUrls: ['./registration-status.component.scss']
 })
-export class RegistrationStatusComponent extends AbstractFormComponent implements OnInit {
+export class RegistrationStatusComponent extends AbstractFormComponent implements OnInit, AfterViewInit {
 
   /** Access to date component */
   @ViewChild(FPCareDateComponent) dobForm: FPCareDateComponent;
+  @ViewChild('consentModal') consentModal: ConsentModalComponent;
+
   public captchaApiBaseUrl;
 
-  private _disableRegNum = false;
-  private _disablePhn = false;
   private _hasToken = false;
+
 
   constructor(protected router: Router,
               private fpcareDataService: FPCareDataService,
@@ -41,6 +42,13 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     }
   }
 
+  ngAfterViewInit() {
+
+    // Individual has not consented to collection notice
+    if (!this.fpcareDataService.acceptedCollectionNotice) {
+      this.consentModal.openModal();
+    }
+  }
 
   canContinue(): boolean {
     // return this._canContinue;
@@ -53,8 +61,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
     return (valid && this._hasToken);
   }
-
-
 
   /**
    * Structure to record data for request
@@ -100,6 +106,14 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   setToken(token): void {
     this._hasToken = true;
     this.apiService.setCaptchaToken(token);
+  }
+
+  /**
+   * Method to set the consented value for the collection notice
+   * @param {boolean} value
+   */
+  onAccept( value: boolean ){
+    this.fpcareDataService.acceptedCollectionNotice = value;
   }
 
   // Methods triggered by the form action bar

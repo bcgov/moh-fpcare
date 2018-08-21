@@ -1,16 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ConsentResultsComponent } from './consent-results.component';
+import { ReprintStatusComponent } from './reprint-status.component';
 import {CoreModule} from '../../../core/core.module';
 
 describe('ConsentResultsComponent', () => {
-  let component: ConsentResultsComponent;
-  let fixture: ComponentFixture<ConsentResultsComponent>;
+  let component: ReprintStatusComponent;
+  let fixture: ComponentFixture<ReprintStatusComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        ConsentResultsComponent
+        ReprintStatusComponent
       ],
       imports: [
         CoreModule
@@ -20,7 +20,7 @@ describe('ConsentResultsComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ConsentResultsComponent);
+    fixture = TestBed.createComponent(ReprintStatusComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

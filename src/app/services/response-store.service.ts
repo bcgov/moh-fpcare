@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { StatusCheckPHNPayload, StatusCheckRegNumberPayload, StatusCheckRegNum } from '../models/api.model';
+import {StatusCheckPHNPayload, StatusCheckRegNumberPayload, StatusCheckRegNum, ReprintLetterPayload} from '../models/api.model';
 
 /**
  * ResponseStore is responsible for storing HTTP responses from the API.  Use
@@ -17,6 +17,7 @@ export class ResponseStoreService {
 
   private _statusCheckRegNumber: StatusCheckRegNumberPayload;
   private _statusCheckPHN: StatusCheckPHNPayload;
+  private _reprintLetter: ReprintLetterPayload;
 
   /**
    * Returns the response for a Reg Num Status Check request. Note: A PHN Status
@@ -42,4 +43,12 @@ export class ResponseStoreService {
     this._statusCheckRegNumber = null;
   }
 
+  /**
+   * Returns the response for a Reprint Letter request.
+   */
+  get reprintLetter(): ReprintLetterPayload { return this._reprintLetter; }
+
+  set reprintLetter(val: ReprintLetterPayload){
+    this._reprintLetter = val;
+  }
 }

@@ -30,7 +30,8 @@ import {RegNumberValidationComponent} from '../../validation/reg-number-validati
 import {PcValidationComponent} from '../../validation/pc-validation/pc-validation.component';
 import { ResultsFrameworkComponent } from './components/results-framework/results-framework.component';
 import {NameValidationComponent} from '../../validation/name-validation/name-validation.component';
-
+import { CaptchaDataService } from 'mygovbc-captcha-widget/src/app/captcha-data.service';
+import { CaptchaComponent } from 'mygovbc-captcha-widget/src/app/captcha/captcha.component';
 
 const componentList = [
   AlertComponent,
@@ -56,7 +57,8 @@ const componentList = [
   CalendarFutureDatesDirective,
   FileUploaderComponent,
   FPCareDateComponent,
-  ResultsFrameworkComponent
+  ResultsFrameworkComponent,
+  CaptchaComponent
 ]
 
 @NgModule({
@@ -86,5 +88,8 @@ const componentList = [
     PcValidationComponent,
     NameValidationComponent
   ],
+  providers: [
+    CaptchaDataService
+  ]
 })
 export class CoreModule { }

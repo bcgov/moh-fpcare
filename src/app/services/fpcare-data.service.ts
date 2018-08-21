@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Person} from '../models/person.model';
+import {LetterTypes} from '../modules/reprint-letters/components/request-template/request-template.component';
+import { environment } from 'environments/environment';
 
 /**
  * FPCareDataService is responsible for storing and searching data. It is not
@@ -17,6 +19,12 @@ export class FPCareDataService {
   /** Information for children related to applicant */
   private _dependants: Person[] = [];
 
+  /** Variable to record whether individual has consented to collection notice */
+  public acceptedCollectionNotice: boolean = false;
+
+  /** Variable to record the letter type if response is not returned by API service */
+  public reprintLetterType: string;
+
   /** FPC benefit year - calendar year */
   public benefitYear: string;
   /** FPC tax year is 2 years prior to benefit year */
@@ -28,6 +36,10 @@ export class FPCareDataService {
   constructor() {
     // Create applicant
     this._applicant = new Person();
+
+    if (environment.bypassConsentModal){
+      this.acceptedCollectionNotice = true;
+    }
   }
 
   /**
@@ -115,34 +127,10 @@ export class FPCareDataService {
   }
 
   /**
-   * Indicated whether additional children can be added to the dependants list
+   * Indicates whether additional children can be added to the dependants list
    * @returns {boolean}
    */
   canAddChild(): boolean {
     return this._dependants.length <= this.MAX_DEPENDANTS;
-  }
-
-  /**
-   * Convert the person structure into a JSON formatted request
-   *
-   * TODO:  This may changed once integrated service has been developed
-   * NOTE: This function will likely be completely removed as DataService is not responsible for retrieving data, only storing/searching it.
-   * @param {Person} person
-   * @returns {string}
-   */
-  getStatusRequest( person: Person ): Object {
-
-    console.log( 'Get Request Registration Status' );
-
-    return {
-      'uuid': '',
-      'phn': person.phn,
-      'familyNumber': person.fpcRegNumber,
-      'dateOfBirth': person.dateOfBirth,
-      'postalCode': person.address.postal,
-      'benefitYear': '',
-      'clientApplication': '',
-      'status': ''
-    };
   }
 }

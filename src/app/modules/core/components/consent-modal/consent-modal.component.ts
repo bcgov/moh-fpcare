@@ -2,7 +2,6 @@ import { Component, ViewChild, AfterViewInit, EventEmitter, Output } from '@angu
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Base } from '../base/base.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-// import { ConsentModalContent } from './content/consent-modal-content.component';
 
 @Component({
   selector: 'fpcare-consent-modal',
@@ -10,8 +9,8 @@ import { ModalDirective } from 'ngx-bootstrap/modal';
   styleUrls: ['./consent-modal.component.scss']
 })
 export class ConsentModalComponent extends Base {
-  bsModalRef: BsModalRef;
-  agreeCheck: boolean;
+
+  agreeCheck: boolean = false;
   @ViewChild('informationCollectionModal') public informationCollectionModal: ModalDirective;
 
   @Output() onConsented = new EventEmitter<boolean>();
@@ -27,9 +26,6 @@ export class ConsentModalComponent extends Base {
 
   public closeModal(): void {
     this.informationCollectionModal.hide();
-    this.onConsented.emit(true);
+    this.onConsented.emit( this.agreeCheck );
   }
-
-
-
 }

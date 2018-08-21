@@ -1,3 +1,8 @@
+<fpcare-consent-modal
+        #consentModal
+        (onConsented)="onAccept($event)">
+</fpcare-consent-modal>
+
 <fpcare-page-framework layout='default'>
 
   <div>
@@ -11,8 +16,8 @@
   </div>
 
   <form #formRef="ngForm" novalidate>
-    <div class="row">
-      <div class="bg-light p-md-2 col-md-6">
+    <div class="row mx-lg-0">
+      <div class="bg-light p-lg-2 col-lg-6">
         <div class="form-group">
           <label for="phn">Personal Health Number (PHN)</label>
           <input class="form-control"
@@ -43,27 +48,32 @@
         </div>
       </div>
     </div>
-    
-    <div class="row p-md-2">
-      <div class="col-md-6 p-md-4">
-        Placeholder for Captcha
-      </div>
+
+    <div class="mt-4 px-3 px-md-2">
+      <captcha [apiBaseUrl]="captchaApiBaseUrl" [nonce]="nonce" (onValidToken)="setToken($event)"></captcha>
     </div>
   </form>
 
   <aside>
+
+    <div>
+      <h5>PHN</h5>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+   </div>
+
     <div class="todo">
       <ul>
-        <li>Need to add captcha to page</li>
-        <li>Add helper text for PHN and Registration Number to "aside"</li>
+        <li class="done">Need to add captcha to page</li>
+        <li>Add helper text for PHN to "aside"</li>
       </ul>
     </div>
   </aside>
 
   <fpcare-form-action-bar
-          [submitLabel]="buttonLabel"
+          [submitLabel]="data.label"
           [canContinue]="canContinue()"
-          (click)="continue()">
+          (click)="continue()"
+          [isLoading]="loading">
   </fpcare-form-action-bar>
 
 </fpcare-page-framework>

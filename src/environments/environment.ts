@@ -19,5 +19,7 @@ export const environment = {
 
   /** console.log() HTTP requests from our API and Log services */
   logHTTPRequestsToConsole: true,
-  
+
+  /** Do not show the consent modal by setting the user as already consenting to the collection notice. */
+  bypassConsentModal: true,
 };

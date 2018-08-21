@@ -8,6 +8,7 @@ import { LogService } from './log.service';
 import { UUID } from 'angular2-uuid';
 import * as moment from 'moment';
 import { BenefitYearInterface, StatusCheckPHN, StatusCheckRegNum } from 'app/models/api.model';
+import {ReprintLetter} from '../models/api.model';
 
 
 
@@ -83,6 +84,26 @@ export class ApiService extends AbstractHttpService {
       phn: input.phn,
       postalCode: input.postalCode,
       dateOfBirth: input.dob
+    });
+  }
+
+  /**
+   * Request reprint of letter (consent or COB) using the Personal Health Number, Date of birth, and postal code
+   *
+   * @param {{phn: string, dob: string, postalCode: string, benefitYear: string, letterType: number}} input
+   * @returns {Observable<StatusCheckPHN>}
+   */
+  public reprintLetter( input: {phn: string, dob: string, postalCode: string, benefitYear: string, letterType: string} ): Observable<StatusCheckPHN> {
+    const url = environment.baseAPIUrl + 'requestLetter';
+
+    return this.post<ReprintLetter>(url, {
+      uuid: this.generateUUID(),
+      clientName: this._clientName,
+      benefitYear: input.benefitYear,
+      phn: input.phn,
+      postalCode: input.postalCode,
+      dateOfBirth: input.dob,
+      letterType: input.letterType
     });
   }
 
