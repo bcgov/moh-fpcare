@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DemoPageComponent } from './pages/demo-page/demo-page.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import {RequestCobComponent} from './modules/reprint-letters/components/request-cob/request-cob.component';
-import {RequestConsentComponent} from './modules/reprint-letters/components/request-consent/request-consent.component';
-import {ReprintStatusComponent} from './modules/reprint-letters/components/reprint-status/reprint-status.component';
+import {REGISTRATION_PATH, REGISTRATION_STATUS_PATH, REPRINT_LETTERS_PATH} from './models/route-paths.constants';
+
 
 const routes: Routes = [
 
@@ -25,27 +24,17 @@ const routes: Routes = [
 
   // Lazy loading modules below
   {
-    path: 'registration',
+    path: REGISTRATION_PATH,
     loadChildren: 'app/modules/registration/registration.module#RegistrationModule'
   },
   {
-    path: 'registration-status',
+    path: REGISTRATION_STATUS_PATH,
     loadChildren: 'app/modules/registration-status/registration-status.module#RegistrationStatusModule'
   },
-  // These pages need to be directed to homepage in the event the URL is unknown -- BEGIN
   {
-    path: 'request-reprint/cob',
-    component: RequestCobComponent
+    path: REPRINT_LETTERS_PATH,
+    loadChildren: 'app/modules/reprint-letters/reprint-letters.module#ReprintLettersModule'
   },
-  {
-    path: 'request-reprint/consent',
-    component: RequestConsentComponent
-  },
-  {
-    path: 'request-reprint/status',
-    component: ReprintStatusComponent
-  },
-  // -- END
   {
     path: '**',
     redirectTo: '',

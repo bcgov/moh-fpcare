@@ -21,10 +21,6 @@ import { FPCareDataService } from './services/fpcare-data.service';
 import { UserService } from './services/user.service';
 import { HeaderFooterModule } from './modules/header-footer/header-footer.module';
 import { ValidationService } from './services/validation.service';
-import {RequestCobComponent} from './modules/reprint-letters/components/request-cob/request-cob.component';
-import {RequestTemplateComponent} from './modules/reprint-letters/components/request-template/request-template.component';
-import {RequestConsentComponent} from './modules/reprint-letters/components/request-consent/request-consent.component';
-import {ReprintStatusComponent} from './modules/reprint-letters/components/reprint-status/reprint-status.component';
 import {DateTimeService} from './services/date-time.service';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -34,11 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     DemoPageComponent,
     HomePageComponent,
-    BlankPageComponent,
-    RequestTemplateComponent,
-    RequestCobComponent,
-    RequestConsentComponent,
-    ReprintStatusComponent
+    BlankPageComponent
   ],
   imports: [
     BrowserModule,

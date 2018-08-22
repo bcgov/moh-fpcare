@@ -6,34 +6,41 @@ import { EligibilityPageComponent } from './pages/eligibility/eligibility.compon
 import { MailingAddressPageComponent } from './pages/mailing-address/mailing-address.component';
 import { PersonalInfoPageComponent } from './pages/personal-info/personal-info.component';
 import { ReviewPageComponent } from './pages/review/review.component';
+import {
+  REGISTRATION_ADDRESS, REGISTRATION_AUTHORIZE,
+  REGISTRATION_CHILD,
+  REGISTRATION_ELIGIBILITY,
+  REGISTRATION_FINANCIAL,
+  REGISTRATION_PERSONAL, REGISTRATION_REVIEW
+} from '../../models/route-paths.constants';
 
 export const pageRoutes: Routes = [
     {
-        path: 'financial',
+        path: REGISTRATION_FINANCIAL,
         component: CalculatorPageComponent
     },
     {
-        path: 'eligibility',
+        path: REGISTRATION_ELIGIBILITY,
         component: EligibilityPageComponent
     },
     {
-        path: 'personal-info',
+        path: REGISTRATION_PERSONAL,
         component: PersonalInfoPageComponent
     },
     {
-        path: 'child-info',
+        path: REGISTRATION_CHILD,
         component: ChildrenPageComponent
     },
     {
-        path: 'address',
+        path: REGISTRATION_ADDRESS,
         component: MailingAddressPageComponent
     },
     {
-        path: 'review',
+        path: REGISTRATION_REVIEW,
         component: ReviewPageComponent
     },
     {
-        path: 'authorize',
+        path: REGISTRATION_AUTHORIZE,
         component: CompletePageComponent
     },
 ];

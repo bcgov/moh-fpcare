@@ -4,6 +4,11 @@ import {DateTimeService} from '../../../../services/date-time.service';
 import {Router} from '@angular/router';
 import {Person} from '../../../../models/person.model';
 import {Base} from '../../../core/components/base/base.class';
+import {
+  REGISTRATION_ADDRESS, REGISTRATION_AUTHORIZE,
+  REGISTRATION_CHILD,
+  REGISTRATION_ELIGIBILITY, REGISTRATION_FINANCIAL, REGISTRATION_PATH
+} from '../../../../models/route-paths.constants';
 
 @Component({
   selector: 'fpcare-review',
@@ -91,28 +96,28 @@ export class ReviewPageComponent extends Base implements OnInit {
    * Link to Eligibility page so applicant can edit data
    */
   editPersonalInfo() {
-    this.navigate( 'eligibility' );
+    this.navigate( REGISTRATION_ELIGIBILITY );
   }
 
   /**
    * Link to Child Information page so applicant can edit data
    */
   editChildInfo() {
-    this.navigate( 'child-info' );
+    this.navigate( REGISTRATION_CHILD );
   }
 
   /**
    * Link to Address page so applicant can edit data
    */
   editContactInfo() {
-    this.navigate( 'address' );
+    this.navigate( REGISTRATION_ADDRESS );
   }
 
   /**
    * Link to Financial page so applicant can edit data
    */
   editFinancialInfo() {
-    this.navigate( 'financial' );
+    this.navigate( REGISTRATION_FINANCIAL );
   }
 
   /**
@@ -166,7 +171,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * Navigates to the next page
    */
   continue() {
-    this.navigate( 'authorize' );
+    this.navigate( REGISTRATION_AUTHORIZE );
   }
 
   /**
@@ -179,7 +184,7 @@ export class ReviewPageComponent extends Base implements OnInit {
 
   /** Navigates to a route then automatically scrolls to the top of the page. */
   private navigate(page: string){
-    this.router.navigate(['/registration/' + page])
+    this.router.navigate([ REGISTRATION_PATH + '/' + page])
       .then((data) => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });

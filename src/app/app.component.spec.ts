@@ -7,19 +7,24 @@ import { HeaderFooterModule } from './modules/header-footer/header-footer.module
 import { UserService } from './services/user.service';
 import { DummyDataService } from './services/dummy-data.service';
 import { FPCareDataService } from './services/fpcare-data.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent,
+        AppComponent
       ],
       providers: [
         UserService,
         DummyDataService,
         FPCareDataService
       ],
-      imports: [RouterTestingModule, HeaderFooterModule]
+      imports: [
+        RouterTestingModule,
+        HeaderFooterModule,
+        HttpClientTestingModule
+      ]
     }).compileComponents();
   }));
 

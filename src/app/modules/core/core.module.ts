@@ -33,6 +33,7 @@ import {NameValidationComponent} from '../../validation/name-validation/name-val
 import { CaptchaDataService } from 'mygovbc-captcha-widget/src/app/captcha-data.service';
 import { CaptchaComponent } from 'mygovbc-captcha-widget/src/app/captcha/captcha.component';
 
+
 const componentList = [
   AlertComponent,
   MiniProgressBarComponent,
@@ -59,7 +60,7 @@ const componentList = [
   FPCareDateComponent,
   ResultsFrameworkComponent,
   CaptchaComponent
-]
+];
 
 @NgModule({
   imports: [
@@ -75,7 +76,7 @@ const componentList = [
     TextMaskModule,
   ],
   declarations: [
-    componentList,
+    componentList
   ],
   exports: [
     componentList

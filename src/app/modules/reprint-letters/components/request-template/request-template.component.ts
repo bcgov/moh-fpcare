@@ -9,6 +9,7 @@ import {ApiService} from '../../../../services/api-service.service';
 import {environment} from '../../../../../environments/environment';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {ReprintLetter, ReprintLetterPayload} from '../../../../models/api.model';
+import {REPRINT_LETTERS_PATH, REPRINT_STATUS} from '../../../../models/route-paths.constants';
 
 /**
  * Letter types
@@ -55,7 +56,6 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
       this._hasToken = true;
     }
 
-
     this.fpcareDataService.reprintLetterType = this.data.letterType;
   }
 
@@ -76,7 +76,7 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   }
 
   canContinue(): boolean {
-    // return this._canContinue;
+
     let valid = this.form.valid;
 
     // We have to explicitly check the DateComponent validity as it doesn't bubble to this.form.
@@ -127,8 +127,8 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
     subscription.subscribe(response => {
       this.responseStore.reprintLetter = new ReprintLetterPayload(response as ReprintLetter);
       this.loading = false;
-      const url = '/request-reprint/status';
-      this.router.navigate([url]);
+      this.navigate(REPRINT_LETTERS_PATH + '/' + REPRINT_STATUS );
+
     });
   }
 }

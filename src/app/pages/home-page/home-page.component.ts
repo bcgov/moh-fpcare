@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {ApiService} from '../../services/api-service.service';
-import {FPCareDataService} from '../../services/fpcare-data.service';
+import {
+  REGISTRATION_PATH, REGISTRATION_REQUIREMENTS,
+  REGISTRATION_STATUS_PATH,
+  REPRINT_COB,
+  REPRINT_CONSENT,
+  REPRINT_LETTERS_PATH,
+  REQUEST_REG_STATUS
+} from '../../models/route-paths.constants';
 
 @Component({
   selector: 'fpcare-home-page',
@@ -9,9 +15,12 @@ import {FPCareDataService} from '../../services/fpcare-data.service';
 })
 export class HomePageComponent implements OnInit {
 
-  // API & FPCare Data Services to be removed after DEVELOPMENT
-  constructor( private fpcareDataService: FPCareDataService
-             , private apiService: ApiService ) { }
+  public confirmAssistance: string = '/' + REPRINT_LETTERS_PATH + '/' + REPRINT_COB;
+  public requestConsent: string = '/' + REPRINT_LETTERS_PATH + '/' + REPRINT_CONSENT;
+  public requestRegStatus: string = '/' + REGISTRATION_STATUS_PATH + '/' + REQUEST_REG_STATUS;
+  public registration: string = '/' + REGISTRATION_PATH +  '/' + REGISTRATION_REQUIREMENTS;
+
+  constructor() { }
 
   ngOnInit() {
   }

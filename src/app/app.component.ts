@@ -33,21 +33,17 @@ export class AppComponent implements OnInit {
       // console.log( 'spouse: ', this.fpcareDataService.spouse );
       this.fpcareDataService.dependants = this.dummyDataService.createChildren( 2 );
       // console.log( 'children: ', this.fpcareDataService.dependants );
-
-      this.fpcareDataService.benefitYear = '2018';
-      this.fpcareDataService.taxYear = '2016';
-    }
-    else {
-      //Since we're not using Dummy data, get real data from API
-      this.apiService.getBenefitYear().subscribe(response => {
-        const payload = new BenefitYearPayload(response);
-
-        if (payload.success){
-          this.fpcareDataService.benefitYear = payload.benefitYear;
-          this.fpcareDataService.taxYear = payload.taxYear;
-        }
-      });
     }
 
+    // Retrieve benefit year
+    this.apiService.getBenefitYear().subscribe(response => {
+      const payload = new BenefitYearPayload(response);
+      console.log( ' payload: ', payload );
+
+      if (payload.success){
+        this.fpcareDataService.benefitYear = payload.benefitYear;
+        this.fpcareDataService.taxYear = payload.taxYear;
+      }
+    });
   }
 }

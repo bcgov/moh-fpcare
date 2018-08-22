@@ -65,21 +65,6 @@ export class DummyDataService {
     return result;
   }
 
-  // -- Generating Models
-  /** Returns an array of people with random names.*/
-
-  /**
-   * JSON Object
-   * @param {Object} request
-   */
-  submitRequestStatus( request: Object ) {
-
-    this._regStatusResponse = request;
-    this._regStatusResponse.status = 'Your application is complete. We have mailed you a letter confirming your coverage.';
-
-    console.log( 'response: ', this._regStatusResponse );
-  }
-
   getStatusResponse(): Object {
     return this._regStatusResponse ? this._regStatusResponse : {} ;
   }

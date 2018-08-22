@@ -1,12 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {RequestTemplateComponent} from './request-template.component';
+import {ComponentData, LetterTypes, RequestTemplateComponent} from './request-template.component';
 import {FormsModule} from '@angular/forms';
 import {CoreModule} from '../../../core/core.module';
 import {RouterTestingModule} from '@angular/router/testing';
-import {DummyDataService} from '../../../../services/dummy-data.service';
+import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
-const dummyDataService = new DummyDataService();
-
+/**
+ * Used by COB & Consent request reprints - needs to create only
+ */
 describe('RequestTemplateComponent', () => {
   let component: RequestTemplateComponent;
   let fixture: ComponentFixture<RequestTemplateComponent>;
@@ -19,16 +21,25 @@ describe('RequestTemplateComponent', () => {
       imports: [
         CoreModule,
         FormsModule,
-        RouterTestingModule
-      ]
-    })
+        RouterTestingModule,
+        HttpClientTestingModule
+      ],
+    providers: [
+      FPCareDataService
+    ]
+  })
     .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(RequestTemplateComponent);
     component = fixture.componentInstance;
-    component.applicant = dummyDataService.createAdult();
+    component['fpcareDataService'].acceptedCollectionNotice = true;
+    const cobRequest: ComponentData = {
+      label: 'Request Confirmation',
+      letterType: LetterTypes.COB_LETTER
+    };
+    component.data = cobRequest;
     fixture.detectChanges();
   });
 

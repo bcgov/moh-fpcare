@@ -12,7 +12,7 @@ import {StatusResultsComponent} from './components/status-results/status-results
     CommonModule,
     CoreModule,
     FormsModule,
-    RegistrationStatusRoutingModule,
+    RegistrationStatusRoutingModule
   ],
   declarations: [
     RegistrationStatusComponent,

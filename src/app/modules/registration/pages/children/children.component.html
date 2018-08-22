@@ -5,7 +5,7 @@
   <h2>Your child's personal information</h2>
 
   <!-- Repeat for each child -->
-  <form *ngIf="hasChildren()" #formRef="ngForm" novalidate>
+  <form #formRef="ngForm" novalidate>
     <div *ngFor="let child of children; let i = index;">
       <!--Array starts at 0 add one -->
       <h2 class="border-bottom">
@@ -15,7 +15,7 @@
 
       <div class="p-md-2 col-md-6">
         <div class="form-group">
-          <label for="ch_firstnm_{{i}}">First Name</label>
+          <label for="ch_firstnm_{{i}}">Given Name</label>
           <input class="form-control"
                  type="text"
                  id="ch_firstnm_{{i}}"
@@ -24,15 +24,7 @@
                  [(ngModel)]="child.firstName"/>
         </div>
         <div class="form-group">
-          <label for="ch_middlenm_{{i}}">Middle Name</label>
-          <input class="form-control"
-                 type="text"
-                 id="ch_middlenm_{{i}}"
-                 name="ch_middlenm_{{i}}"
-                 [(ngModel)]="child.middleName"/>
-        </div>
-        <div class="form-group">
-          <label for="ch_lastnm_{{i}}">Last Name</label>
+          <label for="ch_lastnm_{{i}}">Surname</label>
           <input class="form-control"
                  type="text"
                  id="ch_lastnm_{{i}}"
@@ -48,7 +40,7 @@
                   [date]="child.dateOfBirth"
                   [restrictDate]="'past'">
           </fpcare-date>
-          <div *ngIf="!isLegitDependant(child)" role="alert" aria-live="assertive">
+          <div *ngIf="!isLegitDependant(child.dateOfBirth)" role="alert" aria-live="assertive">
             <div class="text-danger">Individual is too old.</div>
           </div>
         </div>

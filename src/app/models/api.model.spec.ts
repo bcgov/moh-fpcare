@@ -20,7 +20,7 @@ const regNumberFail: StatusCheckRegNum = {
     'regStatusMsg' : 'We could not find an account with the information you have entered.\n\nPlease call PharmaCare at 1-800-663-7100 to register for a new Fair PharmaCare account or visit <link to Registration Page>'
   }
 
-fdescribe('API Models - ServerPayload', () => {
+describe('API Models - ServerPayload', () => {
     let model: ServerPayload;
     let response: BenefitYearInterface;
 

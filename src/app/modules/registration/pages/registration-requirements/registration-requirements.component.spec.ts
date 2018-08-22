@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { RegistrationRequirementsComponent } from './registration-requirements.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CoreModule } from '../../../core/core.module';
 import { APP_BASE_HREF } from '@angular/common';
+import {FPCareDataService} from '../../../../services/fpcare-data.service';
 
 describe('RegistrationRequirementsComponent', () => {
   let component: RegistrationRequirementsComponent;
@@ -11,9 +11,18 @@ describe('RegistrationRequirementsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RegistrationRequirementsComponent ],
-      imports: [ RouterTestingModule, CoreModule ],
-      providers: [ {provide: APP_BASE_HREF, useValue: '/'} ]
+      declarations: [
+        RegistrationRequirementsComponent
+      ],
+      imports: [
+        RouterTestingModule,
+        CoreModule
+      ]
+      ,
+      providers: [
+        {provide: APP_BASE_HREF, useValue: '/'},
+        FPCareDataService
+        ]
     })
     .compileComponents();
   }));

@@ -14,7 +14,7 @@
 
   <hr> -->
 
-  <a routerLink="/registration/requirements">
+  <a [routerLink]='registration'>
     <button class="btn btn-block btn-lg btn-secondary">
       Registration
     </button>
@@ -22,7 +22,7 @@
 
   <hr class="invisible">
 
-  <a routerLink="/registration-status/status">
+  <a [routerLink]='requestRegStatus'>
     <button class="btn btn-block btn-lg btn-secondary">
       Registration Status
     </button>
@@ -30,7 +30,8 @@
 
   <hr class="invisible">
 
-  <a routerLink="/request-reprint/cob">
+
+  <a [routerLink]='confirmAssistance'>
     <button class="btn btn-block btn-lg btn-secondary">
       Request Confirmation of Assistance
     </button>
@@ -38,7 +39,7 @@
 
   <hr class="invisible">
 
-  <a routerLink="/request-reprint/consent">
+  <a [routerLink]='requestConsent'>
     <button class="btn btn-block btn-lg btn-secondary">
       Request Consent Form
     </button>

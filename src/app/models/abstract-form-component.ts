@@ -15,12 +15,11 @@ export abstract class AbstractFormComponent extends Base {
   loading: boolean = false;
   /** What happens when the user clicks the continue button. Generally navigating to another page. */
   abstract continue(): void;
+  /** Determines if the Continue button is disabled */
+  abstract canContinue(): boolean;
 
   /** Access to the form elements for validation */
   @ViewChild('formRef') form: NgForm;
-
-  /** Flag to indicate whether applicant can continue in process */
-  protected _canContinue = false;
 
   /**
    * Constructor
@@ -30,11 +29,6 @@ export abstract class AbstractFormComponent extends Base {
         super(); // objectId within Base class
         this.router = router;
     }
-
-  /** Determines if the Continue button is disabled */
-  canContinue(): boolean {
-    return this._canContinue;
-  }
 
   /** Navigates to a route then automatically scrolls to the top of the page. */
   protected navigate(url: string){

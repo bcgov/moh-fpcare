@@ -50,14 +50,14 @@
       </div>
     </div>
 
-    <div class="col-md-6 p-md-4">
-      Placeholder for Captcha
+    <div class="mt-md-3 px-3 px-md-2">
+      <captcha [apiBaseUrl]="captchaApiBaseUrl" [nonce]="objectId" (onValidToken)="setToken($event)"></captcha>
     </div>
   </form>
 
   <div class="todo">
     <ul>
-      <li>Add captcha module</li>
+      <li class="'done">Add captcha module</li>
       <li>Code form checks to enable button, update checkbox labels to be on opposite side</li>
     </ul>
   </div>

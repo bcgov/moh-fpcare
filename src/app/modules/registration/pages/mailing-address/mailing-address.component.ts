@@ -1,19 +1,23 @@
-import {Component, DoCheck, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
 import {Address} from '../../../../models/address.model';
+import {REGISTRATION_PATH, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
 
 @Component({
   selector: 'fpcare-mailing-address',
   templateUrl: './mailing-address.component.html',
   styleUrls: ['./mailing-address.component.scss']
 })
-export class MailingAddressPageComponent extends AbstractFormComponent implements OnInit, DoCheck {
+export class MailingAddressPageComponent extends AbstractFormComponent implements OnInit {
 
   // Variable to indicate whether the postal code matches the one on file
   private _postalCodeMatch = true;
+
+  /** Page to naviage to when continue process */
+  private _url = REGISTRATION_PATH + '/' + REGISTRATION_REVIEW;
 
   constructor( private fpcService: FPCareDataService
              , protected router: Router ) {
@@ -24,10 +28,11 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   }
 
   /**
-   * Detect changes, check if form is valid
+   * Check to verify whether user can continue or not
+   * @returns {boolean}
    */
-  ngDoCheck() {
-    this._canContinue = this.form.valid;
+  canContinue(): boolean {
+    return this.form.valid;
   }
 
   /**
@@ -62,7 +67,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   continue () {
     if ( this.canContinue() ) {
-      this.navigate( '/registration/review' );
+      this.navigate(  this._url );
     }
   }
 }

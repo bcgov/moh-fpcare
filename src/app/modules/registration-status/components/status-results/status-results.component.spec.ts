@@ -1,9 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { StatusResultsComponent } from './status-results.component';
-import {ResultsFrameworkComponent} from '../../../core/components/results-framework/results-framework.component';
 import {CoreModule} from '../../../core/core.module';
-import {DummyDataService} from '../../../../services/dummy-data.service';
 
 describe('StatusResultsComponent', () => {
   let component: StatusResultsComponent;
@@ -16,9 +13,6 @@ describe('StatusResultsComponent', () => {
       ],
       imports: [
         CoreModule
-      ],
-      providers: [
-        DummyDataService
       ]
     })
     .compileComponents();

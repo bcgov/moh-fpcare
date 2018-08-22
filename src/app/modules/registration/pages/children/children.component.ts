@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
 import {Router} from '@angular/router';
@@ -6,19 +6,24 @@ import {AbstractFormComponent} from '../../../../models/abstract-form-component'
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ValidationService} from '../../../../services/validation.service';
 import {DateTimeService} from '../../../../services/date-time.service';
+import {SimpleDate} from '../../../core/components/date/simple-date.interface';
+import {REGISTRATION_ADDRESS, REGISTRATION_PATH, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
 
 @Component({
   selector: 'fpcare-children',
   templateUrl: './children.component.html',
   styleUrls: ['./children.component.scss']
 })
-export class ChildrenPageComponent extends AbstractFormComponent implements OnInit, DoCheck {
+export class ChildrenPageComponent extends AbstractFormComponent implements OnInit {
 
   /** Access to date component */
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
   /** Indicates whether or not the same PHNs has been used for another family member */
-  private _uniquePhnError = false;
+  private _uniquePhns = true;
+
+  /** Page to naviage to when continue process */
+  private _url = REGISTRATION_PATH + '/' + REGISTRATION_ADDRESS;
 
   constructor( private fpcService: FPCareDataService
              , private validationService: ValidationService
@@ -31,41 +36,37 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   }
 
   /**
-   * Detect changes, check if form is valid
+   * Check to verify whether user can continue or not
+   * @returns {boolean}
    */
-  ngDoCheck() {
+  canContinue(): boolean {
 
-    let valid = ( !this.hasChildren() ) ? true : ( !!this.form && this.form.valid );
+    let valid = true;
 
-    if ( !!this.dobForm ) {
-      const dobList = this.dobForm.map(x => {
+
+    if (this.hasChildren()) {
+
+      const validDob = this.dobForm.map(x => {
         if (x.required && x.isValid()) {
           return x.form.valid;
         }
       })
         .filter(x => x !== true);
 
-      valid = valid && (dobList.length === 0);
-    }
-
-    if ( this.hasChildren() ) {
-
       // Check that PHNs are unique
-      this._uniquePhnError = !this.validationService.isUnique( this.familyPhnList );
-
-      valid = valid && !this._uniquePhnError;
+      this._uniquePhns = this.validationService.isUnique( this.familyPhnList );
 
       // Check that individuals are allowed on Parents FPC account
       const notLegitDep = this.children.map( x => {
-        if (!this.isLegitDependant(x) ) {
+        if (!this.isLegitDependant(x.dateOfBirth) ) {
           return x;
         }
       }).filter( x => x );
 
-      valid = valid && ( notLegitDep.length === 0 );
+      valid = !!this.form.valid && (validDob.length === 0) && this._uniquePhns && (notLegitDep.length === 0);
     }
 
-    this._canContinue = valid;
+    return valid;
   }
 
   /**
@@ -91,7 +92,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   hasUniquePhnError( child: Person ): boolean {
 
-    if ( this._uniquePhnError ) {
+    if ( !this._uniquePhns ) {
       // Is this the PHN that is duplicated
       const list = this.familyPhnList.filter( x => { return x === child.phn; } );
 
@@ -108,9 +109,13 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * Individuals who are more than 25 years old cannot be on parents FPCare account
    * @returns {boolean}
    */
-  isLegitDependant( child: Person ): boolean {
-    const age = this.dateTimeService.getAge( child.dateOfBirth );
-    return ( age < 25 );
+  isLegitDependant( dob: SimpleDate ): boolean {
+    if ( dob.year && dob.month && dob.day ) {
+      const age = this.dateTimeService.getAge( dob );
+      console.log( 'age: ', age );
+      return ( age < 25 );
+    }
+    return true;
   }
 
   /**
@@ -152,7 +157,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   continue () {
     if ( this.canContinue() ) {
-      this.navigate( '/registration/address' );
+      this.navigate( this._url );
     }
   }
 
@@ -168,6 +173,6 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
       phnList.push(this.fpcService.spouse.phn);
     }
 
-    return phnList;
+    return phnList.filter( x => x );
   }
 }

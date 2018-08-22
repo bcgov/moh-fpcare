@@ -1,4 +1,4 @@
-import {Component, DoCheck, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {Person} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
@@ -6,19 +6,23 @@ import {AbstractFormComponent} from '../../../../models/abstract-form-component'
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {DateTimeService} from '../../../../services/date-time.service';
 import {ValidationService} from '../../../../services/validation.service';
+import {REGISTRATION_CHILD, REGISTRATION_PATH, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
 
 @Component({
   selector: 'fpcare-personal-info',
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss']
 })
-export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit, DoCheck {
+export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit {
 
   /** Access to date component */
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
   /** Indicates whether or not the same SIN has been used for spouse */
-  private _uniqueSinError = false;
+  private _uniqueSin = true;
+
+  /** Page to naviage to when continue process */
+  private _url = REGISTRATION_PATH + '/' + REGISTRATION_CHILD;
 
   constructor( private fpcService: FPCareDataService
              , private dateTimeService: DateTimeService
@@ -31,32 +35,26 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   }
 
   /**
-   * Detect changes, check if form is valid
+   * Check to verify whether user can continue or not
+   * @returns {boolean}
    */
-  ngDoCheck() {
+  canContinue(): boolean {
 
-    const sinList: string[] = [];
-    let valid = this.form.valid;
+    let valid = false;
 
-    // Check SINs are unique
-    if ( this.hasSpouse() ) {
+    if ( !!this.form ) {
 
-      sinList.push( this.applicant.sin );
-      sinList.push( this.spouse.sin );
-      this._uniqueSinError = !this.validationService.isUnique( sinList );
-      valid = valid && !this._uniqueSinError;
+      // Check SINs are unique
+      if ( this.hasSpouse() ) {
+        const sinList: string[] = [this.applicant.sin, this.spouse.sin];
+
+        this._uniqueSin = this.validationService.isUnique( sinList );
+      }
+
+      valid = this.form.valid && this._uniqueSin;
     }
 
-    if ( !!this.dobForm ) {
-      valid = valid && (this.dobForm.map(x => {
-        if (x.required && x.isValid()) {
-          return x.form.valid;
-        }
-      })
-        .filter(x => x !== true).length === 0);
-    }
-
-    this._canContinue = valid;
+    return valid;
   }
 
   /**
@@ -105,7 +103,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * @returns {boolean}
    */
   hasUniqueSinError(): boolean {
-    return this._uniqueSinError;
+    return !this._uniqueSin;
   }
 
   // Methods triggered by the form action bar
@@ -116,7 +114,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   continue() {
 
     if ( this.canContinue() ) {
-      this.navigate( '/registration/child-info' );
+      this.navigate( this._url );
     }
   }
 }
