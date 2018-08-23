@@ -16,6 +16,8 @@ import {REGISTRATION_ADDRESS, REGISTRATION_PATH, REGISTRATION_REVIEW} from '../.
 })
 export class ChildrenPageComponent extends AbstractFormComponent implements OnInit {
 
+  public MAX_CHILD_AGE = 25;
+
   /** Access to date component */
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
@@ -43,27 +45,27 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
     let valid = true;
 
+    // Ensure forms are loaded before performing checks
+    if (this.hasChildren() && !!this.form && !!this.dobForm ) {
 
-    if (this.hasChildren()) {
-
-      const validDob = this.dobForm.map(x => {
-        if (x.required && x.isValid()) {
-          return x.form.valid;
-        }
-      })
-        .filter(x => x !== true);
-
-      // Check that PHNs are unique
-      this._uniquePhns = this.validationService.isUnique( this.familyPhnList );
-
-      // Check that individuals are allowed on Parents FPC account
-      const notLegitDep = this.children.map( x => {
-        if (!this.isLegitDependant(x.dateOfBirth) ) {
+      const invalidDob = this.dobForm.map(x => {
+        if (!x.form.valid) {
           return x;
         }
-      }).filter( x => x );
+      })
+          .filter(x => x);
 
-      valid = !!this.form.valid && (validDob.length === 0) && this._uniquePhns && (notLegitDep.length === 0);
+      // Check that PHNs are unique
+      this._uniquePhns = this.validationService.isUnique(this.familyPhnList);
+
+      // Check that individuals are allowed on Parents FPC account
+      const notLegitDep = this.children.map(x => {
+        if ( !this.legitimateDependant( x ) ) {
+          return x;
+        }
+      }).filter(x => x);
+
+      valid = this.form.valid && (invalidDob.length === 0) && this._uniquePhns && (notLegitDep.length === 0);
     }
 
     return valid;
@@ -102,20 +104,6 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
       }
     }
     return false;
-  }
-
-  /**
-   * Determines whether individual is a legitiment dependant
-   * Individuals who are more than 25 years old cannot be on parents FPCare account
-   * @returns {boolean}
-   */
-  isLegitDependant( dob: SimpleDate ): boolean {
-    if ( dob.year && dob.month && dob.day ) {
-      const age = this.dateTimeService.getAge( dob );
-      console.log( 'age: ', age );
-      return ( age < 25 );
-    }
-    return true;
   }
 
   /**
@@ -159,6 +147,15 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
     if ( this.canContinue() ) {
       this.navigate( this._url );
     }
+  }
+
+  /**
+   *
+   * @param {Person} child
+   * @returns {boolean}
+   */
+  legitimateDependant( child: Person ): boolean {
+    return (!child.isDobEmpty() && child.getAge() < this.MAX_CHILD_AGE);
   }
 
   /**

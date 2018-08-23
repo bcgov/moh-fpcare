@@ -82,7 +82,7 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
     // We have to explicitly check the DateComponent validity as it doesn't bubble to this.form.
     valid = valid && this.dobForm.form.valid;
 
-    return (valid && this._hasToken);
+    return (valid && this._hasToken && !this.isFormEmpty());
   }
 
   /** Use the UUID as a cryptographic client nonce to avoid replay attacks. */

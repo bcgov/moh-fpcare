@@ -40,7 +40,7 @@
                   [date]="child.dateOfBirth"
                   [restrictDate]="'past'">
           </fpcare-date>
-          <div *ngIf="!isLegitDependant(child.dateOfBirth)" role="alert" aria-live="assertive">
+          <div *ngIf="!legitimateDependant(child)" role="alert" aria-live="assertive">
             <div class="text-danger">Individual is too old.</div>
           </div>
         </div>

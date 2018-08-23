@@ -14,6 +14,8 @@ import {ApiService} from '../../../../services/api-service.service';
 export class CompletePageComponent extends AbstractFormComponent implements OnInit  {
 
   public captchaApiBaseUrl;
+  public applicantAgreement: boolean = false;
+  public spouseAgreement: boolean = false;
 
   private _hasToken = false;
 
@@ -76,8 +78,14 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
    * @returns {boolean}
    */
   canContinue(): boolean {
-    // Do check to verify that check boxes and captcha complete
-    return false;
+
+    let valid = (this.applicantAgreement && this._hasToken);
+
+    if ( this.hasSpouse() ) {
+      valid = (valid && this.spouseAgreement);
+    }
+
+    return valid;
   }
 
   /**
@@ -86,6 +94,6 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
   continue() {
 
     // this.canContinue();
-    console.log( 'submit request' );
+    console.log( 'can submit request: ', this.canContinue() );
   }
 }

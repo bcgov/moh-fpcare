@@ -6,6 +6,7 @@ import {Person} from '../../../../models/person.model';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ValidationService} from '../../../../services/validation.service';
 import {REGISTRATION_PATH, REGISTRATION_PERSONAL, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'fpcare-eligibility',
@@ -38,16 +39,18 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    */
   canContinue(): boolean {
 
+    // Forms exist
+    const formsLoaded = !!this.form  && !!this.dobForm;
     let valid = false;
 
-    if (!!this.form && !!this.dobForm) {
+    if ( formsLoaded ) {
 
-      const validDob = this.dobForm.map(x => {
-        if (x.required && x.isValid()) {
-          return x.form.valid;
+      const invalidDob = this.dobForm.map(x => {
+        if (!x.form.valid) {
+          return x;
         }
       })
-        .filter(x => x !== true);
+        .filter(x => x);
 
       // Check PHNs are unique
       if (this.hasSpouse()) {
@@ -57,7 +60,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
         this._uniquePhn = this.validationService.isUnique(phnList);
       }
 
-      valid = this.form.valid && (validDob.length === 0) && this._uniquePhn;
+      valid = this.form.valid && !this.isFormEmpty() && (invalidDob.length === 0) && this._uniquePhn;
     }
 
     return valid;

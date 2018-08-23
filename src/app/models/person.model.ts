@@ -124,6 +124,17 @@ export class Person extends Base {
   }
 
   /**
+   * Indicates whether or not the date of birth is empty
+   * @returns {boolean}
+   */
+  isDobEmpty(): boolean {
+    return Object.keys(this._dateOfBirth)
+        .map(key => this._dateOfBirth[key])
+        .filter(x => x) // Filter out null/undefined
+        .length === 0;
+  }
+
+  /**
    * Set Personal Health Number for person
    * @param {string} phn
    */
@@ -197,6 +208,17 @@ export class Person extends Base {
       this.middleName = names[1];
       this.lastName = names[2];
     }
+  }
+
+  /**
+   * Calculates the age from date of birth
+   * @param {SimpleDate} dob
+   * @returns {Number}
+   */
+  getAge(): Number {
+    const today = new Date();
+    const dobDt = new Date( this._dateOfBirth.year, this._dateOfBirth.month, this._dateOfBirth.day );
+    return moment( today ).diff( dobDt, 'year' );
   }
 }
 

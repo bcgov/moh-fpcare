@@ -51,7 +51,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
         this._uniqueSin = this.validationService.isUnique( sinList );
       }
 
-      valid = this.form.valid && this._uniqueSin;
+      valid = this.form.valid && this._uniqueSin && !this.isFormEmpty();
     }
 
     return valid;

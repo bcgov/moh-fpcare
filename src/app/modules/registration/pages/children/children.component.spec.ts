@@ -39,4 +39,13 @@ describe('ChildrenComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('can continue by default (no children)', () => {
+    expect(component.canContinue()).toBeTruthy();
+  });
+
+  it('cannot continue by default (has child)', () => {
+    component.addChild();
+    expect(component.canContinue()).toBeFalsy();
+  });
 });

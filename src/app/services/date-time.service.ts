@@ -35,15 +35,4 @@ export class DateTimeService {
   convertSimpleDateToDate( dt: SimpleDate ): Date {
     return new Date( dt.year, dt.month, dt.day );
   }
-
-  /**
-   * Calculates the age from date of birth
-   * @param {SimpleDate} dob
-   * @returns {Number}
-   */
-  getAge( dob: SimpleDate ): Number {
-    const today = new Date();
-    const dobDt = this.convertSimpleDateToDate( dob );
-    return moment( today ).diff( dobDt, 'year' );
-  }
 }

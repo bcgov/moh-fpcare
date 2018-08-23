@@ -32,7 +32,14 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    * @returns {boolean}
    */
   canContinue(): boolean {
-    return this.form.valid;
+
+    let valid = false;
+
+    if ( !!this.form ) {
+      valid = this.form.valid && !this.isFormEmpty();
+    }
+
+    return valid;
   }
 
   /**

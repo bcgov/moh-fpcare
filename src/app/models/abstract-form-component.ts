@@ -1,6 +1,6 @@
 import {Router} from '@angular/router';
 import {Base} from '../modules/core/components/base/base.class';
-import {NgForm} from '@angular/forms';
+import {FormControl, FormGroup, NgForm} from '@angular/forms';
 import {ViewChild} from '@angular/core';
 
 /**
@@ -37,4 +37,16 @@ export abstract class AbstractFormComponent extends Base {
           window.scrollTo({ top: 0, behavior: 'smooth' });
       });
   }
+
+  /**
+   * Determine whether form has at least one field populated
+   * @returns {boolean}
+   */
+  protected isFormEmpty(): boolean {
+    return Object.keys(this.form.controls)
+    .map(key => this.form.controls[key].value)
+    .filter(x => x) // Filter out null/undefined
+    .length === 0;
+  }
 }
+

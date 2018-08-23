@@ -5,6 +5,7 @@ import {CoreModule} from '../../../core/core.module';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.spec';
 import {FormsModule} from '@angular/forms';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('CompleteComponent', () => {
   let component: CompletePageComponent;
@@ -18,7 +19,8 @@ describe('CompleteComponent', () => {
       imports: [
         CoreModule,
         FormsModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientTestingModule
       ],
       providers: [
         { provide: FPCareDataService, useValue: fPCareDataServiceStub }
@@ -35,5 +37,9 @@ describe('CompleteComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('cannot continue by default', () => {
+    expect(component.canContinue()).toBeFalsy();
   });
 });

@@ -52,7 +52,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   }
 
   canContinue(): boolean {
-    // return this._canContinue;
+
     let valid = this.form.valid;
 
     // We have to explicitly check the DateComponent validity as it doesn't bubble to this.form.
@@ -60,7 +60,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
       valid = valid && this.dobForm.form.valid;
     }
 
-    return (valid && this._hasToken);
+    return (valid && this._hasToken && !this.isFormEmpty());
   }
 
   /**
@@ -77,22 +77,11 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   }
 
   /**
-   * Indicates whether or not the date of birth is empty
-   * @returns {boolean}
-   */
-  isDobEmpty(): boolean {
-    return Object.keys(this.applicant.dateOfBirth)
-      .map(key => this.applicant.dateOfBirth[key])
-      .filter(x => x) // Filter out null/undefined
-      .length === 0;
-  }
-
-  /**
    * Disable Registration Number field
    * @returns {boolean}
    */
   disableRegNum(): boolean {
-    const hasDateOfBirth = !this.isDobEmpty();
+    const hasDateOfBirth = !this.applicant.isDobEmpty();
     return !!this.applicant.phn || hasDateOfBirth || !!this.applicant.address.postal;
   }
 
@@ -127,7 +116,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     console.log('continue clicked');
     if (!this.canContinue()) {
       return;
-    };
+    }
 
     this.loading = true;
 

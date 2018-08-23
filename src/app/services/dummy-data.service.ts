@@ -96,12 +96,23 @@ export class DummyDataService {
   }
 
   private generatePHN(): string {
-    const phn = `${Math.ceil(Math.random() * 9999999999 )}`;
+    const validPhns = [
+      '9043076746', '9059437075', '9125715913', '9151060317', '9151843149', '9151949138',
+      '9151970861', '9300000076', '9300000194', '9300000202', '9300000234', '9300000241'
+    ];
+    const phn = this.getRandomElFromArray( validPhns );
+    //const phn = `${Math.ceil(Math.random() * 9999999999 )}`;
     return phn;
   }
 
   private generateSIN(): string {
-    const sin = `${Math.ceil(Math.random() * 699999999 )}`;
+
+    const validSins = [
+        '743235277', '680943958', '642332704', '627384738', '389043027', '337143549',
+        '545553711', '127591188', '302762042', '610702607', '394429864', '616708368'
+    ];
+    const sin = this.getRandomElFromArray( validSins );
+    //const sin = `${Math.ceil(Math.random() * 699999999 )}`;
     return sin;
   }
 
@@ -121,4 +132,5 @@ export class DummyDataService {
   private randomDate(start: Date, end: Date): Date {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   }
+
 }

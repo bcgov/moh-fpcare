@@ -36,4 +36,8 @@ describe('MailingAddressComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('cannot continue by default', () => {
+    expect(component.canContinue()).toBeFalsy();
+  });
 });

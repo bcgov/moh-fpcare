@@ -35,15 +35,19 @@ describe('RequestTemplateComponent', () => {
     fixture = TestBed.createComponent(RequestTemplateComponent);
     component = fixture.componentInstance;
     component['fpcareDataService'].acceptedCollectionNotice = true;
-    const cobRequest: ComponentData = {
+    const requestPgData: ComponentData = {
       label: 'Request Confirmation',
       letterType: LetterTypes.COB_LETTER
     };
-    component.data = cobRequest;
+    component.data = requestPgData;
     fixture.detectChanges();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('cannot continue by default', () => {
+    expect(component.canContinue()).toBeFalsy();
   });
 });

@@ -162,16 +162,11 @@ export class ReviewPageComponent extends Base implements OnInit {
 
   // Methods triggered by the form action bar
 
-  /** Determines if the Continue button is disabled */
-  canContinue(): boolean {
-    return true;
-  }
-
   /**
    * Navigates to the next page
    */
   continue() {
-    this.navigate( REGISTRATION_AUTHORIZE );
+    this.navigate(REGISTRATION_AUTHORIZE);
   }
 
   /**
