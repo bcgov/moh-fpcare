@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
     // Retrieve benefit year
     this.apiService.getBenefitYear().subscribe(response => {
       const payload = new BenefitYearPayload(response);
-      console.log( ' payload: ', payload );
+      // console.log( ' payload: ', payload );
 
       if (payload.success){
         this.fpcareDataService.benefitYear = payload.benefitYear;

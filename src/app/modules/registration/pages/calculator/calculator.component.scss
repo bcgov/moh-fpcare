@@ -1,0 +1,8 @@
+/**
+* This component has labels always on their own line. If ALL other pages are
+* like this too we should make the label styles global.
+*/
+
+label, fpcare-toggle {
+    display: block;
+}

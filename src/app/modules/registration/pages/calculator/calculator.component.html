@@ -1,15 +1,87 @@
 <fpcare-page-framework layout='default'>
 
-  <p>
-    Financial review works! in page framework
-  </p>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea autem eius qui quod illo vitae corrupti fugiat doloremque, architecto iure rem, mollitia officiis eligendi quisquam soluta culpa incidunt omnis dicta.</p>
-  <p>Cupiditate voluptatem numquam est voluptatibus? Distinctio, assumenda ipsum ipsam doloribus nihil odio ratione officiis accusamus recusandae tempora. Delectus, consequatur expedita natus mollitia exercitationem maiores officia asperiores saepe quam officiis unde?</p>
-  <p>Recusandae ad itaque nam eligendi suscipit blanditiis enim autem nobis rerum quos, voluptatum deleniti, alias adipisci tenetur est. Quo reprehenderit laborum eos at soluta sapiente exercitationem aliquid, quod numquam architecto.</p>
+  <h1>Enter your financial information</h1>
+
+  <form #formRef="ngForm" novalidate>
+      <div class="form-group">
+          <label class='no-bold' for="totalFamilyIncome">Enter your net income from 2016 &mdash; see Line 236 of your Notice of Assessment or Reassessment from Canada Revenue Agency.</label>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <input class="form-control"
+                type="text"
+                id="totalFamilyIncome"
+                name="totalFamilyIncome"
+                fpcareRequired="required"
+                [ngModel]="income"
+                (ngModelChange)="income = $event; update()"
+                [textMask]="{mask: moneyMask}"
+                placeholder="Enter Your Income"/>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="hasSpouse">Do you have a spouse/common-law partner?
+          <fpcare-toggle [data]='hasSpouse' (dataChange)="hasSpouse = $event; update();"></fpcare-toggle>
+        </label>
+        <p class="text-muted">Note: Failure to notify HIBC when you marry or begin living in a marriage-like relationship may impact the eligibility for your FPC registration.</p>
+      </div>
+
+
+      <div class="form-group" *ngIf='hasSpouse'>
+          <label class='no-bold' for="spouseIncome">Enter your spouse's / common law partner's net income from 2016 &mdash; see Line 236 of your Notice of Assessment or Reassessment from Canada Revenue Agency.</label>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <input class="form-control"
+                type="text"
+                id="spouseIncome"
+                name="spouseIncome"
+                fpcareRequired="required"
+                [ngModel]="spouseIncome"
+                (ngModelChange)="spouseIncome = $event; update()"
+                [textMask]="{mask: moneyMask}"
+                placeholder="Enter Your Income"/>
+          </div>
+      </div>
+
+      <div class="form-group">
+        <label for="bornBefore1939">Were you born in 1939 or earlier?
+          <fpcare-toggle [data]='bornBefore1939' (dataChange)="bornBefore1939 = $event; update();"></fpcare-toggle>
+        </label>
+      </div>
+
+      <h2>Add disability information if applicable</h2>
+      <div class="form-group">
+          <label class='no-bold' for="disability">How much did you report for a Registered Disability Savings Plan on your income tax return 2016 (Line 125)?</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <input class="form-control"
+                type="text"
+                id="disability"
+                name="disability"
+                [ngModel]="disabilityFormatted"
+                (ngModelChange)="disabilityFormatted = $event; update();"
+                [textMask]="{mask: moneyMask}"
+                placeholder="Enter Disability Savings Amounts"/>
+          </div>
+      </div>
+        
+  </form>
 
   <aside>
-    <strong>Financial aside!</strong>
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque modi ipsum cumque tempore dolore explicabo libero, dolor dignissimos debitis minus voluptate quas culpa dolores atque inventore unde iure. Reiciendis, ea.
+    <fpcare-financial-calculator
+      [income]="totalFamilyIncome"
+      [bornBefore1939]="bornBefore1939"
+      [hasSpouse]="hasSpouse"
+      [disabilitySavingsAmount]="disabilityAmount"
+    ></fpcare-financial-calculator>
   </aside>
 
 </fpcare-page-framework>

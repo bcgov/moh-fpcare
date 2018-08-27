@@ -137,7 +137,7 @@ html, body {
   }
   // Content colour is determined in page framework
 }
-label {
+label:not(.no-bold) {
   font-weight: bold;
 }
 

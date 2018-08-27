@@ -1,0 +1,35 @@
+@import 'variables.scss';
+
+.deductible-legend {
+    padding-left: 2rem;
+    position: relative;
+}
+
+.deductible-legend:before {
+    content: " ";
+    display: block;
+    width: 1.2rem;
+    height: 1.2rem;
+    top: 0.6rem; // Half of height; vertically centres.
+    left: 0;
+    position: absolute;
+    border-radius: 20%;
+}
+
+.deductible-legend-blue:before {
+    background-color: $color-primary;
+}
+
+.deductible-legend-yellow:before {
+    background-color: $color-secondary;
+}
+
+.deductible-legend-green:before {
+    background-color: $color-success;
+}
+
+.infinity {
+    // Increase size of infinity symbol, but not spacing below it.
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+}

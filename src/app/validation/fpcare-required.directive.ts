@@ -186,12 +186,23 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
   }
 
 
-  /** Returns the div.form-group parent, which _should_ be the direct parent. */
+  /**
+   * Returns the div.form-group parent, which _should_ be the direct parent. It
+   * will check grandparent as well, to handle cases where we use .input-groups,
+   * e.g. for dollar signs.
+   */
   private get formGroupElement(): ElementRef {
     const parent = this.input.nativeElement.parentElement;
     if (parent.classList.contains('form-group')) {
       return parent;
     }
+    // Check for grand parent, necessary in cases where we use input-group as direct parent
+    const grandParent = this.input.nativeElement.parentElement.parentElement;
+    if (grandParent.classList.contains('form-group')){
+      return grandParent;
+    }
+
+
     //Extend this function as required to find .form-group, but keep DOM operations at a minimum.
     throw new Error('FPCareRequiredDirective unable to find the parent .form-group element');
   }

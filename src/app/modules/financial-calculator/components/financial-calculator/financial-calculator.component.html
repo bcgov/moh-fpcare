@@ -1,0 +1,34 @@
+<div class='line-item'>
+  <span class="line-item--text">Total Family Income</span>
+  <span class="line-item--value">${{incomeDisplay}}</span>
+</div>
+
+<hr class='line-item-break'>
+
+<p class='line-item-title'>Deductions</p>
+
+<div class="line-item">
+  <span class="line-item--text">Disability Savings Plan</span>
+  <span class="line-item--value">${{disabilityDisplay}}</span>
+</div>
+
+<div class='line-item'>
+  <span class="line-item--text">Total Deductions</span>
+  <span class="line-item--value">${{disabilityDisplay}}</span>
+</div>
+
+<hr class='line-item-break'>
+
+<div class='line-item'>
+  <span class="line-item--text">Adjusted Income</span>
+  <span class="line-item--value">${{adjustedIncomeDisplay}}</span>
+</div>
+
+<hr class="line-item-break">
+
+<p>The information you entered indicates you would be eligible for the level of coverage below:</p>
+
+<fpcare-annual-deductible
+  [familyNetIncome]="adjustedIncomeAmount"
+  [bornBefore1939]="bornBefore1939"
+></fpcare-annual-deductible>

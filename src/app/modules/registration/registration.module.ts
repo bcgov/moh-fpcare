@@ -13,13 +13,17 @@ import { RegistrationContainerComponent } from './components/registration-contai
 import { CoreModule } from '../core/core.module';
 import { FormsModule } from '@angular/forms';
 import { RegResultsComponent } from './pages/reg-results/reg-results.component';
+import { FinancialCalculatorModule } from '../financial-calculator/financial-calculator.module';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   imports: [
     FormsModule,
     CommonModule,
     RegistrationRoutingModule,
-    CoreModule
+    CoreModule,
+    FinancialCalculatorModule,
+    TextMaskModule
   ],
   declarations: [
     RegistrationContainerComponent,

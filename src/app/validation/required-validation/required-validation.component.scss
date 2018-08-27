@@ -1,0 +1,11 @@
+
+/**
+  * Makes the error-full width and break to its own line.  This handles the case
+  * of using this validation on an input that uses .input-groups, specifically
+  * to append/prepend.  When this happens it is not appended to the .form-group,
+  * but rather nested in the .input-group. For normal inputs only using
+  * .form-group should have on bearing.
+  */
+:host { 
+    flex-basis: 100%;
+}
