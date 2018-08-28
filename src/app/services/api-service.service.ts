@@ -21,7 +21,7 @@ export class ApiService extends AbstractHttpService {
    *  Default hardcoded header values.  Note: Authentication headers are added
    *  at runtime in the httpOptions() method.
    */
-  protected _headers: HttpHeaders = new HttpHeaders({angular: 'FPC-API-Service'});
+  protected _headers: HttpHeaders = new HttpHeaders();
   private _token: string;
   private _clientName: string = 'ppiwebuser';
 
@@ -29,7 +29,6 @@ export class ApiService extends AbstractHttpService {
     super(http);
   }
 
-  // TODO! TYPE API RESPONSES! Work is above.
   public getBenefitYear(processDate = this.getProcessDate()) {
     const url = environment.baseAPIUrl + 'getCalendar';
 
@@ -42,12 +41,14 @@ export class ApiService extends AbstractHttpService {
 
   public setCaptchaToken(token: string){
     this._token = token;
-    this._headers = this._headers.append('X-Authorization', `Bearer ${this._token}`);
-    console.log('ApiService token set:', {
-      token: this._token,
-      headers: this._headers,
-    });
+    this._headers = this._headers.set('X-Authorization', `Bearer ${this._token}`);
 
+    if (!environment.production) {
+      console.log('ApiService token set:', {
+        token: this._token,
+        headers: this._headers,
+      });
+    }
   }
 
   /**
