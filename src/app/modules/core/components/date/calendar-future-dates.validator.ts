@@ -24,14 +24,25 @@ export class CalendarFutureDatesDirective {
       return null;
     }
 
-    const year: number = parseInt(control.value.year, 10);
-    const month: number = parseInt(control.value.month, 10);
-    const day: number = parseInt(control.value.day, 10);
+    // let year: number, month: number, day: number;
+    let year: number = control.value.year;
+    const month: number = control.value.month;
+    let day: number = control.value.day;
 
     //Useful because we show error based on formRef being touched, not yearRef input.
     //Otherwise, validation shows up too early when user enters first digit of year.
     if (year.toString().length <= 3) {
       return null;
+    }
+
+    // Trim year and day to proper lengths if they're longer. See notes in
+    // calendar-day and calendar-year validators for more info.
+    if (year.toString().length > 4) {
+      year = parseInt(year.toString().slice(0, 4), 10);
+    }
+
+    if (day.toString().length > 2) {
+      day = parseInt(day.toString().slice(0, 2), 10);
     }
 
     const diff = moment({

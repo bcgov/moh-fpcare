@@ -30,13 +30,12 @@
                (ngModelChange) = 'setDayValueOnModel($event)'
                [calendarFieldFormatter]="'day'"
                validateCalendarDay
-
                id="day{{objectId}}" name="day" #dayRef="ngModel"
                placeholder="day"
                [required]="required"
                [disabled]="disabled"
                min="1"
-               max="31">
+               max="31">             
         <label class="visuallyhidden" for="year{{objectId}}">Year</label>
         <input type="number" [calendarFieldFormatter]="'year'"
                class="form-control yearInput"

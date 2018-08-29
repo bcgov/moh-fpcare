@@ -14,14 +14,23 @@ export class CalendarYearValidatorDirective {
   validate(control: FormControl): {[key: string]: boolean; }  {
     // console.log('year value at validator: ' + control.value);
     // Get value out of control
-    const year: string = control.value;
+    let year: number = control.value;
 
-    const y: number = parseInt(year, 10);
+    if (!year) return;
 
-    if ( moment().get('y') - y > 150){
+    // It's possible that the value passed will be 5 digits long.
+    // CalendarFieldFormatterDirective will trim it down to 4 characters for the
+    // user, however it's impossible to guarantee the order of directives.
+    // Consequently, we must explicitly trim a 5rd character if it exists.
+
+    if (year.toString().length > 4){
+      year = parseInt( year.toString().slice(0, 4), 10);
+    }
+
+    if ( moment().get('y') - year > 150){
       return {'yearDistantPast': true};
     }
-    if ( y - moment().get('y') > 150){
+    if ( year - moment().get('y') > 150){
       return {'yearDistantFuture': true};
     }
 
