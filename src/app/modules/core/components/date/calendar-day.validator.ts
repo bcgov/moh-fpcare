@@ -9,7 +9,12 @@ import * as moment from 'moment';
     }
   ]
 })
-export class CalendarDayValidatorDirective {
+export class CalendarDayValidatorDirective implements Validator {
+
+  /** An integer representing the selected month. Jan=1 ... Dec=12 */
+  @Input() selectedMonth: number;
+  /** A 4 digit integer representing the year, e.g. 1950. */
+  @Input() selectedYear: number;
 
   validate(control: FormControl): {[key: string]: boolean; }  {
 
@@ -22,14 +27,16 @@ export class CalendarDayValidatorDirective {
     // CalendarFieldFormatterDirective will trim it down to 2 characters for the
     // user, however it's impossible to guarantee the order of directives.
     // Consequently, we must explicitly trim a 3rd character if it exists.
-
-    // TODO: Need to get "month" value in here to compare against days!
-
     if (day.toString().length > 2){
       day = parseInt( day.toString().slice(0, 2), 10);
     }
 
-    if (day > 31 || day < 1){
+    let daysInMonth: number = moment(`${this.selectedYear}-${this.selectedMonth}`, 'YYYY-MM').daysInMonth();
+    if (isNaN(daysInMonth)){
+      daysInMonth = 31;
+    }
+
+    if (day > daysInMonth || day < 1){
       return {'calendarDayOutOfRange': true};
     }
 
