@@ -1,5 +1,6 @@
 <label for="mail_pc{{objectId}}">Mailing Postal Code</label>
 <input class="form-control"
+    spellcheck="false"
     type="text"
     id="mail_pc{{objectId}}"
     name="mail_pc{{objectId}}"
@@ -7,4 +8,5 @@
     [ngModel]='value'
     (ngModelChange)="valueChange.emit($event)"
     [textMask]="{mask: mask, pipe: upperCasePipe}"
+    [disabled]="disabled"
 />

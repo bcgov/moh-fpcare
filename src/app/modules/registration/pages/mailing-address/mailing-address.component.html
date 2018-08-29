@@ -8,13 +8,7 @@
   <form #formRef="ngForm" novalidate>
     <div class="p-md-2 col-md-6">
       <div class="form-group">
-        <label for="mail_pc">Mailing Postal Code</label>
-        <input class="form-control"
-               type="text"
-               id="mail_pc"
-               name="mail_pc"
-               fpcareRequired="required,postal-code"
-               [(ngModel)]="applicant.address.postal" />
+          <fpcare-postal-code [(value)]="applicant.address.postal"></fpcare-postal-code>
       </div>
     </div>
 
@@ -52,13 +46,7 @@
                  [(ngModel)]="applicant.updAddress.province" />
         </div>
         <div class="form-group">
-          <label for="postalcode">Postal Code</label>
-          <input class="form-control"
-                 type="text"
-                 id="postalcode"
-                 name="postalcode"
-                 fpcareRequired="required,postal-code"
-                 [(ngModel)]="applicant.updAddress.postal" />
+            <fpcare-postal-code [(value)]="applicant.updAddress.postal"></fpcare-postal-code>
         </div>
         <div class="form-group">
           <label for="country">Country</label>
