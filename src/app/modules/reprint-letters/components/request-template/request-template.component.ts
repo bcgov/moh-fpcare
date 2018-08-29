@@ -52,6 +52,7 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
     this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
 
     // Bypass the CAPTCHA if not production.
+    // TODO: Remove these CAPTCHA bypasses everywhere in the app because now the proxy service requires them regardless.
     if (!environment.production){
       this._hasToken = true;
     }
@@ -82,7 +83,10 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
     // We have to explicitly check the DateComponent validity as it doesn't bubble to this.form.
     valid = valid && this.dobForm.form.valid;
 
-    return (valid && this._hasToken && !this.isFormEmpty());
+    // User should have already consented to close modal, but we check again here just in case.
+    const consented = this.fpcareDataService.acceptedCollectionNotice;
+
+    return (valid && this._hasToken && !this.isFormEmpty() && consented);
   }
 
   /** Use the UUID as a cryptographic client nonce to avoid replay attacks. */

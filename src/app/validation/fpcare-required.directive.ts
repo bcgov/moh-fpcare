@@ -114,10 +114,30 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
       this.validationComponents.map(this.setValid.bind(this));
     }
   }
-  @HostListener('keyup')
-  @HostListener('blur')
-  onKey() {
+
+  /**
+   * Main function. Runs all loaded validation components, shows errors, updates
+   * form status.
+   */
+  runAll() {
     this.validationComponents.forEach(this.runValidationComponent.bind(this));
+  }
+
+  /**
+   * We debounce all keyup events to stop validating as the user is still actively typing.
+   */
+  @HostListener('keyup')
+  @debounce(500)
+  onKey(){
+    this.runAll();
+  }
+
+  /**
+   * We validate on blur immediately. No debouncing.
+   */
+  @HostListener('blur')
+  onBlur(){
+    this.runAll();
   }
 
   /**
@@ -249,4 +269,20 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
     return true;
   }
 
+}
+
+// Debounce function decorator. If you need to use this elsewhere, refactor it into a different file.
+export function debounce(delay: number = 300): MethodDecorator {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    let timeout = null;
+
+    const original = descriptor.value;
+
+    descriptor.value = function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => original.apply(this, args), delay);
+    };
+
+    return descriptor;
+  };
 }

@@ -3,7 +3,6 @@ import { Base } from '../base/base.class';
 
 const LETTER = /[A-Z]/i; //Ignore case here, then upperCase it via pipe.
 const NUMBER = /\d/;
-const SPACE = ' '; //Consistency!
 
 @Component({
   selector: 'fpcare-postal-code',
@@ -16,7 +15,7 @@ export class PostalCodeComponent extends Base implements OnInit {
 
   @Input() disabled: boolean;
 
-  public mask = [LETTER, NUMBER, LETTER, SPACE, NUMBER, LETTER, NUMBER]
+  public mask = [LETTER, NUMBER, LETTER, NUMBER, LETTER, NUMBER];
 
   upperCasePipe(text: string){
     return text.toUpperCase();

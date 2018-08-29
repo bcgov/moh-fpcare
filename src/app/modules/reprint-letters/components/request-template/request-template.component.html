@@ -38,13 +38,7 @@
         </div>
 
         <div class="form-group">
-          <label for="mail_pc">Mailing Postal Code</label>
-          <input class="form-control"
-                 type="text"
-                 id="mail_pc"
-                 name="mail_pc"
-                 fpcareRequired="required,postal-code"
-                 [(ngModel)]="applicant.address.postal"/>
+            <fpcare-postal-code [(value)]="applicant.address.postal" ></fpcare-postal-code>
         </div>
       </div>
     </div>
@@ -60,13 +54,6 @@
       <h5>PHN</h5>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
    </div>
-
-    <div class="todo">
-      <ul>
-        <li class="done">Need to add captcha to page</li>
-        <li>Add helper text for PHN to "aside"</li>
-      </ul>
-    </div>
   </aside>
 
   <fpcare-form-action-bar

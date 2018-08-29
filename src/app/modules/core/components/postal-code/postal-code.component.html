@@ -1,13 +1,10 @@
-<label class="has-float-label">
-    <input type="text"
-      class="form-control prime-input-medium"
-      id="postal{{objectId}}"
-      name="postal"
-      [ngModel]='value'
-      (ngModelChange)="valueChange.emit($event)"
-      [textMask]="{mask: mask, pipe: upperCasePipe}"
-      [attr.placeholder]="disabled ? '' : ' '"
-      [attr.disabled]='disabled'
-    />
-    <input type="text" value="Fix - Commented out input">
-</label>
+<label for="mail_pc{{objectId}}">Mailing Postal Code</label>
+<input class="form-control"
+    type="text"
+    id="mail_pc{{objectId}}"
+    name="mail_pc{{objectId}}"
+    fpcareRequired="required,postal-code"
+    [ngModel]='value'
+    (ngModelChange)="valueChange.emit($event)"
+    [textMask]="{mask: mask, pipe: upperCasePipe}"
+/>

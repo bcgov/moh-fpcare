@@ -53,37 +53,37 @@
 
         <div role="alert" class='error-container' aria-live="assertive">
           <div *ngIf='monthRef.touched || showError'>
-            <div class="text-danger" *ngIf="monthRef.errors?.required" i18n="@@monthErrorRequired">Month is required</div>
+            <div class="text-danger" *ngIf="monthRef?.errors?.required" i18n="@@monthErrorRequired">Month is required</div>
           </div>
           <div *ngIf='dayRef.touched || showError'>
-            <div class="text-danger" *ngIf="dayRef.errors?.required" i18n="@@dayErrorRequired">Day is required</div>
+            <div class="text-danger" *ngIf="dayRef?.errors?.required" i18n="@@dayErrorRequired">Day is required</div>
           </div>
           <div *ngIf='yearRef.touched || showError'>
-            <div class="text-danger" *ngIf="yearRef.errors?.required" i18n="@@yearErrorRequired">Year is required</div>
+            <div class="text-danger" *ngIf="yearRef?.errors?.required" i18n="@@yearErrorRequired">Year is required</div>
           </div>
 
           <!-- If dateNotInFuture / dateNotInPast are enabled for this instance they will trigger isValid(). We only want to show one at a time, so we check the others aren't active here.. -->
           <div *ngIf='(yearRef.touched || showError) && !isValid()
-            && formRef.errors?.dateNotInPast !== true
-            && formRef.errors?.dateNotInFuture !== true'>
+            && formRef?.errors?.dateNotInPast !== true
+            && formRef?.errors?.dateNotInFuture !== true'>
             <div class="text-danger" i18n="@@yearErrorBadFormat">This does not appear to be a valid date</div>
           </div>
 
           <div *ngIf='(dayRef.touched || showError)'>
-            <div class="text-danger" *ngIf="dayRef.errors?.calendarDayOutOfRange" i18n="@@calendarDayOutOfRange">Day of the month is out of range</div>
+            <div class="text-danger" *ngIf="dayRef?.errors?.calendarDayOutOfRange" i18n="@@calendarDayOutOfRange">Day of the month is out of range</div>
           </div>
           <div *ngIf='(yearRef.touched || showError)'>
-            <div class="text-danger" *ngIf="yearRef.errors?.yearDistantPast" i18n="@@yearErrorDistantPast">Date is too far in the past</div>
+            <div class="text-danger" *ngIf="yearRef?.errors?.yearDistantPast" i18n="@@yearErrorDistantPast">Date is too far in the past</div>
           </div>
           <div *ngIf='(yearRef.touched || showError)'>
-            <div class="text-danger" *ngIf="yearRef.errors?.yearDistantFuture" i18n="@@yearErrorDistantFuture">Date is too far in the future</div>
+            <div class="text-danger" *ngIf="yearRef?.errors?.yearDistantFuture" i18n="@@yearErrorDistantFuture">Date is too far in the future</div>
           </div>
 
           <div *ngIf='(formRef.touched || showError)'>
-            <div class="text-danger" *ngIf="formRef.errors?.dateNotInPast" i18n="@@dateErrorMustBeInFuture">Date must be in the future.</div>
+            <div class="text-danger" *ngIf="formRef?.errors?.dateNotInPast" i18n="@@dateErrorMustBeInFuture">Date must be in the future.</div>
           </div>
           <div *ngIf='(formRef.touched || showError)'>
-            <div class="text-danger" *ngIf="formRef.errors?.dateNotInFuture" i18n="@@dateErrorMustBeInPast">Date must be in the past</div>
+            <div class="text-danger" *ngIf="formRef?.errors?.dateNotInFuture" i18n="@@dateErrorMustBeInPast">Date must be in the past</div>
           </div>
         </div>
     </div>
