@@ -1,10 +1,13 @@
 @import 'variables.scss';
+
 .form-action-bar {
     display: flex;
     justify-content: flex-end;
     padding: 1em;
     background: linear-gradient(#efefef, #d0d0d1);
     position: fixed;
+    position: -webkit-sticky;
+    position: sticky;
     bottom: 0;
     z-index: 10;
     box-shadow: transparentize($color: $gray-700, $amount: 0.8) 1px 3px 7px 3px;

@@ -8,7 +8,7 @@
 .todo {
   // Temporarily removing prior to deploy.  Note - we eventually want this
   // controlled by environment variable, but that's taken some time.
-  display: none !important; 
+  display: none !important;
   color: red;
   font-size: 0;
   &:hover {
@@ -18,15 +18,6 @@
   .done {
     text-decoration: line-through;
   }
-}
-
-.devApiTest:before {
-  content: 'DEVELOPMENT NETWORK TESTS (check console)';
-}
-
-.devApiTest {
-  color: darkorange;
-  font-size: 1em;
 }
 // END OF DEV css
 
