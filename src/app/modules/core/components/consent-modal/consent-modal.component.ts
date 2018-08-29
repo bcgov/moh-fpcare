@@ -1,5 +1,4 @@
-import { Component, ViewChild, AfterViewInit, EventEmitter, Output } from '@angular/core';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import {Component, ViewChild, EventEmitter, Output} from '@angular/core';
 import { Base } from '../base/base.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 
@@ -15,12 +14,14 @@ export class ConsentModalComponent extends Base {
 
   @Output() onConsented = new EventEmitter<boolean>();
 
-
-  constructor(private modalService: BsModalService) {
+  constructor() {
     super();
   }
 
   public openModal(): void {
+    this.informationCollectionModal.config.keyboard = false;
+    this.informationCollectionModal.config.backdrop = true;
+    this.informationCollectionModal.config.ignoreBackdropClick = true;
     this.informationCollectionModal.show();
   }
 
