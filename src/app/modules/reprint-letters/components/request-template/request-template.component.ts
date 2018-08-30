@@ -41,6 +41,9 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
 
   protected _hasToken = false;
 
+  /** Result page */
+  private _url = REPRINT_LETTERS_PATH + '/' + REPRINT_STATUS;
+
   constructor( protected router: Router,
                private fpcareDataService: FPCareDataService,
                private apiService: ApiService,
@@ -131,8 +134,12 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
     subscription.subscribe(response => {
       this.responseStore.reprintLetter = new ReprintLetterPayload(response as ReprintLetter);
       this.loading = false;
-      this.navigate(REPRINT_LETTERS_PATH + '/' + REPRINT_STATUS );
-
+      this.navigate( this._url );
+    },
+    error => {
+      this.loading = false;
+      console.log( 'Error occurred: ' + error );
+      this.navigate( this._url );
     });
   }
 }

@@ -26,6 +26,9 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
   private _hasToken = false;
 
+  /** Result page */
+  private _url = REGISTRATION_STATUS_PATH + '/' + RESULT_REG_STATUS;
+
 
   constructor(protected router: Router,
               private fpcareDataService: FPCareDataService,
@@ -146,9 +149,12 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
         this.responseStore.statusCheckRegNumber = new StatusCheckRegNumberPayload(response as StatusCheckRegNum);
       }
       this.loading = false;
-      this.navigate(REGISTRATION_STATUS_PATH + '/' + RESULT_REG_STATUS );
+      this.navigate( this._url );
+    },
+    error => {
+      this.loading = false;
+      console.log( 'Error occurred: ' + error );
+      this.navigate( this._url );
     });
-
-
   }
 }
