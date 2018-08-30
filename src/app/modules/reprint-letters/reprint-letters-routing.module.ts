@@ -17,6 +17,11 @@ export const pageRoutes: Routes = [
   {
     path: REPRINT_STATUS,
     component: ReprintStatusComponent
+  },
+  // We have to redirect _somewhere_, so picked one arbitrarily.
+  {
+    path: '**',
+    redirectTo: REPRINT_COB
   }
 ];
 

@@ -46,6 +46,7 @@ export class FPCareDateComponent extends Base implements OnInit {
     } else {
       this.date.year = null;
     }
+    this.triggerDayValidation();
     this.onDateChange.emit(this.date);
   }
 
@@ -64,6 +65,7 @@ export class FPCareDateComponent extends Base implements OnInit {
     } else {
       this.date.month = null;
     }
+    this.triggerDayValidation();
     this.onDateChange.emit(this.date);
   }
 
@@ -111,6 +113,15 @@ export class FPCareDateComponent extends Base implements OnInit {
     }
 
     return true;
+  }
+
+  /**
+   * Force the `day` input to run it's directives again. Important in cases
+   * where user fills fields out of order, e.g. sets days to 31 then month to
+   * Februrary.
+   */
+  triggerDayValidation(){
+    this.form.controls['day'].updateValueAndValidity();
   }
 
   private get moment() {

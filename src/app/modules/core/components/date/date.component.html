@@ -30,6 +30,8 @@
                (ngModelChange) = 'setDayValueOnModel($event)'
                [calendarFieldFormatter]="'day'"
                validateCalendarDay
+               [selectedMonth]='date.month'
+               [selectedYear]='date.year'
                id="day{{objectId}}" name="day" #dayRef="ngModel"
                placeholder="day"
                [required]="required"
