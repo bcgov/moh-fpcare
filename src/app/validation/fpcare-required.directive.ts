@@ -9,6 +9,7 @@ import {AbstractControl, NG_VALIDATORS, Validator} from '@angular/forms';
 import {PhnValidationComponent} from './phn-validation/phn-validation.component';
 import {SinValidationComponent} from './sin-validation/sin-validation.component';
 import {RegNumberValidationComponent} from './reg-number-validation/reg-number-validation.component';
+import {PcValidationComponent} from './pc-validation/pc-validation.component';
 import {NameValidationComponent} from './name-validation/name-validation.component';
 
 
@@ -37,6 +38,7 @@ import {NameValidationComponent} from './name-validation/name-validation.compone
   ]
 })
 export class FPCareRequiredDirective implements AfterViewInit, Validator {
+  //private el: ElementRef;
   private input: ElementRef;
   private label: ElementRef;
   private view: ViewContainerRef;
@@ -89,6 +91,10 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
 
         case 'regnum-check':
           this.validationComponents.push(RegNumberValidationComponent);
+          break;
+
+        case 'postal-code':
+          this.validationComponents.push(PcValidationComponent);
           break;
 
         case 'name-check':
