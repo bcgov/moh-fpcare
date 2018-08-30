@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Base } from '../base/base.class';
 import * as moment from 'moment';
@@ -27,7 +27,7 @@ export class FPCareDateComponent extends Base implements OnInit {
 
 
 
-  constructor() {
+  constructor(private cd: ChangeDetectorRef) {
     super();
   }
 
@@ -121,7 +121,11 @@ export class FPCareDateComponent extends Base implements OnInit {
    * Februrary.
    */
   triggerDayValidation(){
-    this.form.controls['day'].updateValueAndValidity();
+    // We have to wrap this in a timeout, otherwise it runs before Angular has updated the values
+    setTimeout( () => {
+      this.form.controls['day'].updateValueAndValidity();
+      this.cd.detectChanges();
+    }, 0);
   }
 
   private get moment() {
