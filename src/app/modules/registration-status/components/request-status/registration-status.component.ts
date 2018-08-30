@@ -147,6 +147,10 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
       }
       this.loading = false;
       this.navigate(REGISTRATION_STATUS_PATH + '/' + RESULT_REG_STATUS );
+    },
+    error => {
+      this.loading = false;
+      console.log( 'Error occurred: ' + error );
     });
 
 
