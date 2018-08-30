@@ -27,7 +27,6 @@ import { FPCareDateComponent } from './components/date/date.component';
 import {PhnValidationComponent} from '../../validation/phn-validation/phn-validation.component';
 import {SinValidationComponent} from '../../validation/sin-validation/sin-validation.component';
 import {RegNumberValidationComponent} from '../../validation/reg-number-validation/reg-number-validation.component';
-import {PcValidationComponent} from '../../validation/pc-validation/pc-validation.component';
 import { ResultsFrameworkComponent } from './components/results-framework/results-framework.component';
 import {NameValidationComponent} from '../../validation/name-validation/name-validation.component';
 import { CaptchaDataService } from 'mygovbc-captcha-widget/src/app/captcha-data.service';
@@ -48,7 +47,6 @@ const componentList = [
   PhnValidationComponent,
   SinValidationComponent,
   RegNumberValidationComponent,
-  PcValidationComponent,
   NameValidationComponent,
   ConsentModalComponent,
   CalendarFieldFormatterDirective,
@@ -86,7 +84,6 @@ const componentList = [
     PhnValidationComponent,
     SinValidationComponent,
     RegNumberValidationComponent,
-    PcValidationComponent,
     NameValidationComponent
   ],
   providers: [
