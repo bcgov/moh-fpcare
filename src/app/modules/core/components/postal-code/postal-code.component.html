@@ -4,7 +4,7 @@
     type="text"
     id="mail_pc{{objectId}}"
     name="mail_pc{{objectId}}"
-    fpcareRequired="required,postal-code"
+    fpcareRequired="required"
     [ngModel]='value'
     (ngModelChange)="valueChange.emit($event)"
     [textMask]="{mask: mask, pipe: upperCasePipe}"
