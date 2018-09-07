@@ -15,23 +15,17 @@
 
       <div class="p-md-2 col-md-6">
         <div class="form-group">
-          <label for="ch_firstnm_{{i}}">Given Name</label>
-          <input class="form-control"
-                 type="text"
-                 id="ch_firstnm_{{i}}"
-                 name="ch_firstnm_{{i}}"
-                 fpcareRequired="required,name-check"
-                 [(ngModel)]="child.firstName"/>
+           <fpcare-name
+              [label]="'Given Name'"
+              [(value)]="child.firstName">
+           </fpcare-name>
         </div>
-        <div class="form-group">
-          <label for="ch_lastnm_{{i}}">Surname</label>
-          <input class="form-control"
-                 type="text"
-                 id="ch_lastnm_{{i}}"
-                 name="ch_lastnm_{{i}}"
-                 fpcareRequired="required,name-check"
-                 [(ngModel)]="child.lastName"/>
-        </div>
+         <div class="form-group">
+            <fpcare-name
+                [label]="'Surname'"
+                [(value)]="child.lastname">
+            </fpcare-name>
+         </div>
         <div class="form-group">
           <label for="ch_dob_{{i}}">Birthdate</label>
           <fpcare-date
@@ -45,13 +39,9 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="ch_phn_{{i}}">PHN</label>
-          <input class="form-control"
-                 type="text"
-                 id="ch_phn_{{i}}"
-                 name="ch_phn_{{i}}"
-                 fpcareRequired="required,phn-check"
-                 [(ngModel)]="child.phn"/>
+           <fpcare-phn
+               [value]="child.phn">
+           </fpcare-phn>
           <div *ngIf="hasUniquePhnError(child)" role="alert" aria-live="assertive">
             <div class="text-danger">This PHN was already used for another family member.</div>
           </div>
@@ -67,9 +57,7 @@
   <aside>
     <div class="todo">
       <ul>
-        <li>Add helper text to "aside"</li>
-        <li>Need way to separate length messaage from invalid charcters</li>
-        <li>ENABLE PHN CHECK VERIFICATION module</li>
+        <li>Need way to separate length message from invalid charcters</li>
       </ul>
     </div>
     <strong>Child Info aside!</strong>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { pageRoutes } from '../../registration-page-routing';
 import { WizardProgressItem } from '../../../core/components/wizard-progress-bar/wizard-progress-bar.component';
-
+import {RegistrationService} from '../../registration.service';
 
 
 @Component({
@@ -14,10 +14,11 @@ export class RegistrationContainerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // Interface for wizard progress items
     this.progressSteps = pageRoutes.map(x => {
       return {
         title: this.convertRouteToTitle(x.path),
-        route: x.path,
+        route: x.path
       };
     });
   }
@@ -33,5 +34,4 @@ export class RegistrationContainerComponent implements OnInit {
   convertRouteToTitle(routePath: string): string{
     return routePath.split('-').map(x => x[0].toUpperCase() + x.slice(1)).join(' ');
   }
-
 }

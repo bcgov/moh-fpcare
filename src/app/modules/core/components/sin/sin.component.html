@@ -1,0 +1,14 @@
+<div class='form-group'>
+  <label for="sin_{{objectId}}">Social Insurance Number (SIN)</label>
+  <input class="form-control"
+         spellcheck="false"
+         type="text"
+         id="sin_{{objectId}}"
+         name="sin"
+         [placeholder]="placeholder"
+         fpcareRequired="required,sin-check"
+         [ngModel]="value"
+         (ngModelChange)="onUpdate($event)"
+         [textMask]="{mask: mask}"
+         [disabled]="disabled" />
+</div>

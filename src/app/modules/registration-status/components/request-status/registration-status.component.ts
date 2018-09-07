@@ -10,6 +10,8 @@ import { ResponseStoreService } from '../../../../services/response-store.servic
 import { StatusCheckPHNPayload, StatusCheckRegNumberPayload, StatusCheckPHN, StatusCheckRegNum } from 'app/models/api.model';
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
 import {REGISTRATION_STATUS_PATH, RESULT_REG_STATUS} from '../../../../models/route-paths.constants';
+import {LETTER, NUMBER} from '../../../../models/masking.model';
+import {ValidationService} from '../../../../services/validation.service';
 
 @Component({
   selector: 'fpcare-registration-status',
@@ -21,6 +23,8 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   /** Access to date component */
   @ViewChild(FPCareDateComponent) dobForm: FPCareDateComponent;
   @ViewChild('consentModal') consentModal: ConsentModalComponent;
+
+  public placeholder = 'A12345678';
 
   public captchaApiBaseUrl;
 
@@ -35,6 +39,22 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
               private apiService: ApiService,
               private responseStore: ResponseStoreService) {
     super(router);
+  }
+
+  /**
+   * Set max lenght of the registration number input
+   * @returns {number}
+   */
+  regNumberMaxLn(): number {
+    return ValidationService.MAX_REGNUM_LENGTH;
+  }
+
+  /**
+   * Turn letters to upper case
+   * @param {string} value
+   */
+  updateRegNumber(value: string ) {
+    this.applicant.fpcRegNumber = value.toUpperCase();
   }
 
   ngOnInit() {
@@ -60,7 +80,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
     // We have to explicitly check the DateComponent validity as it doesn't bubble to this.form.
     if (this.disableRegNum()){
-      valid = valid && this.dobForm.form.valid;
+      valid = valid && this.dobForm.isValid();
     }
 
     return (valid && this._hasToken && !this.isFormEmpty());

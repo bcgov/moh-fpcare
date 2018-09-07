@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { pageRoutes } from "../../registration-page-routing";
+import { pageRoutes } from '../../registration-page-routing';
 
 
 import { RegistrationContainerComponent } from './registration-container.component';
@@ -29,13 +29,13 @@ describe('RegistrationContainerComponent', () => {
   });
 
   it('should convert one-word routes to titles', () => {
-    expect(component.convertRouteToTitle("financial")).toBe("Financial")
-    expect(component.convertRouteToTitle("review")).toBe("Review")
+    expect(component.convertRouteToTitle('financial')).toBe('Financial');
+    expect(component.convertRouteToTitle('review')).toBe('Review');
   });
 
   it('should convert two-word routes to titles', () => {
-    expect(component.convertRouteToTitle("personal-info")).toBe("Personal Info")
-    expect(component.convertRouteToTitle("child-info")).toBe("Child Info")
+    expect(component.convertRouteToTitle('personal-info')).toBe('Personal Info');
+    expect(component.convertRouteToTitle('child-info')).toBe('Child Info');
   });
 
   it('should have progressSteps defined and not empty', () => {
@@ -45,7 +45,7 @@ describe('RegistrationContainerComponent', () => {
   });
 
   it('progressStep length should equal pageRoutes length', () => {
-    expect(component.progressSteps.length).toEqual(pageRoutes.length)
+    expect(component.progressSteps.length).toEqual(pageRoutes.length);
   });
 
 });

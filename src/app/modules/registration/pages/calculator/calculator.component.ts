@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {RegistrationService} from '../../registration.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { Router } from '@angular/router';
 import { FinanceService } from '../../../financial-calculator/finance.service';
+import {REGISTRATION_ELIGIBILITY, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 
 @Component({
   selector: 'fpcare-calculator',
@@ -24,20 +26,30 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   /** The text mask responsible for the currency formatting. */
   public moneyMask;
 
-  constructor(protected router: Router, private financeService: FinanceService) {
+  /** Page to navigate to when continue process */
+  private _url = REGISTRATION_PATH + '/' + REGISTRATION_ELIGIBILITY;
+
+  constructor( protected router: Router
+             , private financeService: FinanceService
+             , private registrationService: RegistrationService ) {
     super(router);
   }
 
   ngOnInit() {
     this.moneyMask = this.financeService.moneyMask;
+    this.registrationService.setItemIncomplete();
   }
 
   canContinue() {
-    return false;
+    return true;
   }
 
   continue() {
     console.log('todo');
+    if ( this.canContinue() ) {
+      this.registrationService.setItemComplete();
+      this.navigate( this._url );
+    }
   }
 
   public update(): void {

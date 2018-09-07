@@ -116,11 +116,12 @@ export class Person extends Base {
    * Returns DoB in YYYYMMDD format, used by API.
    */
   get dateOfBirthShort(): string {
-    return moment()
-      .date(this._dateOfBirth.day)
-      .month(this._dateOfBirth.month - 1) //moment is 0 indexed, SimpleDate is not
-      .year(this._dateOfBirth.year)
-      .format('YYYYMMDD');
+    return this.isDobEmpty() ? null :
+      moment()
+        .date(this._dateOfBirth.day)
+        .month(this._dateOfBirth.month - 1) //moment is 0 indexed, SimpleDate is not
+        .year(this._dateOfBirth.year)
+        .format('YYYYMMDD');
   }
 
   /**

@@ -25,7 +25,10 @@ export class SinValidationComponent extends BaseValidationComponent {
       return true;
     }
 
-    return (environment.modChecksOn) ? ValidationService.validateSIN( inputVal ) : true;
+    // Remove spaces - mask format
+    const sin = inputVal.replace(/ /g, '');
+
+    return (environment.modChecksOn) ? ValidationService.validateSIN( sin ) : true;
   }
 
 }

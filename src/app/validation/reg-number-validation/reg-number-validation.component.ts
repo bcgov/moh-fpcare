@@ -11,7 +11,7 @@ import { environment } from 'environments/environment';
 })
 @staticImplements<ValidationComponent>()
 export class RegNumberValidationComponent extends BaseValidationComponent {
-  static regex: RegExp = /^A|a\d{8}$/;
+  static regex: RegExp = /^[A][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]$/;
 
   public static ERROR_STRING = 'fpc-regnumber';
 
@@ -34,13 +34,7 @@ export class RegNumberValidationComponent extends BaseValidationComponent {
       return true;
     }
 
-    // check length
-    if ( inputVal.length > ValidationService.MAX_REGNUM_LENGTH ||
-        inputVal.length < ValidationService.MAX_REGNUM_LENGTH ) {
-      return false;
-    }
-
-    return (environment.modChecksOn) ? this.regex.test( inputVal ) : true;
+    return this.regex.test( inputVal );
   }
 
 }

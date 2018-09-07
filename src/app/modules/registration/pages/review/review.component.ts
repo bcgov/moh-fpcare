@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
-import {DateTimeService} from '../../../../services/date-time.service';
 import {Router} from '@angular/router';
 import {Person} from '../../../../models/person.model';
 import {Base} from '../../../core/components/base/base.class';
@@ -9,6 +8,7 @@ import {
   REGISTRATION_CHILD,
   REGISTRATION_ELIGIBILITY, REGISTRATION_FINANCIAL, REGISTRATION_PATH
 } from '../../../../models/route-paths.constants';
+import {RegistrationService} from '../../registration.service';
 
 @Component({
   selector: 'fpcare-review',
@@ -18,12 +18,13 @@ import {
 export class ReviewPageComponent extends Base implements OnInit {
 
   constructor( private fpcService: FPCareDataService
-             , private dateTimeService: DateTimeService
-             , private router: Router ) {
+             , private router: Router
+             , private registrationService: RegistrationService ) {
     super( );
   }
 
   ngOnInit() {
+    this.registrationService.setItemIncomplete();
   }
 
   /**
@@ -72,7 +73,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getApplicantDob(): string {
-    return this.dateTimeService.convertSimpleDateToStr( this.applicant.dateOfBirth );
+    return this.applicant.dateOfBirthShort;
   }
 
   /**
@@ -80,7 +81,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getSpouseDob(): string {
-    return this.dateTimeService.convertSimpleDateToStr( this.spouse.dateOfBirth );
+    return this.spouse.dateOfBirthShort;
   }
 
   /**
@@ -89,7 +90,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getChildDob( child: Person ): string {
-    return this.dateTimeService.convertSimpleDateToStr( child.dateOfBirth );
+    return child.dateOfBirthShort;
   }
 
   /**
@@ -166,6 +167,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * Navigates to the next page
    */
   continue() {
+    this.registrationService.setItemComplete();
     this.navigate(REGISTRATION_AUTHORIZE);
   }
 

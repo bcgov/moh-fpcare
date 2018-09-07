@@ -19,13 +19,7 @@
     <div class="row mx-lg-0">
       <div class="bg-light p-lg-2 col-lg-6">
         <div class="form-group">
-          <label for="phn">Personal Health Number (PHN)</label>
-          <input class="form-control"
-                 type="text"
-                 id="phn"
-                 name="phn"
-                 fpcareRequired="required,phn-check"
-                 [(ngModel)]="applicant.phn"/>
+          <fpcare-phn [(value)]="applicant.phn"> </fpcare-phn>
         </div>
 
         <div class="form-group">

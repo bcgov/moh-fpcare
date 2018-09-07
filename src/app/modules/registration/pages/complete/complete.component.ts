@@ -5,6 +5,7 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
 import {environment} from '../../../../../environments/environment';
 import {ApiService} from '../../../../services/api-service.service';
+import {RegistrationService} from '../../registration.service';
 
 @Component({
   selector: 'fpcare-complete',
@@ -21,12 +22,14 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
 
   constructor( private fpcService: FPCareDataService
              , protected router: Router
-             , private apiService: ApiService ) {
+             , private apiService: ApiService
+             , private registrationService: RegistrationService ) {
     super( router );
   }
 
   ngOnInit() {
     this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
+    this.registrationService.setItemIncomplete();
 
     // Bypass the CAPTCHA if not production.
     if (!environment.production){
@@ -93,7 +96,9 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
    */
   continue() {
 
-    // this.canContinue();
-    console.log( 'can submit request: ', this.canContinue() );
+    console.log('can submit request: ', this.canContinue());
+    if (this.canContinue()) {
+      this.registrationService.setItemComplete();
+   }
   }
 }

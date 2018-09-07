@@ -4,6 +4,8 @@ import {Base} from '../../../core/components/base/base.class';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
 import {REGISTRATION_FINANCIAL, REGISTRATION_PATH, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
+import {RegistrationService} from '../../registration.service';
+import {pageRoutes} from '../../registration-page-routing';
 
 @Component({
   selector: 'fpcare-registration-requirements',
@@ -17,12 +19,20 @@ export class RegistrationRequirementsComponent extends Base implements OnInit, A
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_FINANCIAL;
 
   constructor( private router: Router,
-               private fpcareDataService: FPCareDataService) {
+               private fpcareDataService: FPCareDataService,
+               private registrationService: RegistrationService ) {
     super();
+
+    // Registration items to be completed
+    this.registrationService.registrationItems = pageRoutes.map( x => {
+      return {
+        route: x.path,
+        isComplete: false
+      };
+    });
   }
 
   ngOnInit() {
-    this.fpcareDataService.acceptedCollectionNotice = false;
   }
 
   ngAfterViewInit() {

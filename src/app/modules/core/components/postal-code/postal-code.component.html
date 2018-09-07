@@ -4,9 +4,11 @@
         spellcheck="false"
         type="text"
         id="mail_pc{{objectId}}"
-        name="mail_pc{{objectId}}"
+        name="mail_pc"
+        [placeholder]="placeholder"
         fpcareRequired="required,postal-code"
-        [(ngModel)]='value'
+        [ngModel]="value"
+        (ngModelChange)="onUpdate($event)"
         [textMask]="{mask: mask, pipe: upperCasePipe}"
         [disabled]="disabled" />
 </div>

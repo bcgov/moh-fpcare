@@ -6,6 +6,7 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.spec';
 import {FormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {RegistrationService} from '../../registration.service';
 
 describe('CompleteComponent', () => {
   let component: CompletePageComponent;
@@ -23,7 +24,8 @@ describe('CompleteComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        { provide: FPCareDataService, useValue: fPCareDataServiceStub }
+        { provide: FPCareDataService, useValue: fPCareDataServiceStub },
+        RegistrationService
       ]
     })
     .compileComponents();

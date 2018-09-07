@@ -6,8 +6,11 @@
     <p>
       Enter each person's name as shown on your income tax return. (If your name as it appears on your
       BC Service Card is different from the name show on your income tax return, continue with your
-      Fair PharmaCare registration and notifiy <a href="javascript:void(0)">Medical Services Plan</a>
-      or <a href="javascript:void(0)">Canada Revenue Agency</a> as soon as possible).
+      Fair PharmaCare registration and notifiy
+       <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp"
+          target="_blank">Medical Services Plan</a>
+      or <a href="https://www.canada.ca/en/revenue-agency.html"
+            target="_blank">Canada Revenue Agency</a> as soon as possible).
     </p>
   </div>
 
@@ -20,31 +23,21 @@
     <div class="p-md-2 col-md-6">
 
       <div class="form-group">
-        <label for="ap_firstnm">Given Name</label>
-        <input class="form-control"
-             type="text"
-             id="ap_firstnm"
-             name="ap_firstnm"
-             fpcareRequired="required,name-check"
-             [(ngModel)]="applicant.firstName"/>
+         <fpcare-name
+           [label]="'Given Name'"
+           [(value)]="applicant.firstName">
+         </fpcare-name>
       </div>
       <div class="form-group">
-        <label for="ap_lastnm">Surname</label>
-        <input class="form-control"
-               type="text"
-               id="ap_lastnm"
-               name="ap_lastnm"
-               fpcareRequired="required,name-check"
-               [(ngModel)]="applicant.lastName"/>
+         <fpcare-name
+           [label]="'Surname'"
+           [(value)]="applicant.lastName">
+         </fpcare-name>
       </div>
       <div class="form-group">
-        <label for="ap_sin">SIN</label>
-        <input class="form-control"
-               type="text"
-               id="ap_sin"
-               name="ap_sin"
-               fpcareRequired="required,sin-check"
-               [(ngModel)]="applicant.sin"/>
+         <fpcare-sin
+             [(value)]="applicant.sin">
+         </fpcare-sin>
       </div>
       <div class="form-group">
         <!-- DOB ready only field - set in previous page -->
@@ -57,13 +50,10 @@
       </div>
       <div class="form-group">
         <!-- PHN ready only field - set in previous page -->
-        <label for="ap_phn">PHN</label>
-        <input class="form-control"
-               type="text"
-               id="ap_phn"
-               name="ap_phn"
-               disabled
-               [ngModel]="applicant.phn"/>
+         <fpcare-phn
+             [value]="applicant.phn"
+             [disabled]="'true'">
+         </fpcare-phn>
       </div>
     </div>
 
@@ -72,31 +62,21 @@
       <h2 class="border-bottom">Spouse Information</h2>
       <div class="p-md-2 col-md-6">
         <div class="form-group">
-          <label for="sp_firstnm">Given Name</label>
-          <input class="form-control"
-                 type="text"
-                 id="sp_firstnm"
-                 name="sp_firstnm"
-                 fpcareRequired="required,name-check"
-                 [(ngModel)]="spouse.firstName"/>
+           <fpcare-name
+               [label]="'Given Name'"
+               [(value)]="spouse.firstName">
+           </fpcare-name>
         </div>
         <div class="form-group">
-          <label for="sp_lastnm">Surname</label>
-          <input class="form-control"
-                 type="text"
-                 id="sp_lastnm"
-                 name="sp_lastnm"
-                 fpcareRequired="required,name-check"
-                 [(ngModel)]="spouse.lastName"/>
+           <fpcare-name
+               [label]="'Surname'"
+               [(value)]="spouse.lastName">
+           </fpcare-name>
         </div>
         <div class="form-group">
-          <label for="sp_sin">SIN</label>
-          <input class="form-control"
-                 type="text"
-                 id="sp_sin"
-                 name="sp_sin"
-                 fpcareRequired="required,sin-check"
-                 [(ngModel)]="spouse.sin"/>
+           <fpcare-sin
+               [(value)]="spouse.sin">
+           </fpcare-sin>
           <div *ngIf="hasUniqueSinError()" role="alert" aria-live="assertive">
             <div class="text-danger">This SIN was already used for registrant.</div>
           </div>
@@ -111,14 +91,11 @@
                  [value]="getSpouseDob()"/>
         </div>
         <div class="form-group">
-          <!-- PHN ready only field - set in previous page -->
-          <label for="sp_phn">PHN</label>
-          <input class="form-control"
-                 type="text"
-                 id="sp_phn"
-                 name="sp_phn"
-                 disabled
-                 [(ngModel)]="spouse.phn"/>
+         <!-- PHN ready only field - set in previous page -->
+         <fpcare-phn
+            [value]="spouse.phn"
+            [disabled]="'true'">
+         </fpcare-phn>
         </div>
       </div>
     </div>
@@ -127,9 +104,7 @@
   <aside>
     <div class="todo">
       <ul>
-        <li>Link the Medical Services Plan and Canada Revenue Agency to URLs</li>
-        <li>Need way to separate length messaage from invalid characters</li>
-        <li>ENABLE SIN CHECK VERIFICATION module</li>
+        <li>Need way to separate length message from invalid characters</li>
       </ul>
     </div>
     <p><strong>Personal Info aside!</strong>

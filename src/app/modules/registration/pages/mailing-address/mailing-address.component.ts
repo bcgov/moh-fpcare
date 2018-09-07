@@ -5,6 +5,7 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
 import {Address} from '../../../../models/address.model';
 import {REGISTRATION_PATH, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
+import {RegistrationService} from '../../registration.service';
 
 @Component({
   selector: 'fpcare-mailing-address',
@@ -20,11 +21,13 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_REVIEW;
 
   constructor( private fpcService: FPCareDataService
-             , protected router: Router ) {
+             , protected router: Router
+             , private registrationService: RegistrationService) {
     super( router );
   }
 
   ngOnInit() {
+    this.registrationService.setItemIncomplete();
   }
 
   /**
@@ -74,6 +77,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   continue () {
     if ( this.canContinue() ) {
+      this.registrationService.setItemComplete();
       this.navigate(  this._url );
     }
   }

@@ -38,7 +38,7 @@ import {NameValidationComponent} from './name-validation/name-validation.compone
   ]
 })
 export class FPCareRequiredDirective implements AfterViewInit, Validator {
-  //private el: ElementRef;
+
   private input: ElementRef;
   private label: ElementRef;
   private view: ViewContainerRef;
@@ -166,6 +166,15 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
 
   /** Runs the logic of a given validation component */
   private runValidationComponent(validationComponent: ValidationComponent) {
+
+    // Only validate if the field has been touched (i.e. ng-touched or ng-dirty)
+    const classList = this.input.nativeElement.classList;
+    if ( Object.keys(classList).map( key => {
+          return classList[key] === 'ng-pristine' || classList[key] === 'ng-untouched';
+          }).filter( x => x === true ).length !== 0) {
+      return;
+    }
+
     if ( !validationComponent.validate(this.input) ) {
       this.setInvalid(validationComponent);
     }

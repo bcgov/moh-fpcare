@@ -6,6 +6,7 @@ import { FinancialCalculatorModule } from '../../../financial-calculator/financi
 import { FormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 import { RouterTestingModule } from '@angular/router/testing';
+import {RegistrationService} from '../../registration.service';
 
 describe('CalculatorComponent', () => {
   let component: CalculatorPageComponent;
@@ -14,7 +15,17 @@ describe('CalculatorComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ CalculatorPageComponent ],
-      imports: [ CoreModule, FinancialCalculatorModule, FormsModule, TextMaskModule, RouterTestingModule ]
+      imports: [
+        CoreModule,
+        FinancialCalculatorModule,
+        FormsModule,
+        TextMaskModule,
+        RouterTestingModule
+      ],
+      providers: [
+        RegistrationService
+      ]
+
     })
     .compileComponents();
   }));

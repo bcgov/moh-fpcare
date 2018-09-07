@@ -6,6 +6,7 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {FormsModule} from '@angular/forms';
 import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.spec';
+import {RegistrationService} from '../../registration.service';
 
 describe('MailingAddressComponent', () => {
   let component: MailingAddressPageComponent;
@@ -22,6 +23,7 @@ describe('MailingAddressComponent', () => {
       ],
       providers: [
         { provide: FPCareDataService, useValue: fPCareDataServiceStub },
+        RegistrationService
       ]
     })
     .compileComponents();

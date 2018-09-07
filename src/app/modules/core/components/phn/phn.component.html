@@ -1,0 +1,14 @@
+<div class='form-group'>
+  <label for="phn_{{objectId}}">Personal Health Number (PHN)</label>
+  <input class="form-control"
+         spellcheck="false"
+         type="text"
+         id="phn_{{objectId}}"
+         name="phn"
+         [placeholder]="placeholder"
+         fpcareRequired="required,phn-check"
+         [ngModel]="value"
+         (ngModelChange)="onUpdate($event)"
+         [textMask]="{mask: mask}"
+         [disabled]="disabled" />
+</div>

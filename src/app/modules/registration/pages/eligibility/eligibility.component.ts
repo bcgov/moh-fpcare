@@ -5,8 +5,8 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ValidationService} from '../../../../services/validation.service';
-import {REGISTRATION_PATH, REGISTRATION_PERSONAL, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
-import {FormControl, FormGroup} from '@angular/forms';
+import {REGISTRATION_PATH, REGISTRATION_PERSONAL} from '../../../../models/route-paths.constants';
+import {RegistrationService} from '../../registration.service';
 
 @Component({
   selector: 'fpcare-eligibility',
@@ -26,11 +26,13 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
 
   constructor( protected router: Router
              , private fpcareDataService: FPCareDataService
-             , private validationService: ValidationService ) {
+             , private validationService: ValidationService
+             , private registrationService: RegistrationService ) {
     super( router );
   }
 
   ngOnInit() {
+    this.registrationService.setItemIncomplete() ;
   }
 
   /**
@@ -103,7 +105,9 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    * Navigates to next page
    */
   continue(): void {
+
     if ( this.canContinue() ) {
+      this.registrationService.setItemComplete();
       this.navigate( this._url );
     }
   }

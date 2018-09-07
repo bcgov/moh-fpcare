@@ -5,9 +5,8 @@ import {Router} from '@angular/router';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ValidationService} from '../../../../services/validation.service';
-import {DateTimeService} from '../../../../services/date-time.service';
-import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 import {REGISTRATION_ADDRESS, REGISTRATION_PATH, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
+import {RegistrationService} from '../../registration.service';
 
 @Component({
   selector: 'fpcare-children',
@@ -24,17 +23,18 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   /** Indicates whether or not the same PHNs has been used for another family member */
   private _uniquePhns = true;
 
-  /** Page to naviage to when continue process */
+  /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_ADDRESS;
 
   constructor( private fpcService: FPCareDataService
              , private validationService: ValidationService
-             , private dateTimeService: DateTimeService
-             , protected router: Router ) {
+             , protected router: Router
+             , private registrationService: RegistrationService ) {
     super( router );
   }
 
   ngOnInit() {
+    this.registrationService.setItemIncomplete();
   }
 
   /**
@@ -60,7 +60,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
       // Check that individuals are allowed on Parents FPC account
       const notLegitDep = this.children.map(x => {
-        if ( !this.legitimateDependant( x ) ) {
+        if ( !x.isDobEmpty() && !this.legitimateDependant( x ) ) {
           return x;
         }
       }).filter(x => x);
@@ -145,6 +145,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   continue () {
     if ( this.canContinue() ) {
+      this.registrationService.setItemComplete();
       this.navigate( this._url );
     }
   }

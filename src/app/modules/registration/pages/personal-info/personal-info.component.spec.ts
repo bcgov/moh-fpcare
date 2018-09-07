@@ -4,10 +4,10 @@ import { PersonalInfoPageComponent } from './personal-info.component';
 import { CoreModule } from '../../../core/core.module';
 import {FormsModule} from '@angular/forms';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
-import {DateTimeService} from '../../../../services/date-time.service';
 import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.spec';
 import {RouterTestingModule} from '@angular/router/testing';
 import {ValidationService} from '../../../../services/validation.service';
+import {RegistrationService} from '../../registration.service';
 
 describe('PersonalInfoComponent', () => {
   let component: PersonalInfoPageComponent;
@@ -25,8 +25,8 @@ describe('PersonalInfoComponent', () => {
       ],
       providers: [
         { provide: FPCareDataService, useValue: fPCareDataServiceStub },
-        DateTimeService,
-        ValidationService
+        ValidationService,
+        RegistrationService
       ]
     })
     .compileComponents();

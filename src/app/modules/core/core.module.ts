@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from './components/alert/alert.component';
 import { AlertModule, TooltipModule, ProgressbarModule, ModalModule } from 'ngx-bootstrap';
-import { MiniProgressBarComponent } from './components/mini-progress-bar/mini-progress-bar.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -32,13 +31,18 @@ import { ResultsFrameworkComponent } from './components/results-framework/result
 import {NameValidationComponent} from '../../validation/name-validation/name-validation.component';
 import { CaptchaDataService } from 'mygovbc-captcha-widget/src/app/captcha-data.service';
 import { CaptchaComponent } from 'mygovbc-captcha-widget/src/app/captcha/captcha.component';
+import { PhnComponent } from './components/phn/phn.component';
+import { SinComponent } from './components/sin/sin.component';
+import {NameComponent} from './components/name/name.component';
 
 
 const componentList = [
   AlertComponent,
-  MiniProgressBarComponent,
   FPCareToggleComponent,
   PostalCodeComponent,
+  PhnComponent,
+  SinComponent,
+  NameComponent,
   PageFrameworkComponent,
   WizardProgressBarComponent,
   CoreBreadcrumbComponent,
@@ -76,7 +80,9 @@ const componentList = [
     TextMaskModule,
   ],
   declarations: [
-    componentList
+    componentList,
+    PhnComponent,
+    SinComponent
   ],
   exports: [
     componentList

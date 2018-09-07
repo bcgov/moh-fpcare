@@ -16,7 +16,6 @@ export class NameValidationComponent extends BaseValidationComponent {
 
   public static ERROR_STRING = 'fpc-name';
 
-
   /**
    * Validates the input's value based on the classes regex. Does not
    * require the field be filled out, but if it is must pass regex.
@@ -29,11 +28,6 @@ export class NameValidationComponent extends BaseValidationComponent {
     // empty field
     if (inputVal == null || inputVal.length < 1) {
       return true;
-    }
-
-    // check length
-    if ( inputVal.length > ValidationService.MAX_NAME_LENGTH ) {
-      return false;
     }
 
     return this.regex.test( inputVal );

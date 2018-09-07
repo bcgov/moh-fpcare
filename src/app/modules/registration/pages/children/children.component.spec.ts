@@ -5,9 +5,9 @@ import {FormsModule} from '@angular/forms';
 import {RouterTestingModule} from '@angular/router/testing';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ValidationService} from '../../../../services/validation.service';
-import {DateTimeService} from '../../../../services/date-time.service';
+import {RegistrationService} from '../../registration.service';
 
-describe('ChildrenComponent', () => {
+fdescribe('ChildrenComponent', () => {
   let component: ChildrenPageComponent;
   let fixture: ComponentFixture<ChildrenPageComponent>;
 
@@ -24,7 +24,7 @@ describe('ChildrenComponent', () => {
       providers: [
         FPCareDataService,
         ValidationService,
-        DateTimeService
+        RegistrationService
       ]
     })
     .compileComponents();

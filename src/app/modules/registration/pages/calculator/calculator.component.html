@@ -51,7 +51,7 @@
 
       <div class="form-group">
         <label for="bornBefore1939">Were you born in 1939 or earlier?
-          <fpcare-toggle [data]='bornBefore1939' (dataChange)="bornBefore1939 = $event; update();"></fpcare-toggle>
+          <fpcare-toggle id='bornBefore1939' [data]='bornBefore1939' (dataChange)="bornBefore1939 = $event; update();"></fpcare-toggle>
         </label>
       </div>
 
@@ -83,5 +83,10 @@
       [disabilitySavingsAmount]="disabilityAmount"
     ></fpcare-financial-calculator>
   </aside>
+
+   <fpcare-form-action-bar
+       [canContinue]="canContinue()"
+       (click)="continue()">
+   </fpcare-form-action-bar>
 
 </fpcare-page-framework>

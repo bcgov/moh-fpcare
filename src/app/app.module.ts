@@ -21,8 +21,8 @@ import { FPCareDataService } from './services/fpcare-data.service';
 import { UserService } from './services/user.service';
 import { HeaderFooterModule } from './modules/header-footer/header-footer.module';
 import { ValidationService } from './services/validation.service';
-import {DateTimeService} from './services/date-time.service';
 import { HttpClientModule } from '@angular/common/http';
+import {RegistrationService} from './modules/registration/registration.service';
 
 
 @NgModule({
@@ -54,7 +54,7 @@ import { HttpClientModule } from '@angular/common/http';
     DummyDataService,
     FPCareDataService,
     ValidationService,
-    DateTimeService
+    RegistrationService
   ],
   bootstrap: [AppComponent]
 })

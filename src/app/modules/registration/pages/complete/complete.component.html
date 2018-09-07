@@ -53,13 +53,6 @@
     <captcha [apiBaseUrl]="captchaApiBaseUrl" [nonce]="objectId" (onValidToken)="setToken($event)"></captcha>
   </div>
 
-  <div class="todo">
-    <ul>
-      <li class="'done">Add captcha module</li>
-      <li>Code form checks to enable button, update checkbox labels to be on opposite side</li>
-    </ul>
-  </div>
-
   <fpcare-form-action-bar
           [submitLabel]="buttonLabel"
           [canContinue]="canContinue()"

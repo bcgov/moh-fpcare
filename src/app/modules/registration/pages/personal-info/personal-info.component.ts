@@ -4,9 +4,9 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
-import {DateTimeService} from '../../../../services/date-time.service';
 import {ValidationService} from '../../../../services/validation.service';
 import {REGISTRATION_CHILD, REGISTRATION_PATH, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
+import {RegistrationService} from '../../registration.service';
 
 @Component({
   selector: 'fpcare-personal-info',
@@ -21,17 +21,18 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   /** Indicates whether or not the same SIN has been used for spouse */
   private _uniqueSin = true;
 
-  /** Page to naviage to when continue process */
+  /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_CHILD;
 
   constructor( private fpcService: FPCareDataService
-             , private dateTimeService: DateTimeService
              , private validationService: ValidationService
-             , protected router: Router ) {
+             , protected router: Router
+             , private registrationService: RegistrationService ) {
     super( router );
   }
 
   ngOnInit() {
+    this.registrationService.setItemIncomplete();
   }
 
   /**
@@ -87,7 +88,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * @returns {string}
    */
   getApplicantDob(): string {
-    return this.dateTimeService.convertSimpleDateToStr( this.applicant.dateOfBirth );
+    return this.applicant.dateOfBirthShort;
   }
 
   /**
@@ -95,7 +96,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * @returns {string}
    */
   getSpouseDob(): string {
-    return this.dateTimeService.convertSimpleDateToStr( this.spouse.dateOfBirth );
+    return this.spouse.dateOfBirthShort;
   }
 
   /**
@@ -112,8 +113,8 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * Navigates to the next page
    */
   continue() {
-
     if ( this.canContinue() ) {
+      this.registrationService.setItemComplete();
       this.navigate( this._url );
     }
   }

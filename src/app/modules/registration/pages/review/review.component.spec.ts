@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReviewPageComponent } from './review.component';
 import { CoreModule } from '../../../core/core.module';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
-import {DateTimeService} from '../../../../services/date-time.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.spec';
+import {RegistrationService} from '../../registration.service';
 
 describe('ReviewComponent', () => {
   let component: ReviewPageComponent;
@@ -21,7 +21,7 @@ describe('ReviewComponent', () => {
       ],
       providers: [
         { provide: FPCareDataService, useValue: fPCareDataServiceStub },
-        DateTimeService
+        RegistrationService
       ]
     })
     .compileComponents();

@@ -4,13 +4,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegistrationContainerComponent } from './components/registration-container/registration-container.component';
 import { RegistrationRequirementsComponent } from './pages/registration-requirements/registration-requirements.component';
 import {REGISTRATION_REQUIREMENTS} from '../../models/route-paths.constants';
+import {RegistrationGuard} from './registration.guard';
 
 
 export const routes: Routes = [
   {
     path: '',
     component: RegistrationContainerComponent,
-    children: pageRoutes
+    children: pageRoutes,
+    canActivateChild: [RegistrationGuard]
   },
 
 

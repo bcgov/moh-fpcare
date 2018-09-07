@@ -13,12 +13,14 @@
 
 progressbar {
   background-color: $gray-500;
+  height: 0.5rem;
 }
 
 .step {
   $markerSize: 1em;
   position: relative;
   transform: translateX(-$markerSize / 2);
+  margin-top: 0.25rem;
 
   &:before {
     content: " ";

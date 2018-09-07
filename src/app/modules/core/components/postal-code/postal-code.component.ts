@@ -1,9 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Base } from '../base/base.class';
+import { Component, OnInit } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
-
-const LETTER = /[A-Z]/i; //Ignore case here, then upperCase it via pipe.
-const NUMBER = /\d/;
+import {LETTER, Masking, NUMBER, SPACE} from '../../../../models/masking.model';
 
 @Component({
   selector: 'fpcare-postal-code',
@@ -14,17 +11,10 @@ const NUMBER = /\d/;
   // up in its parents `this.form`, and will auto-update `this.form.valid`
   viewProviders: [ { provide: ControlContainer, useExisting: NgForm }]
 })
-export class PostalCodeComponent extends Base implements OnInit {
-  @Input() value: string;
-  @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
+export class PostalCodeComponent extends Masking implements OnInit {
 
-  @Input() disabled: boolean;
-
-  public mask = [LETTER, NUMBER, LETTER, NUMBER, LETTER, NUMBER];
-
-  upperCasePipe(text: string){
-    return text.toUpperCase();
-  }
+  public mask = [LETTER, NUMBER, LETTER, SPACE, NUMBER, LETTER, NUMBER];
+  public placeholder = 'V1V V1V';
 
   constructor() {
     super();
@@ -32,5 +22,4 @@ export class PostalCodeComponent extends Base implements OnInit {
 
   ngOnInit() {
   }
-
 }

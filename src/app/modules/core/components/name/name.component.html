@@ -1,0 +1,12 @@
+<div class='form-group'>
+  <label for="name_{{objectId}}">{{label}}</label>
+  <input class="form-control"
+         spellcheck="false"
+         type="text"
+         id="name_{{objectId}}"
+         name="name_{{objectId}}"
+         [maxlength]="nameMaxLength()"
+         fpcareRequired="required,name-check"
+         [ngModel]="value"
+         (ngModelChange)="onUpdate($event)"/>
+</div>

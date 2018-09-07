@@ -22,4 +22,7 @@ export const environment = {
 
   /** Do not show the consent modal by setting the user as already consenting to the collection notice. */
   bypassConsentModal: true,
+
+  /** Do not trigger guards */
+  bypassGuards: true
 };

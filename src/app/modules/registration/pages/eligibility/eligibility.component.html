@@ -14,13 +14,7 @@
 
     <div class="p-md-2 col-md-6">
       <div class="form-group">
-        <label for="ap_phn">PHN</label>
-        <input class="form-control"
-               type="text"
-               id="ap_phn"
-               name="ap_phn"
-               fpcareRequired="required,phn-check"
-               [(ngModel)]="applicant.phn"/>
+        <fpcare-phn [(value)]="applicant.phn"> </fpcare-phn>
       </div>
 
       <div class="form-group">
@@ -40,13 +34,7 @@
 
       <div class="p-md-2 col-md-6">
         <div class="form-group">
-          <label for="ap_phn">PHN</label>
-          <input class="form-control"
-                 type="text"
-                 id="sp_phn"
-                 name="sp_phn"
-                 fpcareRequired="required,phn-check"
-                 [(ngModel)]="spouse.phn"/>
+          <fpcare-phn [(value)]="spouse.phn"></fpcare-phn>
           <div *ngIf="hasUniquePhnError()" role="alert" aria-live="assertive">
             <div class="text-danger">This PHN was already used for registrant.</div>
           </div>
@@ -67,10 +55,14 @@
   </form>
 
   <aside>
-    <div class="todo">
-      <ul>
-        <li>Add helper text to "aside"</li>
-      </ul>
+     <div class="todo">
+        <ul>
+           <li>Date validation causing errors - need to investigate</li>
+        </ul>
+     </div>
+    <div>
+      <h5>PHN</h5>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     </div>
   </aside>
 
