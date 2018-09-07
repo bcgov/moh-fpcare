@@ -7,7 +7,7 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ValidationService} from '../../../../services/validation.service';
 import {RegistrationService} from '../../registration.service';
 
-fdescribe('ChildrenComponent', () => {
+describe('ChildrenComponent', () => {
   let component: ChildrenPageComponent;
   let fixture: ComponentFixture<ChildrenPageComponent>;
 

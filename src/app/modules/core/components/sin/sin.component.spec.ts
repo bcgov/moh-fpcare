@@ -1,14 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SinComponent } from './sin.component';
+import {FormsModule} from '@angular/forms';
+import {TextMaskModule} from 'angular2-text-mask';
+import {SinComponent} from './sin.component';
 
-describe('SinComponent', () => {
+fdescribe('SinComponent', () => {
   let component: SinComponent;
   let fixture: ComponentFixture<SinComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SinComponent ]
+      declarations: [ SinComponent ],
+      imports: [ FormsModule, TextMaskModule ]
     })
     .compileComponents();
   }));

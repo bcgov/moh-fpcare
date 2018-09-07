@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostalCodeComponent } from './postal-code.component';
-import { FormsModule } from '@angular/forms';
+import {ControlContainer, FormsModule} from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 
-describe('PostalCodeComponent', () => {
+fdescribe('PostalCodeComponent', () => {
   let component: PostalCodeComponent;
   let fixture: ComponentFixture<PostalCodeComponent>;
 
