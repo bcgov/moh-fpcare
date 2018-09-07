@@ -59,11 +59,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
   ngOnInit() {
     this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
-
-    // Bypass the CAPTCHA if not production.
-    if (environment.production === false){
-      this._hasToken = true;
-    }
   }
 
   ngAfterViewInit() {

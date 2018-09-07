@@ -53,13 +53,6 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
 
   ngOnInit() {
     this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
-
-    // Bypass the CAPTCHA if not production.
-    // TODO: Remove these CAPTCHA bypasses everywhere in the app because now the proxy service requires them regardless.
-    if (!environment.production){
-      this._hasToken = true;
-    }
-
     this.fpcareDataService.reprintLetterType = this.data.letterType;
   }
 
