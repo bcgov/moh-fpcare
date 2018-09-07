@@ -4,6 +4,8 @@ import { AbstractFormComponent } from '../../../../models/abstract-form-componen
 import { Router } from '@angular/router';
 import { FinanceService } from '../../../financial-calculator/finance.service';
 import {REGISTRATION_ELIGIBILITY, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
+import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import {isUndefined} from 'util';
 
 @Component({
   selector: 'fpcare-calculator',
@@ -31,6 +33,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
 
   constructor( protected router: Router
              , private financeService: FinanceService
+             , private fpcareDataService: FPCareDataService
              , private registrationService: RegistrationService ) {
     super(router);
   }
@@ -41,12 +44,19 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   canContinue() {
-    return true;
+    return (!this.isFormEmpty() && this.form.valid &&
+        !isUndefined( this.hasSpouse ) && !isUndefined( this.bornBefore1939 ));
   }
 
   continue() {
     console.log('todo');
     if ( this.canContinue() ) {
+
+      // Add a spouse to application
+      if ( this.hasSpouse ) {
+        this.fpcareDataService.addSpouse();
+      }
+
       this.registrationService.setItemComplete();
       this.navigate( this._url );
     }

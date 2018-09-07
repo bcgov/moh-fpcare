@@ -24,7 +24,7 @@
 
       <div class="form-group">
         <label for="hasSpouse">Do you have a spouse/common-law partner?
-          <fpcare-toggle [data]='hasSpouse' (dataChange)="hasSpouse = $event; update();"></fpcare-toggle>
+          <fpcare-toggle id="hasSpouse" [data]='hasSpouse' (dataChange)="hasSpouse = $event; update();"></fpcare-toggle>
         </label>
         <p class="text-muted">Note: Failure to notify HIBC when you marry or begin living in a marriage-like relationship may impact the eligibility for your FPC registration.</p>
       </div>
