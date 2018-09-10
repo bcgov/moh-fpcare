@@ -55,8 +55,7 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
 
   constructor(input: ElementRef, private renderer: Renderer2,
     @Inject(ViewContainerRef) viewContainerRef,
-    @Inject(ComponentFactoryResolver) factoryResolver,
-    private ref: ChangeDetectorRef) {
+    @Inject(ComponentFactoryResolver) factoryResolver) {
     this.input = input;
     this.view = viewContainerRef;
     this.factoryResolver = factoryResolver;
@@ -144,7 +143,7 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
    * Validation the fields on page
    * Note: validate must be on the form
    * @param {AbstractControl} control
-   * @returns {{[p: string]: any} | null}
+   * @returns {{[key: string]: any} | null}
    */
   validate(control: AbstractControl): {[key: string]: any} | null {
 
@@ -166,14 +165,6 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
 
   /** Runs the logic of a given validation component */
   private runValidationComponent(validationComponent: ValidationComponent) {
-
-    // Only validate if the field has been touched (i.e. ng-touched or ng-dirty)
-    const classList = this.input.nativeElement.classList;
-    if ( Object.keys(classList).map( key => {
-          return classList[key] === 'ng-pristine' || classList[key] === 'ng-untouched';
-          }).filter( x => x === true ).length !== 0) {
-      return;
-    }
 
     if ( !validationComponent.validate(this.input) ) {
       this.setInvalid(validationComponent);

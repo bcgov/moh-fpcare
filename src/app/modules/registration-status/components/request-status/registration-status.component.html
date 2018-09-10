@@ -68,7 +68,7 @@
                  id="regNumber"
                  name="regNumber"
                  [placeholder]="placeholder"
-                 maxlength="regNumberMaxLn()"
+                 [maxlength]="regNumberMaxLn()"
                  fpcareRequired="required,regnum-check"
                  [ngModel]="applicant.fpcRegNumber"
                  (ngModelChange)="updateRegNumber($event)"

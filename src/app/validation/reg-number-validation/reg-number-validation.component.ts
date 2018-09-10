@@ -24,10 +24,7 @@ export class RegNumberValidationComponent extends BaseValidationComponent {
   public static validate(input: ElementRef): boolean {
     const inputVal = input.nativeElement.value;
 
-    // Set the max chars a user can input.
-    if (input.nativeElement.maxLength !== ValidationService.MAX_REGNUM_LENGTH){
-      input.nativeElement.maxLength = ValidationService.MAX_REGNUM_LENGTH;
-    }
+    console.log( 'inputVal: ', inputVal );
 
     // empty field
     if (inputVal == null || inputVal.length < 1) {
