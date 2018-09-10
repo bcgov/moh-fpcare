@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {RegistrationService} from '../../registration.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FinanceService } from '../../../financial-calculator/finance.service';
 import {REGISTRATION_ELIGIBILITY, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 
@@ -26,18 +26,33 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   /** The text mask responsible for the currency formatting. */
   public moneyMask;
 
+  /**
+   * Is the form standalone? If false, it's part of Registration's flow, if
+   * true, it's a page treated in isolation. This includes, for example,
+   * removing the form continue button.
+   */
+  public standalone: boolean = false;
+
   /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_ELIGIBILITY;
 
   constructor( protected router: Router
              , private financeService: FinanceService
-             , private registrationService: RegistrationService ) {
+             , private registrationService: RegistrationService
+             , private activatedRoute: ActivatedRoute ) {
     super(router);
   }
 
   ngOnInit() {
     this.moneyMask = this.financeService.moneyMask;
     this.registrationService.setItemIncomplete();
+
+    // Retrieve standalone state from router data
+    this.activatedRoute.data.subscribe((data: {standalone: boolean}) => {
+      if (data.standalone === true){
+        this.standalone = data.standalone;
+      }
+    });
   }
 
   canContinue() {

@@ -36,6 +36,9 @@ import { TextMaskModule } from 'angular2-text-mask';
     ReviewPageComponent,
     CompletePageComponent,
     RegResultsComponent
+  ],
+  exports: [
+    CalculatorPageComponent
   ]
 })
 export class RegistrationModule {
