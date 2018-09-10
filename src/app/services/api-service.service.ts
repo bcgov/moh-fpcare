@@ -82,8 +82,8 @@ export class ApiService extends AbstractHttpService {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       benefitYear: input.benefitYear,
-      phn: input.phn,
-      postalCode: input.postalCode,
+      phn: this.trimSpaces( input.phn),
+      postalCode: this.trimSpaces (input.postalCode ),
       dateOfBirth: input.dob
     });
   }
@@ -101,8 +101,8 @@ export class ApiService extends AbstractHttpService {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       benefitYear: input.benefitYear,
-      phn: input.phn,
-      postalCode: input.postalCode,
+      phn: this.trimSpaces( input.phn),
+      postalCode: this.trimSpaces (input.postalCode ),
       dateOfBirth: input.dob,
       letterType: input.letterType
     });
@@ -135,4 +135,13 @@ export class ApiService extends AbstractHttpService {
     return moment().format('YYYYMMDD');
   }
 
+  /**
+   * Remove spaces from string formatted with mask
+   * @param {string} str
+   * @returns {string}
+   */
+  private trimSpaces( str: string ): string {
+    // Remove spaces - mask format
+    return str.replace(/ /g, '');
+  }
 }

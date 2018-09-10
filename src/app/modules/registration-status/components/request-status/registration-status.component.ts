@@ -10,7 +10,6 @@ import { ResponseStoreService } from '../../../../services/response-store.servic
 import { StatusCheckPHNPayload, StatusCheckRegNumberPayload, StatusCheckPHN, StatusCheckRegNum } from 'app/models/api.model';
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
 import {REGISTRATION_STATUS_PATH, RESULT_REG_STATUS} from '../../../../models/route-paths.constants';
-import {LETTER, NUMBER} from '../../../../models/masking.model';
 import {ValidationService} from '../../../../services/validation.service';
 
 @Component({
@@ -131,7 +130,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    */
   continue(): void {
 
-    console.log('continue clicked');
     if (!this.canContinue()) {
       return;
     }
