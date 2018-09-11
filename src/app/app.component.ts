@@ -44,8 +44,8 @@ export class AppComponent implements OnInit {
       // console.log( 'children: ', this.fpcareDataService.dependants );
     }
 
-    if (environment.confirmOnExit){
-      this.enableConfirmOnExit();
+    if (environment.promptOnExit){
+      this.enablePromptOnExit();
     }
 
     if (environment.purgeWhenInactive){
@@ -73,15 +73,15 @@ export class AppComponent implements OnInit {
    * displayed text. Additionally, the prompt will not work if user has disabled
    * them in browser settings or has not yet interacted with the page.
    */
-  enableConfirmOnExit(){
+  enablePromptOnExit(){
     window.addEventListener('beforeunload', this.handleBeforeUnload);
   }
 
   /**
    * Removes the confirm on exit prompt.  It is safe to call this function even
-   * if `enableConfirmOnExit()` has not been called.
+   * if `enablePromptOnExit()` has not been called.
    */
-  disableConfirmOnExit(){
+  disablePromptOnExit(){
     window.removeEventListener('beforeunload', this.handleBeforeUnload);
   }
 
@@ -102,8 +102,8 @@ export class AppComponent implements OnInit {
     /** Purge local state by refreshing. */
     const purge = () => {
       console.log('You are inactive, so we are purging all data by refreshing the page.');
-      // Remove the confirmOnExit prompt, or it'll stop the refresh.
-      this.disableConfirmOnExit();
+      // Remove the promptOnExit prompt, or it'll stop the refresh.
+      this.disablePromptOnExit();
       window.location.reload();
     };
 

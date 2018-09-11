@@ -8,6 +8,6 @@ export const environment = {
   logHTTPRequestsToConsole: true,
   bypassConsentModal: false,
   bypassGuards: false,
-  confirmOnExit: true,
+  promptOnExit: true,
   purgeWhenInactive: true,
 };
