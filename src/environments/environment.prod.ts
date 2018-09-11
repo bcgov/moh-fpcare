@@ -9,4 +9,5 @@ export const environment = {
   bypassConsentModal: false,
   bypassGuards: false,
   confirmOnExit: true,
+  purgeWhenInactive: true,
 };
