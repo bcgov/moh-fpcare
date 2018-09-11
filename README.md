@@ -23,7 +23,19 @@ npm run dev # Runs a local dev server
 
 ## Versioning Deployments
 
-Prior to TEST and PROD builds you must update the version number. There are two npm scripts which do this: `npm run test-version` and `npm run prod-version`.  These increment the package version and automatically commit the result, and as such must be run on a clean working directory (i.e. no changes that are uncommitted in git).
+Prior to TEST and PROD builds you must update the version number. There are two npm scripts which do this: `npm run test-version` and `npm run prod-version`.  These commands 
+
+1. increment the package version
+2. commit the result
+3. tag the new commit with the new version number
+4. push the new commit to github with the tag, for the current branch you're on.
+
+As such, you should run these commands right before deploying a build and with a clean working directory (i.e. no changes that are uncommitted in git), otherwise they'll fail.
+
+As this application is not a library/dependency it does not follow semver.  Instead, version codes are as follows:
+
+    test-version : 0.1.0 -> 0.2.0 .... 0.10.0 -> 0.11.0
+    prod-version : 1.0.0 -> 2.0.0 .... 10.0.0 -> 11.0.0
 
 `src/version.js` is called in the prebuild hook, prior to every `npm run build`.  It puts version info into a generated file which is then console.log()'d out.
 

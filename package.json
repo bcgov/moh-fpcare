@@ -9,6 +9,7 @@
     "version": "node src/version.js",
     "test-version": "npm version minor -m 'Increase version for upcoming TEST build: %s'",
     "prod-version": "npm version major -m 'Increase version for upcoming PROD build: %s'",
+    "postversion": "git push --follow-tags",
     "prebuild": "node src/version.js",
     "build": "ng build --prod",
     "test": "ng test",
