@@ -7,5 +7,6 @@ export const environment = {
   loggingURL: '/fpcare/api/logging',
   logHTTPRequestsToConsole: true,
   bypassConsentModal: false,
-  bypassGuards: false
+  bypassGuards: false,
+  confirmOnExit: true,
 };

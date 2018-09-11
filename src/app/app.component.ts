@@ -44,6 +44,10 @@ export class AppComponent implements OnInit {
       // console.log( 'children: ', this.fpcareDataService.dependants );
     }
 
+    if (environment.confirmOnExit){
+      this.enableConfirmOnExit();
+    }
+
     // Retrieve benefit year
     this.apiService.getBenefitYear().subscribe(response => {
       const payload = new BenefitYearPayload(response);
@@ -53,6 +57,22 @@ export class AppComponent implements OnInit {
         this.fpcareDataService.benefitYear = payload.benefitYear;
         this.fpcareDataService.taxYear = payload.taxYear;
       }
+    });
+  }
+
+  /**
+   * Enables the confirm on exit/there are unsaved changes prompt when
+   * navigating away or reloading the page. Has only been tested for FF/Chrome,
+   * need to test for IE.
+   *
+   * Note: Due to browser security policies we are unable to control the
+   * displayed text. Additionally, the prompt will not work if user has disabled
+   * them in browser settings or has not yet interacted with the page.
+   */
+  enableConfirmOnExit(){
+    window.addEventListener('beforeunload', function (event) {
+      event.preventDefault(); // Most browsers, including FF
+      event.returnValue = ''; // Chrome/Chromium based browsers still need this one.
     });
   }
 }

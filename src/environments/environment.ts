@@ -24,5 +24,8 @@ export const environment = {
   bypassConsentModal: true,
 
   /** Do not trigger guards */
-  bypassGuards: true
+  bypassGuards: true,
+
+  /** If true, the user is shown a 'Are you sure you want to leave?' prompt when trying to navigate away or close the browser. */
+  confirmOnExit: true,
 };
