@@ -4,13 +4,14 @@
     display: flex;
     justify-content: flex-end;
     padding: 1em;
-    background: linear-gradient(#efefef, #d0d0d1);
+    background-color: hsla(210, 30%, 85%, 1);
+    transition: background-color 0.3s;
+    &.disabled { background-color: hsla(210, 10%, 85%, 1); }
     position: fixed;
     position: -webkit-sticky;
     position: sticky;
     bottom: 0;
     z-index: 10;
-    box-shadow: transparentize($color: $gray-700, $amount: 0.8) 1px 3px 7px 3px;
 
     // Positioning  values match .container-fluid in app.component.scss
     left: $container-gutter-size;
