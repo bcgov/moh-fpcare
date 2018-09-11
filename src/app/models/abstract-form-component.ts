@@ -43,7 +43,6 @@ export abstract class AbstractFormComponent extends Base {
    * @returns {boolean}
    */
   protected isFormEmpty(): boolean {
-    console.log( 'controls: ', this.form.controls );
     return Object.keys(this.form.controls)
     .map(key => this.form.controls[key].value)
     .filter(x => x) // Filter out null/undefined

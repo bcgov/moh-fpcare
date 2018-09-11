@@ -13,9 +13,14 @@ import { environment } from 'environments/environment';
 export class FPCareDataService {
 
   /** Applicant information */
-  private _applicant: Person;
+  public applicant: Person;
+
+  /** Flag to indicate that applicant has a spouse */
+  public hasSpouse: boolean;
+
   /** Information for applicant's spouse */
-  private _spouse: Person;
+  public spouse: Person;
+
   /** Information for children related to applicant */
   private _dependants: Person[] = [];
 
@@ -30,50 +35,24 @@ export class FPCareDataService {
   /** FPC tax year is 2 years prior to benefit year */
   public taxYear: string;
 
+  /** Financial Information for applicant */
+  public applicantIncome: string;
+  public spouseIncome: string;
+  public disabilityAmount: string;
+  public bornBefore1939: boolean;
+  public adjustedIncome: string = '0'; // Family Income - disability
+
+
   /** Maximum number of dependents on an account */
   MAX_DEPENDANTS = 18;
 
   constructor() {
     // Create applicant
-    this._applicant = new Person();
+    this.applicant = new Person();
 
     if (environment.bypassConsentModal){
       this.acceptedCollectionNotice = true;
     }
-  }
-
-  /**
-   * Gets the applicant object
-   * @returns {Person}
-   */
-  get applicant(): Person {
-    /** If Person Object does not exist, create new Object **/
-    return this._applicant;
-  }
-
-  /**
-   * Sets the applicant object
-   * @param {Person} applicant
-   */
-  set applicant( applicant: Person ) {
-    this._applicant = applicant;
-  }
-
-  /**
-   * Gets the spouse object
-   * @returns {Person}
-   */
-  get spouse(): Person {
-    /** If Person Object does not exist, create new Object **/
-    return this._spouse;
-  }
-
-  /**
-   * Sets the spouse object
-   * @param {Person} spouse
-   */
-  set spouse( spouse: Person ) {
-    this._spouse = spouse;
   }
 
   /**
@@ -93,18 +72,10 @@ export class FPCareDataService {
   }
 
   /**
-   * Indicates whether a spouse is present
-   * @returns {boolean}
-   */
-  hasSpouse(): boolean {
-    return !!(this._spouse);
-  }
-
-  /**
    * Adds a spouse
    */
   addSpouse() {
-    this._spouse = new Person();
+    this.spouse = new Person();
   }
 
   /**

@@ -44,10 +44,12 @@ export class FinanceService {
   }
 
   public currencyFormat(currency: number, withDollarSign = false): string {
+    if ( !!!currency ) {
+      return null;
+    }
     const mask = conformToMask(currency.toString(), this.moneyMask, {});
     return `${withDollarSign ? '$' : ''}${mask.conformedValue}`;
   }
-
 
   // BUSINESS RULE METHODS ----------------------------------------------------
   // The below methods are defined in Functional Requirement Documents

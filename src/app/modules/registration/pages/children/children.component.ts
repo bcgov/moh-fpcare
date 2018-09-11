@@ -43,10 +43,10 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   canContinue(): boolean {
 
-    let valid = true;
+    let valid = this.hasChildren() ? !this.isFormEmpty() : true;
 
     // Ensure forms are loaded before performing checks
-    if (this.hasChildren() && !!this.form && !!this.dobForm ) {
+    if ( this.hasChildren() ) {
 
       const invalidDob = this.dobForm.map(x => {
         if (!x.form.valid) {
@@ -156,7 +156,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * @returns {boolean}
    */
   legitimateDependant( child: Person ): boolean {
-    return (!child.isDobEmpty() && child.getAge() < this.MAX_CHILD_AGE);
+    return !child.isDobEmpty() ? (child.getAge() < this.MAX_CHILD_AGE) : true;
   }
 
   /**
@@ -167,7 +167,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
     const phnList = this.children.map( x => x.phn );
     phnList.push( this.fpcService.applicant.phn );
 
-    if ( this.fpcService.hasSpouse() ) {
+    if ( !!this.fpcService.hasSpouse ) {
       phnList.push(this.fpcService.spouse.phn);
     }
 

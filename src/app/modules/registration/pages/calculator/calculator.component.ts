@@ -13,16 +13,8 @@ import {isUndefined} from 'util';
   styleUrls: ['./calculator.component.scss']
 })
 export class CalculatorPageComponent extends AbstractFormComponent implements OnInit {
-  /** Formatted currency string for applicant's income */
-  public income: string;
-  public hasSpouse: boolean;
-  /** Formatted currency string for applicant's spouse's income */
-  public spouseIncome: string;
-  public bornBefore1939: boolean;
   /** Numeric value for disability */
   public disabilityAmount: number;
-  /** Formatted currency string for disability amount */
-  public disabilityFormatted: string;
   /** Numeric value for income + spouseIncome (if applicable) */
   public totalFamilyIncome: number;
   /** The text mask responsible for the currency formatting. */
@@ -41,6 +33,98 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   ngOnInit() {
     this.moneyMask = this.financeService.moneyMask;
     this.registrationService.setItemIncomplete();
+
+    // Update data - user may have used back button on browser
+    this.update();
+  }
+
+  /**
+   * Indicates whether applicant has spouse
+   * @returns {boolean}
+   */
+  get hasSpouse(): boolean {
+    return this.fpcareDataService.hasSpouse;
+  }
+  /**
+   * Sets whether applicant has spouse
+   * @param {boolean} value
+   */
+  set hasSpouse( value: boolean ) {
+
+    if ( !value ) {
+      // set blank - no spouse
+      this.fpcareDataService.spouseIncome = '';
+    } else {
+      // Spouse
+      this.fpcareDataService.addSpouse();
+    }
+    this.fpcareDataService.hasSpouse = value;
+  }
+
+  /**
+   * Retrieves formatted currency string for applicant's income
+   * @returns {string}
+   */
+  get income(): string {
+    return this.fpcareDataService.applicantIncome;
+  }
+
+  /**
+   * Sets formatted currency string for applicant's income
+   * @param {string} value
+   */
+  set income( value: string ) {
+    this.fpcareDataService.applicantIncome = value;
+  }
+
+  /**
+   * Retrieves formatted currency string for applicant's spouse's income
+   * @returns {string}
+   */
+  get spouseIncome(): string {
+    return this.fpcareDataService.spouseIncome;
+  }
+
+  /**
+   * Sets formatted currency string for applicant's spouse's income
+   * @param {string} value
+   */
+  set spouseIncome( value: string ) {
+    this.fpcareDataService.spouseIncome = value;
+  }
+
+  /**
+   *  Retrieve formatted currency string for disability amount
+   * @returns {string}
+   */
+  get disabilityFormatted() {
+    return this.fpcareDataService.disabilityAmount;
+  }
+
+  /**
+   * Set formatted currency string for disability amount
+   * @param {string} value
+   */
+  set disabilityFormatted( value: string ) {
+    if ( !!value ) {
+      this.fpcareDataService.disabilityAmount = value;
+    }
+  }
+
+  /**
+   * Retrieves flag indicating whether applicant or spouse was born before 1939
+   * @returns {boolean}
+   */
+  get bornBefore1939(): boolean {
+    return this.fpcareDataService.bornBefore1939;
+  }
+
+  /**
+   * Sets flag indicating whether applicant or spouse was born before 1939
+   * @param {boolean} value
+   */
+  set bornBefore1939( value: boolean ) {
+    this.fpcareDataService.bornBefore1939 = value;
   }
 
   canContinue() {
@@ -49,13 +133,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   continue() {
-    console.log('todo');
     if ( this.canContinue() ) {
-
-      // Add a spouse to application
-      if ( this.hasSpouse ) {
-        this.fpcareDataService.addSpouse();
-      }
 
       this.registrationService.setItemComplete();
       this.navigate( this._url );
@@ -71,6 +149,14 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     else {
       this.disabilityAmount = 0;
     }
+  }
+
+  /**
+   * Income adjustment
+   * @param {string} value
+   */
+  public onIncomeAdjustment( value: string ) {
+    this.fpcareDataService.adjustedIncome = value;
   }
 
   private calculateTotalFamilyIncome(): number {

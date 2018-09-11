@@ -80,7 +80,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * @returns {boolean}
    */
   hasSpouse(): boolean {
-    return this.fpcService.hasSpouse();
+    return !!this.fpcService.hasSpouse;
   }
 
   /**
