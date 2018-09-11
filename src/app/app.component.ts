@@ -6,6 +6,7 @@ import {environment} from 'environments/environment';
 import { ApiService } from './services/api-service.service';
 import { BenefitYearPayload } from 'app/models/api.model';
 
+import * as version from '../VERSION.generated';
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,14 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Testers have asked for Version to be logged with every build.
+    if (version.success){
+      console.log(version.message);
+    }
+    else {
+      console.error(version.message);
+    }
+
 
     if ( environment.useDummyData ) {
 

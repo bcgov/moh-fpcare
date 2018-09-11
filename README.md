@@ -21,6 +21,11 @@ npm install
 npm run dev # Runs a local dev server
 ```
 
+## Versioning Deployments
+
+Prior to TEST and PROD builds you must update the version number. There are two npm scripts which do this: `npm run test-version` and `npm run prod-version`.  These increment the package version and automatically commit the result, and as such must be run on a clean working directory (i.e. no changes that are uncommitted in git).
+
+`src/version.js` is called in the prebuild hook, prior to every `npm run build`.  It puts version info into a generated file which is then console.log()'d out.
 
 ## Testing
 

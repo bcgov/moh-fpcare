@@ -1,11 +1,15 @@
 {
   "name": "fpcare",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "Apache-2.0",
   "scripts": {
     "ng": "ng",
     "start": "npm run dev",
     "dev": "ng serve -o",
+    "version": "node src/version.js",
+    "test-version": "npm version minor -m 'Increase version for upcoming TEST build: %s'",
+    "prod-version": "npm version major -m 'Increase version for upcoming PROD build: %s'",
+    "prebuild": "node src/version.js",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
