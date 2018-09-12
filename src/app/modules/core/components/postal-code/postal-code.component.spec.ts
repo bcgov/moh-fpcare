@@ -1,17 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PostalCodeComponent } from './postal-code.component';
-import {ControlContainer, FormsModule} from '@angular/forms';
+import {ControlContainer, FormsModule, NgForm} from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 
-fdescribe('PostalCodeComponent', () => {
+describe('PostalCodeComponent', () => {
   let component: PostalCodeComponent;
   let fixture: ComponentFixture<PostalCodeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PostalCodeComponent ],
-      imports: [ FormsModule, TextMaskModule ]
+      imports: [ FormsModule, TextMaskModule ],
+      providers: [ NgForm ]
     })
     .compileComponents();
   }));

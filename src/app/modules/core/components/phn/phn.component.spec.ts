@@ -1,17 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {FormsModule} from '@angular/forms';
+import {FormsModule, NgForm} from '@angular/forms';
 import {TextMaskModule} from 'angular2-text-mask';
 import {PhnComponent} from './phn.component';
 
-fdescribe('PhnComponent', () => {
+describe('PhnComponent', () => {
   let component: PhnComponent;
   let fixture: ComponentFixture<PhnComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PhnComponent ],
-      imports: [ FormsModule, TextMaskModule ]
+      imports: [ FormsModule, TextMaskModule ],
+      providers: [ NgForm ]
     })
     .compileComponents();
   }));

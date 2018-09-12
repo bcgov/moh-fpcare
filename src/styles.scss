@@ -186,9 +186,13 @@ Special accessibility class to hide things like labels but still have the readab
   background-color: #294266;
 }
 
+.btn-primary {
+  transition: background-color 0.3s;
+ }
+
 .btn-primary.disabled,
 .btn-primary:disabled {
-  background-color: transparentize($color-primary, 0.5);
+  background-color: desaturate($color-primary, 50%);
   border-color: transparent;
 }
 

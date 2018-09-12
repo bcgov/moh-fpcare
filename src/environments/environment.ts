@@ -24,5 +24,11 @@ export const environment = {
   bypassConsentModal: true,
 
   /** Do not trigger guards */
-  bypassGuards: true
+  bypassGuards: true,
+
+  /** The user is shown a 'Are you sure you want to leave?' prompt when trying to navigate away or close the browser. */
+  promptOnExit: false,
+
+  /** Detect if user has been active for 3 hours and then force a refresh to purge local stage. */
+  purgeWhenInactive: false,
 };

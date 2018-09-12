@@ -8,6 +8,7 @@ export const REPRINT_STATUS = 'status';
 export const REGISTRATION_STATUS_PATH = 'registration-status';
 export const REQUEST_REG_STATUS = 'request-status';
 export const RESULT_REG_STATUS = 'status-result';
+export const STANDALONE_CALCULATOR = 'financial-calculator';
 
 export const REGISTRATION_PATH = 'registration';
 export const REGISTRATION_REQUIREMENTS = 'requirements';
@@ -18,5 +19,3 @@ export const REGISTRATION_CHILD = 'child-info';
 export const REGISTRATION_ADDRESS = 'address';
 export const REGISTRATION_REVIEW = 'review';
 export const REGISTRATION_AUTHORIZE = 'authorize';
-
-

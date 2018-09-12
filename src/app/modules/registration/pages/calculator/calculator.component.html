@@ -86,6 +86,7 @@
   </aside>
 
    <fpcare-form-action-bar
+       *ngIf="!standalone"
        [canContinue]="canContinue()"
        (click)="continue()">
    </fpcare-form-action-bar>

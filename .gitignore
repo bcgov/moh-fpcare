@@ -41,4 +41,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
-package-lock.json
+# Do NOT ignore package-lock.json, as to ensure consistent builds on Jenkins.
+# package-lock.json
+
+# Version file
+src/VERSION.generated.ts
