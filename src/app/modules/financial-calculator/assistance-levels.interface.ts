@@ -10,4 +10,4 @@ export interface PharmaCareAssistanceLevel {
     pharmaCarePortion: number;
     /** The maximum amount the person must spend in a year before PharmaCare covers 100% of remaining costs */
     maximum: number;
-}
+};

@@ -6,7 +6,7 @@ import { FinanceService } from '../../../financial-calculator/finance.service';
 import {REGISTRATION_ELIGIBILITY, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {isUndefined} from 'util';
-import {ApiService} from '../../../../services/api-service.service';;
+import {ApiService} from '../../../../services/api-service.service';
 import {BenefitYearPayload, DeductiblePayload} from '../../../../models/api.model';
 
 
@@ -43,29 +43,30 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   ngOnInit() {
-    console.log( 'Calculator (onInit) ' );
+    // console.log( 'Calculator (onInit) ' );
 
+    // TODO - Ideally instead of nested Observable subscriptions, we should use rxjs delayWhen() or concatMap() to triger sequential operation
+    this.apiService.getBenefitYear().subscribe(benefitResponse => {
+      const benefitPayload = new BenefitYearPayload(benefitResponse);
 
-    this.apiService.getBenefitYear().subscribe(response => {
-      const payload = new BenefitYearPayload(response);
-       console.log( ' payload: ', payload );
-
-      if (payload.success){
-        this.fpcareDataService.benefitYear = payload.benefitYear;
-        this.fpcareDataService.taxYear = payload.taxYear;
+      if (benefitPayload.success){
+        this.fpcareDataService.benefitYear = benefitPayload.benefitYear;
+        this.fpcareDataService.taxYear = benefitPayload.taxYear;
       }
 
-      console.log( 'get deductibles');
-      this.apiService.getDeductibles( { benefitYear: this.fpcareDataService.benefitYear })
-          .subscribe(response2 => {
-            const payload2 = new DeductiblePayload(response2);
-            console.log( ' payload: ', payload2);
+      // Nested observable call - should be unnested and sequential.
+      this.apiService.getDeductibles( { benefitYear: this.fpcareDataService.benefitYear }).subscribe(
+        (deductibleResponse) => {
+          const deductiblePayload = new DeductiblePayload(deductibleResponse);
 
-            if (payload.success){
-              this.financeService.PharmaCareAssistanceLevels = payload2.assistanceLevels;
-              this.financeService.Pre1939PharmaCareAssistanceLevels = payload2.pre1939AssistanceLevels;
-            }
-          });
+          if (benefitPayload.success){
+            this.financeService.setAssistanceLevels(deductiblePayload.assistanceLevels, deductiblePayload.pre1939AssistanceLevels);
+          }
+        },
+        (deductibleError) => {
+          // When API service returns an error we need to manually trigger an error in financeService
+          this.financeService.failedToLoadAssistanceLevels(deductibleError);
+        });
     });
 
     // Retrieve standalone state from router data

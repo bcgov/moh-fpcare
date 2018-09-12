@@ -3,6 +3,7 @@ import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import { conformToMask } from 'angular2-text-mask';
 import { PharmaCareAssistanceLevel } from './assistance-levels.interface';
 import {isUndefined} from 'util';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -12,6 +13,10 @@ export class FinanceService {
 
   public PharmaCareAssistanceLevels: PharmaCareAssistanceLevel[];
   public Pre1939PharmaCareAssistanceLevels: PharmaCareAssistanceLevel[];
+
+  private _hasData = new BehaviorSubject<boolean>(false);
+  /** Subscribe to this observable to check it's true prior to accessing this.PharmacareAssistanceLevels / Pre1939 */
+  public hasData = this._hasData.asObservable();
 
   constructor() { }
 
@@ -26,6 +31,16 @@ export class FinanceService {
     integerLimit: 9 // Max numeric value is 999,999,999.99 - from Light FDS
   });
 
+  public setAssistanceLevels(normal: PharmaCareAssistanceLevel[], pre1939: PharmaCareAssistanceLevel[]){
+    this.PharmaCareAssistanceLevels = normal;
+    this.Pre1939PharmaCareAssistanceLevels = pre1939;
+    this._hasData.next(true);
+  }
+
+  public failedToLoadAssistanceLevels(error): void {
+    this._hasData.error(error);
+  }
+
   /**
    * Looks up the official PharmaCare Assistance Level for a given income.
    *
@@ -38,12 +53,12 @@ export class FinanceService {
    * @memberof FinanceService
    */
   public findAssistanceLevel(familyNetIncome: number = 0, config?: { bornBefore1939: boolean }): PharmaCareAssistanceLevel {
-    console.log( 'PharmaCareAssistanceLevels: ', this.PharmaCareAssistanceLevels );
-    console.log( 'Pre1939PharmaCareAssistanceLevels: ', this.Pre1939PharmaCareAssistanceLevels );
+    // console.log( 'PharmaCareAssistanceLevels: ', this.PharmaCareAssistanceLevels );
+    // console.log( 'Pre1939PharmaCareAssistanceLevels: ', this.Pre1939PharmaCareAssistanceLevels );
 
-    if ( isUndefined( this.PharmaCareAssistanceLevels )  || isUndefined( this.Pre1939PharmaCareAssistanceLevels ) ) {
-      console.log( 'Assistance levels not loaded' );
-      return;
+    if ( !this.PharmaCareAssistanceLevels  || !this.Pre1939PharmaCareAssistanceLevels ) {
+      console.error( 'Assistance levels not loaded', this.PharmaCareAssistanceLevels, this.Pre1939PharmaCareAssistanceLevels );
+      return null;
     }
 
     let source = this.PharmaCareAssistanceLevels;
@@ -56,7 +71,7 @@ export class FinanceService {
   }
 
   public currencyFormat(currency: number, withDollarSign = false): string {
-    if ( !!!currency ) {
+    if ( !currency ) {
       return null;
     }
     const mask = conformToMask(currency.toString(), this.moneyMask, {});

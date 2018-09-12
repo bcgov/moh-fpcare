@@ -1,12 +1,14 @@
-import {Component, OnInit, Input, ChangeDetectionStrategy, SimpleChanges, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, ChangeDetectionStrategy, SimpleChanges, Output, EventEmitter, ChangeDetectorRef} from '@angular/core';
 import { FinanceService } from '../../finance.service';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
+import { growVertical } from '../../../../animations/animations';
 
 @Component({
   selector: 'fpcare-financial-calculator',
   templateUrl: './financial-calculator.component.html',
   styleUrls: ['./financial-calculator.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [growVertical]
 })
 export class FinancialCalculatorComponent implements OnInit {
 
@@ -27,6 +29,11 @@ export class FinancialCalculatorComponent implements OnInit {
   /** A currency formatted string retrieved from the finance service. */
   public adjustedIncomeDisplay: string = '0';
 
+
+  /** Finance Service is still loading data. */
+  public isLoadingData: boolean = true;
+  public errorLoadingData: boolean = false;
+
   /**
    * Invoked on every ngOnChanges, the salient difference is it only invokes
    * them _after_ ngOnInit() has fired, not before.
@@ -34,7 +41,7 @@ export class FinancialCalculatorComponent implements OnInit {
   onChanges = new BehaviorSubject<SimpleChanges>( null );
 
 
-  constructor(private financeService: FinanceService) {
+  constructor(private financeService: FinanceService, private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -54,6 +61,16 @@ export class FinancialCalculatorComponent implements OnInit {
         this.adjustedIncomeDisplay = this.currencyFormat(this.adjustedIncomeAmount);
         this.incomeAdjustment.emit( this.adjustedIncomeDisplay );
       }
+    });
+
+    // Listen for Finance Service having it's data loaded
+    this.financeService.hasData.subscribe(hasData => {
+      this.isLoadingData = !hasData;
+      this.cd.detectChanges();
+    }, (_onError) => {
+      this.isLoadingData = true;
+      this.errorLoadingData = true;
+      this.cd.detectChanges();
     });
   }
 
