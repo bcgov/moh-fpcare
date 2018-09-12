@@ -34,7 +34,7 @@ export const buildTime = '${ buildTime }';
 /** App version retrieved from package.json. */
 export const projectVersion = '${projectVersion}';
 /** Human readable message  */
-export const message = 'Build: ${ trimmed } - ${ buildTime } (v${projectVersion})';
+export const message = 'Canonical Version: ${ trimmed } - ${ buildTime } (v${projectVersion})';
 /** If true, other values should be present. */
 export const success = ${success};
 `
