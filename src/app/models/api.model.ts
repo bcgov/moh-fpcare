@@ -1,3 +1,5 @@
+import {PharmaCareAssistanceLevel} from '../modules/financial-calculator/assistance-levels.interface';
+
 export enum RegStatusCode {
     SUCCESS = '0',
     ERROR = '1'
@@ -37,7 +39,17 @@ export interface ReprintLetter extends PayloadInterface {
     phn: string;
     dateOfBirth: string;
     postalCode: string;
-    letterType; string;
+    letterType: string;
+}
+
+export interface DeductibleInterface extends PayloadInterface {
+    assistanceLevels: PharmaCareAssistanceLevel[];
+    pre1939AssistanceLevels: PharmaCareAssistanceLevel[];
+
+    benefitYear: string;
+
+    /** Part of input params. Never consumed by Angular app */
+    processDate?: string;
 }
 
 export class ServerPayload implements PayloadInterface {
@@ -73,7 +85,8 @@ export class ServerPayload implements PayloadInterface {
         // Note: using `href` here isn't ideal as it triggers a complete reload
         // of the Angular app. I tried using routerLink``, but angular stripped
         // it out.
-        return msg.replace('<link to Registration Page>', '<a href="registration/requirements">Registration Page');
+        return msg.replace('<link to Registration Page>',
+            '<a href="registration/requirements">Registration Page');
     }
 }
 
@@ -108,14 +121,26 @@ export class StatusCheckPHNPayload extends ServerPayload {
     }
 }
 
-
 export class ReprintLetterPayload extends ServerPayload {
-  phn: string;
-  letterType: string;
+    phn: string;
+    letterType: string;
 
-  constructor(payload: ReprintLetter) {
-    super(payload);
-    this.phn = payload.phn;
-    this.letterType = payload.letterType;
-  }
+    constructor(payload: ReprintLetter) {
+        super(payload);
+        this.phn = payload.phn;
+        this.letterType = payload.letterType;
+    }
+}
+
+export class DeductiblePayload extends ServerPayload implements DeductibleInterface {
+    benefitYear: string;
+    assistanceLevels: PharmaCareAssistanceLevel[];
+    pre1939AssistanceLevels: PharmaCareAssistanceLevel[];
+
+    constructor(payload: DeductibleInterface) {
+        super(payload);
+        this.benefitYear = payload.benefitYear;
+        this.assistanceLevels = payload.assistanceLevels;
+        this.pre1939AssistanceLevels = payload.pre1939AssistanceLevels;
+    }
 }

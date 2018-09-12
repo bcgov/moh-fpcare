@@ -52,8 +52,15 @@ export class AppComponent implements OnInit {
       this.enablePurgeWhenInactive();
     }
 
+    /*
+    * temporary - issue in calculator component that the deductibles require benefit year
+    * so reg status & reprints use this call - and calculator has different call in component to call requests
+    * sequentially.
+    *
+    * Future investigation required
+    */
     // Retrieve benefit year
-    this.apiService.getBenefitYear().subscribe(response => {
+ /*   this.apiService.getBenefitYear().subscribe(response => {
       const payload = new BenefitYearPayload(response);
       // console.log( ' payload: ', payload );
 
@@ -61,7 +68,7 @@ export class AppComponent implements OnInit {
         this.fpcareDataService.benefitYear = payload.benefitYear;
         this.fpcareDataService.taxYear = payload.taxYear;
       }
-    });
+    });*/
   }
 
   /**

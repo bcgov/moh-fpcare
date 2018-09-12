@@ -6,6 +6,9 @@ import { FinanceService } from '../../../financial-calculator/finance.service';
 import {REGISTRATION_ELIGIBILITY, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {isUndefined} from 'util';
+import {ApiService} from '../../../../services/api-service.service';;
+import {BenefitYearPayload, DeductiblePayload} from '../../../../models/api.model';
+
 
 @Component({
   selector: 'fpcare-calculator',
@@ -34,11 +37,36 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
              , private financeService: FinanceService
              , private fpcareDataService: FPCareDataService
              , private registrationService: RegistrationService
-             , private activatedRoute: ActivatedRoute ) {
+             , private activatedRoute: ActivatedRoute
+             , private apiService: ApiService ) {
     super(router);
   }
 
   ngOnInit() {
+    console.log( 'Calculator (onInit) ' );
+
+
+    this.apiService.getBenefitYear().subscribe(response => {
+      const payload = new BenefitYearPayload(response);
+       console.log( ' payload: ', payload );
+
+      if (payload.success){
+        this.fpcareDataService.benefitYear = payload.benefitYear;
+        this.fpcareDataService.taxYear = payload.taxYear;
+      }
+
+      console.log( 'get deductibles');
+      this.apiService.getDeductibles( { benefitYear: this.fpcareDataService.benefitYear })
+          .subscribe(response2 => {
+            const payload2 = new DeductiblePayload(response2);
+            console.log( ' payload: ', payload2);
+
+            if (payload.success){
+              this.financeService.PharmaCareAssistanceLevels = payload2.assistanceLevels;
+              this.financeService.Pre1939PharmaCareAssistanceLevels = payload2.pre1939AssistanceLevels;
+            }
+          });
+    });
 
     // Retrieve standalone state from router data
     this.activatedRoute.data.subscribe((data: {standalone: boolean}) => {
@@ -189,5 +217,4 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
 
     return this.financeService.calculateFamilyNetIncome(incomeNum, spouseNum);
   }
-
 }

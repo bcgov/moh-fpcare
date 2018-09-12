@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { FinanceService } from './finance.service';
-import { PharmaCareAssistanceLevels, Pre1939PharmaCareAssistanceLevels } from './assistance-levels';
+import { PharmaCareAssistanceLevels, Pre1939PharmaCareAssistanceLevels } from './assistance-levels.interface';
 
 describe('FinanceService', () => {
   beforeEach(() => {

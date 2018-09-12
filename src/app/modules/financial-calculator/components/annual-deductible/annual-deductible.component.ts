@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FinanceService } from '../../finance.service';
-import { PharmaCareAssistanceLevel } from '../../assistance-levels';
+import { PharmaCareAssistanceLevel } from '../../assistance-levels.interface';
 import {debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Base } from '../../../../models/base.alias';
 import { growVertical } from '../../../../animations/animations';
