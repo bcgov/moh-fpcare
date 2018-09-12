@@ -12,7 +12,7 @@ import { filter, map } from 'rxjs/operators';
 export class WizardProgressBarComponent extends Base implements OnInit {
   @Input() progressSteps: WizardProgressItem[] = [];
   @ViewChild('stepContainer') stepContainer: ElementRef;
-  @ViewChildren('steps') steps: QueryList<ElementRef>;
+  @ViewChildren('steps') steps: QueryList<ElementRef<HTMLAnchorElement>>;
 
   public activeIndex: number;
 
@@ -22,7 +22,7 @@ export class WizardProgressBarComponent extends Base implements OnInit {
 
   ngOnInit() {
 
-    // Update the progress bar view on route change and _only_ route change.
+    // Update the progress bar view on route change and _only_ route chaange.
     // Skip most of Angular's ChangeDetection in favour of manually optimizing.
     this.router.events.pipe(
       filter(ev => ev instanceof NavigationEnd),
@@ -30,6 +30,7 @@ export class WizardProgressBarComponent extends Base implements OnInit {
     ).subscribe(url => {
       this.activeIndex = this.getActiveIndex(url);
       this.cd.detectChanges();
+      this.scrollStepIntoView();
     });
 
     // Must schedule first run manually, or bar won't be set.
@@ -49,6 +50,25 @@ export class WizardProgressBarComponent extends Base implements OnInit {
 
   getActiveIndex(url): number {
     return this.progressSteps.findIndex(x => url.includes(x.route));
+  }
+
+   /**
+   * Primarily for mobile, this horizontally scrolls the step into view.
+   *
+   * Note - be very careful with any changes to this function because it steps
+   * outside of Angular to call native browser functions.
+   */
+  private scrollStepIntoView() {
+    const target = this.steps.toArray()[this.activeIndex];
+    const container = document.getElementsByClassName('horizontal-scroll');
+    if (container.length === 1) {
+      // Since we're already breaking out of Angular, we try and be safe by using a try/catch.
+      // Otherwise an error here could halt execution,
+      try {
+        container[0].scrollLeft = target.nativeElement.offsetLeft - (window.outerWidth / 2);  
+      } catch (error) {}
+      
+    }
   }
 
 }
