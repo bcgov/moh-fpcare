@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyDateRangePickerModule } from 'mydaterangepicker';
 import { StickyModule } from 'ng2-sticky-kit';
@@ -54,7 +54,8 @@ import {RegistrationService} from './modules/registration/registration.service';
     DummyDataService,
     FPCareDataService,
     ValidationService,
-    RegistrationService
+    RegistrationService,
+    Title
   ],
   bootstrap: [AppComponent]
 })

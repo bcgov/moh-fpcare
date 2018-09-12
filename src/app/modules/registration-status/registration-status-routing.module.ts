@@ -8,11 +8,13 @@ import { REQUEST_REG_STATUS, RESULT_REG_STATUS } from '../../models/route-paths.
 export const pageRoutes: Routes = [
     {
         path: REQUEST_REG_STATUS,
-        component: RegistrationStatusComponent
+        component: RegistrationStatusComponent,
+        data: { title: 'Registration Status Search' }
     },
     {
         path: RESULT_REG_STATUS,
-        component: StatusResultsComponent
+        component: StatusResultsComponent,
+        data: { title: 'Registration Status Search Results'}
     },
     // We have to redirect _somewhere_, so picked one arbitrarily.
     {
