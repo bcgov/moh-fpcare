@@ -5,6 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "npm run dev",
+    "predev": "node src/version.js",
     "dev": "ng serve -o",
     "version": "node src/version.js",
     "test-version": "npm version minor -m 'Increase version for upcoming TEST build: %s'",
