@@ -40,12 +40,9 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    * @returns {boolean}
    */
   canContinue(): boolean {
-
-    // Forms exist
-    const formsLoaded = !!this.form  && !!this.dobForm;
     let valid = false;
 
-    if ( formsLoaded ) {
+    if ( !this.isFormEmpty() ) {
 
       const invalidDob = this.dobForm.map(x => {
         if (!x.form.valid) {
@@ -55,7 +52,8 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
         .filter(x => x);
 
       // Check PHNs are unique
-      if (this.hasSpouse()) {
+      if ( this.hasSpouse() ) {
+        console.log( this.applicant.phn + ' ' + this.spouse.phn );
 
         const phnList: string[] = [this.applicant.phn, this.spouse.phn];
 
@@ -98,7 +96,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    * @returns {boolean}
    */
   hasSpouse(): boolean {
-    return this.fpcareDataService.hasSpouse();
+    return !!this.fpcareDataService.hasSpouse;
   }
 
   /**

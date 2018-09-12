@@ -4,7 +4,7 @@ import { UserService } from './services/user.service';
 import { FPCareDataService } from './services/fpcare-data.service';
 import {environment} from 'environments/environment';
 import { ApiService } from './services/api-service.service';
-import { BenefitYearPayload } from 'app/models/api.model';
+//import { BenefitYearPayload } from 'app/models/api.model';
 
 import * as version from '../VERSION.generated';
 import { Title } from '@angular/platform-browser';
@@ -60,8 +60,15 @@ export class AppComponent implements OnInit {
       this.enablePurgeWhenInactive();
     }
 
+    /*
+    * temporary - issue in calculator component that the deductibles require benefit year
+    * so reg status & reprints use this call - and calculator has different call in component to call requests
+    * sequentially.
+    *
+    * Future investigation required
+    */
     // Retrieve benefit year
-    this.loadBenefitYear();
+    //this.loadBenefitYear();
   }
 
 
@@ -95,6 +102,7 @@ export class AppComponent implements OnInit {
     }
   }
 
+  /*
   private loadBenefitYear() {
     this.apiService.getBenefitYear().subscribe(response => {
       const payload = new BenefitYearPayload(response);
@@ -104,7 +112,7 @@ export class AppComponent implements OnInit {
         this.fpcareDataService.taxYear = payload.taxYear;
       }
     });
-  }
+  }*/
 
   /**
    * Enables the confirm on exit/there are unsaved changes prompt when

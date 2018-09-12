@@ -132,7 +132,7 @@ export class Person extends Base {
     return Object.keys(this._dateOfBirth)
         .map(key => this._dateOfBirth[key])
         .filter(x => x) // Filter out null/undefined
-        .length === 0;
+        .length !== 3;
   }
 
   /**

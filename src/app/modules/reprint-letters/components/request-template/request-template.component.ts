@@ -52,6 +52,8 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   }
 
   ngOnInit() {
+    this.apiService.subscribeBenefitYear();
+
     this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
     this.fpcareDataService.reprintLetterType = this.data.letterType;
   }

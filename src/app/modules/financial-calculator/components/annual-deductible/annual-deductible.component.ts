@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FinanceService } from '../../finance.service';
-import { PharmaCareAssistanceLevel, PharmaCareAssistanceLevels } from '../../assistance-levels';
-import { Subject, interval } from 'rxjs';
-import { throttle, debounceTime, throttleTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { PharmaCareAssistanceLevel } from '../../assistance-levels.interface';
+import {debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Base } from '../../../../models/base.alias';
 import { growVertical } from '../../../../animations/animations';
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: 'fpcare-annual-deductible',
@@ -22,11 +22,11 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
   /** The main data object, retrieved via lookup using familyNetIncome. Used in calclations. */
   public pharmaCareLevel: PharmaCareAssistanceLevel;
   /** Currency formatted dollar amount */
-  public deductible: string;
+  public deductible: string = null;
   /** A percentage value (without the % symbol) of the portion PharmaCare pays after deductible is met  */
   public pharmaCarePortion: number;
   /** A currency formatted dollar amount of the max */
-  public maximum: string;
+  public maximum: string = null;
 
   /** Percentage width of deductible portion of progress bar */
   public deductibleRatio = 0;
@@ -39,7 +39,7 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
    * We use rxjs for performance benefits to reduce the calls to re-animating
    * the progress bar only when it needs it.
    */
-  private progressBarChange = new Subject();
+  private progressBarChange = new BehaviorSubject(null );
 
   constructor(private financeService: FinanceService, private cdref: ChangeDetectorRef) {
     super();
@@ -64,39 +64,48 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
     this.progressBarChange.unsubscribe();
   }
 
-  ngOnChanges(changes){
-    // console.log('Annual deductible ngOnChanges', changes);
-    // this.pharmaCareLevel = this.financeService.findAssistanceLevel(this.familyNetIncome);
-    this.pharmaCareLevel = this.financeService.findAssistanceLevel(this.familyNetIncome, {bornBefore1939: this.bornBefore1939});
-    this.deductible = this.financeService.currencyFormat(this.pharmaCareLevel.deductible);
-    this.maximum = this.financeService.currencyFormat(this.pharmaCareLevel.maximum);
-    this.pharmaCarePortion = this.pharmaCareLevel.pharmaCarePortion;
+  ngOnChanges(changes) {
+    //console.log('Annual deductible ngOnChanges', changes);
 
-    // Update the progress bar UI, if and only if necessary
-    this.progressBarChange.next( this.pharmaCareLevel );
+    this.pharmaCareLevel = this.financeService.findAssistanceLevel(this.familyNetIncome, {bornBefore1939: this.bornBefore1939});
+
+    // Cannot be _undefined
+    if ( !!this.pharmaCareLevel ) {
+      this.deductible = this.financeService.currencyFormat(this.pharmaCareLevel.deductible);
+      this.maximum = this.financeService.currencyFormat(this.pharmaCareLevel.maximum);
+      this.pharmaCarePortion = this.pharmaCareLevel.pharmaCarePortion;
+
+      // Update the progress bar UI, if and only if necessary
+      this.progressBarChange.next(this.pharmaCareLevel);
+    }
   }
 
   private updateProgressBar(){
-    // 100% green bar - PharmaCare pays everything
-    if (this.pharmaCareLevel.maximum === 0){
-      this.maximumRatio = 100;
-      this.deductibleRatio = 0;
-      this.pharmaCareRatio = 0;
-      return;
-    }
 
-    // 50% green / 50% yellow - no deductible bar
-    if (this.pharmaCareLevel.deductible === 0){
-      this.deductibleRatio = 0;
-      this.pharmaCareRatio = 50;
-      this.maximumRatio = 50;
-      return;
-    }
+    // Cannot be _undefined
+    if ( !!this.pharmaCareLevel ) {
 
-    // Show all 3 bars - alignments match the text labels above the bar
-    this.deductibleRatio = 30;
-    this.pharmaCareRatio = 40;
-    this.maximumRatio = 30;
+      // 100% green bar - PharmaCare pays everything
+      if (this.pharmaCareLevel.maximum === 0) {
+        this.maximumRatio = 100;
+        this.deductibleRatio = 0;
+        this.pharmaCareRatio = 0;
+        return;
+      }
+
+      // 50% green / 50% yellow - no deductible bar
+      if (this.pharmaCareLevel.deductible === 0) {
+        this.deductibleRatio = 0;
+        this.pharmaCareRatio = 50;
+        this.maximumRatio = 50;
+        return;
+      }
+
+      // Show all 3 bars - alignments match the text labels above the bar
+      this.deductibleRatio = 30;
+      this.pharmaCareRatio = 40;
+      this.maximumRatio = 30;
+    }
   }
 
 

@@ -57,6 +57,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   }
 
   ngOnInit() {
+    this.apiService.subscribeBenefitYear();
     this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
   }
 

@@ -17,6 +17,7 @@ import {RegistrationService} from '../../registration.service';
 })
 export class ReviewPageComponent extends Base implements OnInit {
 
+
   constructor( private fpcService: FPCareDataService
              , private router: Router
              , private registrationService: RegistrationService ) {
@@ -24,6 +25,8 @@ export class ReviewPageComponent extends Base implements OnInit {
   }
 
   ngOnInit() {
+
+    console.log( 'Review Page' );
     this.registrationService.setItemIncomplete();
   }
 
@@ -52,12 +55,60 @@ export class ReviewPageComponent extends Base implements OnInit {
   }
 
   /**
+   * Retrieves that applicant's income
+   * @returns {string}
+   */
+  get applicantIncome(): string {
+    return this.fpcService.applicantIncome;
+  }
+
+  /**
+   * Retrieves the applicant's spouse's income
+   * @returns {string}
+   */
+  get spouseIncome(): string {
+    return this.fpcService.spouseIncome;
+  }
+
+  /**
+   * Retrieves the Registered Disability Savings for applicant/spouse
+   * @returns {string}
+   */
+  get disabilityAmount(): string {
+    return this.fpcService.disabilityAmount;
+  }
+
+  /**
+   * Retrieves the adjusted income for applicant
+   * @returns {string}
+   */
+  get adjustedIncome(): string {
+    return this.fpcService.adjustedIncome;
+  }
+
+  /**
+   * Flag indicating applicant or spouse born before 1939
+   * @returns {boolean}
+   */
+  get bornBefore1939(): boolean {
+    return this.fpcService.bornBefore1939;
+  }
+
+  /**
+   *
+   * @returns {number}
+   */
+  get adjustedIncomeAmount(): number {
+    return !!this.adjustedIncome ? Number(this.adjustedIncome.replace(/,/g, '')) : 0;
+  }
+
+  /**
    * Flag indicating presence of spouse
    * Displays spouse information section if true, otherwise it's hidden
    * @returns {boolean}
    */
   hasSpouse(): boolean {
-    return this.fpcService.hasSpouse();
+    return !!this.fpcService.hasSpouse;
   }
 
   /**
@@ -67,6 +118,7 @@ export class ReviewPageComponent extends Base implements OnInit {
   hasChildren(): boolean {
     return this.fpcService.hasChildren();
   }
+
 
   /**
    * Retrieves the applicant's date of birth as a string

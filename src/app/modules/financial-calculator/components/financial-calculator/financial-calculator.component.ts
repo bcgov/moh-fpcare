@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, SimpleChanges } from '@angular/core';
+import {Component, OnInit, Input, ChangeDetectionStrategy, SimpleChanges, Output, EventEmitter} from '@angular/core';
 import { FinanceService } from '../../finance.service';
-import { conformToMask } from 'angular2-text-mask';
-import { Subject } from 'rxjs';
+import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
 @Component({
   selector: 'fpcare-financial-calculator',
@@ -16,6 +15,7 @@ export class FinancialCalculatorComponent implements OnInit {
   @Input() disabilitySavingsAmount: number;
   @Input() hasSpouse: boolean;
   @Input() bornBefore1939: boolean;
+  @Output() incomeAdjustment: EventEmitter<string> = new EventEmitter<string>();
 
   /** A currency formatted string corresponding to `income` */
   public incomeDisplay: string = '0';
@@ -31,7 +31,7 @@ export class FinancialCalculatorComponent implements OnInit {
    * Invoked on every ngOnChanges, the salient difference is it only invokes
    * them _after_ ngOnInit() has fired, not before.
    */
-  onChanges = new Subject<SimpleChanges>();
+  onChanges = new BehaviorSubject<SimpleChanges>( null );
 
 
   constructor(private financeService: FinanceService) {
@@ -40,7 +40,7 @@ export class FinancialCalculatorComponent implements OnInit {
   ngOnInit() {
 
     this.onChanges.subscribe((changes: SimpleChanges) => {
-      // console.log('finCalc onchanges', changes);
+      //console.log('finCalc onchanges', changes);
       if (changes.income) {
         this.incomeDisplay = this.currencyFormat(this.income);
       }
@@ -52,6 +52,7 @@ export class FinancialCalculatorComponent implements OnInit {
       if (changes.income || changes.disabilitySavingsAmount){
         this.adjustedIncomeAmount = this.financeService.calculateFamilyAdjustedIncome(this.income, this.disabilitySavingsAmount);
         this.adjustedIncomeDisplay = this.currencyFormat(this.adjustedIncomeAmount);
+        this.incomeAdjustment.emit( this.adjustedIncomeDisplay );
       }
     });
   }

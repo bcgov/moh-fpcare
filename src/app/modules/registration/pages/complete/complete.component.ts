@@ -59,7 +59,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
    * @returns {boolean}
    */
   hasSpouse(): boolean {
-    return this.fpcService.hasSpouse();
+    return !!this.fpcService.hasSpouse;
   }
 
   setToken(token): void {

@@ -1,16 +1,19 @@
 import { AbstractHttpService } from './abstract-api-service';
-
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { LogService } from './log.service';
 import { UUID } from 'angular2-uuid';
 import * as moment from 'moment';
-import { BenefitYearInterface, StatusCheckPHN, StatusCheckRegNum } from 'app/models/api.model';
-import {ReprintLetter} from '../models/api.model';
-
-
+import {
+  BenefitYearInterface,
+  StatusCheckPHN,
+  StatusCheckRegNum,
+  DeductibleInterface,
+  ReprintLetter, BenefitYearPayload
+} from 'app/models/api.model';
+import {FPCareDataService} from './fpcare-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +28,29 @@ export class ApiService extends AbstractHttpService {
   private _token: string;
   private _clientName: string = 'ppiwebuser';
 
-  constructor(protected http: HttpClient, public logService: LogService){
+  constructor(protected http: HttpClient,
+              public logService: LogService,
+              private fpcareDataService: FPCareDataService){
     super(http);
+  }
+
+  /**
+   * temporary - issue in calculator component that the deductibles require benefit year
+   * so reg status & reprints use this call - and calculator has different call in component to call requests
+   * sequentially.
+   *
+   * Code commented out in app.component
+   */
+  public subscribeBenefitYear() {
+    this.getBenefitYear().subscribe(response => {
+      const payload = new BenefitYearPayload(response);
+       console.log( ' payload: ', payload );
+
+      if (payload.success){
+        this.fpcareDataService.benefitYear = payload.benefitYear;
+        this.fpcareDataService.taxYear = payload.taxYear;
+      }
+    });
   }
 
   public getBenefitYear(processDate = this.getProcessDate()) {
@@ -105,6 +129,18 @@ export class ApiService extends AbstractHttpService {
       postalCode: this.trimSpaces (input.postalCode ),
       dateOfBirth: input.dob,
       letterType: input.letterType
+    });
+  }
+
+  public getDeductibles( input: {benefitYear: string}, processDate = this.getProcessDate() ) {
+    const url = environment.baseAPIUrl + 'getDeductibles';
+    console.log( 'input: ', input );
+
+    return this.post<DeductibleInterface>(url, {
+      uuid: this.generateUUID(),
+      clientName: this._clientName,
+      benefitYear: input.benefitYear,
+      processDate: processDate
     });
   }
 
