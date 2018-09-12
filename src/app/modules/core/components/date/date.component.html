@@ -10,7 +10,12 @@
                 #monthRef="ngModel"
                 [disabled]="disabled"
                 [required]="required">
-            <option value="0">&nbsp;</option>
+            <!-- 
+              We show the blank option if the input isn't required, so the user
+              can clear out their data. However if it is required, there's no
+              need.
+             -->
+            <option value="0" *ngIf="!required">&nbsp;</option>
             <option value="1">January</option>
             <option value="2">February</option>
             <option value="3">March</option>
@@ -52,7 +57,7 @@
                max="2300"
                step="1">
 
-        <div role="alert" class='error-container' aria-live="assertive">
+        <div *ngIf='yearRef.status !== "DISABLED"' role="alert" class='error-container' aria-live="assertive">
           <div *ngIf='monthRef.touched || showError'>
             <div class="text-danger" *ngIf="monthRef?.errors?.required" i18n="@@monthErrorRequired">Month is required</div>
           </div>

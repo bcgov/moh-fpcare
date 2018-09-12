@@ -265,3 +265,10 @@ thead tr.ng2-smart-titles .ng2-smart-th {padding-left: 0}
 button.disabled {
   cursor: not-allowed;
 }
+
+// Makes .label styled identically to the label element. Useful in cases where
+// you want to display a label but can't use one for a11y purposes, e.g. the
+// DateComponent.
+.label {
+  @extend label;
+}
