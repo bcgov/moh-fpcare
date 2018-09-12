@@ -39,6 +39,14 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   ngOnInit() {
+
+    // Retrieve standalone state from router data
+    this.activatedRoute.data.subscribe((data: {standalone: boolean}) => {
+      if (data.standalone === true){
+        this.standalone = data.standalone;
+      }
+    });
+
     this.moneyMask = this.financeService.moneyMask;
     this.registrationService.setItemIncomplete();
 
@@ -133,13 +141,6 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
    */
   set bornBefore1939( value: boolean ) {
     this.fpcareDataService.bornBefore1939 = value;
-
-    // Retrieve standalone state from router data
-    this.activatedRoute.data.subscribe((data: {standalone: boolean}) => {
-      if (data.standalone === true){
-        this.standalone = data.standalone;
-      }
-    });
   }
 
   canContinue() {
