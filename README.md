@@ -28,9 +28,12 @@ Prior to TEST and PROD builds you must update the version number. There are two 
 1. increment the package version
 2. commit the result
 3. tag the new commit with the new version number
-4. push the new commit to github with the tag, for the current branch you're on.
+
+After you verify everything is correct, run `git push --follow-tags` to push the new tags to GitHub (or run `npm run push-version`).
 
 As such, you should run these commands right before deploying a build and with a clean working directory (i.e. no changes that are uncommitted in git), otherwise they'll fail.
+
+
 
 As this application is not a library/dependency it does not follow semver.  Instead, version codes are as follows:
 
