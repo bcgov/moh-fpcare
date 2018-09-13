@@ -1,14 +1,13 @@
 import {Base} from './base.alias';
-import {isNullOrUndefined} from 'util';
-
 
 export class Address extends Base {
+
   /* Variables for class */
-  private _street: string;
-  private _postal: string;
-  private _country: string;
-  private _province: string;
-  private _city: string;
+  public street: string;
+  public postal: string;
+  public country: string;
+  public province: string;
+  public city: string;
 
 
   /** Overwrite the native JavaScript toString method to determine how the
@@ -20,54 +19,24 @@ export class Address extends Base {
     return `${this.street}, ${this.city}`;
   }
 
-  /* Setter/Getter functions*/
-  get city(): string {
-    return !(isNullOrUndefined(this._city)) ? this._city : null;
+  /**
+   * Address must have all fields filled out to be considered
+   * complete
+   * @returns {boolean}
+   */
+  isComplete(): boolean {
+    // All fields have data - not empty
+    return !(this.street && this.city && this.country &&
+             this.province && this.postal );
   }
 
-  set city(value: string) {
-    this._city = value;
-  }
-  get province(): string {
-    return !(isNullOrUndefined(this._province)) ? this._province : null;
-  }
-
-  set province(value: string) {
-    this._province = value;
-  }
-  get country(): string {
-    return !(isNullOrUndefined(this._country)) ? this._country : null;
-  }
-
-  set country(value: string) {
-    this._country = value;
-  }
-  get postal(): string {
-    return !(isNullOrUndefined(this._postal)) ? this._postal : null;
-  }
-
-  set postal(value: string) {
-    this._postal = value;
-  }
-  get street(): string {
-    return !(isNullOrUndefined(this._street)) ? this._street : null;
-  }
-
-  set street(value: string) {
-    this._street = value;
-  }
-  /* Check if object has been set */
-  isEmpty(): boolean {
-    return (isNullOrUndefined(this._street) || isNullOrUndefined(this._city) || isNullOrUndefined(this._country) ||
-      isNullOrUndefined(this._province) || isNullOrUndefined(this._postal) ) ? true : false;
-  }
   /* Copy function */
   copy(object: Address) {
-    this._street = object.street;
-    this._city = object.city;
-    this._country = object.country;
-    this._postal = object.postal;
-    this._province = object.province;
+    this.street = object.street;
+    this.city = object.city;
+    this.country = object.country;
+    this.postal = object.postal;
+    this.province = object.province;
   }
 }
 

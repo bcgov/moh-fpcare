@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import { conformToMask } from 'angular2-text-mask';
 import { PharmaCareAssistanceLevel } from './assistance-levels.interface';
-import {isUndefined} from 'util';
 import { BehaviorSubject } from 'rxjs';
 
 
@@ -118,4 +117,13 @@ export class FinanceService {
     return adjustedIncome;
   }
 
+
+  /**
+   * Convert the currency string to a numeric
+   * @param {string} str
+   * @returns {number}
+   */
+  public currencyStrToNumber( str: string ): number {
+    return str ? Number( str.replace(/,/g, '') ) : 0;
+  }
 }

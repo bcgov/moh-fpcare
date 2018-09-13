@@ -43,10 +43,10 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   canContinue(): boolean {
 
-    let valid = this.hasChildren() ? !this.isFormEmpty() : true;
+    let valid = this.hasChildren ? !this.isFormEmpty() : true;
 
     // Ensure forms are loaded before performing checks
-    if ( this.hasChildren() ) {
+    if ( this.hasChildren && !this.isFormEmpty() ) {
 
       const invalidDob = this.dobForm.map(x => {
         if (!x.form.valid) {
@@ -56,7 +56,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
           .filter(x => x);
 
       // Check that PHNs are unique
-      this._uniquePhns = this.validationService.isUnique(this.familyPhnList);
+      this._uniquePhns = this.validationService.isUnique( this.familyPhnList );
 
       // Check that individuals are allowed on Parents FPC account
       const notLegitDep = this.children.map(x => {
@@ -83,8 +83,8 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * Indicates whether or not applicant has children
    * @returns {boolean}
    */
-  hasChildren(): boolean {
-    return this.fpcService.hasChildren();
+  get hasChildren(): boolean {
+    return this.fpcService.hasChildren;
   }
 
   /**
@@ -120,7 +120,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   get buttonLabel(): string {
 
-    return ( this.hasChildren() ) ? 'Continue' : 'Skip this step';
+    return ( this.hasChildren ) ? 'Continue' : 'Skip this step';
   }
 
   /**
@@ -164,13 +164,14 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * @returns {string[]}
    */
   private get familyPhnList(): string [] {
+
     const phnList = this.children.map( x => x.phn );
+
     phnList.push( this.fpcService.applicant.phn );
 
-    if ( !!this.fpcService.hasSpouse ) {
+    if ( this.fpcService.hasSpouse ) {
       phnList.push(this.fpcService.spouse.phn);
     }
-
-    return phnList.filter( x => x );
+    return phnList;
   }
 }

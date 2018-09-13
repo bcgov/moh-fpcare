@@ -52,7 +52,7 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   }
 
   ngOnInit() {
-    this.apiService.subscribeBenefitYear();
+    this.apiService.loadBenefitYear();
 
     this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
     this.fpcareDataService.reprintLetterType = this.data.letterType;
@@ -118,10 +118,10 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
 
     // Setup the request
     const subscription = this.apiService.reprintLetter({
-        phn: this.applicant.phn,
+        phn: this.fpcareDataService.removeStrFormat( this.applicant.phn ),
         benefitYear: this.fpcareDataService.benefitYear,
         dob: this.applicant.dateOfBirthShort,
-        postalCode: this.applicant.address.postal,
+        postalCode: this.fpcareDataService.removeStrFormat( this.applicant.address.postal ),
         letterType: this.data.letterType
       });
 

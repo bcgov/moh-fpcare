@@ -40,6 +40,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    * @returns {boolean}
    */
   canContinue(): boolean {
+
     let valid = false;
 
     if ( !this.isFormEmpty() ) {
@@ -52,15 +53,12 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
         .filter(x => x);
 
       // Check PHNs are unique
-      if ( this.hasSpouse() ) {
-        console.log( this.applicant.phn + ' ' + this.spouse.phn );
-
+      if ( this.hasSpouse) {
         const phnList: string[] = [this.applicant.phn, this.spouse.phn];
-
-        this._uniquePhn = this.validationService.isUnique(phnList);
+        this._uniquePhn = this.validationService.isUnique( phnList );
       }
 
-      valid = this.form.valid && !this.isFormEmpty() && (invalidDob.length === 0) && this._uniquePhn;
+      valid = this.form.valid && (invalidDob.length === 0) && this._uniquePhn;
     }
 
     return valid;
@@ -86,7 +84,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    * Indicates whether the PHNs are the same
    * @returns {boolean}
    */
-  hasUniquePhnError(): boolean {
+  get hasUniquePhnError(): boolean {
     return !this._uniquePhn;
   }
 
@@ -95,8 +93,8 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    * Displays spouse information section if true, otherwise it's hidden
    * @returns {boolean}
    */
-  hasSpouse(): boolean {
-    return !!this.fpcareDataService.hasSpouse;
+  get hasSpouse(): boolean {
+    return this.fpcareDataService.hasSpouse;
   }
 
   /**

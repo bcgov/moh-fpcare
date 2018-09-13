@@ -43,16 +43,17 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
 
     let valid = false;
 
-    if ( !!this.form ) {
+    // Check values only form is not empty
+    if ( !this.isFormEmpty() ) {
 
       // Check SINs are unique
-      if ( this.hasSpouse() ) {
+      if ( this.hasSpouse() && this.spouse.sin ) {
         const sinList: string[] = [this.applicant.sin, this.spouse.sin];
 
         this._uniqueSin = this.validationService.isUnique( sinList );
       }
 
-      valid = this.form.valid && this._uniqueSin && !this.isFormEmpty();
+      valid = this.form.valid && this._uniqueSin;
     }
 
     return valid;
@@ -88,7 +89,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * @returns {string}
    */
   getApplicantDob(): string {
-    return this.applicant.dateOfBirthShort;
+    return this.applicant.formatDateOfBirth;
   }
 
   /**
@@ -96,7 +97,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * @returns {string}
    */
   getSpouseDob(): string {
-    return this.spouse.dateOfBirthShort;
+    return this.spouse.formatDateOfBirth;
   }
 
   /**

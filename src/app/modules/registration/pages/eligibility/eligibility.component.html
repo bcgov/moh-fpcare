@@ -22,20 +22,20 @@
         <fpcare-date
                 id="ap_dob"
                 [useCurrentDate]="false"
-                [date]="applicant.dateOfBirth"
+                [(date)]="applicant.dateOfBirth"
                 [restrictDate]="'past'">
         </fpcare-date>
       </div>
     </div>
 
-    <div  *ngIf="hasSpouse()">
+    <div  *ngIf="hasSpouse">
 
       <h2 class="border-bottom">Spouse Information</h2>
 
       <div class="p-md-2 col-md-6">
         <div class="form-group">
           <fpcare-phn [(value)]="spouse.phn"></fpcare-phn>
-          <div *ngIf="hasUniquePhnError()" role="alert" aria-live="assertive">
+          <div *ngIf="hasUniquePhnError" role="alert" aria-live="assertive">
             <div class="text-danger">This PHN was already used for registrant.</div>
           </div>
         </div>
@@ -45,7 +45,7 @@
           <fpcare-date
                   id="sp_dob"
                   [useCurrentDate]="false"
-                  [date]="spouse.dateOfBirth"
+                  [(date)]="spouse.dateOfBirth"
                   [restrictDate]="'past'">
           </fpcare-date>
         </div>
@@ -55,11 +55,6 @@
   </form>
 
   <aside>
-     <div class="todo">
-        <ul>
-           <li>Date validation causing errors - need to investigate</li>
-        </ul>
-     </div>
     <div>
       <h5>PHN</h5>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>

@@ -11,7 +11,7 @@ export class Masking extends Base {
   @Input() value: string;
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
-  @Input() disabled: boolean;
+  @Input() disabled: boolean = false;
 
   constructor() {
     super();
@@ -31,7 +31,9 @@ export class Masking extends Base {
    * @param {string} value
    */
   onUpdate( value: string ) {
-    this.value = value;
-    this.valueChange.emit( this.value );
+    console.log( 'onUpdate: ', value );
+
+    // Emit value without spaces
+    this.valueChange.emit( value );
   }
 }
