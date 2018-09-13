@@ -21,8 +21,9 @@ export class ValidationService {
    * @returns {boolean}
    */
   isUnique( list: string[] ): boolean {
+    const sortedList = list.sort().filter( x => x );
     const uniqueList = list.filter( this.filterUnique );
-    return ( uniqueList.length === list.length );
+    return ( uniqueList.length === sortedList.length );
   }
 
   /**

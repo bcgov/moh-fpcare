@@ -38,8 +38,8 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
     let valid = false;
 
-    if ( !!this.form ) {
-      valid = this.form.valid && !this.isFormEmpty();
+    if ( this.isFormEmpty() ) {
+      valid = this.form.valid;
     }
 
     return valid;
@@ -63,8 +63,6 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     if ( !this._postalCodeMatch ) {
       this.applicant.updAddress = new Address();
     }
-
-    this.applicant.updatedAddress = !this._postalCodeMatch; // Flag to indicate address is updated
 
     return this._postalCodeMatch;
   }

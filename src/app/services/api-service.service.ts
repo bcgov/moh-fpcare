@@ -41,10 +41,9 @@ export class ApiService extends AbstractHttpService {
    *
    * Code commented out in app.component
    */
-  public subscribeBenefitYear() {
+  public loadBenefitYear() {
     this.getBenefitYear().subscribe(response => {
       const payload = new BenefitYearPayload(response);
-       console.log( ' payload: ', payload );
 
       if (payload.success){
         this.fpcareDataService.benefitYear = payload.benefitYear;
@@ -106,8 +105,8 @@ export class ApiService extends AbstractHttpService {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       benefitYear: input.benefitYear,
-      phn: this.trimSpaces( input.phn),
-      postalCode: this.trimSpaces (input.postalCode ),
+      phn: input.phn,
+      postalCode: input.postalCode,
       dateOfBirth: input.dob
     });
   }
@@ -125,8 +124,8 @@ export class ApiService extends AbstractHttpService {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       benefitYear: input.benefitYear,
-      phn: this.trimSpaces( input.phn),
-      postalCode: this.trimSpaces (input.postalCode ),
+      phn: input.phn,
+      postalCode: input.postalCode,
       dateOfBirth: input.dob,
       letterType: input.letterType
     });
@@ -134,7 +133,6 @@ export class ApiService extends AbstractHttpService {
 
   public getDeductibles( input: {benefitYear: string}, processDate = this.getProcessDate() ) {
     const url = environment.baseAPIUrl + 'getDeductibles';
-    console.log( 'input: ', input );
 
     return this.post<DeductibleInterface>(url, {
       uuid: this.generateUUID(),
@@ -169,15 +167,5 @@ export class ApiService extends AbstractHttpService {
    */
   private getProcessDate(): string {
     return moment().format('YYYYMMDD');
-  }
-
-  /**
-   * Remove spaces from string formatted with mask
-   * @param {string} str
-   * @returns {string}
-   */
-  private trimSpaces( str: string ): string {
-    // Remove spaces - mask format
-    return str.replace(/ /g, '');
   }
 }

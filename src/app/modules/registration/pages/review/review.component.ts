@@ -25,8 +25,6 @@ export class ReviewPageComponent extends Base implements OnInit {
   }
 
   ngOnInit() {
-
-    console.log( 'Review Page' );
     this.registrationService.setItemIncomplete();
   }
 
@@ -99,7 +97,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {number}
    */
   get adjustedIncomeAmount(): number {
-    return !!this.adjustedIncome ? Number(this.adjustedIncome.replace(/,/g, '')) : 0;
+    return this.adjustedIncome ? Number( this.adjustedIncome.replace(/,/g, '') ) : 0;
   }
 
   /**
@@ -108,7 +106,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {boolean}
    */
   hasSpouse(): boolean {
-    return !!this.fpcService.hasSpouse;
+    return this.fpcService.hasSpouse;
   }
 
   /**
@@ -116,7 +114,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {boolean}
    */
   hasChildren(): boolean {
-    return this.fpcService.hasChildren();
+    return this.fpcService.hasChildren;
   }
 
 
@@ -125,7 +123,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getApplicantDob(): string {
-    return this.applicant.dateOfBirthShort;
+    return this.applicant.formatDateOfBirth;
   }
 
   /**
@@ -133,7 +131,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getSpouseDob(): string {
-    return this.spouse.dateOfBirthShort;
+    return this.spouse.formatDateOfBirth;
   }
 
   /**
@@ -142,7 +140,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getChildDob( child: Person ): string {
-    return child.dateOfBirthShort;
+    return child.formatDateOfBirth;
   }
 
   /**
@@ -178,7 +176,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getStreet(): string {
-    return  this.isAddressUpdated() ? this.applicant.updAddress.street : this.applicant.address.street ;
+    return  this.isAddressUpdated ? this.applicant.updAddress.street : this.applicant.address.street ;
   }
 
   /**
@@ -186,7 +184,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getCity(): string {
-    return  this.isAddressUpdated() ? this.applicant.updAddress.city : this.applicant.address.city;
+    return  this.isAddressUpdated ? this.applicant.updAddress.city : this.applicant.address.city;
   }
 
   /**
@@ -194,7 +192,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getProvince(): string {
-    return  this.isAddressUpdated() ? this.applicant.updAddress.province : this.applicant.address.province;
+    return  this.isAddressUpdated ? this.applicant.updAddress.province : this.applicant.address.province;
   }
 
   /**
@@ -202,7 +200,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getCountry(): string {
-    return  this.isAddressUpdated() ? this.applicant.updAddress.country : this.applicant.address.country;
+    return  this.isAddressUpdated ? this.applicant.updAddress.country : this.applicant.address.country;
   }
 
   /**
@@ -210,7 +208,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getPostalCode(): string {
-    return  this.isAddressUpdated() ? this.applicant.updAddress.postal : this.applicant.address.postal ;
+    return  this.isAddressUpdated ? this.applicant.updAddress.postal : this.applicant.address.postal ;
   }
 
   // Methods triggered by the form action bar
@@ -227,8 +225,8 @@ export class ReviewPageComponent extends Base implements OnInit {
    *
    * @returns {boolean}
    */
-  isAddressUpdated(): boolean {
-    return this.applicant.isAdressUpdated();
+  get isAddressUpdated(): boolean {
+    return this.applicant.isAdressUpdated;
   }
 
   /** Navigates to a route then automatically scrolls to the top of the page. */

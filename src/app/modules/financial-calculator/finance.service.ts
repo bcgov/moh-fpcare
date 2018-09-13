@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import { conformToMask } from 'angular2-text-mask';
 import { PharmaCareAssistanceLevel } from './assistance-levels.interface';
-import {isUndefined} from 'util';
 
 
 @Injectable({
@@ -38,10 +37,8 @@ export class FinanceService {
    * @memberof FinanceService
    */
   public findAssistanceLevel(familyNetIncome: number = 0, config?: { bornBefore1939: boolean }): PharmaCareAssistanceLevel {
-    console.log( 'PharmaCareAssistanceLevels: ', this.PharmaCareAssistanceLevels );
-    console.log( 'Pre1939PharmaCareAssistanceLevels: ', this.Pre1939PharmaCareAssistanceLevels );
 
-    if ( isUndefined( this.PharmaCareAssistanceLevels )  || isUndefined( this.Pre1939PharmaCareAssistanceLevels ) ) {
+    if ( !this.PharmaCareAssistanceLevels || !this.Pre1939PharmaCareAssistanceLevels ) {
       console.log( 'Assistance levels not loaded' );
       return;
     }

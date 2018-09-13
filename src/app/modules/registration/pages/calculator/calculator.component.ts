@@ -5,8 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FinanceService } from '../../../financial-calculator/finance.service';
 import {REGISTRATION_ELIGIBILITY, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
-import {isUndefined} from 'util';
-import {ApiService} from '../../../../services/api-service.service';;
+import {ApiService} from '../../../../services/api-service.service';
 import {BenefitYearPayload, DeductiblePayload} from '../../../../models/api.model';
 
 
@@ -43,23 +42,19 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   ngOnInit() {
-    console.log( 'Calculator (onInit) ' );
 
-
+    //
     this.apiService.getBenefitYear().subscribe(response => {
       const payload = new BenefitYearPayload(response);
-       console.log( ' payload: ', payload );
 
       if (payload.success){
         this.fpcareDataService.benefitYear = payload.benefitYear;
         this.fpcareDataService.taxYear = payload.taxYear;
       }
 
-      console.log( 'get deductibles');
       this.apiService.getDeductibles( { benefitYear: this.fpcareDataService.benefitYear })
           .subscribe(response2 => {
             const payload2 = new DeductiblePayload(response2);
-            console.log( ' payload: ', payload2);
 
             if (payload.success){
               this.financeService.PharmaCareAssistanceLevels = payload2.assistanceLevels;
@@ -173,7 +168,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
 
   canContinue() {
     return (!this.isFormEmpty() && this.form.valid &&
-        !isUndefined( this.hasSpouse ) && !isUndefined( this.bornBefore1939 ));
+        undefined !== this.hasSpouse && undefined !== this.bornBefore1939 );
   }
 
   continue() {

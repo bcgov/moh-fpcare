@@ -47,6 +47,7 @@ export class AppComponent implements OnInit {
       this.fpcareDataService.applicant = this.dummyDataService.createApplicant();
       // console.log( 'applicant: ', this.fpcareDataService.applicant );
       this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
+      this.fpcareDataService.hasSpouse = true;
       // console.log( 'spouse: ', this.fpcareDataService.spouse );
       this.fpcareDataService.dependants = this.dummyDataService.createChildren( 2 );
       // console.log( 'children: ', this.fpcareDataService.dependants );

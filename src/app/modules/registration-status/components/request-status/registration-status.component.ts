@@ -57,7 +57,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   }
 
   ngOnInit() {
-    this.apiService.subscribeBenefitYear();
+    this.apiService.loadBenefitYear();
     this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
   }
 
@@ -141,10 +141,10 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     let subscription;
     if (this.disableRegNum()) {
       subscription = this.apiService.statusCheckPHN({
-        phn: this.applicant.phn,
+        phn: this.fpcareDataService.removeStrFormat( this.applicant.phn ),
         benefitYear: this.fpcareDataService.benefitYear,
         dob: this.applicant.dateOfBirthShort,
-        postalCode: this.applicant.address.postal
+        postalCode: this.fpcareDataService.removeStrFormat( this.applicant.address.postal )
       });
     }
     else {

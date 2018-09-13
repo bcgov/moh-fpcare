@@ -28,24 +28,15 @@ export class Person extends Base {
 
   // Contact information for person
   /* Mailing address for person */
-  address: Address = new Address();
-  updAddress: Address;
-  private _updatedAddress: boolean = false;
+  public address: Address = new Address();
+  public updAddress: Address;
 
   /**
-   *
-   * @param {boolean} updated
-   */
-  set updatedAddress( updated: boolean ) {
-    this._updatedAddress = updated;
-  }
-
-  /**
-   *
+   * Checks if address was updated
    * @returns {boolean}
    */
-  isAdressUpdated(): boolean {
-    return this._updatedAddress;
+  get isAdressUpdated(): boolean {
+    return ( this.updAddress && !this.updAddress.isEmpty() );
   }
 
   /**
@@ -122,6 +113,18 @@ export class Person extends Base {
         .month(this._dateOfBirth.month - 1) //moment is 0 indexed, SimpleDate is not
         .year(this._dateOfBirth.year)
         .format('YYYYMMDD');
+  }
+
+  /**
+   * Returns DoB in DD/MM/YYYY format, for display purposes
+   */
+  get formatDateOfBirth(): string {
+    return this.isDobEmpty() ? null :
+        moment()
+            .date(this._dateOfBirth.day)
+            .month(this._dateOfBirth.month - 1) //moment is 0 indexed, SimpleDate is not
+            .year(this._dateOfBirth.year)
+            .format('DD/MM/YYYY');
   }
 
   /**
@@ -223,5 +226,3 @@ export class Person extends Base {
   }
 }
 
-/* Interface for telephone number */
-interface PhoneNumber { }

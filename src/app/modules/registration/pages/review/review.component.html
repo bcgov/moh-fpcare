@@ -79,25 +79,10 @@
     <h2>Contact Information
       <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editContactInfo()"></i>
     </h2>
-    <div *ngIf="!isAddressUpdated()" class="bg-light">
+    <div *ngIf="!isAddressUpdated; else updatedAddress" class="bg-light">
       <div class="row p-md-1">
         <div class="col-md-6">Mailing Address</div>
         <div class="col-md-6">{{getPostalCode()}}</div>
-      </div>
-    </div>
-    <div *ngIf="isAddressUpdated()" class="bg-light">
-      <div class="row p-md-1">
-        <div class="col-md-6">Mailing Address</div>
-        <div class="col-md-6">{{getStreet()}}</div>
-      </div>
-      <div class="row p-md-1">
-        <div class="col-md-6 offset-md-6">{{getCity()}}, {{getProvince()}}</div>
-      </div>
-      <div class="row p-md-1">
-        <div class="col-md-6 offset-md-6">{{getPostalCode()}}</div>
-      </div>
-      <div class="row p-md-1">
-        <div class="col-md-6 offset-md-6">{{getCountry()}}</div>
       </div>
     </div>
   </div>
@@ -116,7 +101,7 @@
           <div class="col-md-6">Spouse/common-law partner</div>
           <div class="col-md-6">{{hasSpouse() ? 'Yes' : 'No'}}</div>
         </div>
-        <div class="row p-md-1">
+        <div *ngIf="hasSpouse()" class="row p-md-1">
           <div class="col-md-6">Spouse's annual income</div>
           <div class="col-md-6">{{spouseIncome}}</div>
         </div>
@@ -141,3 +126,22 @@
   </fpcare-form-action-bar>
   
 </fpcare-page-framework>
+
+<!-- There's no response object - user hasn't submitted the HTTP request. -->
+<ng-template #updatedAddress>
+  <div class="bg-light">
+    <div class="row p-md-1">
+      <div class="col-md-6">Mailing Address</div>
+      <div class="col-md-6">{{getStreet()}}</div>
+    </div>
+    <div class="row p-md-1">
+      <div class="col-md-6 offset-md-6">{{getCity()}}, {{getProvince()}}</div>
+    </div>
+    <div class="row p-md-1">
+      <div class="col-md-6 offset-md-6">{{getPostalCode()}}</div>
+    </div>
+    <div class="row p-md-1">
+      <div class="col-md-6 offset-md-6">{{getCountry()}}</div>
+    </div>
+  </div>
+</ng-template>

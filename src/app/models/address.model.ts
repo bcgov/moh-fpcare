@@ -22,45 +22,52 @@ export class Address extends Base {
 
   /* Setter/Getter functions*/
   get city(): string {
-    return !(isNullOrUndefined(this._city)) ? this._city : null;
+    return this._city ? this._city : null;
   }
 
   set city(value: string) {
     this._city = value;
   }
   get province(): string {
-    return !(isNullOrUndefined(this._province)) ? this._province : null;
+    return this._province ? this._province : null;
   }
 
   set province(value: string) {
     this._province = value;
   }
   get country(): string {
-    return !(isNullOrUndefined(this._country)) ? this._country : null;
+    return this._country ? this._country : null;
   }
 
   set country(value: string) {
     this._country = value;
   }
   get postal(): string {
-    return !(isNullOrUndefined(this._postal)) ? this._postal : null;
+    return this._postal ? this._postal : null;
   }
 
   set postal(value: string) {
     this._postal = value;
   }
   get street(): string {
-    return !(isNullOrUndefined(this._street)) ? this._street : null;
+    return this._street ? this._street : null;
   }
 
   set street(value: string) {
     this._street = value;
   }
-  /* Check if object has been set */
+
+  /**
+   * Address must have all fields filled out to be considered
+   * not empty
+   * @returns {boolean}
+   */
   isEmpty(): boolean {
-    return (isNullOrUndefined(this._street) || isNullOrUndefined(this._city) || isNullOrUndefined(this._country) ||
-      isNullOrUndefined(this._province) || isNullOrUndefined(this._postal) ) ? true : false;
+    // All fields have data - not empty
+    return !(this._street && this._city && this._country &&
+             this._province && this._postal );
   }
+
   /* Copy function */
   copy(object: Address) {
     this._street = object.street;
