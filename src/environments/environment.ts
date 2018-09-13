@@ -18,7 +18,7 @@ export const environment = {
   captchaApiBaseUrl: '/fpcare/api/captcha',
 
   /** console.log() HTTP requests from our API and Log services */
-  logHTTPRequestsToConsole: true,
+  logHTTPRequestsToConsole: false,
 
   /** Do not show the consent modal by setting the user as already consenting to the collection notice. */
   bypassConsentModal: true,
