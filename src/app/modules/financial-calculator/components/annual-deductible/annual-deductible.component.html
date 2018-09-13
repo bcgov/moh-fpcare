@@ -5,6 +5,7 @@
   <span>$0</span>
   <span *ngIf="pharmaCareLevel?.deductible >= 1" class='progress-labels--deductible'>${{deductible}}</span>
   <span *ngIf="pharmaCareLevel?.maximum >= 1" class='progress-labels--maximum'>${{maximum}}</span>
+  <!-- TODO - Remove infinity icon but keep layout. nbsp? -->
   <span class='infinity'>&infin;</span>
 </div>
 

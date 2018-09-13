@@ -32,9 +32,32 @@ export class FinanceService {
   });
 
   public setAssistanceLevels(normal: PharmaCareAssistanceLevel[], pre1939: PharmaCareAssistanceLevel[]){
+    // Change strings of numbers into numbers, as we do math on them
+    // this.PharmaCareAssistanceLevels = normal.map(item => this.convertFormattedStringToNumber(item))
+    // TODO - TEmp commented out to merge branches. Use the line below.
+    // this.PharmaCareAssistanceLevels = normal
+      // .map(item => this.mapObjectByKey(item, this.convertFormattedStringToNumber));
+
     this.PharmaCareAssistanceLevels = normal;
     this.Pre1939PharmaCareAssistanceLevels = pre1939;
+
+    console.log('AssistaneLevels', {normal: this.PharmaCareAssistanceLevels, pre1939: this.Pre1939PharmaCareAssistanceLevels});
+
     this._hasData.next(true);
+  }
+
+  // todo - move
+  private mapObjectByKey<T>(item: T, mutator: (input) => any ): T {
+    Object.keys(item).map(key => {
+      item[key] = mutator(item[key]);
+    });
+    return item;
+  }
+
+  // todo - move
+  private convertFormattedStringToNumber(string: string): number {
+
+    return 0;
   }
 
   public failedToLoadAssistanceLevels(error): void {

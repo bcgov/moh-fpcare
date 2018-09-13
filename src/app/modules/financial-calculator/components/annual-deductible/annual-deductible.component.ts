@@ -53,6 +53,11 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
         debounceTime(200),
       )
       .subscribe(_ => {
+        console.log('AnnualDeductible progressBarChange', _);
+        if (!this.pharmaCareLevel){
+          return;
+        }
+
         this.updateProgressBar();
         // Since we use debounceTime(), updates can happen after Angular change
         // detection is done, so we have to manually invoke it.
@@ -70,7 +75,7 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
     this.pharmaCareLevel = this.financeService.findAssistanceLevel(this.familyNetIncome, {bornBefore1939: this.bornBefore1939});
 
     // Cannot be _undefined
-    if ( !!this.pharmaCareLevel ) {
+    if ( this.pharmaCareLevel ) {
       this.deductible = this.financeService.currencyFormat(this.pharmaCareLevel.deductible);
       this.maximum = this.financeService.currencyFormat(this.pharmaCareLevel.maximum);
       this.pharmaCarePortion = this.pharmaCareLevel.pharmaCarePortion;
@@ -80,32 +85,34 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
     }
   }
 
-  private updateProgressBar(){
-
-    // Cannot be _undefined
-    if ( !!this.pharmaCareLevel ) {
-
-      // 100% green bar - PharmaCare pays everything
-      if (this.pharmaCareLevel.maximum === 0) {
-        this.maximumRatio = 100;
-        this.deductibleRatio = 0;
-        this.pharmaCareRatio = 0;
-        return;
-      }
-
-      // 50% green / 50% yellow - no deductible bar
-      if (this.pharmaCareLevel.deductible === 0) {
-        this.deductibleRatio = 0;
-        this.pharmaCareRatio = 50;
-        this.maximumRatio = 50;
-        return;
-      }
-
-      // Show all 3 bars - alignments match the text labels above the bar
-      this.deductibleRatio = 30;
-      this.pharmaCareRatio = 40;
-      this.maximumRatio = 30;
+  private updateProgressBar() {
+    // 100% green bar - PharmaCare pays everything
+    if (Number(this.pharmaCareLevel.maximum) === 0) {
+      this.maximumRatio = 100;
+      this.deductibleRatio = 0;
+      this.pharmaCareRatio = 0;
+      return;
     }
+
+    // 50% green / 50% yellow - no deductible bar
+    if (Number(this.pharmaCareLevel.deductible) === 0) {
+      this.deductibleRatio = 0;
+      this.pharmaCareRatio = 50;
+      this.maximumRatio = 50;
+      return;
+    }
+
+    // Show all 3 bars - alignments match the text labels above the bar
+    this.deductibleRatio = 30;
+    this.pharmaCareRatio = 40;
+    this.maximumRatio = 30;
+
+    console.log('done updateProgressBar', {
+      deductibleRatio: this.deductibleRatio,
+      pharmaCareRatio: this.pharmaCareRatio,
+      maximumRatio: this.maximumRatio,
+      pharmaCareLevel: this.pharmaCareLevel
+    });
   }
 
 
