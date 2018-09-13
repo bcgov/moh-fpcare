@@ -35,12 +35,11 @@ export class FPCareDataService {
   public taxYear: string;
 
   /** Financial Information for applicant */
-  public applicantIncome: string;
-  public spouseIncome: string;
-  public disabilityAmount: string;
+  public applicantIncome: number; /** Income for applicant */
+  public spouseIncome: number; /** Income for applicant's spouse */
+  public disabilityAmount: number; /** Amount for disability */
+  public adjustedIncome: number;
   public bornBefore1939: boolean;
-  public adjustedIncome: string = '0'; // Family Income - disability
-
 
   /** Maximum number of dependents on an account */
   MAX_DEPENDANTS = 18;

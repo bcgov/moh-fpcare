@@ -9,6 +9,7 @@ import {
   REGISTRATION_ELIGIBILITY, REGISTRATION_FINANCIAL, REGISTRATION_PATH
 } from '../../../../models/route-paths.constants';
 import {RegistrationService} from '../../registration.service';
+import {FinanceService} from '../../../financial-calculator/finance.service';
 
 @Component({
   selector: 'fpcare-review',
@@ -20,7 +21,8 @@ export class ReviewPageComponent extends Base implements OnInit {
 
   constructor( private fpcService: FPCareDataService
              , private router: Router
-             , private registrationService: RegistrationService ) {
+             , private registrationService: RegistrationService
+             , private financeService: FinanceService ) {
     super( );
   }
 
@@ -57,7 +59,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   get applicantIncome(): string {
-    return this.fpcService.applicantIncome;
+    return this.financeService.currencyFormat( this.fpcService.applicantIncome, true );
   }
 
   /**
@@ -65,7 +67,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   get spouseIncome(): string {
-    return this.fpcService.spouseIncome;
+    return this.financeService.currencyFormat( this.fpcService.spouseIncome, true );
   }
 
   /**
@@ -73,7 +75,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   get disabilityAmount(): string {
-    return this.fpcService.disabilityAmount;
+    return this.financeService.currencyFormat( this.fpcService.disabilityAmount, true );
   }
 
   /**
@@ -81,7 +83,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   get adjustedIncome(): string {
-    return this.fpcService.adjustedIncome;
+    return this.financeService.currencyFormat( this.fpcService.adjustedIncome, true );
   }
 
   /**
@@ -97,7 +99,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {number}
    */
   get adjustedIncomeAmount(): number {
-    return this.adjustedIncome ? Number( this.adjustedIncome.replace(/,/g, '') ) : 0;
+    return this.fpcService.adjustedIncome;
   }
 
   /**

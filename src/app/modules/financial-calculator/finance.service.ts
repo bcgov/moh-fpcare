@@ -77,4 +77,13 @@ export class FinanceService {
     return adjustedIncome;
   }
 
+
+  /**
+   * Convert the currency string to a numeric
+   * @param {string} str
+   * @returns {number}
+   */
+  public currencyStrToNumber( str: string ): number {
+    return str ? Number( str.replace(/,/g, '') ) : 0;
+  }
 }

@@ -15,12 +15,18 @@ import {BenefitYearPayload, DeductiblePayload} from '../../../../models/api.mode
   styleUrls: ['./calculator.component.scss']
 })
 export class CalculatorPageComponent extends AbstractFormComponent implements OnInit {
-  /** Numeric value for disability */
-  public disabilityAmount: number;
   /** Numeric value for income + spouseIncome (if applicable) */
   public totalFamilyIncome: number;
   /** The text mask responsible for the currency formatting. */
   public moneyMask;
+  /** Formatted currency string for applicant's income */
+  public income: string;
+  /** Formatted currency string for applicant's spouse's income */
+  public spouseIncome: string;
+  /** Formatted currency string for disability amount */
+  public disabilityFormatted: string;
+  /** Numeric value for disability */
+  public disabilityAmount: number;
 
   /**
    * Is the form standalone? If false, it's part of Registration's flow, if
@@ -92,62 +98,12 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
 
     if ( !value ) {
       // set blank - no spouse
-      this.fpcareDataService.spouseIncome = '';
+      this.spouseIncome = '';
     } else {
       // Spouse
       this.fpcareDataService.addSpouse();
     }
     this.fpcareDataService.hasSpouse = value;
-  }
-
-  /**
-   * Retrieves formatted currency string for applicant's income
-   * @returns {string}
-   */
-  get income(): string {
-    return this.fpcareDataService.applicantIncome;
-  }
-
-  /**
-   * Sets formatted currency string for applicant's income
-   * @param {string} value
-   */
-  set income( value: string ) {
-    this.fpcareDataService.applicantIncome = value;
-  }
-
-  /**
-   * Retrieves formatted currency string for applicant's spouse's income
-   * @returns {string}
-   */
-  get spouseIncome(): string {
-    return this.fpcareDataService.spouseIncome;
-  }
-
-  /**
-   * Sets formatted currency string for applicant's spouse's income
-   * @param {string} value
-   */
-  set spouseIncome( value: string ) {
-    this.fpcareDataService.spouseIncome = value;
-  }
-
-  /**
-   *  Retrieve formatted currency string for disability amount
-   * @returns {string}
-   */
-  get disabilityFormatted() {
-    return this.fpcareDataService.disabilityAmount;
-  }
-
-  /**
-   * Set formatted currency string for disability amount
-   * @param {string} value
-   */
-  set disabilityFormatted( value: string ) {
-    if ( !!value ) {
-      this.fpcareDataService.disabilityAmount = value;
-    }
   }
 
   /**
@@ -183,11 +139,16 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     this.totalFamilyIncome = this.calculateTotalFamilyIncome();
 
     if (this.disabilityFormatted && this.disabilityFormatted.length) {
-      this.disabilityAmount = Number(this.disabilityFormatted.replace(/,/g, ''));
+      this.disabilityAmount = this.financeService.currencyStrToNumber( this.disabilityFormatted );
     }
     else {
       this.disabilityAmount = 0;
     }
+
+    // Update fpcare-data service values
+    this.fpcareDataService.applicantIncome = this.financeService.currencyStrToNumber( this.income );
+    this.fpcareDataService.spouseIncome = this.financeService.currencyStrToNumber( this.spouseIncome );
+    this.fpcareDataService.disabilityAmount = this.disabilityAmount;
   }
 
   /**
@@ -195,7 +156,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
    * @param {string} value
    */
   public onIncomeAdjustment( value: string ) {
-    this.fpcareDataService.adjustedIncome = value;
+    this.fpcareDataService.adjustedIncome = this.financeService.currencyStrToNumber( value );
   }
 
   private calculateTotalFamilyIncome(): number {
@@ -203,11 +164,11 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     let spouseNum = 0;
 
     if (this.income){
-      incomeNum = Number(this.income.replace(/,/g, ''));
+      incomeNum = this.financeService.currencyStrToNumber( this.income );
     }
 
     if ( this.hasSpouse && this.spouseIncome) {
-      spouseNum = Number(this.spouseIncome.replace(/,/g, ''));
+      spouseNum = this.financeService.currencyStrToNumber( this.spouseIncome );
     }
 
     return this.financeService.calculateFamilyNetIncome(incomeNum, spouseNum);
