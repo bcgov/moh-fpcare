@@ -102,10 +102,9 @@ export class ReviewPageComponent extends Base implements OnInit {
 
   /**
    * Flag indicating presence of spouse
-   * Displays spouse information section if true, otherwise it's hidden
    * @returns {boolean}
    */
-  hasSpouse(): boolean {
+  get hasSpouse(): boolean {
     return this.fpcService.hasSpouse;
   }
 
@@ -113,7 +112,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * Indicates whether or not applicant has children
    * @returns {boolean}
    */
-  hasChildren(): boolean {
+  get hasChildren(): boolean {
     return this.fpcService.hasChildren;
   }
 
