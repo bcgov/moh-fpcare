@@ -23,7 +23,7 @@
          <div class="form-group">
             <fpcare-name
                 [label]="'Surname'"
-                [(value)]="child.lastname">
+                [(value)]="child.lastName">
             </fpcare-name>
          </div>
         <div class="form-group">
@@ -31,7 +31,7 @@
           <fpcare-date
                   id="ch_dob_{{i}}"
                   [useCurrentDate]="false"
-                  [date]="child.dateOfBirth"
+                  [(date)]="child.dateOfBirth"
                   [restrictDate]="'past'">
           </fpcare-date>
           <div *ngIf="!legitimateDependant(child)" role="alert" aria-live="assertive">
@@ -40,7 +40,7 @@
         </div>
         <div class="form-group">
            <fpcare-phn
-               [value]="child.phn">
+               [(value)]="child.phn">
            </fpcare-phn>
           <div *ngIf="hasUniquePhnError(child)" role="alert" aria-live="assertive">
             <div class="text-danger">This PHN was already used for another family member.</div>
@@ -55,11 +55,6 @@
   </button>
 
   <aside>
-    <div class="todo">
-      <ul>
-        <li>Need way to separate length message from invalid charcters</li>
-      </ul>
-    </div>
     <strong>Child Info aside!</strong>
     Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque modi ipsum cumque tempore dolore explicabo libero, dolor dignissimos debitis minus voluptate quas culpa dolores atque inventore unde iure. Reiciendis, ea.
   </aside>

@@ -7,6 +7,8 @@ import { FormsModule } from '@angular/forms';
 import { TextMaskModule } from 'angular2-text-mask';
 import { RouterTestingModule } from '@angular/router/testing';
 import {RegistrationService} from '../../registration.service';
+import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('CalculatorComponent', () => {
   let component: CalculatorPageComponent;
@@ -20,10 +22,12 @@ describe('CalculatorComponent', () => {
         FinancialCalculatorModule,
         FormsModule,
         TextMaskModule,
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientTestingModule
       ],
       providers: [
-        RegistrationService
+        RegistrationService,
+        FPCareDataService
       ]
 
     })

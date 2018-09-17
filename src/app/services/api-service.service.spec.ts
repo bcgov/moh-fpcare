@@ -2,6 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 
 import { ApiService } from './api-service.service';
 import {HttpClientModule} from '@angular/common/http';
+import {FPCareDataService} from './fpcare-data.service';
 
 describe('ApiServiceService', () => {
   beforeEach(() => {
@@ -10,7 +11,8 @@ describe('ApiServiceService', () => {
         HttpClientModule
       ],
       providers: [
-        ApiService
+        ApiService,
+        FPCareDataService
       ]
     });
   });

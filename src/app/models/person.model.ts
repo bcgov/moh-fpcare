@@ -10,106 +10,33 @@ import * as moment from 'moment';
 export class Person extends Base {
 
   // Parts of a person's name
-  private _firstName: string;
-  private _middleName: string;
-  private _lastName: string;
+  public firstName: string;
+  public middleName: string;
+  public lastName: string;
 
   // initialize dob to nulls
-  private _dateOfBirth: SimpleDate = { year: null, month: null, day: null };
+  public dateOfBirth: SimpleDate = { year: null, month: null, day: null };
 
   // Personal Health Number (validation mod 11 check - reuse logic from old web app)
-  private _phn: string;
+  public phn: string;
 
   // Social Insurance Number (validation mod 10 check - reuse logic from old web app)
-  private _sin: string;
+  public sin: string;
 
   // FPCare registration number
-  private _regNumber: string;
+  public fpcRegNumber: string;
 
   // Contact information for person
   /* Mailing address for person */
-  address: Address = new Address();
-  updAddress: Address;
-  private _updatedAddress: boolean = false;
+  public address: Address = new Address();
+  public updAddress: Address;
 
   /**
-   *
-   * @param {boolean} updated
-   */
-  set updatedAddress( updated: boolean ) {
-    this._updatedAddress = updated;
-  }
-
-  /**
-   *
+   * Checks if address was updated
    * @returns {boolean}
    */
-  isAdressUpdated(): boolean {
-    return this._updatedAddress;
-  }
-
-  /**
-   * Set first name for person
-   * @param {string} name
-   */
-  set firstName( name: string ) {
-    this._firstName = name;
-  }
-
-  /**
-   * Gets first name for person
-   * @returns {string}
-   */
-  get firstName(): string {
-    return this._firstName ? this._firstName : '';
-  }
-
-  /**
-   * Set middle name for person
-   * @param {string} name
-   */
-  set middleName( name: string ) {
-    this._middleName = name;
-  }
-
-  /**
-   * Gets middle name for person
-   * @returns {string}
-   */
-  get middleName(): string {
-    return this._middleName ? this._middleName : '';
-  }
-
-  /**
-   * Set last name for person
-   * @param {string} name
-   */
-  set lastName( name: string ) {
-    this._lastName = name;
-  }
-
-  /**
-   * Gets last name for person
-   * @returns {string}
-   */
-  get lastName(): string {
-    return this._lastName ? this._lastName : '';
-  }
-
-  /**
-   * Set birth date for person
-   * @param {Date} dob
-   */
-  set dateOfBirth( dob: SimpleDate ) {
-    this._dateOfBirth = dob;
-  }
-
-  /**
-   * Gets birth date for person
-   * @returns {Date}
-   */
-  get dateOfBirth(): SimpleDate {
-    return this._dateOfBirth;
+  get isAdressUpdated(): boolean {
+    return ( this.updAddress && !this.updAddress.isComplete() );
   }
 
   /**
@@ -118,10 +45,22 @@ export class Person extends Base {
   get dateOfBirthShort(): string {
     return this.isDobEmpty() ? null :
       moment()
-        .date(this._dateOfBirth.day)
-        .month(this._dateOfBirth.month - 1) //moment is 0 indexed, SimpleDate is not
-        .year(this._dateOfBirth.year)
+        .date(this.dateOfBirth.day)
+        .month(this.dateOfBirth.month - 1) //moment is 0 indexed, SimpleDate is not
+        .year(this.dateOfBirth.year)
         .format('YYYYMMDD');
+  }
+
+  /**
+   * Returns DoB in DD/MM/YYYY format, for display purposes
+   */
+  get formatDateOfBirth(): string {
+    return this.isDobEmpty() ? null :
+        moment()
+            .date(this.dateOfBirth.day)
+            .month(this.dateOfBirth.month - 1) //moment is 0 indexed, SimpleDate is not
+            .year(this.dateOfBirth.year)
+            .format('DD/MM/YYYY');
   }
 
   /**
@@ -129,58 +68,10 @@ export class Person extends Base {
    * @returns {boolean}
    */
   isDobEmpty(): boolean {
-    return Object.keys(this._dateOfBirth)
-        .map(key => this._dateOfBirth[key])
+    return Object.keys(this.dateOfBirth)
+        .map(key => this.dateOfBirth[key])
         .filter(x => x) // Filter out null/undefined
         .length !== 3;
-  }
-
-  /**
-   * Set Personal Health Number for person
-   * @param {string} phn
-   */
-  set phn( phn: string ) {
-    this._phn = phn;
-  }
-
-  /**
-   * Gets Personal Health Number for person
-   * @returns {string}
-   */
-  get phn(): string {
-    return this._phn ? this._phn : '';
-  }
-
-  /**
-   * Set Social Insurance Number for person
-   * @param {string} phn
-   */
-  set sin( sin: string ) {
-    this._sin = sin;
-  }
-
-  /**
-   * Gets Social Insurance Number for person
-   * @returns {string}
-   */
-  get sin(): string {
-    return this._sin ? this._sin : '';
-  }
-
-  /**
-   * Sets the Fair PharmaCare Registration Number
-   * @param {string} regNumber
-   */
-  set fpcRegNumber( regNumber: string ) {
-    this._regNumber = regNumber;
-  }
-
-  /**
-   * Gets the Fair PharmaCare Registration Number
-   * @returns {string}
-   */
-  get fpcRegNumber(): string {
-    return this._regNumber ? this._regNumber : '';
   }
 
   /**
@@ -188,7 +79,17 @@ export class Person extends Base {
    * @returns {string}
    */
   get name(): string {
-    return `${this.firstName} ${this.lastName}`;
+    let _name = null;
+
+    if ( this.firstName ) {
+      _name = this.firstName;
+    }
+
+    if ( this.lastName ) {
+      _name = _name ? _name.concat( ' ' + this.lastName ) : this.lastName;
+    }
+
+    return _name;
   }
 
   /**
@@ -213,15 +114,12 @@ export class Person extends Base {
 
   /**
    * Calculates the age from date of birth
-   * @param {SimpleDate} dob
    * @returns {Number}
    */
   getAge(): Number {
     const today = new Date();
-    const dobDt = new Date( this._dateOfBirth.year, this._dateOfBirth.month, this._dateOfBirth.day );
+    const dobDt = new Date( this.dateOfBirth.year, this.dateOfBirth.month, this.dateOfBirth.day );
     return moment( today ).diff( dobDt, 'year' );
   }
 }
 
-/* Interface for telephone number */
-interface PhoneNumber { }

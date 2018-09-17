@@ -5,6 +5,8 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.spec';
 import {RegistrationService} from '../../registration.service';
+import {FinanceService} from '../../../financial-calculator/finance.service';
+import {FinancialCalculatorModule} from '../../../financial-calculator/financial-calculator.module';
 
 describe('ReviewComponent', () => {
   let component: ReviewPageComponent;
@@ -17,11 +19,13 @@ describe('ReviewComponent', () => {
       ],
       imports: [
         CoreModule,
-        RouterTestingModule
+        RouterTestingModule,
+        FinancialCalculatorModule
       ],
       providers: [
         { provide: FPCareDataService, useValue: fPCareDataServiceStub },
-        RegistrationService
+        RegistrationService,
+        FinanceService
       ]
     })
     .compileComponents();

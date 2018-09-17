@@ -26,9 +26,27 @@
 
 <hr class="line-item-break">
 
-<p>The information you entered indicates you would be eligible for the level of coverage below:</p>
+<div *ngIf='!isLoadingData; else loadingSpinner' [@growVertical] >
 
-<fpcare-annual-deductible
-  [familyNetIncome]="adjustedIncomeAmount"
-  [bornBefore1939]="bornBefore1939"
-></fpcare-annual-deductible>
+  <p>The information you entered indicates you would be eligible for the level of coverage below:</p>
+
+  <fpcare-annual-deductible
+    [familyNetIncome]="adjustedIncomeAmount"
+    [bornBefore1939]="bornBefore1939"
+  ></fpcare-annual-deductible>
+</div>
+
+<ng-template #loadingSpinner>
+  <div class="text-center" *ngIf="!errorLoadingData; else errorMessage">
+    <p class='font-italic text-muted'>Loading Pharmacare data...</p>
+    <i class="fa fa-spinner fa-3x fa-pulse fa-fw"></i>
+  </div>
+</ng-template>
+
+<ng-template #errorMessage>
+  <div class="text-center text-danger">
+    <p class='font-italic text-danger mb-0'>Unable to load Pharmacare data. </p>
+    <p class='font-italic text-danger'>Please reload or try again later.</p>
+    <i class="fa fa-exclamation-triangle text-danger fa-3x "></i>
+  </div>
+</ng-template>

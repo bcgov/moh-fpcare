@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {Person} from '../models/person.model';
-import {LetterTypes} from '../modules/reprint-letters/components/request-template/request-template.component';
 import { environment } from 'environments/environment';
 
 /**
@@ -36,12 +35,11 @@ export class FPCareDataService {
   public taxYear: string;
 
   /** Financial Information for applicant */
-  public applicantIncome: string;
-  public spouseIncome: string;
-  public disabilityAmount: string;
+  public applicantIncome: number; /** Income for applicant */
+  public spouseIncome: number; /** Income for applicant's spouse */
+  public disabilityAmount: number; /** Amount for disability */
+  public adjustedIncome: number;
   public bornBefore1939: boolean;
-  public adjustedIncome: string = '0'; // Family Income - disability
-
 
   /** Maximum number of dependents on an account */
   MAX_DEPENDANTS = 18;
@@ -82,8 +80,8 @@ export class FPCareDataService {
    * Indicates whether a children are present
    * @returns {boolean}
    */
-  hasChildren(): boolean {
-    return !!(this._dependants && this._dependants.length);
+  get hasChildren(): boolean {
+    return (this._dependants && this._dependants.length !== 0);
   }
 
   /**
@@ -103,5 +101,14 @@ export class FPCareDataService {
    */
   canAddChild(): boolean {
     return this._dependants.length <= this.MAX_DEPENDANTS;
+  }
+
+  /**
+   *
+   * @param {string} value
+   * @returns {string}
+   */
+  removeStrFormat( value: string ): string {
+    return value.replace(/ /g, '');
   }
 }

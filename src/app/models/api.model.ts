@@ -1,4 +1,4 @@
-import {PharmaCareAssistanceLevel} from '../modules/financial-calculator/assistance-levels.interface';
+import {PharmaCareAssistanceLevel, PharmaCareAssistanceLevelServerResponse} from '../modules/financial-calculator/assistance-levels.interface';
 
 export enum RegStatusCode {
     SUCCESS = '0',
@@ -43,8 +43,8 @@ export interface ReprintLetter extends PayloadInterface {
 }
 
 export interface DeductibleInterface extends PayloadInterface {
-    assistanceLevels: PharmaCareAssistanceLevel[];
-    pre1939AssistanceLevels: PharmaCareAssistanceLevel[];
+    assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
+    pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
 
     benefitYear: string;
 
@@ -134,8 +134,8 @@ export class ReprintLetterPayload extends ServerPayload {
 
 export class DeductiblePayload extends ServerPayload implements DeductibleInterface {
     benefitYear: string;
-    assistanceLevels: PharmaCareAssistanceLevel[];
-    pre1939AssistanceLevels: PharmaCareAssistanceLevel[];
+    assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
+    pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
 
     constructor(payload: DeductibleInterface) {
         super(payload);

@@ -20,7 +20,7 @@ export class DummyDataService {
 
   // Applicant for test purpose - personal info
   createApplicant( populated: boolean = true ): Person {
-    return populated ? this.createAdult( true, true ) : new Person();
+    return populated ? this.createAdult( true, false ) : new Person();
   }
 
   // Spouse for test purpose - personal info
@@ -44,7 +44,6 @@ export class DummyDataService {
     // Populate update address in person object
     if ( setUpdAddress ) {
       result.updAddress = this.generateAddress();
-      result.updatedAddress = true;
     }
 
     return result;
@@ -97,22 +96,20 @@ export class DummyDataService {
 
   private generatePHN(): string {
     const validPhns = [
-      '9043076746', '9059437075', '9125715913', '9151060317', '9151843149', '9151949138',
-      '9151970861', '9300000076', '9300000194', '9300000202', '9300000234', '9300000241'
+      '9043 076 746', '9059 437 075', '9125 715 913', '9151 060 317', '9151 843 149', '9151 949 138',
+      '9151 970 861', '9300 000 076', '9300 000 194', '9300 000 202', '9300 000 234', '9300 000 241'
     ];
     const phn = this.getRandomElFromArray( validPhns );
-    //const phn = `${Math.ceil(Math.random() * 9999999999 )}`;
     return phn;
   }
 
   private generateSIN(): string {
 
     const validSins = [
-        '743235277', '680943958', '642332704', '627384738', '389043027', '337143549',
-        '545553711', '127591188', '302762042', '610702607', '394429864', '616708368'
+        '743 235 277', '680 943 958', '642 332 704', '627 384 738', '389 043 027', '337 143 549',
+        '545 553 711', '127 591 188', '302 762 042', '610 702 607', '394 429 864', '616 708 368'
     ];
     const sin = this.getRandomElFromArray( validSins );
-    //const sin = `${Math.ceil(Math.random() * 699999999 )}`;
     return sin;
   }
 

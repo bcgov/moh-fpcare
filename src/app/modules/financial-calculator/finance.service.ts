@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import { conformToMask } from 'angular2-text-mask';
-import { PharmaCareAssistanceLevel } from './assistance-levels.interface';
-import {isUndefined} from 'util';
+import { PharmaCareAssistanceLevel, PharmaCareAssistanceLevelServerResponse } from './assistance-levels.interface';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -12,6 +12,10 @@ export class FinanceService {
 
   public PharmaCareAssistanceLevels: PharmaCareAssistanceLevel[];
   public Pre1939PharmaCareAssistanceLevels: PharmaCareAssistanceLevel[];
+
+  private _hasData = new BehaviorSubject<boolean>(false);
+  /** Subscribe to this observable to check it's true prior to accessing this.PharmacareAssistanceLevels / Pre1939 */
+  public hasData = this._hasData.asObservable();
 
   constructor() { }
 
@@ -26,6 +30,30 @@ export class FinanceService {
     integerLimit: 9 // Max numeric value is 999,999,999.99 - from Light FDS
   });
 
+  public setAssistanceLevels(baseline: PharmaCareAssistanceLevelServerResponse[], pre1939: PharmaCareAssistanceLevelServerResponse[]){
+    // Change strings of numbers into numbers, as we do math on them
+    this.PharmaCareAssistanceLevels = baseline.map(item => this.convertServerResponse(item));
+    this.Pre1939PharmaCareAssistanceLevels = pre1939.map(item => this.convertServerResponse(item));
+
+    this._hasData.next(true);
+  }
+
+  private convertServerResponse(serverResponse: PharmaCareAssistanceLevelServerResponse): PharmaCareAssistanceLevel {
+
+    return {
+      startRange: Number(serverResponse.startRange),
+      endRange: Number(serverResponse.endRange),
+      deductible: Number(serverResponse.deductible.replace('$', '')),
+      pharmaCarePortion: Number(serverResponse.pharmaCarePortion.replace('%', '')),
+      maximum: Number(serverResponse.maximum.replace('$', '')),
+    }
+  }
+
+
+  public failedToLoadAssistanceLevels(error): void {
+    this._hasData.error(error);
+  }
+
   /**
    * Looks up the official PharmaCare Assistance Level for a given income.
    *
@@ -38,12 +66,12 @@ export class FinanceService {
    * @memberof FinanceService
    */
   public findAssistanceLevel(familyNetIncome: number = 0, config?: { bornBefore1939: boolean }): PharmaCareAssistanceLevel {
-    console.log( 'PharmaCareAssistanceLevels: ', this.PharmaCareAssistanceLevels );
-    console.log( 'Pre1939PharmaCareAssistanceLevels: ', this.Pre1939PharmaCareAssistanceLevels );
+    // console.log( 'PharmaCareAssistanceLevels: ', this.PharmaCareAssistanceLevels );
+    // console.log( 'Pre1939PharmaCareAssistanceLevels: ', this.Pre1939PharmaCareAssistanceLevels );
 
-    if ( isUndefined( this.PharmaCareAssistanceLevels )  || isUndefined( this.Pre1939PharmaCareAssistanceLevels ) ) {
-      console.log( 'Assistance levels not loaded' );
-      return;
+    if ( !this.PharmaCareAssistanceLevels  || !this.Pre1939PharmaCareAssistanceLevels ) {
+      console.error( 'Assistance levels not loaded', this.PharmaCareAssistanceLevels, this.Pre1939PharmaCareAssistanceLevels );
+      return null;
     }
 
     let source = this.PharmaCareAssistanceLevels;
@@ -56,7 +84,7 @@ export class FinanceService {
   }
 
   public currencyFormat(currency: number, withDollarSign = false): string {
-    if ( !!!currency ) {
+    if ( !currency ) {
       return null;
     }
     const mask = conformToMask(currency.toString(), this.moneyMask, {});
@@ -80,4 +108,13 @@ export class FinanceService {
     return adjustedIncome;
   }
 
+
+  /**
+   * Convert the currency string to a numeric
+   * @param {string} str
+   * @returns {number}
+   */
+  public currencyStrToNumber( str: string ): number {
+    return str ? Number( str.replace(/,/g, '') ) : null;
+  }
 }
