@@ -53,7 +53,9 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
         debounceTime(200),
       )
       .subscribe(_ => {
-        console.log('AnnualDeductible progressBarChange', _);
+
+        // * Idea - Instead of checking each time for this, we could just setup
+        // * progressBarChange to have a delayUntil on financeService.hasData
         if (!this.pharmaCareLevel){
           return;
         }
@@ -87,7 +89,7 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
 
   private updateProgressBar() {
     // 100% green bar - PharmaCare pays everything
-    if (Number(this.pharmaCareLevel.maximum) === 0) {
+    if (this.pharmaCareLevel.maximum === 0) {
       this.maximumRatio = 100;
       this.deductibleRatio = 0;
       this.pharmaCareRatio = 0;
@@ -95,7 +97,7 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
     }
 
     // 50% green / 50% yellow - no deductible bar
-    if (Number(this.pharmaCareLevel.deductible) === 0) {
+    if (this.pharmaCareLevel.deductible === 0) {
       this.deductibleRatio = 0;
       this.pharmaCareRatio = 50;
       this.maximumRatio = 50;

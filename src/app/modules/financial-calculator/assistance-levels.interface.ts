@@ -11,3 +11,15 @@ export interface PharmaCareAssistanceLevel {
     /** The maximum amount the person must spend in a year before PharmaCare covers 100% of remaining costs */
     maximum: number;
 };
+
+/**
+ * The API response from the server returns strings instead of numbers.
+ */
+export interface PharmaCareAssistanceLevelServerResponse {
+    startRange: string;
+    endRange: string;
+    deductible: string;
+    pharmaCarePortion: string;
+    maximum: string;
+};
+

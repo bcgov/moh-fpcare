@@ -6,13 +6,13 @@ const dummyDataService = new DummyDataService();
 
 /**
  * Stud to inject data into tests
- * @type {{applicant: Person; spouse: Person; hasSpouse: () => boolean}}
+ * @type {{applicant: Person; spouse: Person; hasSpouse: boolean}}
  */
 export const fPCareDataServiceStub: Partial<FPCareDataService> = {
   applicant: dummyDataService.createApplicant(),
   spouse: dummyDataService.createSpouse(),
-  hasSpouse: () => { return true; },
-  hasChildren: () => { return false; }
+  hasSpouse: true,
+  hasChildren: false
 }
 
 describe('FPCareDataService', () => {

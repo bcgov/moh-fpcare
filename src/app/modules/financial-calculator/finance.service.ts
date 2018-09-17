@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import { conformToMask } from 'angular2-text-mask';
-import { PharmaCareAssistanceLevel } from './assistance-levels.interface';
+import { PharmaCareAssistanceLevel, PharmaCareAssistanceLevelServerResponse } from './assistance-levels.interface';
 import { BehaviorSubject } from 'rxjs';
 
 
@@ -30,33 +30,23 @@ export class FinanceService {
     integerLimit: 9 // Max numeric value is 999,999,999.99 - from Light FDS
   });
 
-  public setAssistanceLevels(normal: PharmaCareAssistanceLevel[], pre1939: PharmaCareAssistanceLevel[]){
+  public setAssistanceLevels(baseline: PharmaCareAssistanceLevelServerResponse[], pre1939: PharmaCareAssistanceLevelServerResponse[]){
     // Change strings of numbers into numbers, as we do math on them
-    // this.PharmaCareAssistanceLevels = normal.map(item => this.convertFormattedStringToNumber(item))
-    // TODO - TEmp commented out to merge branches. Use the line below.
-    // this.PharmaCareAssistanceLevels = normal
-      // .map(item => this.mapObjectByKey(item, this.convertFormattedStringToNumber));
-
-    this.PharmaCareAssistanceLevels = normal;
-    this.Pre1939PharmaCareAssistanceLevels = pre1939;
-
-    console.log('AssistaneLevels', {normal: this.PharmaCareAssistanceLevels, pre1939: this.Pre1939PharmaCareAssistanceLevels});
+    this.PharmaCareAssistanceLevels = baseline.map(item => this.convertServerResponse(item));
+    this.Pre1939PharmaCareAssistanceLevels = pre1939.map(item => this.convertServerResponse(item));
 
     this._hasData.next(true);
   }
 
-  // todo - move
-  private mapObjectByKey<T>(item: T, mutator: (input) => any ): T {
-    Object.keys(item).map(key => {
-      item[key] = mutator(item[key]);
-    });
-    return item;
-  }
+  private convertServerResponse(serverResponse: PharmaCareAssistanceLevelServerResponse): PharmaCareAssistanceLevel {
 
-  // todo - move
-  private convertFormattedStringToNumber(string: string): number {
-
-    return 0;
+    return {
+      startRange: Number(serverResponse.startRange),
+      endRange: Number(serverResponse.endRange),
+      deductible: Number(serverResponse.deductible.replace('$', '')),
+      pharmaCarePortion: Number(serverResponse.pharmaCarePortion.replace('%', '')),
+      maximum: Number(serverResponse.maximum.replace('$', '')),
+    };
   }
 
   public failedToLoadAssistanceLevels(error): void {
@@ -124,6 +114,6 @@ export class FinanceService {
    * @returns {number}
    */
   public currencyStrToNumber( str: string ): number {
-    return str ? Number( str.replace(/,/g, '') ) : 0;
+    return str ? Number( str.replace(/,/g, '') ) : null;
   }
 }
