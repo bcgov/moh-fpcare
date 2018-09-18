@@ -54,19 +54,18 @@
                  type="text"
                  id="country"
                  name="country"
-                 fpcareRequired
-                 [(ngModel)]="applicant.updAddress.country" />
+                 disabled
+                 [ngModel]="applicant.updAddress.country" />
         </div>
       </div>
     </div>
   </form>
 
   <aside>
-    <div class="todo">
-      <ul>
-        <li>Add helper text to "aside"</li>
-        <li>Need logic to compare postal code to determine whether address needs to be updated</li>
-      </ul>
+    <div>
+      <p class="h5">Postal Code</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
     </div>
   </aside>
 

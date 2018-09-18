@@ -1,10 +1,16 @@
 import {PharmaCareAssistanceLevel, PharmaCareAssistanceLevelServerResponse} from '../modules/financial-calculator/assistance-levels.interface';
 
+/**
+ * Status code for the request
+ */
 export enum RegStatusCode {
     SUCCESS = '0',
     ERROR = '1'
 }
 
+/**
+ * Common payload data for all requests/responses
+ */
 export interface PayloadInterface {
     regStatusCode: RegStatusCode;
     regStatusMsg: string;
@@ -14,6 +20,9 @@ export interface PayloadInterface {
     clientName?: string;
 }
 
+/**
+ * Benefit Year
+ */
 export interface BenefitYearInterface extends PayloadInterface {
     benefitYear: string;
     taxYear: string;
@@ -22,11 +31,17 @@ export interface BenefitYearInterface extends PayloadInterface {
     processDate?: string;
 }
 
+/**
+ * Check Status using the Fair PharmaCare Registration number
+ */
 export interface StatusCheckRegNum extends PayloadInterface {
     famNumber: string;
     benefitYear: string;
 }
 
+/**
+ * Check Status using the applicant's PHN, date of birth and postal code
+ */
 export interface StatusCheckPHN extends PayloadInterface {
     benefitYear: string;
     phn: string;
@@ -34,6 +49,9 @@ export interface StatusCheckPHN extends PayloadInterface {
     postalCode: string;
 }
 
+/**
+ * Request for reprint of Consent forms and Confirmation of Assistance
+ */
 export interface ReprintLetter extends PayloadInterface {
     benefitYear: string;
     phn: string;
@@ -42,6 +60,9 @@ export interface ReprintLetter extends PayloadInterface {
     letterType: string;
 }
 
+/**
+ * Retrieve the Fair PharmaCare deductible levels to calculate the applicant's level of assistance
+ */
 export interface DeductibleInterface extends PayloadInterface {
     assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
     pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
@@ -51,6 +72,30 @@ export interface DeductibleInterface extends PayloadInterface {
     /** Part of input params. Never consumed by Angular app */
     processDate?: string;
 }
+
+/**
+ * Format of the Persons field for eligibility checks
+ */
+export interface PersonInterface {
+    perType: string; // 0 = applicant, 1 = spouse
+    phn: string;
+    sin: string;
+    dateOfBirth: string; // YYYYMMDD
+    postalCode: string; // blank by default (value returned)
+
+}
+/**
+ * Check Fair PharmaCare eligibility (i.e. Active MSP coverage and not registered in FPC)
+ */
+export interface EligibilityInterface extends PayloadInterface {
+  benefitYear: string;
+
+  /** Part of input params. Never consumed by Angular app */
+  processDate?: string;
+
+  persons: PersonInterface[];
+}
+
 
 export class ServerPayload implements PayloadInterface {
     regStatusCode: RegStatusCode;
@@ -142,5 +187,16 @@ export class DeductiblePayload extends ServerPayload implements DeductibleInterf
         this.benefitYear = payload.benefitYear;
         this.assistanceLevels = payload.assistanceLevels;
         this.pre1939AssistanceLevels = payload.pre1939AssistanceLevels;
+    }
+}
+
+export class EligibilityPayload extends ServerPayload implements EligibilityInterface {
+    benefitYear: string;
+    persons: PersonInterface[];
+    
+    constructor( payload: EligibilityInterface ) {
+        super(payload);
+        this.benefitYear = payload.benefitYear;
+        this.persons = payload.persons;
     }
 }

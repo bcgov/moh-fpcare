@@ -34,7 +34,6 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   @Input() data: ComponentData;
 
   /** Access to date component */
-  @ViewChild(FPCareDateComponent) dobForm: FPCareDateComponent;
   @ViewChild('consentModal') consentModal: ConsentModalComponent;
 
   public captchaApiBaseUrl;
@@ -76,15 +75,12 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
 
   canContinue(): boolean {
 
-    let valid = this.form.valid;
+    // Main and sub forms are not empty and are valid
+    if ( super.canContinue() ) {
 
-    // We have to explicitly check the DateComponent validity as it doesn't bubble to this.form.
-    valid = valid && this.dobForm.form.valid;
-
-    // User should have already consented to close modal, but we check again here just in case.
-    const consented = this.fpcareDataService.acceptedCollectionNotice;
-
-    return (valid && this._hasToken && !this.isFormEmpty() && consented);
+      return (this.fpcareDataService.acceptedCollectionNotice && this._hasToken);
+    }
+    return false;
   }
 
   /** Use the UUID as a cryptographic client nonce to avoid replay attacks. */

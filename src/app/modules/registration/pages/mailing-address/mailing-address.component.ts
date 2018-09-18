@@ -36,13 +36,8 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   canContinue(): boolean {
 
-    let valid = false;
-
-    if ( this.isFormEmpty() ) {
-      valid = this.form.valid;
-    }
-
-    return valid;
+    // Main and sub forms are not empty and are valid
+    return super.canContinue();
   }
 
   /**
@@ -62,6 +57,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
     if ( !this._postalCodeMatch ) {
       this.applicant.updAddress = new Address();
+      this.applicant.updAddress.country = 'Canada';
     }
 
     return this._postalCodeMatch;

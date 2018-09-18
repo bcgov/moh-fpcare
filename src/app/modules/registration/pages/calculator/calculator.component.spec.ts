@@ -9,6 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import {RegistrationService} from '../../registration.service';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ApiService} from '../../../../services/api-service.service';
 
 describe('CalculatorComponent', () => {
   let component: CalculatorPageComponent;
@@ -27,7 +28,8 @@ describe('CalculatorComponent', () => {
       ],
       providers: [
         RegistrationService,
-        FPCareDataService
+        FPCareDataService,
+        ApiService
       ]
 
     })

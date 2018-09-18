@@ -56,4 +56,109 @@ describe('RegistrationStatusComponent', () => {
     expect(component.disableRegNum()).toBeFalsy();
   });
 
+  it('invalid PHN', () => {
+
+    component.applicant.phn = '9999999990';
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.form.valid).toBe(false);
+      const errors = Object.keys(component.form.controls)
+          .map( key => component.form.controls[key].errors )
+          .filter( x => x );
+
+      expect( errors.map( x => Object.getOwnPropertyNames( x ) )
+          .filter( str => str.includes('fpc-phn') )
+          .length ).toEqual(1);
+    });
+  });
+
+ it('valid PHN', () => {
+
+    component.applicant.phn = '9999999998';
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.form.valid).toBe(false);
+      const errors = Object.keys(component.form.controls)
+          .map( key => component.form.controls[key].errors )
+          .filter( x => x );
+
+      expect( errors.map( x => Object.getOwnPropertyNames( x ) )
+          .filter( str => str.includes('fpc-phn') )
+          .length ).toEqual(0);
+    });
+  });
+
+  it('required PHN' , () => {
+
+    component.applicant.address.postal = 'V1D3G4';
+    component.applicant.dateOfBirth = {month: 1, day: 2, year: 1989 };
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.form.valid).toBe(false);
+      const errors = Object.keys(component.form.controls)
+          .map( key => component.form.controls[key].errors )
+          .filter( x => x );
+
+      expect( errors.map( x => Object.getOwnPropertyNames( x ) )
+          .filter( str => str.includes('fpc-required') )
+          .length ).toEqual(1);
+    });
+  });
+
+  it('required Postal Code' , () => {
+
+    component.applicant.phn = '9999999998';
+    component.applicant.dateOfBirth = {month: 1, day: 2, year: 1989 };
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.form.valid).toBe(false);
+      const errors = Object.keys(component.form.controls)
+          .map( key => component.form.controls[key].errors )
+          .filter( x => x );
+
+      expect( errors.map( x => Object.getOwnPropertyNames( x ) )
+          .filter( str => str.includes('fpc-required') )
+          .length ).toEqual(1);
+    });
+  });
+
+  it('invalid FPC Registration Number' , () => {
+
+    component.applicant.fpcRegNumber = 'B99999999';
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.form.valid).toBe(false);
+      const errors = Object.keys(component.form.controls)
+          .map( key => component.form.controls[key].errors )
+          .filter( x => x );
+
+      expect( errors.map( x => Object.getOwnPropertyNames( x ) )
+          .filter( str => str.includes('fpc-regnumber') )
+          .length ).toEqual(1);
+    });
+  });
+
+  it('valid FPC Registration Number' , () => {
+
+    component.applicant.fpcRegNumber = 'A08349678';
+
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.form.valid).toBe(true);
+      const errors = Object.keys(component.form.controls)
+          .map( key => component.form.controls[key].errors )
+          .filter( x => x );
+
+      expect( errors.map( x => Object.getOwnPropertyNames( x ) )
+         .filter( str => str.includes('fpc-regnumber') )
+         .length ).toEqual(0);
+    });
+  });
+
 });
+

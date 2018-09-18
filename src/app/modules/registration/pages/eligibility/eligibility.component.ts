@@ -41,27 +41,17 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    */
   canContinue(): boolean {
 
-    let valid = false;
-
-    if ( !this.isFormEmpty() ) {
-
-      const invalidDob = this.dobForm.map(x => {
-        if (!x.form.valid) {
-          return x;
-        }
-      })
-        .filter(x => x);
+    // Main and sub forms are not empty and are valid
+    if ( super.canContinue() ) {
 
       // Check PHNs are unique
-      if ( this.hasSpouse) {
-        const phnList: string[] = [this.applicant.phn, this.spouse.phn];
-        this._uniquePhn = this.validationService.isUnique( phnList );
+      if ( this.hasSpouse ) {
+
+        this._uniquePhn = this.validationService.isUnique( [this.applicant.phn, this.spouse.phn] );
+        return this._uniquePhn;
       }
-
-      valid = this.form.valid && (invalidDob.length === 0) && this._uniquePhn;
+      return false;
     }
-
-    return valid;
   }
 
   /**

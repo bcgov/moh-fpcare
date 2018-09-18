@@ -3,7 +3,6 @@ import { TestBed, inject } from '@angular/core/testing';
 import { FinanceService } from './finance.service';
 import {PharmaCareAssistanceLevelServerResponse} from './assistance-levels.interface';
 
-
 export const baselineAssist: PharmaCareAssistanceLevelServerResponse[] = [
   {startRange: '250000.01', endRange: '283333', deductible: '$8000.00', pharmaCarePortion: '70%', maximum: '$10000.00'},
   {startRange: '283333.01', endRange: '316667', deductible: '$9000.00', pharmaCarePortion: '70%', maximum: '$10000.00'},
@@ -177,5 +176,6 @@ describe('FinanceService', () => {
     expect(service.currencyFormat(1000, true)).toBe('$1,000');
     expect(service.currencyFormat(999999999, true)).toBe('$999,999,999');
   }));
-
 });
+
+

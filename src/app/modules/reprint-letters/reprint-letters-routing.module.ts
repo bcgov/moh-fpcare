@@ -8,11 +8,13 @@ import {REPRINT_COB, REPRINT_CONSENT, REPRINT_STATUS} from '../../models/route-p
 export const pageRoutes: Routes = [
   {
     path: REPRINT_COB,
-    component: RequestCobComponent
+    component: RequestCobComponent,
+    data: { title: 'Request Confirmation of Assistance' }
   },
   {
     path: REPRINT_CONSENT,
-    component: RequestConsentComponent
+    component: RequestConsentComponent,
+    data: { title: 'Request Consent Form'}
   },
   {
     path: REPRINT_STATUS,

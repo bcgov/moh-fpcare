@@ -1,6 +1,6 @@
 import { StandaloneCalculatorPageModule } from './standalone-calculator-page.module';
 
-describe('StandaloneCalculatorPageModule', () => {
+xdescribe('StandaloneCalculatorPageModule', () => {
   let standaloneCalculatorPageModule: StandaloneCalculatorPageModule;
 
   beforeEach(() => {

@@ -31,7 +31,6 @@ export class Masking extends Base {
    * @param {string} value
    */
   onUpdate( value: string ) {
-    console.log( 'onUpdate: ', value );
 
     // Emit value without spaces
     this.valueChange.emit( value );

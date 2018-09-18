@@ -128,8 +128,11 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   canContinue() {
-    return (!this.isFormEmpty() && this.form.valid &&
-        undefined !== this.hasSpouse && undefined !== this.bornBefore1939 );
+    // Main and sub forms are not empty and are valid
+    if ( super.canContinue() ) {
+      return (undefined !== this.hasSpouse && undefined !== this.bornBefore1939 );
+    }
+    return false;
   }
 
   continue() {

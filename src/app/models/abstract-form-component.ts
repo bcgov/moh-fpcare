@@ -1,7 +1,8 @@
 import {Router} from '@angular/router';
 import {Base} from '../modules/core/components/base/base.class';
-import {FormControl, FormGroup, NgForm} from '@angular/forms';
-import {ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {FPCareDateComponent} from '../modules/core/components/date/date.component';
 
 /**
  * All classes derived from this class must implement DoCheck so that when changes occur the form can be validated to determine
@@ -15,11 +16,10 @@ export abstract class AbstractFormComponent extends Base {
   loading: boolean = false;
   /** What happens when the user clicks the continue button. Generally navigating to another page. */
   abstract continue(): void;
-  /** Determines if the Continue button is disabled */
-  abstract canContinue(): boolean;
 
   /** Access to the form elements for validation */
   @ViewChild('formRef') form: NgForm;
+  @ViewChildren(FPCareDateComponent) dateForm: QueryList<FPCareDateComponent>;
 
   /**
    * Constructor
@@ -39,14 +39,55 @@ export abstract class AbstractFormComponent extends Base {
   }
 
   /**
+   * Determines if the Continue button is disabled
+   * @returns {boolean}
+   */
+  canContinue(): boolean {
+    return !this.isFormEmpty() && this.isFormValid();
+  }
+
+  /**
    * Determine whether form has at least one field populated
    * @returns {boolean}
    */
   protected isFormEmpty(): boolean {
-    return Object.keys(this.form.controls)
-    .map(key => this.form.controls[key].value)
-    .filter(x => x) // Filter out null/undefined
-    .length === 0;
+
+    const mainFormEmpty = Object.keys(this.form.controls)
+        .map(key => this.form.controls[key].value)
+        .filter(x => x) // Filter out null/undefined
+        .length === 0;
+
+    // Check for date forms
+    if (this.dateForm) {
+
+      const subFormsEmpty = this.dateForm.map(
+          x =>  Object.keys( x.form.controls ).map( key => x.form.controls[key].value)
+          .filter( item => item ).length === 0
+      ).filter( empty => empty !== true ).length === 0;
+
+      return (mainFormEmpty && subFormsEmpty);
+    }
+
+    return mainFormEmpty;
+  }
+
+  /**
+   * Check whether form is valid
+   * @returns {boolean}
+   */
+  protected isFormValid(): boolean {
+    const mainFormValid = this.form.valid;
+    console.log( 'mainFormValid: ', mainFormValid );
+
+    if (this.dateForm) {
+      const subFormsValid = this.dateForm.map( x => x.form.valid )
+          .filter( valid => valid !== false ).length === 0;
+
+      console.log( 'subFormsValid: ', subFormsValid );
+
+      return (mainFormValid && subFormsValid);
+    }
+    return mainFormValid;
   }
 }
 

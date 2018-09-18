@@ -20,7 +20,6 @@ import {ValidationService} from '../../../../services/validation.service';
 export class RegistrationStatusComponent extends AbstractFormComponent implements OnInit, AfterViewInit {
 
   /** Access to date component */
-  @ViewChild(FPCareDateComponent) dobForm: FPCareDateComponent;
   @ViewChild('consentModal') consentModal: ConsentModalComponent;
 
   public placeholder = 'A12345678';
@@ -70,15 +69,8 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   }
 
   canContinue(): boolean {
-
-    let valid = this.form.valid;
-
-    // We have to explicitly check the DateComponent validity as it doesn't bubble to this.form.
-    if (this.disableRegNum()){
-      valid = valid && this.dobForm.isValid();
-    }
-
-    return (valid && this._hasToken && !this.isFormEmpty());
+    // Main and sub forms are not empty and are valid
+    return (super.canContinue() && this._hasToken);
   }
 
   /**

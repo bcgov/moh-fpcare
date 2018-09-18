@@ -17,9 +17,6 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
   public MAX_CHILD_AGE = 25;
 
-  /** Access to date component */
-  @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
-
   /** Indicates whether or not the same PHNs has been used for another family member */
   private _uniquePhns = true;
 
@@ -43,32 +40,25 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   canContinue(): boolean {
 
-    let valid = this.hasChildren ? !this.isFormEmpty() : true;
-
-    // Ensure forms are loaded before performing checks
-    if ( this.hasChildren && !this.isFormEmpty() ) {
-
-      const invalidDob = this.dobForm.map(x => {
-        if (!x.form.valid) {
-          return x;
-        }
-      })
-          .filter(x => x);
-
-      // Check that PHNs are unique
-      this._uniquePhns = this.validationService.isUnique( this.familyPhnList );
-
-      // Check that individuals are allowed on Parents FPC account
-      const notLegitDep = this.children.map(x => {
-        if ( !x.isDobEmpty() && !this.legitimateDependant( x ) ) {
-          return x;
-        }
-      }).filter(x => x);
-
-      valid = this.form.valid && (invalidDob.length === 0) && this._uniquePhns && (notLegitDep.length === 0);
+    if ( !this.hasChildren ) {
+      // no children, continue
+      return true;
     }
 
-    return valid;
+    // Main and sub forms are not empty and are valid
+    if ( super.canContinue() ) {
+
+      // Check that PHNs are unique
+      this._uniquePhns = this.validationService.isUnique(this.familyPhnList);
+
+      // Check that individuals are allowed on Parents FPC account
+      const notLegitDeps = this.children.map(x => !this.legitimateDependant(x))
+          .filter(legit => legit !== true ).length === 0;
+
+      return (this._uniquePhns && notLegitDeps);
+    }
+
+    return false;
   }
 
   /**

@@ -58,8 +58,8 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
    * Displays spouse information section if true, otherwise it's hidden
    * @returns {boolean}
    */
-  hasSpouse(): boolean {
-    return !!this.fpcService.hasSpouse;
+  get hasSpouse(): boolean {
+    return this.fpcService.hasSpouse;
   }
 
   setToken(token): void {
@@ -84,7 +84,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
 
     let valid = (this.applicantAgreement && this._hasToken);
 
-    if ( this.hasSpouse() ) {
+    if ( this.hasSpouse ) {
       valid = (valid && this.spouseAgreement);
     }
 

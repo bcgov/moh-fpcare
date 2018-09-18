@@ -31,8 +31,7 @@ export class NameComponent extends Base implements OnInit {
    * @param {string} value
    */
   onUpdate( value: string ) {
-    this.value = value;
-    this.valueChange.emit( this.value );
+    this.valueChange.emit( value );
   }
 
   /**

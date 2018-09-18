@@ -15,9 +15,6 @@ import {RegistrationService} from '../../registration.service';
 })
 export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit {
 
-  /** Access to date component */
-  @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
-
   /** Indicates whether or not the same SIN has been used for spouse */
   private _uniqueSin = true;
 
@@ -41,22 +38,17 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    */
   canContinue(): boolean {
 
-    let valid = false;
-
-    // Check values only form is not empty
-    if ( !this.isFormEmpty() ) {
+    // Main and sub forms are not empty and are valid
+    if ( super.canContinue() ) {
 
       // Check SINs are unique
-      if ( this.hasSpouse() && this.spouse.sin ) {
-        const sinList: string[] = [this.applicant.sin, this.spouse.sin];
+      if ( this.hasSpouse ) {
+        this._uniqueSin = this.validationService.isUnique( [this.applicant.sin, this.spouse.sin] );
 
-        this._uniqueSin = this.validationService.isUnique( sinList );
+        return this._uniqueSin;
       }
-
-      valid = this.form.valid && this._uniqueSin;
     }
-
-    return valid;
+    return false;
   }
 
   /**
@@ -80,7 +72,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * Displays spouse information section if true, otherwise it's hidden
    * @returns {boolean}
    */
-  hasSpouse(): boolean {
+  get hasSpouse(): boolean {
     return !!this.fpcService.hasSpouse;
   }
 

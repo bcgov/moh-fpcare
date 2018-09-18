@@ -9,7 +9,7 @@
   <h2>Applicant Information
     <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editPersonalInfo()"></i>
   </h2>
-    <div class="bg-light">
+    <div class="bg-light section">
       <div class="row p-md-1">
         <div class="col-md-6">Name</div>
         <div class="col-md-6">{{applicant.name}}</div>
@@ -33,48 +33,50 @@
     <h2>Spouse Information
       <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editPersonalInfo()"></i>
     </h2>
-    <div class="bg-light" *ngIf="hasSpouse; else noSpouse">
-      <div class="row p-md-1">
-        <div class="col-md-6">Name</div>
-        <div class="col-md-6">{{spouse.name}}</div>
+    <div class="bg-light section">
+      <div *ngIf="hasSpouse; else noSpouse">
+        <div class="row p-md-1">
+          <div class="col-md-6">Name</div>
+          <div class="col-md-6">{{spouse.name}}</div>
+        </div>
+        <div class="row p-md-1">
+          <div class="col-md-6">Personal Health Number</div>
+          <div class="col-md-6">{{spouse.phn}}</div>
+        </div>
+        <div class="row p-md-1">
+          <div class="col-md-6">Birthdate</div>
+          <div class="col-md-6">{{getSpouseDob()}}</div>
+        </div>
+        <div class="row p-md-1">
+          <div class="col-md-6">Social Insurance Number</div>
+          <div class="col-md-6">{{spouse.sin}}</div>
+        </div>
       </div>
-      <div class="row p-md-1">
-        <div class="col-md-6">Personal Health Number</div>
-        <div class="col-md-6">{{spouse.phn}}</div>
-      </div>
-      <div class="row p-md-1">
-        <div class="col-md-6">Birthdate</div>
-        <div class="col-md-6">{{getSpouseDob()}}</div>
-      </div>
-      <div class="row p-md-1">
-        <div class="col-md-6">Social Insurance Number</div>
-        <div class="col-md-6">{{spouse.sin}}</div>
-      </div>
-   </div>
+    </div>
   </div>
 
   <div>
     <h2>Child Information
       <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editChildInfo()"></i>
     </h2>
-    <div class="bg-light">
-       <div *ngFor="let child of children">
-         <div class="row p-md-1">
-           <div class="col-md-6">Name</div>
-           <div class="col-md-6">{{child.name}}</div>
-         </div>
-         <div class="row p-md-1">
-           <div class="col-md-6">Personal Health Number</div>
-           <div class="col-md-6">{{child.phn}}</div>
-         </div>
-         <div class="row p-md-1">
-           <div class="col-md-6">Birthdate</div>
-           <div class="col-md-6">{{getChildDob(child)}}</div>
-         </div>
-         <!-- Space between next child for readibility -->
-         <br *ngIf="children.length - 1 !== children.indexOf(child)"/>
-       </div>
-       <div class="p-md-1" *ngIf="!hasChildren" >No Children Added</div>
+    <div class="bg-light section">
+      <div *ngFor="let child of children">
+        <div class="row p-md-1">
+          <div class="col-md-6">Name</div>
+          <div class="col-md-6">{{child.name}}</div>
+        </div>
+        <div class="row p-md-1">
+          <div class="col-md-6">Personal Health Number</div>
+          <div class="col-md-6">{{child.phn}}</div>
+        </div>
+        <div class="row p-md-1">
+          <div class="col-md-6">Birthdate</div>
+          <div class="col-md-6">{{getChildDob(child)}}</div>
+        </div>
+        <!-- Space between next child for readibility -->
+        <br *ngIf="children.length - 1 !== children.indexOf(child)"/>
+      </div>
+      <div class="p-md-1" *ngIf="!hasChildren">No Children Added</div>
     </div>
   </div>
 
@@ -82,10 +84,12 @@
     <h2>Contact Information
       <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editContactInfo()"></i>
     </h2>
-    <div *ngIf="!isAddressUpdated; else updatedAddress" class="bg-light">
-      <div class="row p-md-1">
-        <div class="col-md-6">Mailing Address</div>
-        <div class="col-md-6">{{getPostalCode()}}</div>
+    <div class="bg-light section">
+      <div *ngIf="!isAddressUpdated; else updatedAddress" >
+        <div class="row p-md-1">
+          <div class="col-md-6">Mailing Address</div>
+          <div class="col-md-6">{{getPostalCode()}}</div>
+        </div>
       </div>
     </div>
   </div>
@@ -95,7 +99,7 @@
       <h2>Financial Information
         <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editFinancialInfo()"></i>
       </h2>
-      <div class="bg-light">
+      <div class="bg-light section">
         <div class="row p-md-1">
           <div class="col-md-6">Your net annual income</div>
           <div class="col-md-6">{{applicantIncome}}</div>
@@ -132,24 +136,22 @@
 
 
 <ng-template #noSpouse>
-   <div class="bg-light p-md-1">No Spouse Added</div>
+  <div class="p-md-1">No Spouse Added</div>
 </ng-template>
 
 <!-- There is no updated address -->
 <ng-template #updatedAddress>
-  <div class="bg-light">
-    <div class="row p-md-1">
-      <div class="col-md-6">Mailing Address</div>
-      <div class="col-md-6">{{getStreet()}}</div>
-    </div>
-    <div class="row p-md-1">
-      <div class="col-md-6 offset-md-6">{{getCity()}}, {{getProvince()}}</div>
-    </div>
-    <div class="row p-md-1">
-      <div class="col-md-6 offset-md-6">{{getPostalCode()}}</div>
-    </div>
-    <div class="row p-md-1">
-      <div class="col-md-6 offset-md-6">{{getCountry()}}</div>
-    </div>
+  <div class="row p-md-1">
+    <div class="col-md-6">Mailing Address</div>
+    <div class="col-md-6">{{getStreet()}}</div>
+  </div>
+  <div class="row p-md-1">
+    <div class="col-md-6 offset-md-6">{{getCity()}}, {{getProvince()}}</div>
+  </div>
+  <div class="row p-md-1">
+    <div class="col-md-6 offset-md-6">{{getPostalCode()}}</div>
+  </div>
+  <div class="row p-md-1">
+    <div class="col-md-6 offset-md-6">{{getCountry()}}</div>
   </div>
 </ng-template>
