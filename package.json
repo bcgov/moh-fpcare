@@ -13,7 +13,7 @@
     "prod-version": "npm version major -m 'PROD build: %s'",
     "push-version": "git push --follow-tags",
     "prebuild": "node src/version.js",
-    "build": "ng build --prod --deploy-url /fpcare",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e --environment prod",
