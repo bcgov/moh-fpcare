@@ -92,7 +92,7 @@ export class FinancialCalculatorComponent implements OnInit {
    * @returns {string}
    */
   get adjustedIncomeDisplay(): string {
-    return this._adjustedIncomeDisplay ? this._adjustedIncomeDisplay : '0';
+    return this._adjustedIncomeDisplay ? this._adjustedIncomeDisplay : Number(0).toFixed( 2 );
   }
 
   /**
@@ -100,7 +100,7 @@ export class FinancialCalculatorComponent implements OnInit {
    * @returns {string}
    */
   get disabilityDisplay(): string {
-    return this._disabilityDisplay ? this._disabilityDisplay : '0';
+    return this._disabilityDisplay ? this._disabilityDisplay : Number(0).toFixed( 2 );
   }
 
   /**
@@ -108,6 +108,6 @@ export class FinancialCalculatorComponent implements OnInit {
    * @returns {string}
    */
   get incomeDisplay(): string {
-    return this._incomeDisplay ? this._incomeDisplay : '0';
+    return this._incomeDisplay ? this._incomeDisplay : Number(0).toFixed( 2 );
   }
 }

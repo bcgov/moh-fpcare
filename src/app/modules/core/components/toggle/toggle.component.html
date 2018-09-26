@@ -1,10 +1,15 @@
-<div class="btn-group">
-  <label class="btn btn-default"
-    (click)="dataChange.emit(true)"
-    btnRadio="Left"
-    [class.btn-radio]="data">Yes</label>
-  <label class="btn btn-default"
-    (click)="dataChange.emit(false)"
-    btnRadio="Middle"
-    [class.btn-radio]="data === false">No</label>
-</div>
+<fieldset class="radio-group ">
+   <span class="radio-btn">
+     <label for="no_{{objectId}}">No</label>
+     <input type="radio" id="no_{{objectId}}"
+            name="selection_{{objectId}}" value="no"
+            (click)="dataChange.emit(false)">
+   </span>
+   <span class="radio-btn">
+     <label for="yes_{{objectId}}">Yes</label>
+     <input type="radio"
+            id="yes_{{objectId}}"
+            name="selection_{{objectId}}" value="yes"
+            (click)="dataChange.emit(true)">
+   </span>
+</fieldset>

@@ -87,11 +87,11 @@ export class FinanceService {
       return null;
     }
 
-    const strVal = currency.toString();
-    const mask = conformToMask( (!!decimalsRegex.exec(strVal)) ? currency.toFixed(2) : strVal,
-                                this.moneyMask, {});
+    const strVal = currency.toFixed( 2 );
+    const mask = conformToMask( strVal, this.moneyMask, {});
     return `${withDollarSign ? '$' : ''}${mask.conformedValue}`;
   }
+
 
   // BUSINESS RULE METHODS ----------------------------------------------------
   // The below methods are defined in Functional Requirement Documents

@@ -1,22 +1,19 @@
-.btn-group .btn-default {
-  margin-right: 0;
+.radio-group {
+  padding: 1rem;
 }
 
-.btn-radio {
-  background: #2962FF;
-  color: white;
-  &:hover {
-    background: #2962FF;
-    color: white;
+.radio-btn {
+  padding: inherit;
+
+  .label {
+    margin-right: 0.5rem;
   }
-  &:not(:hover) {
-    background: #2962FF;
-    color: white;
-  }
-  &:selection {
-    background: #2962FF;
-  }
-  &:active {
-    background: #2962FF;
+
+  .input {
+    align-self: center;
   }
 }
+
+
+
+
