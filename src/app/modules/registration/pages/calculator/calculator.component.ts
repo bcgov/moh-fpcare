@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {RegistrationService} from '../../registration.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FinanceService } from '../../../financial-calculator/finance.service';
+import {decimalsRegex, FinanceService} from '../../../financial-calculator/finance.service';
 import {REGISTRATION_ELIGIBILITY, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ApiService} from '../../../../services/api-service.service';
@@ -28,6 +28,9 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   /** Numeric value for disability */
   public disabilityAmount: number;
 
+  /** Text displayed on button */
+  public buttonText: string = 'Apply for Fair PharmaCare Assistance';
+
   /**
    * Is the form standalone? If false, it's part of Registration's flow, if
    * true, it's a page treated in isolation. This includes, for example,
@@ -48,7 +51,6 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   ngOnInit() {
-    // console.log( 'Calculator (onInit) ' );
 
     // TODO - Ideally instead of nested Observable subscriptions, we should use rxjs delayWhen() or concatMap() to triger sequential operation
     this.apiService.getBenefitYear().subscribe(benefitResponse => {
@@ -65,7 +67,8 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
           const deductiblePayload = new DeductiblePayload(deductibleResponse);
 
           if (benefitPayload.success){
-            this.financeService.setAssistanceLevels(deductiblePayload.assistanceLevels, deductiblePayload.pre1939AssistanceLevels);
+            this.financeService.setAssistanceLevels(deductiblePayload.assistanceLevels,
+                deductiblePayload.pre1939AssistanceLevels);
           }
         },
         (deductibleError) => {
@@ -84,8 +87,13 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     this.moneyMask = this.financeService.moneyMask;
     this.registrationService.setItemIncomplete();
 
-    // Update data - user may have used back button on browser
-    this.update();
+    // If not defined do not update the page
+    if ( undefined !== this.income ||
+         undefined !== this.spouseIncome ) {
+
+      // Update data - user may have used back button on browser
+      this.update();
+    }
   }
 
   /**
@@ -144,18 +152,22 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   public update(): void {
-    this.totalFamilyIncome = this.calculateTotalFamilyIncome();
+
+    // Need income to do calculations
+    if ( this.income ) {
+      this.totalFamilyIncome = this.calculateTotalFamilyIncome();
+    }
 
     if (this.disabilityFormatted && this.disabilityFormatted.length) {
-      this.disabilityAmount = this.financeService.currencyStrToNumber( this.disabilityFormatted );
+      this.disabilityAmount = this.financeService.currencyStrToNumber(this.disabilityFormatted);
     }
     else {
       this.disabilityAmount = 0;
     }
 
     // Update fpcare-data service values
-    this.fpcareDataService.applicantIncome = this.financeService.currencyStrToNumber( this.income );
-    this.fpcareDataService.spouseIncome = this.financeService.currencyStrToNumber( this.spouseIncome );
+    this.fpcareDataService.applicantIncome = this.financeService.currencyStrToNumber(this.income);
+    this.fpcareDataService.spouseIncome = this.financeService.currencyStrToNumber(this.spouseIncome);
     this.fpcareDataService.disabilityAmount = this.disabilityAmount;
   }
 
@@ -167,18 +179,37 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     this.fpcareDataService.adjustedIncome = this.financeService.currencyStrToNumber( value );
   }
 
+  /**
+   *
+   * @param {string} value
+   * @returns {string}
+   */
+  public formatDecimal( value: string ) {
+    const result = decimalsRegex.exec( value );
+
+    return ( result && result[1].length < 2 ) ? value.concat( '0' ) : value;
+  }
+
+  /**
+   * Get the tax year for this benefit year
+   * @returns {string}
+   */
+  get taxYear(): string {
+    return this.fpcareDataService.taxYear;
+  }
+
   private calculateTotalFamilyIncome(): number {
     let incomeNum = 0;
     let spouseNum = 0;
 
-    if (this.income){
+    if (this.income) {
       incomeNum = this.financeService.currencyStrToNumber( this.income );
     }
 
-    if ( this.hasSpouse && this.spouseIncome) {
+    if ( this.hasSpouse && this.spouseIncome ) {
       spouseNum = this.financeService.currencyStrToNumber( this.spouseIncome );
     }
 
-    return this.financeService.calculateFamilyNetIncome(incomeNum, spouseNum);
+    return this.financeService.calculateFamilyNetIncome( incomeNum, spouseNum );
   }
 }

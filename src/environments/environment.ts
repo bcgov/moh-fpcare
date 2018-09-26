@@ -6,6 +6,7 @@
 export const environment = {
   production: false,
   useDummyData: false,
+  useMockBackend: false,
 
   /** Enable modulo based validation, i.e. PHN and SIN number checks */
   modChecksOn: true,

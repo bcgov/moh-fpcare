@@ -11,9 +11,11 @@ import {
   StatusCheckPHN,
   StatusCheckRegNum,
   DeductibleInterface,
-  ReprintLetter, BenefitYearPayload
+  ReprintLetter, BenefitYearPayload, PersonInterface
 } from 'app/models/api.model';
 import {FPCareDataService} from './fpcare-data.service';
+import {resolveProjectModule} from '@angular/cli/utilities/require-project-module';
+import {EligibilityInterface} from '../models/api.model';
 
 @Injectable({
   providedIn: 'root'
@@ -142,7 +144,22 @@ export class ApiService extends AbstractHttpService {
     });
   }
 
+  public checkEligibility( input: {benefitYear: string, persons: PersonInterface[]}
+                       , processDate = this.getProcessDate() ) {
+    const url = environment.baseAPIUrl + 'checkEligibility';
+
+    return this.post<EligibilityInterface>(url, {
+      uuid: this.generateUUID(),
+      clientName: this._clientName,
+      processDate: processDate,
+      benefitYear: input.benefitYear,
+      persons: input.persons
+    });
+  }
+
   protected handleError(error: HttpErrorResponse) {
+    console.log( 'Error (handleError: ', error );
+
     if (error.error instanceof ErrorEvent) {
       //Client-side / network error occured
       console.error('An error occured: ', error.error.message);

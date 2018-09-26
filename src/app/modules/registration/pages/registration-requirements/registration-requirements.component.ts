@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import {Base} from '../../../core/components/base/base.class';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
-import {REGISTRATION_FINANCIAL, REGISTRATION_PATH, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
+import {REGISTRATION_FINANCIAL, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 import {RegistrationService} from '../../registration.service';
 import {pageRoutes} from '../../registration-page-routing';
 
@@ -15,7 +15,7 @@ import {pageRoutes} from '../../registration-page-routing';
 export class RegistrationRequirementsComponent extends Base implements OnInit, AfterViewInit {
 
   @ViewChild('consentModal') consentModal: ConsentModalComponent;
-  /** Page to naviage to when continue process */
+  /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_FINANCIAL;
 
   constructor( private router: Router,

@@ -38,8 +38,8 @@ export class WizardProgressBarComponent extends Base implements OnInit {
   }
 
   calculateProgressPercentage(): Number {
-    const denominator = this.progressSteps.length - 1;
-    const numerator = this.activeIndex;
+    const denominator = this.progressSteps.length + 1;
+    const numerator = this.activeIndex + 1;
 
     if (denominator === 0 || numerator >= denominator){
       return 100;

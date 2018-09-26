@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { DummyDataService } from '../../../../services/dummy-data.service';
+import { Component } from '@angular/core';
 import { ResponseStoreService } from '../../../../services/response-store.service';
 import { StatusCheckPHNPayload, StatusCheckRegNumberPayload } from '../../../../models/api.model';
 

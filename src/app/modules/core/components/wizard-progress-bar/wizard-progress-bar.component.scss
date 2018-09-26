@@ -11,7 +11,7 @@
 
 .step-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 progressbar {
@@ -51,6 +51,7 @@ progressbar {
     position: absolute;
     transform: translateX(-33%);
     white-space: nowrap;
+    font-size: small;
   }
 }
 

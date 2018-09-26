@@ -5,8 +5,18 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ValidationService} from '../../../../services/validation.service';
-import {REGISTRATION_PATH, REGISTRATION_PERSONAL} from '../../../../models/route-paths.constants';
+import {
+  ERROR_404,
+  REGISTRATION_PATH,
+  REGISTRATION_PERSONAL,
+  REGISTRATION_RESULTS
+} from '../../../../models/route-paths.constants';
 import {RegistrationService} from '../../registration.service';
+import {ApiService} from '../../../../services/api-service.service';
+import {
+  EligibilityPayload, PersonType,
+} from '../../../../models/api.model';
+import {ResponseStoreService} from '../../../../services/response-store.service';
 
 @Component({
   selector: 'fpcare-eligibility',
@@ -22,12 +32,14 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
   private _uniquePhn = true;
 
   /** Page to naviage to when continue process */
-  private _url = REGISTRATION_PATH + '/' + REGISTRATION_PERSONAL;
+  private _baseUrl = REGISTRATION_PATH + '/';
 
   constructor( protected router: Router
              , private fpcareDataService: FPCareDataService
              , private validationService: ValidationService
-             , private registrationService: RegistrationService ) {
+             , private registrationService: RegistrationService
+             , private apiService: ApiService
+             , private responseStore: ResponseStoreService ) {
     super( router );
   }
 
@@ -44,14 +56,15 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
     // Main and sub forms are not empty and are valid
     if ( super.canContinue() ) {
 
-      // Check PHNs are unique
-      if ( this.hasSpouse ) {
-
-        this._uniquePhn = this.validationService.isUnique( [this.applicant.phn, this.spouse.phn] );
-        return this._uniquePhn;
+      if ( !this.hasSpouse ) {
+        return true;
       }
-      return false;
+
+      // Check PHNs are unique
+      this._uniquePhn = this.validationService.isUnique( [this.applicant.phn, this.spouse.phn] );
+      return this._uniquePhn;
     }
+    return false;
   }
 
   /**
@@ -92,9 +105,66 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    */
   continue(): void {
 
-    if ( this.canContinue() ) {
-      this.registrationService.setItemComplete();
-      this.navigate( this._url );
+    if (!this.canContinue()) {
+      return;
     }
+
+    console.log('continue');
+
+    // Set registration item to complete
+    this.registrationService.setItemComplete();
+
+    this.loading = true;
+
+    // Setup the request
+    let subscription;
+    if (this.hasSpouse) {
+      subscription = this.apiService.checkEligibility({
+        persons: [
+          { perType: PersonType.applicantType,
+            phn: this.fpcareDataService.removeStrFormat( this.applicant.phn ),
+            dateOfBirth: this.applicant.dateOfBirthShort,
+            postalCode: ''
+          },
+          { perType: PersonType.spouseType,
+            phn: this.fpcareDataService.removeStrFormat( this.spouse.phn ),
+            dateOfBirth: this.spouse.dateOfBirthShort,
+            postalCode: ''
+          }
+        ],
+        benefitYear: this.fpcareDataService.benefitYear
+      });
+    } else {
+      subscription = this.apiService.checkEligibility({
+        persons: [
+          {perType: PersonType.applicantType,
+            phn: this.fpcareDataService.removeStrFormat( this.applicant.phn) ,
+            dateOfBirth: this.applicant.dateOfBirthShort,
+            postalCode: ''
+          }
+        ],
+        benefitYear: this.fpcareDataService.benefitYear
+      });
+    }
+
+// TODO: response will eventually be encrypted, comparing data entered by applicant will need to be encrypted to be validated
+    // Trigger the HTTP request
+    subscription.subscribe(response => {
+
+      this.responseStore.eligibility = new EligibilityPayload(response);
+      this.loading = false;
+      console.log( 'response: ', response );
+
+      if ( response.success) {
+        this.navigate( this._baseUrl + REGISTRATION_PERSONAL );
+      } else {
+        this.navigate(this._baseUrl +  REGISTRATION_RESULTS );
+      }
+    },
+        (responseError) => {
+          this.loading = false;
+          console.log( 'response error: ', responseError );
+          this.navigate( ERROR_404 );
+    });
   }
 }

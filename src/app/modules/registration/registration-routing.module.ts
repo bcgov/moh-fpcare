@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { RegistrationContainerComponent } from './components/registration-container/registration-container.component';
 import { RegistrationRequirementsComponent } from './pages/registration-requirements/registration-requirements.component';
-import {REGISTRATION_REQUIREMENTS} from '../../models/route-paths.constants';
+import {REGISTRATION_REQUIREMENTS, REGISTRATION_RESULTS} from '../../models/route-paths.constants';
 import {RegistrationGuard} from './registration.guard';
+import {RegResultsComponent} from './pages/reg-results/reg-results.component';
 
 
 export const routes: Routes = [
@@ -19,12 +20,17 @@ export const routes: Routes = [
   // TODO: Move this out into just registration routes, it's not a subpage.
   {
     path: REGISTRATION_REQUIREMENTS,
-    component: RegistrationRequirementsComponent
+    component: RegistrationRequirementsComponent,
+    data: {title: 'Requirements'}
   },
-
+  {
+    path: REGISTRATION_RESULTS,
+    component: RegResultsComponent,
+    data: {title: 'Registration Status'}
+  },
   {
     path: '**',
-    redirectTo: ''
+    redirectTo: REGISTRATION_REQUIREMENTS
   }
 ];
 

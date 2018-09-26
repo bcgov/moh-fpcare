@@ -18,7 +18,8 @@ export const pageRoutes: Routes = [
   },
   {
     path: REPRINT_STATUS,
-    component: ReprintStatusComponent
+    component: ReprintStatusComponent,
+    data: { title: 'Reprint Letter Status'}
   },
   // We have to redirect _somewhere_, so picked one arbitrarily.
   {

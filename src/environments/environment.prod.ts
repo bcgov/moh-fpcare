@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   useDummyData: false,
+  useMockBackend: false,
   modChecksOn: true,
   baseAPIUrl: '/fpcare/api/fpcareIntegration/rest/',
   captchaApiBaseUrl: '/fpcare/api/captcha',

@@ -1,4 +1,4 @@
-import {PharmaCareAssistanceLevel, PharmaCareAssistanceLevelServerResponse} from '../modules/financial-calculator/assistance-levels.interface';
+import {PharmaCareAssistanceLevelServerResponse} from '../modules/financial-calculator/assistance-levels.interface';
 
 /**
  * Status code for the request
@@ -74,16 +74,25 @@ export interface DeductibleInterface extends PayloadInterface {
 }
 
 /**
+ * Structures & values for eligibility component & service
+ */
+export enum PersonType {
+  applicantType = '0',
+  spouseType = '1',
+  dependent = '2'
+}
+
+/**
  * Format of the Persons field for eligibility checks
  */
 export interface PersonInterface {
-    perType: string; // 0 = applicant, 1 = spouse
-    phn: string;
-    sin: string;
-    dateOfBirth: string; // YYYYMMDD
-    postalCode: string; // blank by default (value returned)
+  perType: string; // 0 = applicant, 1 = spouse
+  phn: string;
+  dateOfBirth: string; // YYYYMMDD
+  postalCode: string; // blank by default (value returned)
 
 }
+
 /**
  * Check Fair PharmaCare eligibility (i.e. Active MSP coverage and not registered in FPC)
  */
@@ -193,7 +202,7 @@ export class DeductiblePayload extends ServerPayload implements DeductibleInterf
 export class EligibilityPayload extends ServerPayload implements EligibilityInterface {
     benefitYear: string;
     persons: PersonInterface[];
-    
+
     constructor( payload: EligibilityInterface ) {
         super(payload);
         this.benefitYear = payload.benefitYear;

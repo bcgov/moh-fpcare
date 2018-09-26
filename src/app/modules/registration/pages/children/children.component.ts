@@ -44,7 +44,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
       // no children, continue
       return true;
     }
-
+    
     // Main and sub forms are not empty and are valid
     if ( super.canContinue() ) {
 
@@ -53,7 +53,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
       // Check that individuals are allowed on Parents FPC account
       const notLegitDeps = this.children.map(x => !this.legitimateDependant(x))
-          .filter(legit => legit !== true ).length === 0;
+          .filter(legit => legit === true ).length === 0;
 
       return (this._uniquePhns && notLegitDeps);
     }

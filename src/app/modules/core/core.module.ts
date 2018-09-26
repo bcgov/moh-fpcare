@@ -80,9 +80,7 @@ const componentList = [
     TextMaskModule,
   ],
   declarations: [
-    componentList,
-    PhnComponent,
-    SinComponent
+    componentList
   ],
   exports: [
     componentList

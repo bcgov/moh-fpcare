@@ -23,14 +23,32 @@ import { HeaderFooterModule } from './modules/header-footer/header-footer.module
 import { ValidationService } from './services/validation.service';
 import { HttpClientModule } from '@angular/common/http';
 import {RegistrationService} from './modules/registration/registration.service';
+import {fakeBackendProvider} from './_developmentHelpers/fake-backend';
+import {environment} from '../environments/environment';
+import {ErrorPageComponent} from './pages/error-page/error-page.component';
 
+// List of providers for applicant
+const providerList: any = [
+    UserService,
+    DummyDataService,
+    FPCareDataService,
+    ValidationService,
+    RegistrationService,
+    Title,
+  ];
+
+if ( environment.useMockBackend ) {
+  // provider used to create fake backend - development of registration modules
+  providerList.push( fakeBackendProvider );
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     DemoPageComponent,
     HomePageComponent,
-    BlankPageComponent
+    BlankPageComponent,
+    ErrorPageComponent
   ],
   imports: [
     BrowserModule,
@@ -50,12 +68,7 @@ import {RegistrationService} from './modules/registration/registration.service';
     HttpClientModule
   ],
   providers: [
-    UserService,
-    DummyDataService,
-    FPCareDataService,
-    ValidationService,
-    RegistrationService,
-    Title
+    providerList
   ],
   bootstrap: [AppComponent]
 })

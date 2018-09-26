@@ -7,40 +7,48 @@ import { MailingAddressPageComponent } from './pages/mailing-address/mailing-add
 import { PersonalInfoPageComponent } from './pages/personal-info/personal-info.component';
 import { ReviewPageComponent } from './pages/review/review.component';
 import {
+  ERROR_404,
   REGISTRATION_ADDRESS, REGISTRATION_AUTHORIZE,
   REGISTRATION_CHILD,
   REGISTRATION_ELIGIBILITY,
   REGISTRATION_FINANCIAL,
-  REGISTRATION_PERSONAL, REGISTRATION_REVIEW
+  REGISTRATION_PERSONAL, REGISTRATION_REVIEW, REPRINT_COB
 } from '../../models/route-paths.constants';
 
 export const pageRoutes: Routes = [
     {
         path: REGISTRATION_FINANCIAL,
-        component: CalculatorPageComponent
+        component: CalculatorPageComponent,
+        data: { title: 'Financial Calculator'}
     },
     {
         path: REGISTRATION_ELIGIBILITY,
-        component: EligibilityPageComponent
+        component: EligibilityPageComponent,
+        data: { title: 'Eligibility'}
     },
     {
         path: REGISTRATION_PERSONAL,
-        component: PersonalInfoPageComponent
+        component: PersonalInfoPageComponent,
+        data: { title: 'Personal Information'}
     },
     {
         path: REGISTRATION_CHILD,
-        component: ChildrenPageComponent
+        component: ChildrenPageComponent,
+        data: { title: 'Children Information'}
     },
     {
         path: REGISTRATION_ADDRESS,
-        component: MailingAddressPageComponent
+        component: MailingAddressPageComponent,
+        data: { title: 'Mailing Address'}
     },
     {
         path: REGISTRATION_REVIEW,
-        component: ReviewPageComponent
+        component: ReviewPageComponent,
+        data: { title: 'Review Application'}
     },
     {
         path: REGISTRATION_AUTHORIZE,
-        component: CompletePageComponent
-    },
+        component: CompletePageComponent,
+        data: { title: 'Authorization'}
+    }
 ];

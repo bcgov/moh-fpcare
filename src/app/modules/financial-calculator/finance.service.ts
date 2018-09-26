@@ -4,6 +4,7 @@ import { conformToMask } from 'angular2-text-mask';
 import { PharmaCareAssistanceLevel, PharmaCareAssistanceLevelServerResponse } from './assistance-levels.interface';
 import { BehaviorSubject } from 'rxjs';
 
+export const decimalsRegex = /\.([0-9]{1,2})/;
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,7 @@ export class FinanceService {
       endRange: Number(serverResponse.endRange),
       deductible: Number(serverResponse.deductible.replace('$', '')),
       pharmaCarePortion: Number(serverResponse.pharmaCarePortion.replace('%', '')),
-      maximum: Number(serverResponse.maximum.replace('$', '')),
+      maximum: Number(serverResponse.maximum.replace('$', ''))
     };
   }
 
@@ -65,8 +66,6 @@ export class FinanceService {
    * @memberof FinanceService
    */
   public findAssistanceLevel(familyNetIncome: number = 0, config?: { bornBefore1939: boolean }): PharmaCareAssistanceLevel {
-    // console.log( 'PharmaCareAssistanceLevels: ', this.PharmaCareAssistanceLevels );
-    // console.log( 'Pre1939PharmaCareAssistanceLevels: ', this.Pre1939PharmaCareAssistanceLevels );
 
     if ( !this.PharmaCareAssistanceLevels  || !this.Pre1939PharmaCareAssistanceLevels ) {
       console.error( 'Assistance levels not loaded', this.PharmaCareAssistanceLevels, this.Pre1939PharmaCareAssistanceLevels );
@@ -83,10 +82,14 @@ export class FinanceService {
   }
 
   public currencyFormat(currency: number, withDollarSign = false): string {
-    if ( !currency ) {
+
+    if (!currency) {
       return null;
     }
-    const mask = conformToMask(currency.toString(), this.moneyMask, {});
+
+    const strVal = currency.toString();
+    const mask = conformToMask( (!!decimalsRegex.exec(strVal)) ? currency.toFixed(2) : strVal,
+                                this.moneyMask, {});
     return `${withDollarSign ? '$' : ''}${mask.conformedValue}`;
   }
 
@@ -95,7 +98,14 @@ export class FinanceService {
 
   public calculateFamilyNetIncome(applicantIncome: number = 0, spouseIncome: number = 0) {
     //Family Net Income = Applicant's Net Income (I01) + Spouse's Net Income (I03)
-    return applicantIncome + spouseIncome;
+
+    /**
+     * ST17305 Fix
+     * There is some bug in typescript that causes incorrect values to be calculated when one number has 2 decimals
+     * and the other has 1 decimal. (e.g. 1000,9 + 1000.01 results in 1000.9099999 rather then 1000.91)
+     */
+    const familyNetIncome = applicantIncome + spouseIncome;
+    return Number( familyNetIncome.toFixed(2) );
   }
 
   public calculateFamilyAdjustedIncome(familyNetIncome: number, disability: number): number {
@@ -104,7 +114,7 @@ export class FinanceService {
     if (adjustedIncome < 0) {
       return 0;
     }
-    return adjustedIncome;
+    return Number(adjustedIncome.toFixed( 2 ));
   }
 
 

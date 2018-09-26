@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AnnualDeductibleComponent } from './annual-deductible.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('AnnualDeductibleComponent', () => {
   let component: AnnualDeductibleComponent;
@@ -8,7 +9,12 @@ describe('AnnualDeductibleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AnnualDeductibleComponent ]
+      declarations: [
+        AnnualDeductibleComponent
+      ],
+      imports: [
+        BrowserAnimationsModule
+      ]
     })
     .compileComponents();
   }));

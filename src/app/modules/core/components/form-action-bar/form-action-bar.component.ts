@@ -9,8 +9,8 @@ export class FormActionBarComponent implements OnInit {
   @Input() submitLabel: string = 'Continue';
   @Input() canContinue: boolean = true;
   @Input() isLoading: boolean = false;
-  @Output() click: EventEmitter<any> = new EventEmitter<any>();
-
+  @Input() defaultColor: boolean = true;
+  @Output() btnClick: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
 
@@ -19,7 +19,7 @@ export class FormActionBarComponent implements OnInit {
 
   onClick($event){
     if (!this.isLoading && this.canContinue){
-      this.click.emit($event);
+      this.btnClick.emit($event);
     }
     $event.stopPropagation();
     return false;

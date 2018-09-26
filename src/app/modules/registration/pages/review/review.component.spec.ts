@@ -7,6 +7,7 @@ import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.sp
 import {RegistrationService} from '../../registration.service';
 import {FinanceService} from '../../../financial-calculator/finance.service';
 import {FinancialCalculatorModule} from '../../../financial-calculator/financial-calculator.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('ReviewComponent', () => {
   let component: ReviewPageComponent;
@@ -20,6 +21,7 @@ describe('ReviewComponent', () => {
       imports: [
         CoreModule,
         RouterTestingModule,
+        BrowserAnimationsModule,
         FinancialCalculatorModule
       ],
       providers: [

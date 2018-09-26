@@ -15,11 +15,11 @@ export class RegistrationContainerComponent implements OnInit {
 
   ngOnInit() {
     // Interface for wizard progress items
-    this.progressSteps = pageRoutes.map(x => {
-      return {
-        title: this.convertRouteToTitle(x.path),
-        route: x.path
-      };
+    this.progressSteps = pageRoutes.map(page => {
+        return {
+          title: this.convertRouteToTitle(page.path),
+          route: page.path
+        };
     });
   }
 

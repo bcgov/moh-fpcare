@@ -43,6 +43,8 @@ export abstract class AbstractFormComponent extends Base {
    * @returns {boolean}
    */
   canContinue(): boolean {
+
+    //console.log( 'super canContinue(): ', {empty: this.isFormEmpty(), valid: this.isFormValid() } );
     return !this.isFormEmpty() && this.isFormValid();
   }
 
@@ -65,9 +67,12 @@ export abstract class AbstractFormComponent extends Base {
           .filter( item => item ).length === 0
       ).filter( empty => empty !== true ).length === 0;
 
+     /* console.log( 'isFormEmpty (w/ Date): ',
+          {mainFormEmpty: mainFormEmpty, subFormsEmpty: subFormsEmpty} );*/
       return (mainFormEmpty && subFormsEmpty);
     }
 
+    //console.log( 'isFormEmpty: ', {mainFormEmpty: mainFormEmpty} );
     return mainFormEmpty;
   }
 
@@ -77,16 +82,17 @@ export abstract class AbstractFormComponent extends Base {
    */
   protected isFormValid(): boolean {
     const mainFormValid = this.form.valid;
-    console.log( 'mainFormValid: ', mainFormValid );
 
     if (this.dateForm) {
       const subFormsValid = this.dateForm.map( x => x.form.valid )
-          .filter( valid => valid !== false ).length === 0;
+          .filter( valid => valid !== true ).length === 0;
 
-      console.log( 'subFormsValid: ', subFormsValid );
-
+    /*  console.log( 'isFormValid (w/ Date): ',
+          {mainFormValid: mainFormValid, subFormsValid: subFormsValid} );*/
       return (mainFormValid && subFormsValid);
     }
+
+    //console.log( 'isFormValid: ', {mainFormValid: mainFormValid} );
     return mainFormValid;
   }
 }

@@ -1,7 +1,7 @@
 <form #formRef='ngForm' novalidate [validateCalendarFutureDates]="restrictDate">
-    <label class="visuallyhidden" for="month{{objectId}}">Month</label>
     <div class="form-group"
          [ngClass]="{'has-error': formRef.invalid && (monthRef.touched || yearRef.touched || dayRef.touched || showError)}">
+        <label class="visuallyhidden" for="month{{objectId}}">Month</label>
         <select class="form-control monthSelect"
                 [ngModel]="date.month"
                 (ngModelChange)="setMonthValueOnModel($event)"
@@ -10,24 +10,15 @@
                 #monthRef="ngModel"
                 [disabled]="disabled"
                 [required]="required">
-            <!-- 
+           <!-- TODO: May not be the correct way to add placeholder - further investigation requried -->
+           <option value="null" disabled hidden>month</option>
+            <!--
               We show the blank option if the input isn't required, so the user
               can clear out their data. However if it is required, there's no
               need.
              -->
-            <option value="0" *ngIf="!required">&nbsp;</option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
+           <option value="0" *ngIf="!required">&nbsp;</option>
+           <option *ngFor="let month of monthNames; let i = index;" [value]="i+1"> {{ month }}</option>
         </select>
         <label class="visuallyhidden" for="day{{objectId}}">Day</label>
         <input type="number" class="form-control dayInput"

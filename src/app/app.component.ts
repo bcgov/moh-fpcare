@@ -69,9 +69,8 @@ export class AppComponent implements OnInit {
     * Future investigation required
     */
     // Retrieve benefit year
-    //this.loadBenefitYear();
+    //this.apiService.loadBenefitYear();
   }
-
 
   /**
    * Listen to every route change, and update the page title based on the
@@ -102,18 +101,6 @@ export class AppComponent implements OnInit {
       this.titleService.setTitle(this.title);
     }
   }
-
-  /*
-  private loadBenefitYear() {
-    this.apiService.getBenefitYear().subscribe(response => {
-      const payload = new BenefitYearPayload(response);
-      // console.log( ' payload: ', payload );
-      if (payload.success) {
-        this.fpcareDataService.benefitYear = payload.benefitYear;
-        this.fpcareDataService.taxYear = payload.taxYear;
-      }
-    });
-  }*/
 
   /**
    * Enables the confirm on exit/there are unsaved changes prompt when

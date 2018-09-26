@@ -20,15 +20,14 @@ export class FinancialCalculatorComponent implements OnInit {
   @Output() incomeAdjustment: EventEmitter<string> = new EventEmitter<string>();
 
   /** A currency formatted string corresponding to `income` */
-  public incomeDisplay: string = '0';
+  private _incomeDisplay: string;
   /** A currency formatted string corresponding to `disabilitySavingsAmount` */
-  public disabilityDisplay: string = '0';
+  private _disabilityDisplay: string;
+  /** A currency formatted string retrieved from the finance service. */
+  private _adjustedIncomeDisplay: string;
 
   /** A number in dollars, used to determine what level of PharmaCare coverage. */
   public adjustedIncomeAmount: number;
-  /** A currency formatted string retrieved from the finance service. */
-  public adjustedIncomeDisplay: string = '0';
-
 
   /** Finance Service is still loading data. */
   public isLoadingData: boolean = true;
@@ -48,18 +47,20 @@ export class FinancialCalculatorComponent implements OnInit {
 
     this.onChanges.subscribe((changes: SimpleChanges) => {
       //console.log('finCalc onchanges', changes);
+
       if (changes.income) {
-        this.incomeDisplay = this.currencyFormat(this.income);
+        this._incomeDisplay = this.currencyFormat(this.income);
       }
 
       if (changes.disabilitySavingsAmount) {
-        this.disabilityDisplay = this.currencyFormat(this.disabilitySavingsAmount);
+        this._disabilityDisplay = this.currencyFormat(this.disabilitySavingsAmount);
       }
 
       if (changes.income || changes.disabilitySavingsAmount){
-        this.adjustedIncomeAmount = this.financeService.calculateFamilyAdjustedIncome(this.income, this.disabilitySavingsAmount);
-        this.adjustedIncomeDisplay = this.currencyFormat(this.adjustedIncomeAmount);
-        this.incomeAdjustment.emit( this.adjustedIncomeDisplay );
+        this.adjustedIncomeAmount = this.financeService.calculateFamilyAdjustedIncome(this.income,
+            this.disabilitySavingsAmount);
+        this._adjustedIncomeDisplay = this.currencyFormat(this.adjustedIncomeAmount);
+        this.incomeAdjustment.emit( this._adjustedIncomeDisplay );
       }
     });
 
@@ -86,4 +87,27 @@ export class FinancialCalculatorComponent implements OnInit {
     this.onChanges.unsubscribe();
   }
 
+  /**
+   * Retrieve formatted string value for adjusted income
+   * @returns {string}
+   */
+  get adjustedIncomeDisplay(): string {
+    return this._adjustedIncomeDisplay ? this._adjustedIncomeDisplay : '0';
+  }
+
+  /**
+   * Retrieve formatted string value for disability
+   * @returns {string}
+   */
+  get disabilityDisplay(): string {
+    return this._disabilityDisplay ? this._disabilityDisplay : '0';
+  }
+
+  /**
+   * Retrieve formatted string value for income
+   * @returns {string}
+   */
+  get incomeDisplay(): string {
+    return this._incomeDisplay ? this._incomeDisplay : '0';
+  }
 }

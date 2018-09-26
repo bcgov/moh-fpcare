@@ -4,7 +4,7 @@
 
   <form #formRef="ngForm" novalidate>
       <div class="form-group">
-          <label class='no-bold' for="totalFamilyIncome">Enter your net income from 2016 &mdash; see Line 236 of your Notice of Assessment or Reassessment from Canada Revenue Agency.</label>
+          <label class='no-bold' for="totalFamilyIncome">Enter your net income from {{taxYear}} &mdash; see Line 236 of your Notice of Assessment or Reassessment from Canada Revenue Agency.</label>
 
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -17,7 +17,7 @@
                 fpcareRequired="required"
                 [ngModel]="income"
                 (ngModelChange)="income = $event; update()"
-                [textMask]="{mask: moneyMask}"
+                [textMask]="{mask: moneyMask, pipe: formatDecimal}"
                 placeholder="Enter Your Income"/>
           </div>
       </div>
@@ -31,7 +31,7 @@
 
 
       <div class="form-group" *ngIf='hasSpouse'>
-          <label class='no-bold' for="spouseIncome">Enter your spouse's / common law partner's net income from 2016 &mdash; see Line 236 of your Notice of Assessment or Reassessment from Canada Revenue Agency.</label>
+          <label class='no-bold' for="spouseIncome">Enter your spouse's / common law partner's net income from {{taxYear}} &mdash; see Line 236 of your Notice of Assessment or Reassessment from Canada Revenue Agency.</label>
 
           <div class="input-group mb-3">
             <div class="input-group-prepend">
@@ -44,7 +44,7 @@
                 fpcareRequired="required"
                 [ngModel]="spouseIncome"
                 (ngModelChange)="spouseIncome = $event; update()"
-                [textMask]="{mask: moneyMask}"
+                [textMask]="{mask: moneyMask, pipe: formatDecimal}"
                 placeholder="Enter Your Income"/>
           </div>
       </div>
@@ -68,7 +68,7 @@
                 name="disability"
                 [ngModel]="disabilityFormatted"
                 (ngModelChange)="disabilityFormatted = $event; update();"
-                [textMask]="{mask: moneyMask}"
+                [textMask]="{mask: moneyMask, pipe: formatDecimal}"
                 placeholder="Enter Disability Savings Amounts"/>
           </div>
       </div>
@@ -87,8 +87,10 @@
 
    <fpcare-form-action-bar
        *ngIf="!standalone"
+       [submitLabel]="buttonText"
+       [defaultColor]="false"
        [canContinue]="canContinue()"
-       (click)="continue()">
+       (btnClick)="continue()">
    </fpcare-form-action-bar>
 
 </fpcare-page-framework>

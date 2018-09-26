@@ -4,6 +4,21 @@ import { Base } from '../base/base.class';
 import * as moment from 'moment';
 import { SimpleDate } from './simple-date.interface';
 
+export enum MonthName {
+  Jan = 'January',
+  Feb = 'February',
+  Mar = 'March',
+  Apr = 'April',
+  May = 'May',
+  Jun = 'June',
+  July = 'July',
+  Aug = 'August',
+  Sep = 'September',
+  Oct = 'October',
+  Nov = 'November',
+  Dec = 'December'
+};
+
 @Component({
   selector: 'fpcare-date',
   templateUrl: './date.component.html',
@@ -26,7 +41,6 @@ export class FPCareDateComponent extends Base implements OnInit {
   @ViewChild('formRef') form: NgForm;
 
 
-
   constructor(private cd: ChangeDetectorRef) {
     super();
   }
@@ -38,6 +52,18 @@ export class FPCareDateComponent extends Base implements OnInit {
     if (this.useCurrentDate) {
       this.setToToday();
     }
+  }
+
+  /**
+   * Get names of the months to display on the page
+   * @returns {any[]}
+   */
+  get monthNames() {
+    return Object.keys( MonthName ).map( x => MonthName[x] );
+  }
+
+  get dobMonth() {
+    return this.date ? this.date : 'month';
   }
 
   setYearValueOnModel(value: string) {
@@ -60,8 +86,10 @@ export class FPCareDateComponent extends Base implements OnInit {
   }
 
   setMonthValueOnModel(value: string) {
+    console.log( 'Set Month Value: ', value );
     if (value) {
       this.date.month = parseInt(value, 10);
+      console.log( 'month ', this.date.month );
     } else {
       this.date.month = null;
     }

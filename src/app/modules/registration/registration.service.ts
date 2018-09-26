@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
+import {EligibilityPayload} from '../../models/api.model';
 
 export interface RegistrationItem {
   route: string;

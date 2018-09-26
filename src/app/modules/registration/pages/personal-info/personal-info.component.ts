@@ -41,13 +41,15 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
     // Main and sub forms are not empty and are valid
     if ( super.canContinue() ) {
 
-      // Check SINs are unique
-      if ( this.hasSpouse ) {
-        this._uniqueSin = this.validationService.isUnique( [this.applicant.sin, this.spouse.sin] );
-
-        return this._uniqueSin;
+      if ( !this.hasSpouse ) {
+        return true;
       }
+
+      // Check SINs are unique
+      this._uniqueSin = this.validationService.isUnique( [this.applicant.sin, this.spouse.sin] );
+      return this._uniqueSin;
     }
+
     return false;
   }
 

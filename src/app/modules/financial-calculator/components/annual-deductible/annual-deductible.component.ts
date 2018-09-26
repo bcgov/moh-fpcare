@@ -22,18 +22,18 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
   /** The main data object, retrieved via lookup using familyNetIncome. Used in calclations. */
   public pharmaCareLevel: PharmaCareAssistanceLevel;
   /** Currency formatted dollar amount */
-  public deductible: string = null;
+  public deductible: string = '10,000';
   /** A percentage value (without the % symbol) of the portion PharmaCare pays after deductible is met  */
   public pharmaCarePortion: number;
   /** A currency formatted dollar amount of the max */
-  public maximum: string = null;
+  public maximum: string = '10,000';
 
   /** Percentage width of deductible portion of progress bar */
-  public deductibleRatio = 0;
+  public deductibleRatio = 50;
   /** Percentage width of partial PharmaCare portion of progress bar */
   public pharmaCareRatio = 0;
   /** Percentage width of maximum payment portion of progress bar */
-  public maximumRatio = 100;
+  public maximumRatio = 50;
 
   /**
    * We use rxjs for performance benefits to reduce the calls to re-animating
@@ -74,16 +74,22 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
   ngOnChanges(changes) {
     //console.log('Annual deductible ngOnChanges', changes);
 
-    this.pharmaCareLevel = this.financeService.findAssistanceLevel(this.familyNetIncome, {bornBefore1939: this.bornBefore1939});
+    // Family net income cannot be undefined
+    if ( changes.familyNetIncome || changes.bornBefore1939 ) {
 
-    // Cannot be _undefined
-    if ( this.pharmaCareLevel ) {
-      this.deductible = this.financeService.currencyFormat(this.pharmaCareLevel.deductible);
-      this.maximum = this.financeService.currencyFormat(this.pharmaCareLevel.maximum);
-      this.pharmaCarePortion = this.pharmaCareLevel.pharmaCarePortion;
+      this.pharmaCareLevel = this.financeService.findAssistanceLevel(this.familyNetIncome,
+          {bornBefore1939: this.bornBefore1939});
 
-      // Update the progress bar UI, if and only if necessary
-      this.progressBarChange.next(this.pharmaCareLevel);
+      //console.log('PharmaCare level: ', this.pharmaCareLevel);
+      // Cannot be _undefined
+      if (this.pharmaCareLevel) {
+        this.deductible = this.financeService.currencyFormat(this.pharmaCareLevel.deductible);
+        this.maximum = this.financeService.currencyFormat(this.pharmaCareLevel.maximum);
+        this.pharmaCarePortion = this.pharmaCareLevel.pharmaCarePortion;
+
+        // Update the progress bar UI, if and only if necessary
+        this.progressBarChange.next(this.pharmaCareLevel);
+      }
     }
   }
 
@@ -104,19 +110,40 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
       return;
     }
 
+    // 50% blue / 50% green - no PharmaCare/applicant share
+    if (this.pharmaCareLevel.pharmaCarePortion === 100) {
+      this.deductibleRatio = 50;
+      this.pharmaCareRatio = 0;
+      this.maximumRatio = 50;
+      return;
+    }
+
     // Show all 3 bars - alignments match the text labels above the bar
     this.deductibleRatio = 30;
     this.pharmaCareRatio = 40;
     this.maximumRatio = 30;
 
-    console.log('done updateProgressBar', {
+  /*  console.log('done updateProgressBar', {
       deductibleRatio: this.deductibleRatio,
       pharmaCareRatio: this.pharmaCareRatio,
       maximumRatio: this.maximumRatio,
       pharmaCareLevel: this.pharmaCareLevel
-    });
+    });*/
   }
 
+  /**
+   * Portion applicant pays
+   * @returns {number}
+   */
+  get applicantPortion(): number {
+    return 100 - this.pharmaCarePortion;
+  }
 
-
+  /**
+   *
+   * @returns {number}
+   */
+  get pharmaCareDeductible(): number {
+    return (this.pharmaCareLevel ? this.pharmaCareLevel.deductible : 10000 );
+  }
 }
