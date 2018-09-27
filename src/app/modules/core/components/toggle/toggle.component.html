@@ -1,7 +1,6 @@
 <fieldset class="radio-group ">
    <span class="radio-btn">
      <input type="radio"
-            class="input-lg pointer"
             id="no_{{objectId}}"
             name="selection_{{objectId}}" value="false"
             (click)="dataChange.emit(false)">
@@ -9,7 +8,6 @@
    </span>
    <span class="radio-btn">
      <input type="radio"
-            class="input-lg pointer"
             id="yes_{{objectId}}"
             name="selection_{{objectId}}" value="true"
             (click)="dataChange.emit(true)">

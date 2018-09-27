@@ -28,10 +28,10 @@
           </a>.
         </p>
         <br>
-        <div class="checkbox checkbox-success checkbox-inline">
-          <input class="input-lg" id="agree" type="checkbox" [(ngModel)]="agreeCheck">
+        <span class="checkbox checkbox-success checkbox-inline">
+          <input id="agree" type="checkbox" [(ngModel)]="agreeCheck">
           <label for="agree"><strong>I have read and understand this information</strong></label>
-        </div>
+        </span>
       </div>
       <div class="modal-footer">
         <button [disabled]="!agreeCheck" class="btn btn-block btn-primary pull-left" type="submit" (click)="closeModal()">Continue</button>
