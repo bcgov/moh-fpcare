@@ -83,12 +83,16 @@ export class FinanceService {
 
   public currencyFormat(currency: number, withDollarSign = false): string {
 
-    if (!currency) {
+    if (undefined === currency) {
       return null;
     }
 
-    const strVal = currency.toFixed( 2 );
-    const mask = conformToMask( strVal, this.moneyMask, {});
+    let strVal = currency.toString();
+    if ( decimalsRegex.exec( strVal ) ) {
+      strVal = currency.toFixed( 2 );
+    }
+
+    const mask = conformToMask(strVal, this.moneyMask, {});
     return `${withDollarSign ? '$' : ''}${mask.conformedValue}`;
   }
 
