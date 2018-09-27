@@ -1,16 +1,19 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {Base} from '../base/base.class';
 
 @Component({
   selector: 'fpcare-toggle',
   templateUrl: './toggle.component.html',
   styleUrls: ['./toggle.component.scss']
 })
-export class FPCareToggleComponent implements OnInit {
+export class FPCareToggleComponent extends Base implements OnInit {
 
   @Input() data: boolean;
   @Output() dataChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
   }

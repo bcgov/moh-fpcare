@@ -1,19 +1,23 @@
+@import 'variables.scss';
+
 .radio-group {
-  padding: 1rem;
+  padding: 1em;
 }
 
 .radio-btn {
-  padding: inherit;
-
-  .label {
-    margin-right: 0.5rem;
-  }
-
-  .input {
-    align-self: center;
-  }
+  margin-left: 1em;
+  height: 1em;
 }
 
+input[type=radio] {
+  cursor: pointer;
+  -ms-transform: scale(1.5); /* IE 9 */
+  -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
+  transform: scale(1.5);
+}
 
+label {
+  margin-left: 0.5em;
+}
 
 

@@ -1,15 +1,18 @@
 <fieldset class="radio-group ">
    <span class="radio-btn">
-     <label for="no_{{objectId}}">No</label>
-     <input type="radio" id="no_{{objectId}}"
-            name="selection_{{objectId}}" value="no"
+     <input type="radio"
+            class="input-lg pointer"
+            id="no_{{objectId}}"
+            name="selection_{{objectId}}" value="false"
             (click)="dataChange.emit(false)">
+     <label for="no_{{objectId}}">No</label>
    </span>
    <span class="radio-btn">
-     <label for="yes_{{objectId}}">Yes</label>
      <input type="radio"
+            class="input-lg pointer"
             id="yes_{{objectId}}"
-            name="selection_{{objectId}}" value="yes"
+            name="selection_{{objectId}}" value="true"
             (click)="dataChange.emit(true)">
+      <label for="yes_{{objectId}}">Yes</label>
    </span>
 </fieldset>

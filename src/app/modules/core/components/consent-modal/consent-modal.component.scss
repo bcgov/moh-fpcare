@@ -1,0 +1,12 @@
+@import 'variables.scss';
+
+input[type=checkbox] {
+  cursor: pointer;
+  -ms-transform: scale(1.25); /* IE 9 */
+  -webkit-transform: scale(1.25); /* Chrome, Safari, Opera */
+  transform: scale(1.25);
+}
+
+label {
+  margin-left: 0.5em;
+}
