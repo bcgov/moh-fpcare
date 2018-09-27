@@ -1,8 +1,15 @@
 <fpcare-page-framework layout='default'>
 
-  <h1>Enter your financial information</h1>
+  <h1>Fair PharmaCare Calculator</h1>
+
+   <div>
+      You can view an estimate of your Fair PharmaCare Plan financial assistance by entering the requested information
+      below.
+   </div>
 
   <form #formRef="ngForm" novalidate>
+      <h2 class="border-bottom">Financial Information</h2>
+
       <div class="form-group">
           <label class='no-bold' for="totalFamilyIncome">Enter your net income from {{taxYear}} &mdash; see Line 236 of your Notice of Assessment or Reassessment from Canada Revenue Agency.</label>
 
@@ -55,7 +62,7 @@
         </label>
       </div>
 
-      <h2>Disability information (if applicable)</h2>
+      <h2 class="border-bottom">Disability Information (if applicable)</h2>
       <div class="form-group">
           <label class='no-bold' for="disability">How much did you report for a Registered Disability Savings Plan on your income tax return {{taxYear}} (Line 125)?</label>
           <div class="input-group mb-3 col-md-6">

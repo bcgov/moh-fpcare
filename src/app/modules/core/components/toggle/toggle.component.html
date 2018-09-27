@@ -1,16 +1,18 @@
-<fieldset class="radio-group ">
-   <span class="radio-btn">
-     <input type="radio"
-            id="no_{{objectId}}"
-            name="selection_{{objectId}}" value="false"
-            (click)="dataChange.emit(false)">
+<fieldset>
+   <span class="input-group-btn btn-group-lg mr-md-4">
+     <input class="mr-md-2 btn-radio pointer"
+         type="radio"
+         id="no_{{objectId}}"
+         name="selection_{{objectId}}" value="false"
+         (click)="dataChange.emit(false)">
      <label for="no_{{objectId}}">No</label>
    </span>
-   <span class="radio-btn">
-     <input type="radio"
-            id="yes_{{objectId}}"
-            name="selection_{{objectId}}" value="true"
-            (click)="dataChange.emit(true)">
+   <span class="input-group-btn btn-group-lg">
+     <input class="mr-md-2 btn-radio pointer"
+         type="radio"
+         id="yes_{{objectId}}"
+         name="selection_{{objectId}}" value="true"
+         (click)="dataChange.emit(true)">
       <label for="yes_{{objectId}}">Yes</label>
    </span>
 </fieldset>
