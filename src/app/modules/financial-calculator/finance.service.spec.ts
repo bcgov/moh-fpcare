@@ -3,6 +3,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { FinanceService } from './finance.service';
 import {baselineAssist, pre1939Assist} from './assistenceLevelsTestData';
 
+
 /**
  * Compare the values of 2 objects
  * @param expected
@@ -75,22 +76,22 @@ describe('FinanceService', () => {
   // STRING FORMATTING
 
   it('should currency format strings without dollar signs', inject([FinanceService], (service: FinanceService) => {
-    expect(service.currencyFormat(1)).toBe('1');
+    expect(service.currencyFormat(1)).toBe('1.00');
     expect(service.currencyFormat(1.05)).toBe('1.05');
-    expect(service.currencyFormat(1000)).toBe('1,000');
-    expect(service.currencyFormat(20000)).toBe('20,000');
-    expect(service.currencyFormat(300000)).toBe('300,000');
-    expect(service.currencyFormat(999999999)).toBe('999,999,999');
+    expect(service.currencyFormat(1000)).toBe('1,000.00');
+    expect(service.currencyFormat(20000)).toBe('20,000.00');
+    expect(service.currencyFormat(300000)).toBe('300,000.00');
+    expect(service.currencyFormat(999999999)).toBe('999,999,999.00');
 
     // Js converts 1.00 to 1, nothing we can do about this
-    expect(service.currencyFormat(1.00)).toBe('1');
+    expect(service.currencyFormat(1.00)).toBe('1.00');
   }));
 
   it('should currency format strings with dollar signs', inject([FinanceService], (service: FinanceService) => {
-    expect(service.currencyFormat(1, true)).toBe('$1');
+    expect(service.currencyFormat(1, true)).toBe('$1.00');
     expect(service.currencyFormat(1.05, true)).toBe('$1.05');
-    expect(service.currencyFormat(1000, true)).toBe('$1,000');
-    expect(service.currencyFormat(999999999, true)).toBe('$999,999,999');
+    expect(service.currencyFormat(1000, true)).toBe('$1,000.00');
+    expect(service.currencyFormat(999999999, true)).toBe('$999,999,999.00');
   }));
 });
 

@@ -3,7 +3,7 @@
      <input class="mr-md-2 btn-radio pointer"
          type="radio"
          id="no_{{objectId}}"
-         name="selection_{{objectId}}" value="false"
+         name="selection_{{objectId}}" value="No"
          (click)="dataChange.emit(false)">
      <label for="no_{{objectId}}">No</label>
    </span>
@@ -11,7 +11,7 @@
      <input class="mr-md-2 btn-radio pointer"
          type="radio"
          id="yes_{{objectId}}"
-         name="selection_{{objectId}}" value="true"
+         name="selection_{{objectId}}" value="Yes"
          (click)="dataChange.emit(true)">
       <label for="yes_{{objectId}}">Yes</label>
    </span>
