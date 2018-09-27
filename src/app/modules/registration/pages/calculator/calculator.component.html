@@ -24,7 +24,7 @@
                 fpcareRequired="required"
                 [ngModel]="income"
                 (ngModelChange)="income = $event; update()"
-                [textMask]="{mask: moneyMask, pipe: formatDecimal}"
+                [textMask]="{mask: moneyMask}"
                 placeholder="Enter Your Income"/>
           </div>
       </div>
@@ -51,7 +51,7 @@
                 fpcareRequired="required"
                 [ngModel]="spouseIncome"
                 (ngModelChange)="spouseIncome = $event; update()"
-                [textMask]="{mask: moneyMask, pipe: formatDecimal}"
+                [textMask]="{mask: moneyMask}"
                 placeholder="Enter Your Income"/>
           </div>
       </div>
@@ -75,7 +75,7 @@
                 name="disability"
                 [ngModel]="disabilityFormatted"
                 (ngModelChange)="disabilityFormatted = $event; update();"
-                [textMask]="{mask: moneyMask, pipe: formatDecimal}"
+                [textMask]="{mask: moneyMask}"
                 placeholder="Enter Disability Savings Amounts"/>
           </div>
       </div>

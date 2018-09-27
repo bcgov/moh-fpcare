@@ -180,17 +180,6 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   /**
-   *
-   * @param {string} value
-   * @returns {string}
-   */
-  public formatDecimal( value: string ) {
-    const result = decimalsRegex.exec( value );
-
-    return ( result && result[1].length < 2 ) ? value.concat( '0' ) : value;
-  }
-
-  /**
    * Get the tax year for this benefit year
    * @returns {string}
    */

@@ -26,6 +26,9 @@ export class FinancialCalculatorComponent implements OnInit {
   /** A currency formatted string retrieved from the finance service. */
   private _adjustedIncomeDisplay: string;
 
+  /** Place holder when values are undefined */
+  private _zeroAmountStr: string = '0';
+
   /** A number in dollars, used to determine what level of PharmaCare coverage. */
   public adjustedIncomeAmount: number;
 
@@ -92,7 +95,7 @@ export class FinancialCalculatorComponent implements OnInit {
    * @returns {string}
    */
   get adjustedIncomeDisplay(): string {
-    return this._adjustedIncomeDisplay ? this._adjustedIncomeDisplay : Number(0).toFixed( 2 );
+    return this._adjustedIncomeDisplay ? this._adjustedIncomeDisplay : this._zeroAmountStr;
   }
 
   /**
@@ -100,7 +103,7 @@ export class FinancialCalculatorComponent implements OnInit {
    * @returns {string}
    */
   get disabilityDisplay(): string {
-    return this._disabilityDisplay ? this._disabilityDisplay : Number(0).toFixed( 2 );
+    return this._disabilityDisplay ? this._disabilityDisplay : this._zeroAmountStr ;
   }
 
   /**
@@ -108,6 +111,6 @@ export class FinancialCalculatorComponent implements OnInit {
    * @returns {string}
    */
   get incomeDisplay(): string {
-    return this._incomeDisplay ? this._incomeDisplay : Number(0).toFixed( 2 );
+    return this._incomeDisplay ? this._incomeDisplay : this._zeroAmountStr ;
   }
 }
