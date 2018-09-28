@@ -29,7 +29,7 @@ export class Person extends Base {
   // Contact information for person
   /* Mailing address for person */
   public address: Address = new Address();
-  public updAddress: Address;
+  public updAddress: Address = new Address();
 
   /**
    * Checks if address was updated

@@ -12,12 +12,14 @@
       </div>
     </div>
 
-    <!-- Displays when Postal Code does not match FPCare records -->
     <div *ngIf="!isPostalCodeMatch()">
       <h2 class="border-bottom">
         Update Your Mailing Address
       </h2>
       <div class="p-md-2 col-md-6">
+        <div class="form-group">
+          <fpcare-geocoder-input label='(optional) Address Lookup' [(address)]='applicant.updAddress'  (addressChange)='onGeoLookup()'></fpcare-geocoder-input>
+        </div>
         <div class="form-group">
           <label for="street">Street</label>
           <input class="form-control"
@@ -45,8 +47,8 @@
                  fpcareRequired
                  [(ngModel)]="applicant.updAddress.province" />
         </div>
-        <div class="form-group">
-            <fpcare-postal-code [(value)]="applicant.updAddress.postal"></fpcare-postal-code>
+        <div class="form-group" #postalCodeContainer>
+            <fpcare-postal-code (valueChange)="highlightPostal()" [(value)]="applicant.updAddress.postal"></fpcare-postal-code>
         </div>
         <div class="form-group">
           <label for="country">Country</label>
@@ -66,6 +68,14 @@
       <p class="h5">Postal Code</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+
+    <div>
+      <p class="h5">Address Lookup</p>
+      <p>
+          If you have a unit number, e.g. you live in an appartment, 
+          put the number at the beginning followed by a space and two dashes <strong>- -</strong>
+      </p>
     </div>
   </aside>
 

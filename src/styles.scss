@@ -272,3 +272,18 @@ button.disabled {
 .label {
   @extend label;
 }
+
+
+// Cross app styling when validation errors out, orig from BS3 and now MSP app.
+.has-error .form-control,
+.has-error.form-control {
+  border-color: #a94442;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+// Bootstrap 3 to 4: Re-add has-error label effects, so the question label
+// becomes highlighted red, not just the field.
+.has-error .checkbox, .has-error .checkbox-inline, .has-error.checkbox-inline label, .has-error.checkbox label, .has-error .control-label, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.radio-inline label, .has-error.radio label {
+  color: $color-danger;
+}

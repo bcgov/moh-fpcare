@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { RegResultsComponent } from './pages/reg-results/reg-results.component';
 import { FinancialCalculatorModule } from '../financial-calculator/financial-calculator.module';
 import { TextMaskModule } from 'angular2-text-mask';
+import { GeocoderModule } from '../geocoder/geocoder.module';
 
 @NgModule({
   imports: [
@@ -23,6 +24,7 @@ import { TextMaskModule } from 'angular2-text-mask';
     RegistrationRoutingModule,
     CoreModule,
     FinancialCalculatorModule,
+    GeocoderModule,
     TextMaskModule
   ],
   declarations: [

@@ -9,3 +9,10 @@
 :host { 
     flex-basis: 100%;
 }
+
+
+// Workaround - hides the validation error if the has-error class is gone
+:host {
+  display: none;
+  .has-error & { display: block;}
+}

@@ -10,6 +10,13 @@ export class Address extends Base {
   public city: string;
 
 
+  /**
+   * Only exists for addresses which were created by the GeoCoder Input, this is
+   * the fullAddress string the geocoder returns.
+   */
+  public _geocoderFullAddress: string;
+
+
   /** Overwrite the native JavaScript toString method to determine how the
    * object should be printed, instead of [object Object].  This provides a
    * standard way to print out an address. If you need something specific you

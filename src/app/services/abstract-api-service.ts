@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse, HttpParams } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -16,9 +16,11 @@ export abstract class AbstractHttpService {
    * Makes a GET request to the specified URL, using headers and HTTP options specified in their respective methods.
    * @param url Target URL to make the GET request
    */
-  protected get<T>(url): Observable<T> {
+  protected get<T>(url, queryParams?: HttpParams): Observable<T> {
     /** The HTTP request observer with always on error handling */
-    const observable = this.http.get(url, this.httpOptions);
+    const httpOpts = this.httpOptions;
+    httpOpts.params = queryParams ? queryParams : undefined;
+    const observable = this.http.get(url, httpOpts);
     return this.setupRequest(observable);
   }
 
@@ -41,7 +43,7 @@ export abstract class AbstractHttpService {
   }
 
   /** The HttpOptions object that Angular takes for GET and POST requests. Used in every HTTP request from this service. */
-  protected get httpOptions() {
+  protected get httpOptions(): {headers: HttpHeaders, params?: HttpParams} {
     return {
       headers: this._headers
     };
