@@ -3,7 +3,6 @@ import { Person } from '../../../../models/person.model';
 import { Router } from '@angular/router';
 import { FPCareDataService } from '../../../../services/fpcare-data.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
-import { FPCareDateComponent } from '../../../core/components/date/date.component';
 import { environment } from 'environments/environment';
 import { ApiService } from '../../../../services/api-service.service';
 import { ResponseStoreService } from '../../../../services/response-store.service';

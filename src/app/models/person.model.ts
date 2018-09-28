@@ -44,11 +44,11 @@ export class Person extends Base {
    */
   get dateOfBirthShort(): string {
     return this.isDobEmpty() ? null :
-      moment()
-        .date(this.dateOfBirth.day)
-        .month(this.dateOfBirth.month - 1) //moment is 0 indexed, SimpleDate is not
-        .year(this.dateOfBirth.year)
-        .format('YYYYMMDD');
+        moment( {
+          year: this.dateOfBirth.year,
+          month: this.dateOfBirth.month - 1,
+          day: this.dateOfBirth.day
+        }).format('YYYYMMDD' );
   }
 
   /**
@@ -56,11 +56,11 @@ export class Person extends Base {
    */
   get formatDateOfBirth(): string {
     return this.isDobEmpty() ? null :
-        moment()
-            .date(this.dateOfBirth.day)
-            .month(this.dateOfBirth.month - 1) //moment is 0 indexed, SimpleDate is not
-            .year(this.dateOfBirth.year)
-            .format('DD/MM/YYYY');
+        moment( {
+          year: this.dateOfBirth.year,
+          month: this.dateOfBirth.month - 1,
+          day: this.dateOfBirth.day
+        }).format('DD/MM/YYYY');
   }
 
   /**
