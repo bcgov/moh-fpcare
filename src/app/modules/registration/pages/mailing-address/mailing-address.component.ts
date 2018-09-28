@@ -14,9 +14,6 @@ import {RegistrationService} from '../../registration.service';
 })
 export class MailingAddressPageComponent extends AbstractFormComponent implements OnInit {
 
-  // Variable to indicate whether the postal code matches the one on file
-  private _postalCodeMatch = true;
-
   /** Page to naviage to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_REVIEW;
 
@@ -53,14 +50,21 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    * @returns {boolean}
    */
   isPostalCodeMatch(): boolean {
-    // business logic required to determine whether PC is valid - for dev purposes show update address
 
-    if ( !this._postalCodeMatch ) {
+    if ( !this.applicant.address.postal ) {
+      return true;
+    }
+
+    const isMatch = this.registrationService.isPostalCodeMatch(
+        this.fpcService.removeStrFormat( this.applicant.address.postal ) );
+
+    // Not a match need to update address
+    if ( !isMatch ) {
       this.applicant.updAddress = new Address();
       this.applicant.updAddress.country = 'Canada';
     }
 
-    return this._postalCodeMatch;
+    return isMatch;
   }
 
 
@@ -71,6 +75,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   continue () {
     if ( this.canContinue() ) {
+
       this.registrationService.setItemComplete();
       this.navigate(  this._url );
     }

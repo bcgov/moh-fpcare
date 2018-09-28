@@ -9,6 +9,9 @@
     <div class="p-md-2 col-md-6">
       <div class="form-group">
           <fpcare-postal-code [(value)]="applicant.address.postal"></fpcare-postal-code>
+          <div *ngIf="!isPostalCodeMatch()" role="alert" aria-live="assertive">
+            <div class="text-danger">The mailing address does not match our records.</div>
+          </div>
       </div>
     </div>
 

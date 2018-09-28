@@ -83,6 +83,7 @@ export class FinanceService {
 
   public currencyFormat(currency: number, withDollarSign = false): string {
 
+    console.log( 'currency: ', currency ) ;
     if (undefined === currency) {
       return null;
     }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {ResponseStoreService} from '../../../../services/response-store.service';
-import {EligibilityPayload} from '../../../../models/api.model';
+import {EligibilityPayload, RegStatusCode} from '../../../../models/api.model';
 
 @Component({
   selector: 'fpcare-reg-results',
@@ -19,7 +19,14 @@ export class RegResultsComponent {
 
   // TODO: add registrationpayload to this function
   get response(): EligibilityPayload {
-    console.log( 'response: ', this.responseStore.eligibility );
     return this.responseStore.eligibility;
+  }
+
+  /**
+   * Retrieves whether the request was successful or not
+   * @returns {boolean}
+   */
+  get isSuccessful(): boolean {
+    return (this.response.regStatusCode === RegStatusCode.SUCCESS);
   }
 }
