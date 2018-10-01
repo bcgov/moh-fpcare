@@ -83,9 +83,12 @@ export abstract class AbstractFormComponent extends Base {
   protected isFormValid(): boolean {
     const mainFormValid = this.form.valid;
 
-    if (this.dateForm) {
-      const subFormsValid = this.dateForm.map( x => x.form.valid )
-          .filter( valid => valid !== true ).length === 0;
+    const activeDates = this.dateForm.filter(x => !x.disabled)
+
+    if (activeDates) {
+      const subFormsValid = activeDates
+        .map( x => x.form.valid )
+        .filter( valid => valid !== true ).length === 0;
 
     /*  console.log( 'isFormValid (w/ Date): ',
           {mainFormValid: mainFormValid, subFormsValid: subFormsValid} );*/
