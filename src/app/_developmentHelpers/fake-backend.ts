@@ -10,7 +10,6 @@ import {Observable} from 'rxjs/internal/Observable';
 import {mergeMap} from 'rxjs/operators';
 import {of} from 'rxjs/internal/observable/of';
 import {Injectable} from '@angular/core';
-import {throwError} from 'rxjs/internal/observable/throwError';
 import {BenefitYearPayload, DeductiblePayload, EligibilityPayload, RegStatusCode} from '../models/api.model';
 import {baselineAssist, pre1939Assist} from '../modules/financial-calculator/assistenceLevelsTestData';
 import {FakeBackendService} from './fake-backend.service';

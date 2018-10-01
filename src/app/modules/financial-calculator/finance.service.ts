@@ -83,8 +83,8 @@ export class FinanceService {
 
   public currencyFormat(currency: number, withDollarSign = false): string {
 
-    console.log( 'currency: ', currency ) ;
-    if (undefined === currency) {
+    // We want the value of zero to be formatted
+    if ( undefined === currency || null === currency ) {
       return null;
     }
 
