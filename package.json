@@ -8,7 +8,6 @@
     "predev": "node src/version.js",
     "dev": "ng serve -o",
     "version": "node src/version.js",
-    "dev-version": "npm version patch -m 'DEV build: %s'",
     "test-version": "npm version minor -m 'TEST build: %s'",
     "prod-version": "npm version major -m 'PROD build: %s'",
     "push-version": "git push --follow-tags",
