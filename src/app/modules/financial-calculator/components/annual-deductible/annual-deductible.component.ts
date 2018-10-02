@@ -19,6 +19,8 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
   /** Used to load different PharmaCare assistance level values */
   @Input() bornBefore1939: boolean;
 
+  @Input() isReview: boolean = false;
+
   /** The main data object, retrieved via lookup using familyNetIncome. Used in calclations. */
   public pharmaCareLevel: PharmaCareAssistanceLevel;
   /** Currency formatted dollar amount */
@@ -145,5 +147,9 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
    */
   get pharmaCareDeductible(): number {
     return (this.pharmaCareLevel ? this.pharmaCareLevel.deductible : 10000 );
+  }
+
+  get deductibleTitle(): string {
+    return this.isReview ? 'Level of Coverage' : 'Annual Deductible';
   }
 }

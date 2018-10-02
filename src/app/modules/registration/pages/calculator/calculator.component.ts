@@ -87,9 +87,21 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     this.moneyMask = this.financeService.moneyMask;
     this.registrationService.setItemIncomplete();
 
+    console.log( 'Data: ', { applicant: this.fpcareDataService.applicant,
+                             hasSpouse: this.fpcareDataService.hasSpouse,
+                             spouse: this.fpcareDataService.spouse,
+                             bornBefore1939: this.fpcareDataService.bornBefore1939 }
+                             );
+
     // If not defined do not update the page
-    if ( undefined !== this.income ||
-         undefined !== this.spouseIncome ) {
+    if ( this.fpcareDataService.applicantIncome ||
+         this.fpcareDataService.spouseIncome  ) {
+
+      this.income = this.financeService.currencyFormat( this.fpcareDataService.applicantIncome );
+
+      if ( this.hasSpouse ) {
+        this.spouseIncome = this.financeService.currencyFormat( this.fpcareDataService.spouseIncome );
+      }
 
       // Update data - user may have used back button on browser
       this.update();
