@@ -1,3 +1,22 @@
 .section {
   min-height: 8rem;
 }
+
+.line-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.line-item--text {
+  width: 50%
+}
+
+.line-item--value {
+  font-weight: normal;
+}
+
+
+.edit--icon {
+  cursor: pointer;
+  float: right;
+}

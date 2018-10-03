@@ -17,6 +17,9 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   /** Page to naviage to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_REVIEW;
 
+  private _isPostalMatch: boolean = true;
+  public updateAddress: Address = new Address;
+
   constructor( private fpcService: FPCareDataService
              , protected router: Router
              , private registrationService: RegistrationService) {
@@ -25,6 +28,9 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
   ngOnInit() {
     this.registrationService.setItemIncomplete();
+
+    // Set country
+    this.updateAddress.country = 'Canada';
   }
 
   /**
@@ -33,8 +39,18 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   canContinue(): boolean {
 
+    if ( super.canContinue() ) {
+
+      const pc = this.fpcService.removeStrFormat( this.applicant.address.postal );
+      if ( pc ) {
+        this._isPostalMatch = this.registrationService.isPostalCodeMatch( pc );
+      }
+
+      return ( this._isPostalMatch || ( !this._isPostalMatch && this.updateAddress.isComplete() ) );
+    }
+
     // Main and sub forms are not empty and are valid
-    return super.canContinue();
+    return false;
   }
 
   /**
@@ -45,28 +61,10 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     return this.fpcService.applicant;
   }
 
-  /**
-   * Determines whether postal code is valid, matches FPC record
-   * @returns {boolean}
-   */
-  isPostalCodeMatch(): boolean {
+  get isPostalMatch(): boolean {
 
-    if ( !this.applicant.address.postal ) {
-      return true;
-    }
-
-    const isMatch = this.registrationService.isPostalCodeMatch(
-        this.fpcService.removeStrFormat( this.applicant.address.postal ) );
-
-    // Not a match need to update address
-    if ( !isMatch ) {
-      this.applicant.updAddress = new Address();
-      this.applicant.updAddress.country = 'Canada';
-    }
-
-    return isMatch;
+    return this._isPostalMatch;
   }
-
 
   // Methods triggered by the form action bar
 
@@ -74,7 +72,17 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    * Navigates to the next page
    */
   continue () {
+
     if ( this.canContinue() ) {
+
+      // Update the address
+      if ( this.updateAddress.isComplete() ) {
+        this.fpcService.applicant.isAddressUpdated = true;
+        this.fpcService.applicant.updAddress = new Address();
+        this.fpcService.applicant.updAddress.copy( this.updateAddress );
+      } else {
+        this.fpcService.applicant.isAddressUpdated = false;
+      }
 
       this.registrationService.setItemComplete();
       this.navigate(  this._url );

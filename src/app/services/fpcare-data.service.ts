@@ -109,6 +109,7 @@ export class FPCareDataService {
    * @returns {string}
    */
   removeStrFormat( value: string ): string {
-    return value.replace(/ /g, '');
+
+    return (value ? value.replace(/ /g, '') : null);
   }
 }

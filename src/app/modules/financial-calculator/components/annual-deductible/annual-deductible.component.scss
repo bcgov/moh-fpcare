@@ -2,58 +2,40 @@
 
 .review-deductible {
 
-    .deductible-legend-container {
+    @include media-breakpoint-up(sm) {
 
-        @include media-breakpoint-up(sm) {
+        .deductible-legend-container {
             flex-direction: row;
             justify-content: space-evenly;
         }
-    }
 
-    .deductible-legend {
-        @include media-breakpoint-up(sm) {
+        .deductible-legend {
             padding-left: 1rem;
         }
-    }
 
-    .deductible-legend-blue {
-        @include media-breakpoint-up(sm) {
+        .deductible-legend-blue {
             min-width: 30%;
             max-width: 50%;
         }
-    }
 
-    .deductible-legend-blue:before {
-
-        @include media-breakpoint-up(sm) {
+        .deductible-legend-blue:before {
             display: none !important;
         }
-    }
-
-    .deductible-legend-yellow {
-        @include media-breakpoint-up(sm) {
+        .deductible-legend-yellow {
             min-width: 40%;
             max-width: 50%;
         }
-    }
 
-    .deductible-legend-yellow:before {
-
-        @include media-breakpoint-up(sm) {
+        .deductible-legend-yellow:before {
             display: none !important;
         }
-    }
 
-    .deductible-legend-green {
-        @include media-breakpoint-up(sm) {
+        .deductible-legend-green {
             min-width: 30%;
             max-width: 50%;
         }
-    }
 
-    .deductible-legend-green:before {
-
-        @include media-breakpoint-up(sm) {
+        .deductible-legend-green:before {
             display: none !important;
         }
     }
