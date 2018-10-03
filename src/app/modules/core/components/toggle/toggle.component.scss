@@ -1,19 +1,19 @@
 @import 'variables.scss';
 
+.btn-radio-group {
+  padding: 1rem;
+}
+
 .btn-radio {
-  background: #2962FF;
-  color: white;
+  cursor: pointer;
 
   -ms-transform: scale(1.5); /* IE 9 */
   -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
   transform: scale(1.5);
+}
 
-//  &:selection {
-//    background: #2962FF;
-//  }
-//  &:active {
-//    background: #2962FF;
-//  }
+.btn-label {
+  padding-left: 0.25rem;
 }
 
 

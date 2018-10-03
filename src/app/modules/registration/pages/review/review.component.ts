@@ -27,7 +27,7 @@ export class ReviewPageComponent extends Base implements OnInit {
   }
 
   ngOnInit() {
-    
+
     this.registrationService.setItemIncomplete();
   }
 
