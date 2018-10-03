@@ -7,6 +7,8 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {FormsModule} from '@angular/forms';
 import {fPCareDataServiceStub} from '../../../../services/fpcare-data.service.spec';
 import {RegistrationService} from '../../registration.service';
+import { GeocoderModule } from '../../../geocoder/geocoder.module';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('MailingAddressComponent', () => {
   let component: MailingAddressPageComponent;
@@ -19,7 +21,9 @@ describe('MailingAddressComponent', () => {
       imports: [
         CoreModule,
         RouterTestingModule,
-        FormsModule
+        FormsModule,
+        GeocoderModule,
+        HttpClientTestingModule
       ],
       providers: [
         { provide: FPCareDataService, useValue: fPCareDataServiceStub },

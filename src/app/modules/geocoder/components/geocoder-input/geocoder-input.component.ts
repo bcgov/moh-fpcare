@@ -106,10 +106,8 @@ export class GeocoderInputComponent extends Base implements OnInit {
     if (event.keyCode === 13 || event.keyCode === 9) {  // enter & tab
       return;
     }
-
     //Clear out selection
     this.selectedAddress = null;
-
     this.searchText$.next(this.search);
   }
 

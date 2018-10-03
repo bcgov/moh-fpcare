@@ -2,7 +2,6 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse, HttpParams } 
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-// import { HttpResponse } from 'selenium-webdriver/http';
 
 
 export abstract class AbstractHttpService {

@@ -65,7 +65,7 @@ export class GeocoderService extends AbstractHttpService {
                 country: 'Canada',
                 province: 'British Columbia',
             };
-        })
+        });
     }
 
     protected handleError(error: HttpErrorResponse) {
