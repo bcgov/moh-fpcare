@@ -18,7 +18,6 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_REVIEW;
 
   private _isPostalMatch: boolean = true;
-  public updateAddress: Address = new Address;
 
   constructor( private fpcService: FPCareDataService
              , protected router: Router
@@ -30,7 +29,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     this.registrationService.setItemIncomplete();
 
     // Set country
-    this.updateAddress.country = 'Canada';
+    this.applicant.updAddress.country = 'Canada';
   }
 
   /**
@@ -46,7 +45,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
         this._isPostalMatch = this.registrationService.isPostalCodeMatch( pc );
       }
 
-      return ( this._isPostalMatch || ( !this._isPostalMatch && this.updateAddress.isComplete() ) );
+      return ( this._isPostalMatch || ( !this._isPostalMatch && this.applicant.isAddressUpdated ) );
     }
 
     // Main and sub forms are not empty and are valid
@@ -74,15 +73,6 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   continue () {
 
     if ( this.canContinue() ) {
-
-      // Update the address
-      if ( this.updateAddress.isComplete() ) {
-        this.fpcService.applicant.isAddressUpdated = true;
-        this.fpcService.applicant.updAddress = new Address();
-        this.fpcService.applicant.updAddress.copy( this.updateAddress );
-      } else {
-        this.fpcService.applicant.isAddressUpdated = false;
-      }
 
       this.registrationService.setItemComplete();
       this.navigate(  this._url );

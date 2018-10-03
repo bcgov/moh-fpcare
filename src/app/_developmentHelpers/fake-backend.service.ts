@@ -53,15 +53,17 @@ export class FakeBackendService {
 
   parentDobMatch( input: PersonInterface[], family: PersonInterface[] ): boolean {
 
+    /*
     const list = family.map( person => {
       if ( person.perType === PersonType.applicantType || person.perType === PersonType.spouseType ) {
         return person.dateOfBirth;
       }
-    }).filter( x => x );
+    }).filter( x => x );*/
     // console.log( 'get DOB list: ', list );
 
-    return input.map( x => list.includes( x.dateOfBirth ) )
-        .filter( found => found === true ).length === input.length;
+   /* return input.map( x => list.includes( x.dateOfBirth ) )
+        .filter( found => found === true ).length === input.length;*/
+   return true;
   }
 }
 

@@ -20,6 +20,7 @@ export class DummyDataService {
 
   // Applicant for test purpose - personal info
   createApplicant( populated: boolean = true ): Person {
+
     return populated ? this.createAdult( true, false ) : new Person();
   }
 
@@ -96,8 +97,8 @@ export class DummyDataService {
 
   private generatePHN(): string {
     const validPhns = [
-      '9043 076 746', '9059 437 075', '9125 715 913', '9151 060 317', '9151 843 149', '9151 949 138',
-      '9151 970 861', '9300 000 076', '9300 000 194', '9300 000 202', '9300 000 234', '9300 000 241'
+      '9999 999 973', '9999 999 998', '9999 999 927', '9999 999 934', '9999 999 941', '9999 999 959',
+      '9999 999 966', '9300 000 076', '9300 000 194', '9300 000 202', '9300 000 234', '9300 000 241'
     ];
     const phn = this.getRandomElFromArray( validPhns );
     return phn;
@@ -106,8 +107,8 @@ export class DummyDataService {
   private generateSIN(): string {
 
     const validSins = [
-        '743 235 277', '680 943 958', '642 332 704', '627 384 738', '389 043 027', '337 143 549',
-        '545 553 711', '127 591 188', '302 762 042', '610 702 607', '394 429 864', '616 708 368'
+        '078 522 844', '041 771 650', '035 236 512', '025 335 415', '062 048 947', '018 893 297',
+        '068 928 902', '020 085 916', '087 937 272', '010 018 034', '076 046 762', '057 761 686'
     ];
     const sin = this.getRandomElFromArray( validSins );
     return sin;

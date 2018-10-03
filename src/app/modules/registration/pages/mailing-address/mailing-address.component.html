@@ -28,8 +28,8 @@
                  id="street"
                  name="street"
                  fpcareRequired
-                 [ngModel]="updateAddress?.street"
-                 (ngModelChange)="updateAddress.street=$event" />
+                 [ngModel]="applicant.updAddress?.street"
+                 (ngModelChange)="applicant.updAddress.street=$event" />
         </div>
         <div class="form-group">
           <label for="city">City</label>
@@ -38,8 +38,8 @@
                  id="city"
                  name="city"
                  fpcareRequired
-                 [ngModel]="updateAddress?.city"
-                 (ngModelChange)="updateAddress.city=$event" />
+                 [ngModel]="applicant.updAddress?.city"
+                 (ngModelChange)="applicant.updAddress.city=$event" />
         </div>
         <div class="form-group">
           <label for="province">Province</label>
@@ -48,11 +48,11 @@
                  id="province"
                  name="province"
                  fpcareRequired
-                 [ngModel]="updateAddress?.province"
-                 (ngModelChange)="updateAddress.province=$event" />
+                 [ngModel]="applicant.updAddress?.province"
+                 (ngModelChange)="applicant.updAddress.province=$event" />
         </div>
         <div class="form-group">
-            <fpcare-postal-code [(value)]="updateAddress.postal"></fpcare-postal-code>
+            <fpcare-postal-code [(value)]="applicant.updAddress.postal"></fpcare-postal-code>
         </div>
         <div class="form-group">
           <label for="country">Country</label>
@@ -61,7 +61,7 @@
                  id="country"
                  name="country"
                  disabled
-                 [ngModel]="updateAddress.country" />
+                 [ngModel]="applicant.updAddress.country" />
         </div>
       </div>
     </div>

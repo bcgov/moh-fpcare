@@ -29,8 +29,15 @@ export class Person extends Base {
   // Contact information for person
   /* Mailing address for person */
   public address: Address = new Address();
-  public isAddressUpdated: boolean = false;
-  public updAddress: Address;
+  public updAddress: Address = new Address();
+
+  /**
+   *
+   * @returns {boolean}
+   */
+  get isAddressUpdated(): boolean {
+    return this.updAddress.isComplete();
+  };
 
   /**
    * Returns DoB in YYYYMMDD format, used by API.
