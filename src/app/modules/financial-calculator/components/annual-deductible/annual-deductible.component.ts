@@ -121,9 +121,9 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
     }
 
     // Show all 3 bars - alignments match the text labels above the bar
-    this.deductibleRatio = 30;
-    this.pharmaCareRatio = 40;
-    this.maximumRatio = 30;
+    this.deductibleRatio = 35;
+    this.pharmaCareRatio = 30;
+    this.maximumRatio = 35;
 
   /*  console.log('done updateProgressBar', {
       deductibleRatio: this.deductibleRatio,

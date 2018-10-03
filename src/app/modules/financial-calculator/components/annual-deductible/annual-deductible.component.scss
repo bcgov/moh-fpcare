@@ -14,7 +14,7 @@
         }
 
         .deductible-legend-blue {
-            min-width: 30%;
+            min-width: 35%;
             max-width: 50%;
         }
 
@@ -22,7 +22,7 @@
             display: none !important;
         }
         .deductible-legend-yellow {
-            min-width: 40%;
+            min-width: 30%;
             max-width: 50%;
         }
 
@@ -31,7 +31,7 @@
         }
 
         .deductible-legend-green {
-            min-width: 30%;
+            min-width: 35%;
             max-width: 50%;
         }
 
@@ -81,7 +81,7 @@
     line-height: 1.5rem;
 }
 
-.label-container {
+.progress-labels {
     display: flex;
     justify-content: space-between;
 }

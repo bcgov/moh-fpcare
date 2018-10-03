@@ -3,10 +3,10 @@
   <h3>{{deductibleTitle}}</h3>
 
   <!-- The labels above the progress bar -->
-  <div class="progress-labels label-container">
+  <div class="progress-labels">
     <span>$0</span>
-    <span *ngIf="pharmaCareDeductible >= 1" class='progress-labels--deductible'>${{deductible}}</span>
-    <span *ngIf="pharmaCareLevel?.maximum >= 1 && applicantPortion > 0" class='progress-labels--maximum'>${{maximum}}</span>
+    <span *ngIf="pharmaCareDeductible >= 1">${{deductible}}</span>
+    <span *ngIf="pharmaCareLevel?.maximum >= 1 && applicantPortion > 0">${{maximum}}</span>
     <!-- TODO - Remove infinity icon but keep layout. nbsp? -->
     <span class='infinity'>&infin;</span>
   </div>
