@@ -31,6 +31,12 @@ export class FinanceService {
     integerLimit: 9 // Max numeric value is 999,999,999.99 - from Light FDS
   });
 
+  public moneyMaskLg = createNumberMask({
+    prefix: '', // No $ prefix, because we add it directly to the HTML as an input prepend
+    allowDecimal: true,
+    integerLimit: 12 // Max numeric value is 999, 999,999,999.99 - from Light FDS
+  });
+
   public setAssistanceLevels(baseline: PharmaCareAssistanceLevelServerResponse[], pre1939: PharmaCareAssistanceLevelServerResponse[]){
     // Change strings of numbers into numbers, as we do math on them
     this.PharmaCareAssistanceLevels = baseline.map(item => this.convertServerResponse(item));
@@ -81,10 +87,41 @@ export class FinanceService {
       .find(item => item.startRange <= familyNetIncome && item.endRange >= familyNetIncome);
   }
 
+  /**
+   * Format values upto $999,999,999.99
+   * @param {number} currency
+   * @param {boolean} withDollarSign
+   * @returns {string}
+   */
   public currencyFormat(currency: number, withDollarSign = false): string {
 
+    return this._currencyFormat(currency, this.moneyMask, withDollarSign );
+  }
+
+
+  /**
+   * Format values larger than $999,999,999.99
+   * @param {number} currency
+   * @param {boolean} withDollarSign
+   * @returns {string}
+   */
+  public currencyFormatLg(currency: number, withDollarSign = false): string {
+
+    return this._currencyFormat(currency, this.moneyMaskLg, withDollarSign );
+  }
+
+  /**
+   * Format values to currency
+   * @param {number} currency
+   * @param {string} moneyMask
+   * @param {boolean} withDollarSign
+   * @returns {string}
+   * @private
+   */
+  private _currencyFormat(currency: number, moneyMask: string, withDollarSign = false): string {
+
     // We want the value of zero to be formatted
-    if ( undefined === currency || null === currency ) {
+    if ( undefined === currency || null === currency )  {
       return null;
     }
 
@@ -93,7 +130,7 @@ export class FinanceService {
       strVal = currency.toFixed( 2 );
     }
 
-    const mask = conformToMask(strVal, this.moneyMask, {});
+    const mask = conformToMask(strVal, moneyMask, {});
     return `${withDollarSign ? '$' : ''}${mask.conformedValue}`;
   }
 
