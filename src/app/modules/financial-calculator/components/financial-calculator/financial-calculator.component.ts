@@ -79,7 +79,7 @@ export class FinancialCalculatorComponent implements OnInit {
   }
 
   private currencyFormat(input: number): string {
-    return this.financeService.currencyFormat(input);
+    return this.financeService.currencyFormatLg(input);
   }
 
   ngOnChanges(changes: SimpleChanges) {
