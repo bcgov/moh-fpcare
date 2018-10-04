@@ -3,7 +3,7 @@
 
   <div *ngIf='response; else noResponse'>
     <h2 *ngIf="response.error" class="text-danger"><i class="fa fa-exclamation-triangle"></i> Attention, there was an error.</h2>
-    <h2>Your status for {{ hasReg ? 'Registration' : 'Personal Health Number (PHN)'}} Number {{accountNumber}} is:
+    <h2>Your status for {{ hasReg ? 'Registration' : 'Personal Health'}} Number {{accountNumber}} is:
     </h2>
     <ul>
       <!--

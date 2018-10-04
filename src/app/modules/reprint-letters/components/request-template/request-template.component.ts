@@ -2,7 +2,6 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {Person} from '../../../../models/person.model';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {Router} from '@angular/router';
-import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ApiService} from '../../../../services/api-service.service';
@@ -10,6 +9,8 @@ import {environment} from '../../../../../environments/environment';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {ReprintLetter, ReprintLetterPayload} from '../../../../models/api.model';
 import {REPRINT_LETTERS_PATH, REPRINT_STATUS} from '../../../../models/route-paths.constants';
+import {phn_def, phn_hdr} from '../../../../models/fpcare-aside-definitions';
+
 
 /**
  * Letter types
@@ -37,6 +38,10 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   @ViewChild('consentModal') consentModal: ConsentModalComponent;
 
   public captchaApiBaseUrl;
+
+  // headers and definitions for aside (repeated in multiple places)
+  public phnHdr: string = phn_hdr;
+  public phnDef: string =  phn_def;
 
   protected _hasToken = false;
 

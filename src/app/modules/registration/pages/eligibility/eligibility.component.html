@@ -47,7 +47,7 @@
           <div class="form-group">
             <fpcare-phn [(value)]="spouse.phn"></fpcare-phn>
             <div *ngIf="hasUniquePhnError" role="alert" aria-live="assertive">
-              <div class="text-danger">This PHN was already used for registrant.</div>
+              <div class="text-danger">This Personal Health Number was already used for registrant.</div>
             </div>
           </div>
 
@@ -59,9 +59,8 @@
 
   <aside>
     <div>
-      <p class="h5">PHN</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
+      <p class="h5">{{phnHdr}}</p>
+      <p>{{phnDef}}</p></div>
   </aside>
 
   <fpcare-form-action-bar

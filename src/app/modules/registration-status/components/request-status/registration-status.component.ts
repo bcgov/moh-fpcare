@@ -10,6 +10,7 @@ import { StatusCheckPHNPayload, StatusCheckRegNumberPayload, StatusCheckPHN, Sta
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
 import {REGISTRATION_STATUS_PATH, RESULT_REG_STATUS} from '../../../../models/route-paths.constants';
 import {ValidationService} from '../../../../services/validation.service';
+import {phn_def, phn_hdr} from '../../../../models/fpcare-aside-definitions';
 
 @Component({
   selector: 'fpcare-registration-status',
@@ -26,6 +27,10 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   public captchaApiBaseUrl;
 
   private _hasToken = false;
+
+  // headers and definitions for aside (repeated in multiple places)
+  public phnHdr: string = phn_hdr;
+  public phnDef: string =  phn_def;
 
   /** Result page */
   private _url = REGISTRATION_STATUS_PATH + '/' + RESULT_REG_STATUS;

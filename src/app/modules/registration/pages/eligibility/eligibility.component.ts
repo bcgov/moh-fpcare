@@ -17,6 +17,7 @@ import {
   EligibilityPayload, PersonType,
 } from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
+import {phn_def, phn_hdr} from '../../../../models/fpcare-aside-definitions';
 
 @Component({
   selector: 'fpcare-eligibility',
@@ -30,6 +31,10 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
 
   /** Indicates whether or not the same PHN has been used for spouse */
   private _uniquePhn = true;
+
+  // headers and definitions for aside (repeated in multiple places)
+  public phnHdr: string = phn_hdr;
+  public phnDef: string =  phn_def;
 
   /** Page to naviage to when continue process */
   private _baseUrl = REGISTRATION_PATH + '/';
