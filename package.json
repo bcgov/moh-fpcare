@@ -15,8 +15,7 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e --environment prod",
-    "postinstall": "npm run build"
+    "e2e": "ng e2e --environment prod"
   },
   "private": true,
   "dependencies": {
