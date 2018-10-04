@@ -160,7 +160,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   public update(): void {
 
     // Need income to do calculations
-    if ( this.income ) {
+    if ( undefined !== this.income || undefined !== this.spouseIncome ) {
       this.totalFamilyIncome = this.calculateTotalFamilyIncome();
     }
 
