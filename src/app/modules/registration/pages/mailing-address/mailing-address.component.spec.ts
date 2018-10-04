@@ -26,7 +26,9 @@ describe('MailingAddressComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        { provide: FPCareDataService, useValue: fPCareDataServiceStub },
+        // Reverted to full DataService, as we make use of its str format function
+        // { provide: FPCareDataService, useValue: fPCareDataServiceStub },
+        FPCareDataService,
         RegistrationService
       ]
     })

@@ -145,6 +145,7 @@ export class FPCareDateComponent extends Base implements OnInit {
   triggerDayValidation(){
     // We have to wrap this in a timeout, otherwise it runs before Angular has updated the values
     setTimeout( () => {
+      if (!this.form.controls['day']) return;
       this.form.controls['day'].updateValueAndValidity();
       this.cd.detectChanges();
     }, 0);

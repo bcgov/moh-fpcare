@@ -1,19 +1,20 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { CalendarFutureDatesDirective } from '../date/calendar-future-dates.validator';
 import * as moment from 'moment';
 import { FPCareDateComponent } from './date.component';
 import { CalendarFieldFormatterDirective } from './calendar-field-formatter.directive';
+import { CalendarDayValidatorDirective } from './calendar-day.validator';
 
 
-xdescribe('FPCareDateComponent', () => {
+describe('FPCareDateComponent', () => {
   let component: FPCareDateComponent;
   let fixture: ComponentFixture<FPCareDateComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
-      declarations: [FPCareDateComponent, CalendarFieldFormatterDirective, CalendarFutureDatesDirective],
+      declarations: [FPCareDateComponent, CalendarFieldFormatterDirective, CalendarFutureDatesDirective, CalendarDayValidatorDirective],
     })
     .compileComponents();
   }));
@@ -36,6 +37,7 @@ xdescribe('FPCareDateComponent', () => {
   it('should detect incomplete dates', () => {
     expect(component.isValid()).toBe(false);
     component.setDayValueOnModel('1');
+    fixture.detectChanges();
     component.setMonthValueOnModel('1');
     expect(component.isValid()).toBe(false);
   });
