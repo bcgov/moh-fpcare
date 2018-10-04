@@ -1,18 +1,23 @@
+
+.date-row {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+
 .monthSelect {
-  flex-basis: calc(125px - 1em) !important;
-  flex-grow: 3;
+  max-width: 50%;
   height: 35px;
   margin-right: 1em;
 }
 .dayInput {
-  flex-basis: calc(50px - 1em) !important;
-  flex-grow: 1;
+  max-width: 25%;
   height: 35px;
   margin-right: 1em;
 }
 .yearInput {
-  flex-basis: calc(75px - 1em) !important;
-  flex-grow: 2;
+  max-width: 25%;
   height: 35px;
 }
 .error-container {
@@ -26,10 +31,4 @@ input[type=number]::-webkit-outer-spin-button {
   -moz-appearance: none;
   appearance: none;
   margin: 0;
-}
-
-.form-group {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }

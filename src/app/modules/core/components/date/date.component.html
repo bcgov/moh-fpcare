@@ -1,52 +1,56 @@
 <form #formRef='ngForm' novalidate [validateCalendarFutureDates]="restrictDate">
     <div class="form-group"
          [ngClass]="{'has-error': formRef.invalid && (monthRef.touched || yearRef.touched || dayRef.touched || showError)}">
-        <label class="visuallyhidden" for="month{{objectId}}">Month</label>
-        <select class="form-control monthSelect"
-                [ngModel]="date.month"
-                (ngModelChange)="setMonthValueOnModel($event)"
-                id="month{{objectId}}"
-                name="month"
-                #monthRef="ngModel"
-                [disabled]="disabled"
-                [required]="required">
-           <!-- TODO: May not be the correct way to add placeholder - further investigation requried -->
-           <option value="null" disabled hidden>month</option>
-            <!--
-              We show the blank option if the input isn't required, so the user
-              can clear out their data. However if it is required, there's no
-              need.
-             -->
-           <option value="0" *ngIf="!required">&nbsp;</option>
-           <option *ngFor="let month of monthNames; let i = index;" [value]="i+1"> {{ month }}</option>
-        </select>
-        <label class="visuallyhidden" for="day{{objectId}}">Day</label>
-        <input type="number" class="form-control dayInput"
-               [ngModel]="date.day"
-               (ngModelChange) = 'setDayValueOnModel($event)'
-               [calendarFieldFormatter]="'day'"
-               validateCalendarDay
-               [selectedMonth]='monthRef.value'
-               [selectedYear]='yearRef.value'
-               id="day{{objectId}}" name="day" #dayRef="ngModel"
-               placeholder="day"
-               [required]="required"
-               [disabled]="disabled"
-               min="1"
-               max="31">             
-        <label class="visuallyhidden" for="year{{objectId}}">Year</label>
-        <input type="number" [calendarFieldFormatter]="'year'"
-               class="form-control yearInput"
-               [ngModel]="date.year"
-               (ngModelChange) = 'setYearValueOnModel($event)'
-               validateCalendarYear
-               [disabled]="disabled"
-               id="year{{objectId}}" name="year" #yearRef="ngModel"
-               placeholder="year"
-               [required]="required"
-               min="1830"
-               max="2300"
-               step="1">
+
+         <div class="date-row">
+
+           <label class="visuallyhidden" for="month{{objectId}}">Month</label>
+           <select class="form-control monthSelect"
+                   [ngModel]="date.month"
+                   (ngModelChange)="setMonthValueOnModel($event)"
+                   id="month{{objectId}}"
+                   name="month"
+                   #monthRef="ngModel"
+                   [disabled]="disabled"
+                   [required]="required">
+              <!-- TODO: May not be the correct way to add placeholder - further investigation requried -->
+              <option value="null" disabled hidden>month</option>
+               <!--
+                 We show the blank option if the input isn't required, so the user
+                 can clear out their data. However if it is required, there's no
+                 need.
+                -->
+              <option value="0" *ngIf="!required">&nbsp;</option>
+              <option *ngFor="let month of monthNames; let i = index;" [value]="i+1"> {{ month }}</option>
+           </select>
+           <label class="visuallyhidden" for="day{{objectId}}">Day</label>
+           <input type="number" class="form-control dayInput"
+                  [ngModel]="date.day"
+                  (ngModelChange) = 'setDayValueOnModel($event)'
+                  [calendarFieldFormatter]="'day'"
+                  validateCalendarDay
+                  [selectedMonth]='monthRef.value'
+                  [selectedYear]='yearRef.value'
+                  id="day{{objectId}}" name="day" #dayRef="ngModel"
+                  placeholder="day"
+                  [required]="required"
+                  [disabled]="disabled"
+                  min="1"
+                  max="31">             
+           <label class="visuallyhidden" for="year{{objectId}}">Year</label>
+           <input type="number" [calendarFieldFormatter]="'year'"
+                  class="form-control yearInput"
+                  [ngModel]="date.year"
+                  (ngModelChange) = 'setYearValueOnModel($event)'
+                  validateCalendarYear
+                  [disabled]="disabled"
+                  id="year{{objectId}}" name="year" #yearRef="ngModel"
+                  placeholder="year"
+                  [required]="required"
+                  min="1830"
+                  max="2300"
+                  step="1">
+         </div>
 
         <div *ngIf='yearRef.status !== "DISABLED"' role="alert" class='error-container' aria-live="assertive">
           <div *ngIf='monthRef.touched || showError'>
