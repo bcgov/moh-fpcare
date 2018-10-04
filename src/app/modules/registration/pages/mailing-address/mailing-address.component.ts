@@ -20,7 +20,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   /** Page to naviage to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_REVIEW;
 
-  private _isPostalMatch: boolean = true;
+  public isPostalMatch: boolean = true;
 
   constructor( private fpcService: FPCareDataService
              , protected router: Router
@@ -34,6 +34,9 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
     // Set country
     this.applicant.updAddress.country = 'Canada';
+
+    // Handles case when returning to page with data (e.g. back/forward nav)
+    this.checkPostal();
   }
 
   /**
@@ -41,19 +44,15 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    * @returns {boolean}
    */
   canContinue(): boolean {
+    return super.canContinue() && ( this.isPostalMatch || ( !this.isPostalMatch && this.applicant.isAddressUpdated ) );
+  }
 
-    if ( super.canContinue() ) {
-
+  checkPostal(): void {
+    if (this.applicant.address.hasPostal()){
       const pc = this.fpcService.removeStrFormat( this.applicant.address.postal );
-      if ( pc ) {
-        this._isPostalMatch = this.registrationService.isPostalCodeMatch( pc );
-      }
-
-      return ( this._isPostalMatch || ( !this._isPostalMatch && this.applicant.isAddressUpdated ) );
+      this.isPostalMatch = this.registrationService.isPostalCodeMatch( pc );
+      console.log('checkPostal', this.isPostalMatch, this.registrationService.familyStructure);
     }
-
-    // Main and sub forms are not empty and are valid
-    return false;
   }
 
   /**
@@ -62,15 +61,6 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   get applicant(): Person {
     return this.fpcService.applicant;
-  }
-
-  /**
-   * Determines whether postal code is valid, matches FPC record
-   * @returns {boolean}
-   */
-  get isPostalMatch(): boolean{
-    // business logic required to determine whether PC is valid - for dev purposes show update address
-    return this._isPostalMatch;
   }
 
   highlightPostal(){

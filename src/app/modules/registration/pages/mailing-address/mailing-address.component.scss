@@ -1,0 +1,5 @@
+.validation-alert {
+    // Cancel out the .form-group margin bottom, simulates this is actually part
+    // of the input's validation like FPCareRequired
+    margin-top: -1em;
+}

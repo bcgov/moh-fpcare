@@ -37,6 +37,16 @@ export class Address extends Base {
              this.province && this.postal);
   }
 
+  /**
+   * Check if the address has a completed valid postal.  This works around
+   * text-masking. Assumes postals still follow the text-mask format of V1V 1V1.
+   */
+  hasPostal(): boolean {
+    if (!this.postal) return false;
+    const postal = this.postal.replace(/_/g, ''); //Remove underscores from text-masking
+    return postal.length === 7;
+  }
+
   /* Copy function */
   copy(object: Address) {
     this.street = object.street;
