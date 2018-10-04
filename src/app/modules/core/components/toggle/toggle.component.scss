@@ -1,19 +1,5 @@
 @import 'variables.scss';
 
-.btn-radio-group {
-  padding: 1rem;
-}
-
-.btn-radio {
+.custom-control-label {
   cursor: pointer;
-
-  -ms-transform: scale(1.5); /* IE 9 */
-  -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
-  transform: scale(1.5);
 }
-
-.btn-label {
-  padding-left: 0.25rem;
-}
-
-
