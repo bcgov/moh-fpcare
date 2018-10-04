@@ -51,6 +51,12 @@ export class AppComponent implements OnInit {
       // console.log( 'spouse: ', this.fpcareDataService.spouse );
       this.fpcareDataService.dependants = this.dummyDataService.createChildren( 2 );
       // console.log( 'children: ', this.fpcareDataService.dependants );
+
+      // financial information
+      this.fpcareDataService.applicantIncome = 45000;
+      this.fpcareDataService.spouseIncome = 50000;
+      this.fpcareDataService.bornBefore1939 = true;
+      this.fpcareDataService.disabilityAmount = 5000;
     }
 
     if (environment.promptOnExit){

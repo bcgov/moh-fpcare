@@ -1,36 +1,49 @@
 <fpcare-results-framework>
-  <div *ngIf='response; else noResponse'>
-     <div *ngIf='repsonse.success; else noEligbility'>
-       <h1 title>Your Application has been submitted</h1>
+   <div *ngIf="response; else noResponse">
+      <div *ngIf='isSuccessful; else eligibilityError'>
+        <h1 title>Your Application has been submitted</h1>
 
-       <div>
-         <h2>Registration Number: </h2>
-         What happens next
-         <ul>
-           <li>Important: Keep your registration number - write it down, or print this page for your records</li>
-           <li>
-             To inquire about the status of your registration select <a href="javascript:void(0)">
-             Check the Status of your Registration</a> on the menu and enter your registration numer
-           </li>
-           <li>
-             Based on the information you have provided a temporary Fair PharmaCare deductible will be maintained for your
-             family for a period not exceeding 30 days as follows:
+        <div>
+          <h2>Registration Number: </h2>
+          What happens next
+          <ul>
+            <li>Important: Keep your registration number - write it down, or print this page for your records</li>
+            <li>
+              To inquire about the status of your registration select <a href="javascript:void(0)">
+              Check the Status of your Registration</a> on the menu and enter your registration numer
+            </li>
+            <li>
+              Based on the information you have provided a temporary Fair PharmaCare deductible will be maintained for your
+              family for a period not exceeding 30 days as follows:
 
-             PLACEHOLDER for information from calculator (Family deductible, Portion FPC Pays, Family Maximum)
-           </li>
-         </ul>
-       </div>
-    </div>
-  </div>
-
+              PLACEHOLDER for information from calculator (Family deductible, Portion FPC Pays, Family Maximum)
+            </li>
+          </ul>
+        </div>
+      </div>
+   </div>
 </fpcare-results-framework>
 
 
-<ng-template #noEligbility>
-   <h2 class='text-danger'>Not eligible or already exists in FPC.</h2>
-   <p>Response message: {{status}}</p>
+<ng-template #eligibilityError>
+  <h1 title>Fair PharmaCare Registration Status</h1>
+
+  <div>
+    <h2>Your status is: </h2>
+    <ul>
+      <!--
+        Using innerHTML bypasses angular's security sanitzation, so we can
+        directly include links.  This is safe only because we know we control
+        the messages coming back and no user supplied content will ever appear
+        here.
+      -->
+      <li [innerHTML]="status"></li>
+    </ul>
+  </div>
 </ng-template>
 
+
+<!-- There's no response object - user hasn't submitted the HTTP request. -->
 <ng-template #noResponse>
-   No resposne
+   <h2 class='text-danger'>Something went wrong.</h2>
 </ng-template>

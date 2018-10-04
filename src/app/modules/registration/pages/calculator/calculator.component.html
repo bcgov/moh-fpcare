@@ -57,8 +57,9 @@
       </div>
 
       <div class="form-group">
-        <label for="bornBefore1939">Were you born in 1939 or earlier?
-          <fpcare-toggle id='bornBefore1939' [data]='bornBefore1939' (dataChange)="bornBefore1939 = $event; update();"></fpcare-toggle>
+        <label for="bornBefore1939">Were you {{hasSpouse ?'or your spouse ': ''}}born in 1939 or earlier?
+          <fpcare-toggle id='bornBefore1939' [data]='bornBefore1939'
+                         (dataChange)="bornBefore1939 = $event; update();"></fpcare-toggle>
         </label>
       </div>
 

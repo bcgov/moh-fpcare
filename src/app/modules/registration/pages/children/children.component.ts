@@ -44,7 +44,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
       // no children, continue
       return true;
     }
-    
+
     // Main and sub forms are not empty and are valid
     if ( super.canContinue() ) {
 

@@ -1,19 +1,5 @@
 @import 'variables.scss';
 
-.btn-radio {
-  background: #2962FF;
-  color: white;
-
-  -ms-transform: scale(1.5); /* IE 9 */
-  -webkit-transform: scale(1.5); /* Chrome, Safari, Opera */
-  transform: scale(1.5);
-
-//  &:selection {
-//    background: #2962FF;
-//  }
-//  &:active {
-//    background: #2962FF;
-//  }
+.custom-control-label {
+  cursor: pointer;
 }
-
-

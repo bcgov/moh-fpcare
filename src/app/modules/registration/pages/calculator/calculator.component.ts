@@ -88,8 +88,14 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     this.registrationService.setItemIncomplete();
 
     // If not defined do not update the page
-    if ( undefined !== this.income ||
-         undefined !== this.spouseIncome ) {
+    if ( this.fpcareDataService.applicantIncome ||
+         this.fpcareDataService.spouseIncome  ) {
+
+      this.income = this.financeService.currencyFormat( this.fpcareDataService.applicantIncome );
+
+      if ( this.hasSpouse ) {
+        this.spouseIncome = this.financeService.currencyFormat( this.fpcareDataService.spouseIncome );
+      }
 
       // Update data - user may have used back button on browser
       this.update();

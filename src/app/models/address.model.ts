@@ -33,8 +33,8 @@ export class Address extends Base {
    */
   isComplete(): boolean {
     // All fields have data - not empty
-    return !(this.street && this.city && this.country &&
-             this.province && this.postal );
+    return !!(this.street && this.city && this.country &&
+             this.province && this.postal);
   }
 
   /* Copy function */

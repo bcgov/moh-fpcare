@@ -90,7 +90,12 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    * @returns {boolean}
    */
   disableRegNum(): boolean {
-    const hasDateOfBirth = !this.applicant.isDobEmpty();
+
+    // Check to see if any of the fields for DOB have data
+    const hasDateOfBirth = Object.keys( this.applicant.dateOfBirth )
+        .map(key => this.applicant.dateOfBirth [key])
+        .filter(x => x) // Filter out null/undefined
+        .length !== 0;
     return !!this.applicant.phn || hasDateOfBirth || !!this.applicant.address.postal;
   }
 
@@ -156,7 +161,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
       this.loading = false;
       this.navigate( this._url );
     },
-    error => {
+    error => { // TODO: Confirm that this will be the error-page component
       this.loading = false;
       console.log( 'Error occurred: ' + error );
       this.navigate( this._url );

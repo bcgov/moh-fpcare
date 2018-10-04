@@ -27,6 +27,7 @@ export class ReviewPageComponent extends Base implements OnInit {
   }
 
   ngOnInit() {
+
     this.registrationService.setItemIncomplete();
   }
 
@@ -172,6 +173,14 @@ export class ReviewPageComponent extends Base implements OnInit {
     this.navigate( REGISTRATION_FINANCIAL );
   }
 
+  editSpouse() {
+    if ( this.hasSpouse ) {
+      this.editPersonalInfo();
+    }
+    else {
+      this.editFinancialInfo();
+    }
+  }
   /**
    * Retrieve the updated street address
    * @returns {string}
@@ -227,7 +236,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {boolean}
    */
   get isAddressUpdated(): boolean {
-    return this.applicant.isAdressUpdated;
+    return this.applicant.isAddressUpdated;
   }
 
   /** Navigates to a route then automatically scrolls to the top of the page. */

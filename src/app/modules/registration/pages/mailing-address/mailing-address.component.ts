@@ -4,7 +4,6 @@ import { AbstractFormComponent } from '../../../../models/abstract-form-componen
 import { Person } from '../../../../models/person.model';
 import { REGISTRATION_PATH, REGISTRATION_REVIEW } from '../../../../models/route-paths.constants';
 import { FPCareDataService } from '../../../../services/fpcare-data.service';
-import { PostalCodeComponent } from '../../../core/components/postal-code/postal-code.component';
 import { RegistrationService } from '../../registration.service';
 import { FPCareRequiredDirective } from '../../../../validation/fpcare-required.directive';
 
@@ -15,16 +14,13 @@ import { FPCareRequiredDirective } from '../../../../validation/fpcare-required.
 })
 export class MailingAddressPageComponent extends AbstractFormComponent implements OnInit {
 
-  // Variable to indicate whether the postal code matches the one on file
-  private _postalCodeMatch = false; // TODO - REVERT TO TRUE FOR NOW
-  // private _postalCodeMatch = true; // TODO - REVERT TO TRUE FOR NOW
-
   @ViewChild('postalCodeContainer') postalCodeContainer: ElementRef; //TODO - Remove?
   @ViewChildren(FPCareRequiredDirective) fpcareRequired;
 
-
   /** Page to naviage to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_REVIEW;
+
+  private _isPostalMatch: boolean = true;
 
   constructor( private fpcService: FPCareDataService
              , protected router: Router
@@ -36,6 +32,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   ngOnInit() {
     this.registrationService.setItemIncomplete();
 
+    // Set country
     this.applicant.updAddress.country = 'Canada';
   }
 
@@ -45,8 +42,18 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   canContinue(): boolean {
 
+    if ( super.canContinue() ) {
+
+      const pc = this.fpcService.removeStrFormat( this.applicant.address.postal );
+      if ( pc ) {
+        this._isPostalMatch = this.registrationService.isPostalCodeMatch( pc );
+      }
+
+      return ( this._isPostalMatch || ( !this._isPostalMatch && this.applicant.isAddressUpdated ) );
+    }
+
     // Main and sub forms are not empty and are valid
-    return super.canContinue();
+    return false;
   }
 
   /**
@@ -61,9 +68,9 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    * Determines whether postal code is valid, matches FPC record
    * @returns {boolean}
    */
-  isPostalCodeMatch(): boolean {
+  get isPostalMatch(): boolean{
     // business logic required to determine whether PC is valid - for dev purposes show update address
-    return this._postalCodeMatch;
+    return this._isPostalMatch;
   }
 
   highlightPostal(){
@@ -91,14 +98,15 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     }, 0);
   }
 
-
   // Methods triggered by the form action bar
 
   /**
    * Navigates to the next page
    */
   continue () {
+
     if ( this.canContinue() ) {
+
       this.registrationService.setItemComplete();
       this.navigate(  this._url );
     }

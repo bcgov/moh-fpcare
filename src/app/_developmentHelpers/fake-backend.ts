@@ -10,7 +10,6 @@ import {Observable} from 'rxjs/internal/Observable';
 import {mergeMap} from 'rxjs/operators';
 import {of} from 'rxjs/internal/observable/of';
 import {Injectable} from '@angular/core';
-import {throwError} from 'rxjs/internal/observable/throwError';
 import {BenefitYearPayload, DeductiblePayload, EligibilityPayload, RegStatusCode} from '../models/api.model';
 import {baselineAssist, pre1939Assist} from '../modules/financial-calculator/assistenceLevelsTestData';
 import {FakeBackendService} from './fake-backend.service';
@@ -20,11 +19,12 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
 
   constructor(private fakebackendService: FakeBackendService ) { }
 
-
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     // wrap in delayed observable to simulate server api call
     return of(null).pipe(mergeMap(() => {
+
+      console.log( 'Request (fakeBackend interceptor)', request );
 
       if ( 'POST' === request.method ) {
         let payload = null;
@@ -32,8 +32,8 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
         if ( request.url.endsWith('/getCalendar') ) {
           console.log( 'Get Calendar - fake backend' );
           payload = new BenefitYearPayload({
-            benefitYear: '2019',
-            taxYear: '2017',
+            benefitYear: '2018',
+            taxYear: '2016',
             regStatusCode: RegStatusCode.SUCCESS,
             regStatusMsg: '',
             uuid: request.body.uuid
@@ -59,8 +59,14 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
           payload = new EligibilityPayload( {
             uuid: request.body.uuid,
             benefitYear: request.body.benefitYear,
-            regStatusMsg: 'This is a test message from fake backend.',
-            regStatusCode: (family ? RegStatusCode.SUCCESS : RegStatusCode.ERROR),
+            regStatusMsg: 'Fake backend - ' +
+            (family ? (
+                this.fakebackendService.parentDobMatch(request.body.persons, family ) ? 'Success' : 'DOBs do not match'
+            ) : 'Not eligible ' ),
+            regStatusCode: ( family &&
+                this.fakebackendService.parentDobMatch(request.body.persons, family ) ?
+                    RegStatusCode.SUCCESS : RegStatusCode.ERROR
+            ),
             persons: family
           });
         }
@@ -69,11 +75,11 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
           return of(new HttpResponse({ status: 200, body: payload }));
         }
 
-        // else return 400 bad request
-        return throwError({ error: { message: 'URL not implemented by fake backend.' } });
+        // Pass through to actual service
+        return next.handle( request );
       } else {
-        // else return 400 bad request
-        return throwError({ error: { message: 'Method not supported by fake backend.' } });
+        // Pass through to actual service
+        return next.handle( request );
       }
     }
     ));

@@ -1,48 +1,54 @@
-<h3>Annual Deductible</h3>
+<div [ngClass]="{'review-deductible': isReview}">
 
-<!-- The labels above the progress bar -->
-<div class="progress-labels d-flex justify-content-between">
-  <span>$0</span>
-  <span *ngIf="pharmaCareDeductible >= 1" class='progress-labels--deductible'>${{deductible}}</span>
-  <span *ngIf="pharmaCareLevel?.maximum >= 1 && applicantPortion > 0" class='progress-labels--maximum'>${{maximum}}</span>
-  <!-- TODO - Remove infinity icon but keep layout. nbsp? -->
-  <span class='infinity'>&infin;</span>
+  <h3>{{deductibleTitle}}</h3>
+
+  <!-- The labels above the progress bar -->
+  <div class="progress-labels">
+    <span>$0</span>
+    <span *ngIf="pharmaCareDeductible >= 1">${{deductible}}</span>
+    <span *ngIf="pharmaCareLevel?.maximum >= 1 && applicantPortion > 0">${{maximum}}</span>
+    <!-- TODO - Remove infinity icon but keep layout. nbsp? -->
+    <span class='infinity'>&infin;</span>
+  </div>
+
+
+  <!-- The progress bar -->
+  <div class="progress">
+    <div class="progress-bar"
+         role="progressbar"
+         [style.width]='deductibleRatio + "%"'
+         [attr.aria-valuenow]="deductibleRatio"
+         aria-valuemin="0"
+         aria-valuemax="100"></div>
+    <div class="progress-bar bg-warning"
+         role="progressbar"
+         [style.width]='pharmaCareRatio + "%"'
+         [attr.aria-valuenow]="pharmaCareRatio"
+         aria-valuemin="0"
+         aria-valuemax="100"></div>
+    <div class="progress-bar bg-success"
+         role="progressbar"
+         [style.width]='maximumRatio + "%"'
+         [attr.aria-valuenow]="maximumRatio"
+         aria-valuemin="0"
+         aria-valuemax="100"></div>
+  </div>
+
+  <!-- The legend describing sections on the progress bar -->
+  <div class="deductible-legend-container">
+    <p class="deductible-legend deductible-legend-blue"
+       [@growVertical]
+       *ngIf="pharmaCareDeductible >= 1" >
+      You pay 100% of drug costs (between $0 and ${{deductible}})
+    </p>
+    <p class="deductible-legend deductible-legend-yellow"
+       [@growVertical]
+       *ngIf="pharmaCareLevel?.maximum >= 1 && applicantPortion > 0" >
+      PharmaCare pays {{pharmaCarePortion}}% and you pay {{applicantPortion}}% of drug costs (between ${{deductible}} and ${{maximum}})
+    </p>
+    <p class="deductible-legend deductible-legend-green">
+      PharmaCare pays 100% after you reach the family maximum (${{maximum}})
+    </p>
+  </div>
+
 </div>
-
-
-<!-- The progress bar -->
-<div class="progress">
-  <div class="progress-bar"
-       role="progressbar"
-       [style.width]='deductibleRatio + "%"'
-       [attr.aria-valuenow]="deductibleRatio"
-       aria-valuemin="0"
-       aria-valuemax="100"></div>
-  <div class="progress-bar bg-warning"
-       role="progressbar"
-       [style.width]='pharmaCareRatio + "%"'
-       [attr.aria-valuenow]="pharmaCareRatio"
-       aria-valuemin="0"
-       aria-valuemax="100"></div>
-  <div class="progress-bar bg-success"
-       role="progressbar"
-       [style.width]='maximumRatio + "%"'
-       [attr.aria-valuenow]="maximumRatio"
-       aria-valuemin="0"
-       aria-valuemax="100"></div>
-</div>
-
-<!-- The legend describing sections on the progress bar -->
-<p class="deductible-legend deductible-legend-blue"
-   [@growVertical]
-   *ngIf="pharmaCareDeductible >= 1" >
-  You pay 100% of drug costs (between $0 and ${{deductible}})
-</p>
-<p class="deductible-legend deductible-legend-yellow"
-   [@growVertical]
-   *ngIf="pharmaCareLevel?.maximum >= 1 && applicantPortion > 0" >
-  PharmaCare pays {{pharmaCarePortion}}% and you pay {{applicantPortion}}% of drug costs (between ${{deductible}} and ${{maximum}})
-</p>
-<p class="deductible-legend deductible-legend-green">
-  PharmaCare pays 100% after you reach the family maximum (${{maximum}})
-</p>

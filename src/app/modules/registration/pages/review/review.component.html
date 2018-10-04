@@ -1,55 +1,58 @@
 <fpcare-annual-deductible
     [familyNetIncome]="adjustedIncomeAmount"
-    [bornBefore1939]="bornBefore1939">
+    [bornBefore1939]="bornBefore1939"
+    [isReview]="true">
 </fpcare-annual-deductible>
 
 <fpcare-page-framework layout='double'>
 
   <div>
   <h2>Applicant Information
-    <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editPersonalInfo()"></i>
+    <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editPersonalInfo()"></i>
   </h2>
     <div class="bg-light section">
-      <div class="row p-md-1">
-        <div class="col-md-6">Name</div>
-        <div class="col-md-6">{{applicant.name}}</div>
+      <div class="line-item">
+        <div class="line-item--text">Name</div>
+        <div class="line-item--value">{{applicant.name}}</div>
       </div>
-      <div class="row p-md-1">
-        <div class="col-md-6">Personal Health Number</div>
-        <div class="col-md-6">{{applicant.phn}}</div>
+       <div class="line-item">
+        <div class="line-item--text">Personal Health Number</div>
+        <div class="line-item--value">{{applicant.phn}}</div>
       </div>
-      <div class="row p-md-1">
-        <div class="col-md-6">Birthdate</div>
-        <div class="col-md-6">{{getApplicantDob()}}</div>
+      <div class="line-item">
+        <div class="line-item--text">Birthdate</div>
+        <div class="line-item--value">{{getApplicantDob()}}</div>
       </div>
-      <div class="row p-md-1">
-        <div class="col-md-6">Social Insurance Number</div>
-        <div class="col-md-6">{{applicant.sin}}</div>
+      <div class="line-item">
+        <div class="line-item--text">Social Insurance Number</div>
+        <div class="line-item--value">{{applicant.sin}}</div>
       </div>
     </div>
   </div>
 
   <div>
     <h2>Spouse Information
-      <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editPersonalInfo()"></i>
+      <i class="fa fa-pencil edit--icon"
+         aria-hidden="true"
+         (click)="editSpouse()"></i>
     </h2>
     <div class="bg-light section">
       <div *ngIf="hasSpouse; else noSpouse">
-        <div class="row p-md-1">
-          <div class="col-md-6">Name</div>
-          <div class="col-md-6">{{spouse.name}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Name</div>
+          <div class="line-item--value">{{spouse.name}}</div>
         </div>
-        <div class="row p-md-1">
-          <div class="col-md-6">Personal Health Number</div>
-          <div class="col-md-6">{{spouse.phn}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Personal Health Number</div>
+          <div class="line-item--value">{{spouse.phn}}</div>
         </div>
-        <div class="row p-md-1">
-          <div class="col-md-6">Birthdate</div>
-          <div class="col-md-6">{{getSpouseDob()}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Birthdate</div>
+          <div class="line-item--value">{{getSpouseDob()}}</div>
         </div>
-        <div class="row p-md-1">
-          <div class="col-md-6">Social Insurance Number</div>
-          <div class="col-md-6">{{spouse.sin}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Social Insurance Number</div>
+          <div class="line-item--value">{{spouse.sin}}</div>
         </div>
       </div>
     </div>
@@ -57,21 +60,21 @@
 
   <div>
     <h2>Child Information
-      <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editChildInfo()"></i>
+      <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editChildInfo()"></i>
     </h2>
     <div class="bg-light section">
       <div *ngFor="let child of children">
-        <div class="row p-md-1">
-          <div class="col-md-6">Name</div>
-          <div class="col-md-6">{{child.name}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Name</div>
+          <div class="line-item--value">{{child.name}}</div>
         </div>
-        <div class="row p-md-1">
-          <div class="col-md-6">Personal Health Number</div>
-          <div class="col-md-6">{{child.phn}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Personal Health Number</div>
+          <div class="line-item--value">{{child.phn}}</div>
         </div>
-        <div class="row p-md-1">
-          <div class="col-md-6">Birthdate</div>
-          <div class="col-md-6">{{getChildDob(child)}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Birthdate</div>
+          <div class="line-item--value">{{getChildDob(child)}}</div>
         </div>
         <!-- Space between next child for readibility -->
         <br *ngIf="children.length - 1 !== children.indexOf(child)"/>
@@ -82,14 +85,12 @@
 
   <div>
     <h2>Contact Information
-      <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editContactInfo()"></i>
+      <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editContactInfo()"></i>
     </h2>
     <div class="bg-light section">
-      <div *ngIf="!isAddressUpdated; else updatedAddress" >
-        <div class="row p-md-1">
-          <div class="col-md-6">Mailing Address</div>
-          <div class="col-md-6">{{getPostalCode()}}</div>
-        </div>
+      <div class="line-item">
+        <div class="line-item--text">Mailing Address</div>
+        <div *ngIf="!isAddressUpdated; else updatedAddress" class="line-item--value">{{getPostalCode()}}</div>
       </div>
     </div>
   </div>
@@ -97,32 +98,32 @@
   <aside>
     <div>
       <h2>Financial Information
-        <i class="fa fa-pencil float-right pointer" aria-hidden="true" (click)="editFinancialInfo()"></i>
+        <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editFinancialInfo()"></i>
       </h2>
       <div class="bg-light section">
-        <div class="row p-md-1">
-          <div class="col-md-6">Your net annual income</div>
-          <div class="col-md-6">{{applicantIncome}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Your net annual income</div>
+          <div class="line-item--value">{{applicantIncome}}</div>
         </div>
-        <div class="row p-md-1">
-          <div class="col-md-6">Spouse/common-law partner</div>
-          <div class="col-md-6">{{hasSpouse ? 'Yes' : 'No'}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Spouse/common-law partner</div>
+          <div class="line-item--value">{{hasSpouse ? 'Yes' : 'No'}}</div>
         </div>
-        <div *ngIf="hasSpouse" class="row p-md-1">
-          <div class="col-md-6">Spouse's annual income</div>
-          <div class="col-md-6">{{spouseIncome}}</div>
+        <div *ngIf="hasSpouse" class="line-item">
+          <div class="line-item--text">Spouse's annual income</div>
+          <div class="line-item--value">{{spouseIncome}}</div>
         </div>
-        <div class="row p-md-1">
-          <div class="col-md-6">Registered disability Savings Plan amount</div>
-          <div class="col-md-6">{{disabilityAmount}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Registered disability Savings Plan amount</div>
+          <div class="line-item--value">{{disabilityAmount}}</div>
         </div>
-        <div class="row p-md-1">
-          <div class="col-md-6">Total deductions</div>
-          <div class="col-md-6">{{disabilityAmount}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Total deductions</div>
+          <div class="line-item--value">{{disabilityAmount}}</div>
         </div>
-        <div class="row p-md-1">
-          <div class="col-md-6">Adjusted income</div>
-          <div class="col-md-6">{{adjustedIncome}}</div>
+        <div class="line-item">
+          <div class="line-item--text">Adjusted income</div>
+          <div class="line-item--value">{{adjustedIncome}}</div>
         </div>
       </div>
     </div>
@@ -141,17 +142,10 @@
 
 <!-- There is no updated address -->
 <ng-template #updatedAddress>
-  <div class="row p-md-1">
-    <div class="col-md-6">Mailing Address</div>
-    <div class="col-md-6">{{getStreet()}}</div>
+  <div class="line-item--value">
+    <div>{{getStreet()}}</div>
+    <div>{{getCity()}}, {{getProvince()}}</div>
+    <div>{{getPostalCode()}}</div>
+    <div>{{getCountry()}}</div>
   </div>
-  <div class="row p-md-1">
-    <div class="col-md-6 offset-md-6">{{getCity()}}, {{getProvince()}}</div>
-  </div>
-  <div class="row p-md-1">
-    <div class="col-md-6 offset-md-6">{{getPostalCode()}}</div>
-  </div>
-  <div class="row p-md-1">
-    <div class="col-md-6 offset-md-6">{{getCountry()}}</div>
-  </div>
-</ng-template>
+ </ng-template>

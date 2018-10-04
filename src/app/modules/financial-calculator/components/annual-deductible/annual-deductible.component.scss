@@ -1,5 +1,52 @@
 @import 'variables.scss';
 
+.review-deductible {
+
+    @include media-breakpoint-up(sm) {
+
+        .deductible-legend-container {
+            flex-direction: row;
+            justify-content: space-evenly;
+        }
+
+        .deductible-legend {
+            padding-left: 1rem;
+        }
+
+        .deductible-legend-blue {
+            min-width: 35%;
+            max-width: 50%;
+        }
+
+        .deductible-legend-blue:before {
+            display: none !important;
+        }
+        .deductible-legend-yellow {
+            min-width: 30%;
+            max-width: 50%;
+        }
+
+        .deductible-legend-yellow:before {
+            display: none !important;
+        }
+
+        .deductible-legend-green {
+            min-width: 35%;
+            max-width: 50%;
+        }
+
+        .deductible-legend-green:before {
+            display: none !important;
+        }
+    }
+}
+
+
+.deductible-legend-container {
+    display: flex;
+    flex-direction: column;
+}
+
 .deductible-legend {
     padding-left: 2rem;
     position: relative;
@@ -32,4 +79,9 @@
     // Increase size of infinity symbol, but not spacing below it.
     font-size: 1.5rem;
     line-height: 1.5rem;
+}
+
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
 }

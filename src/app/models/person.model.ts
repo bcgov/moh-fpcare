@@ -32,12 +32,12 @@ export class Person extends Base {
   public updAddress: Address = new Address();
 
   /**
-   * Checks if address was updated
+   *
    * @returns {boolean}
    */
-  get isAdressUpdated(): boolean {
-    return ( this.updAddress && !this.updAddress.isComplete() );
-  }
+  get isAddressUpdated(): boolean {
+    return this.updAddress.isComplete();
+  };
 
   /**
    * Returns DoB in YYYYMMDD format, used by API.

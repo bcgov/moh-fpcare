@@ -62,10 +62,6 @@ export class FPCareDateComponent extends Base implements OnInit {
     return Object.keys( MonthName ).map( x => MonthName[x] );
   }
 
-  get dobMonth() {
-    return this.date ? this.date : 'month';
-  }
-
   setYearValueOnModel(value: string) {
     if (value) {
       this.date.year = parseInt(value, 10);
@@ -86,10 +82,8 @@ export class FPCareDateComponent extends Base implements OnInit {
   }
 
   setMonthValueOnModel(value: string) {
-    console.log( 'Set Month Value: ', value );
     if (value) {
       this.date.month = parseInt(value, 10);
-      console.log( 'month ', this.date.month );
     } else {
       this.date.month = null;
     }

@@ -109,8 +109,6 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
       return;
     }
 
-    console.log('continue');
-
     // Set registration item to complete
     this.registrationService.setItemComplete();
 
@@ -153,9 +151,9 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
 
       this.responseStore.eligibility = new EligibilityPayload(response);
       this.loading = false;
-      console.log( 'response: ', response );
 
       if ( response.success) {
+        this.registrationService.familyStructure = this.responseStore.eligibility.persons;
         this.navigate( this._baseUrl + REGISTRATION_PERSONAL );
       } else {
         this.navigate(this._baseUrl +  REGISTRATION_RESULTS );
