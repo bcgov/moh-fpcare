@@ -2,6 +2,7 @@ import {Component, OnInit, Input, ChangeDetectionStrategy, SimpleChanges, Output
 import { FinanceService } from '../../finance.service';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 import { growVertical } from '../../../../animations/animations';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'fpcare-financial-calculator',
@@ -35,6 +36,7 @@ export class FinancialCalculatorComponent implements OnInit {
   /** Finance Service is still loading data. */
   public isLoadingData: boolean = true;
   public errorLoadingData: boolean = false;
+  private financeHasData$: Subscription;
 
   /**
    * Invoked on every ngOnChanges, the salient difference is it only invokes
@@ -68,7 +70,7 @@ export class FinancialCalculatorComponent implements OnInit {
     });
 
     // Listen for Finance Service having it's data loaded
-    this.financeService.hasData.subscribe(hasData => {
+    this.financeHasData$ = this.financeService.hasData.subscribe(hasData => {
       this.isLoadingData = !hasData;
       this.cd.detectChanges();
     }, (_onError) => {
@@ -76,6 +78,12 @@ export class FinancialCalculatorComponent implements OnInit {
       this.errorLoadingData = true;
       this.cd.detectChanges();
     });
+  }
+
+  ngOnDestroy() {
+    this.financeHasData$.unsubscribe();
+    this.onChanges.unsubscribe();
+    this.cd.detach();
   }
 
   private currencyFormat(input: number): string {
@@ -86,9 +94,6 @@ export class FinancialCalculatorComponent implements OnInit {
     this.onChanges.next(changes);
   }
 
-  ngOnDestroy() {
-    this.onChanges.unsubscribe();
-  }
 
   /**
    * Retrieve formatted string value for adjusted income

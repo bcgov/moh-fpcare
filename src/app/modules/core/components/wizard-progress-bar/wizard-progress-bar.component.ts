@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, ViewChildren, QueryLis
 import { Router, NavigationEnd } from '@angular/router';
 import { Base } from '../base/base.class';
 import { filter, map } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'fpcare-wizard-progress-bar',
@@ -16,6 +17,8 @@ export class WizardProgressBarComponent extends Base implements OnInit {
 
   public activeIndex: number;
 
+  private routerEvents$: Subscription;
+
   constructor(private router: Router, private cd: ChangeDetectorRef) {
     super();
    }
@@ -24,7 +27,7 @@ export class WizardProgressBarComponent extends Base implements OnInit {
 
     // Update the progress bar view on route change and _only_ route chaange.
     // Skip most of Angular's ChangeDetection in favour of manually optimizing.
-    this.router.events.pipe(
+    this.routerEvents$ = this.router.events.pipe(
       filter(ev => ev instanceof NavigationEnd),
       map((ev: NavigationEnd) => ev.url)
     ).subscribe(url => {
@@ -35,6 +38,11 @@ export class WizardProgressBarComponent extends Base implements OnInit {
 
     // Must schedule first run manually, or bar won't be set.
     this.activeIndex = this.getActiveIndex(this.router.url);
+  }
+
+  ngOnDestroy(){
+    this.cd.detach();
+    this.routerEvents$.unsubscribe();
   }
 
   calculateProgressPercentage(): Number {
@@ -65,9 +73,8 @@ export class WizardProgressBarComponent extends Base implements OnInit {
       // Since we're already breaking out of Angular, we try and be safe by using a try/catch.
       // Otherwise an error here could halt execution,
       try {
-        container[0].scrollLeft = target.nativeElement.offsetLeft - (window.outerWidth / 2);  
+        container[0].scrollLeft = target.nativeElement.offsetLeft - (window.outerWidth / 2);
       } catch (error) {}
-      
     }
   }
 
