@@ -7,7 +7,7 @@ import {
   HttpResponse
 } from '@angular/common/http';
 import {Observable} from 'rxjs/internal/Observable';
-import {mergeMap} from 'rxjs/operators';
+import {mergeMap, delay} from 'rxjs/operators';
 import {of} from 'rxjs/internal/observable/of';
 import {Injectable} from '@angular/core';
 import {BenefitYearPayload, DeductiblePayload, EligibilityPayload, RegStatusCode} from '../models/api.model';
@@ -72,7 +72,8 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
         }
 
         if ( payload ) {
-          return of(new HttpResponse({ status: 200, body: payload }));
+          return of(new HttpResponse({ status: 200, body: payload }))
+            .pipe(delay(1000));
         }
 
         // Pass through to actual service
