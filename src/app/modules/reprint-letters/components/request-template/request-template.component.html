@@ -23,11 +23,11 @@
         </div>
 
         <div class="form-group">
-          <p>Birth Date</p>
           <fpcare-date
                   [useCurrentDate]="false"
                   [date]="applicant.dateOfBirth"
-                  [restrictDate]="'past'">
+                  [restrictDate]="'past'"
+                  [label]="'Birth Date'">
           </fpcare-date>
         </div>
 

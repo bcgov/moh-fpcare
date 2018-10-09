@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {ResponseStoreService} from '../../../../services/response-store.service';
-import {EligibilityPayload, RegStatusCode} from '../../../../models/api.model';
+import {EligibilityPayload} from '../../../../models/api.model';
+import {RegistrationService} from '../../registration.service';
 
 @Component({
   selector: 'fpcare-reg-results',
@@ -9,7 +10,8 @@ import {EligibilityPayload, RegStatusCode} from '../../../../models/api.model';
 })
 export class RegResultsComponent {
 
-  constructor(private responseStore: ResponseStoreService) { }
+  constructor( private responseStore: ResponseStoreService
+             , private registrationService: RegistrationService ) { }
 
   get status(): string {
     if (this.response) {
@@ -22,11 +24,7 @@ export class RegResultsComponent {
     return this.responseStore.eligibility;
   }
 
-  /**
-   * Retrieves whether the request was successful or not
-   * @returns {boolean}
-   */
-  get isSuccessful(): boolean {
-    return (this.response.regStatusCode === RegStatusCode.SUCCESS);
+  get isRegistrationComplete(): boolean {
+    return this.registrationService.isRegistrationComplete();
   }
 }

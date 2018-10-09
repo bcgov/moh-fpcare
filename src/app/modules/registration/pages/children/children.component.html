@@ -27,12 +27,12 @@
             </fpcare-name>
          </div>
         <div class="form-group">
-          <label for="ch_dob_{{i}}">Birthdate</label>
           <fpcare-date
                   id="ch_dob_{{i}}"
                   [useCurrentDate]="false"
                   [(date)]="child.dateOfBirth"
-                  [restrictDate]="'past'">
+                  [restrictDate]="'past'"
+                  [label]="'Birth Date'">
           </fpcare-date>
           <div *ngIf="!legitimateDependant(child)" role="alert" aria-live="assertive">
             <div class="text-danger">Individual is too old.</div>

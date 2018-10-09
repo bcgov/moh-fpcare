@@ -41,12 +41,12 @@
         </div>
 
         <div class="form-group">
-          <p class='label'>Birth Date</p>
           <fpcare-date
                   [useCurrentDate]="false"
                   [date]="applicant.dateOfBirth"
                   [restrictDate]="'past'"
-                  [disabled]="disablePhn()">
+                  [disabled]="disablePhn()"
+                  [label]="'Birth Date'">
           </fpcare-date>
         </div>
 

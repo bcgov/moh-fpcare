@@ -4,7 +4,7 @@ import { FinancialCalculatorComponent } from './financial-calculator.component';
 import { AnnualDeductibleComponent } from '../annual-deductible/annual-deductible.component';
 import { TextMaskModule } from 'angular2-text-mask';
 
-xdescribe('FinancialCalculatorComponent', () => {
+describe('FinancialCalculatorComponent', () => {
   let component: FinancialCalculatorComponent;
   let fixture: ComponentFixture<FinancialCalculatorComponent>;
 

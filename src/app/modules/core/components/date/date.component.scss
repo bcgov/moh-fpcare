@@ -1,10 +1,15 @@
+@import 'variables.scss';
+
+.date--legend {
+  font-size: inherit;
+  font-weight: bold;
+}
 
 .date-row {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
 }
-
 
 .monthSelect {
   max-width: 50%;

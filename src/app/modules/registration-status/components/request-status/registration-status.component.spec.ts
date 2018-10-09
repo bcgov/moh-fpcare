@@ -50,6 +50,12 @@ describe('RegistrationStatusComponent', () => {
     expect(component.disablePhn()).toBeFalsy();
   });
 
+  it('disables reg number when a dob field is filled out', () => {
+    component.applicant.dateOfBirth = {year: null, day: 11, month: null };
+    expect(component.disableRegNum()).toBeTruthy();
+    expect(component.disablePhn()).toBeFalsy();
+  });
+
   it('disables phn when reg number is filled out', () => {
     component.applicant.fpcRegNumber = 'A999999998';
     expect(component.disablePhn()).toBeTruthy();

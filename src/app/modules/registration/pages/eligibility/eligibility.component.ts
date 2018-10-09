@@ -154,10 +154,12 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
     // Trigger the HTTP request
     subscription.subscribe(response => {
 
+      console.log( 'response: ', response );
+
       this.responseStore.eligibility = new EligibilityPayload(response);
       this.loading = false;
 
-      if ( response.success) {
+      if ( response.canContinueRegistration ) {
         this.registrationService.familyStructure = this.responseStore.eligibility.persons;
         this.navigate( this._baseUrl + REGISTRATION_PERSONAL );
       } else {

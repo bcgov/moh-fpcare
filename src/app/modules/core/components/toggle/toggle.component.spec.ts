@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FPCareToggleComponent } from './toggle.component';
 
-xdescribe('FPCareToggleComponent', () => {
+describe('FPCareToggleComponent', () => {
   let component: FPCareToggleComponent;
   let fixture: ComponentFixture<FPCareToggleComponent>;
 
@@ -25,22 +25,30 @@ xdescribe('FPCareToggleComponent', () => {
 
   it('should have both options unselected on init', () => {
     expect(component.data).toBeUndefined();
-    //expect(fixture.nativeElement.querySelectorAll('.btn-radio').length).toEqual(0);
+    expect(fixture.nativeElement.querySelectorAll('.custom-control-input:checked').length).toEqual( 0 );
   });
 
   it('should allow for toggling values', () => {
     component.data = true;
     fixture.detectChanges();
 
-    console.log( fixture.nativeElement.querySelectorAll('.btn-radio').length );
- //   expect(fixture.nativeElement.querySelectorAll('.btn-radio').length).toEqual(1);
- //   expect(fixture.nativeElement.querySelectorAll('.btn-radio')[1].value).toEqual('Yes');
+    let selectedInput = fixture.nativeElement.querySelectorAll('.custom-control-input:checked');
+    expect(selectedInput.length).toEqual( 1 );
+    expect(selectedInput[0].value).toEqual('Yes');
 
     component.data = false;
     fixture.detectChanges();
- //   expect(fixture.nativeElement.querySelectorAll('.btn-radio').length).toEqual(1);
- //   expect(fixture.nativeElement.querySelectorAll('.btn-radio')[0].textContent).toEqual('No');
-  //  expect(component.data).toBeFalsy();
+
+    selectedInput = fixture.nativeElement.querySelectorAll('.custom-control-input:checked');
+    expect(selectedInput.length).toEqual( 1 );
+    expect(selectedInput[0].value).toEqual('No');
   });
 
+  it('should display text for component', () => {
+    component.label = 'This a test';
+    fixture.detectChanges();
+
+    const legendText = fixture.nativeElement.querySelector('legend');
+    expect( legendText.textContent).toContain('This a test');
+  });
 });

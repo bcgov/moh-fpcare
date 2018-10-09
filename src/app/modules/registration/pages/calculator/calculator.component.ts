@@ -97,6 +97,10 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
         this.spouseIncome = this.financeService.currencyFormat( this.fpcareDataService.spouseIncome );
       }
 
+      if ( this.fpcareDataService.disabilityAmount ) {
+        this.disabilityFormatted = this.financeService.currencyFormat(this.fpcareDataService.disabilityAmount);
+      }
+
       // Update data - user may have used back button on browser
       this.update();
     }
@@ -206,5 +210,13 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     }
 
     return this.financeService.calculateFamilyNetIncome( incomeNum, spouseNum );
+  }
+
+  get bornBefore1939Label(): string {
+    return this.hasSpouse ? 'Were you or your spouse born in 1939 or earlier?' : 'Were you in 1939 or earlier?';
+  }
+
+  get hasSpouseLabel(): string {
+    return 'Do you have a spouse/common-law partner?';
   }
 }

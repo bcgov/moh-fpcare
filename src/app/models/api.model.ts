@@ -5,7 +5,8 @@ import {PharmaCareAssistanceLevelServerResponse} from '../modules/financial-calc
  */
 export enum RegStatusCode {
     SUCCESS = '0',
-    ERROR = '1'
+    ERROR = '1',
+    CONTINUE_REG = '2' // Continue registration
 }
 
 /**
@@ -125,6 +126,10 @@ export class ServerPayload implements PayloadInterface {
 
     get error(): boolean {
         return this.regStatusCode === RegStatusCode.ERROR;
+    }
+
+    get canContinueRegistration(): boolean {
+        return this.regStatusCode === RegStatusCode.CONTINUE_REG;
     }
 
     /**

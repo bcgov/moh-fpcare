@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegResultsComponent } from './reg-results.component';
 import {CoreModule} from '../../../core/core.module';
+import {RegistrationService} from '../../registration.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('RegResultsComponent', () => {
   let component: RegResultsComponent;
@@ -13,7 +15,11 @@ describe('RegResultsComponent', () => {
         RegResultsComponent
       ],
       imports: [
-        CoreModule
+        CoreModule,
+        RouterTestingModule
+      ],
+      providers: [
+        RegistrationService
       ]
     })
     .compileComponents();

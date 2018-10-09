@@ -52,22 +52,31 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
 
           console.log( 'Check Eligibility - fake backend' );
 
-          const family = this.fakebackendService.getFamily(
-            request.body.persons.map( x => x.phn )
+          let family;
+          let eligible = false;
+          const alreadyRegistered = this.fakebackendService.isRegistered(
+              request.body.persons.map( x => x.phn )
           );
+
+          if ( !alreadyRegistered ) {
+            family = this.fakebackendService.getFamily(
+                request.body.persons.map(x => x.phn)
+            );
+
+            if ( family ) {
+              eligible = this.fakebackendService.parentDobMatch( request.body.persons, family );
+            }
+          }
 
           payload = new EligibilityPayload( {
             uuid: request.body.uuid,
             benefitYear: request.body.benefitYear,
             regStatusMsg: 'Fake backend - ' +
-            (family ? (
-                this.fakebackendService.parentDobMatch(request.body.persons, family ) ? 'Success' : 'DOBs do not match'
-            ) : 'Not eligible ' ),
-            regStatusCode: ( family &&
-                this.fakebackendService.parentDobMatch(request.body.persons, family ) ?
-                    RegStatusCode.SUCCESS : RegStatusCode.ERROR
-            ),
-            persons: family
+            ( alreadyRegistered ? 'Already registered' :
+                ( family ? ( eligible ? 'Success' : 'DOBs do not match' ) : 'Not eligible' ) ),
+            regStatusCode: ( alreadyRegistered ? RegStatusCode.SUCCESS :
+                ( family && eligible ? RegStatusCode.CONTINUE_REG : RegStatusCode.ERROR ) ),
+            persons: ( family ? family : '' )
           });
         }
 

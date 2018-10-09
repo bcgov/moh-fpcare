@@ -9,6 +9,7 @@ import {Base} from '../base/base.class';
 export class FPCareToggleComponent extends Base implements OnInit {
 
   @Input() data: boolean;
+  @Input() label: string;
   @Output() dataChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   constructor() {

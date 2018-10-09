@@ -118,4 +118,12 @@ describe('FPCareDateComponent', () => {
     });
   }));
 
+  it('should display text for component', () => {
+    component.label = 'This a test';
+    fixture.detectChanges();
+
+    const legendText = fixture.nativeElement.querySelector('legend');
+    expect( legendText.textContent).toContain('This a test');
+  });
+
 });

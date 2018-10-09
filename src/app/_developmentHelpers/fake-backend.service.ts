@@ -8,6 +8,12 @@ import {PersonInterface, PersonType} from '../models/api.model';
 })
 export class FakeBackendService {
 
+  /* PHNs not eligible - not in lists below: '9999999142, 9999999135, 9999999103 */
+
+  // Already registered in FPCare
+  private _fpcRegList: string [] = [ '9999999181', '9999999199', '9999999167' ];
+
+  // Eligible to register in FPCare
   private _eligibleList: PersonInterface[] = [
     {perType: PersonType.applicantType, phn: '9999999973', dateOfBirth: '19650430', postalCode: 'V3V2V1'},
     {perType: PersonType.applicantType, phn: '9999999998', dateOfBirth: '19890520', postalCode: 'V1V2V3'},
@@ -18,12 +24,17 @@ export class FakeBackendService {
     {perType: PersonType.dependent, phn: '9999999966', dateOfBirth: '20091231', postalCode: 'V2V2V4'}
   ];
 
-
-
   constructor() { }
 
+  public isRegistered( phnList: string ): boolean {
+    return this._fpcRegList.map( phn => phnList.includes( phn ) )
+        .filter( x => x === true )
+        .length !== 0;
+  }
+
+
   // Returns values for development
-  getFamily( phnList: string[] ): PersonInterface[] | any {
+  public getFamily( phnList: string[] ): PersonInterface[] | any {
 
     //console.log( 'getFamily phnList: ', phnList );
 
@@ -32,6 +43,9 @@ export class FakeBackendService {
         return person;
       }
     } ).filter( x => x );
+
+
+    const foundApplicants = (list.length === phnList.length);
 
     if ( list.length ) {
 
@@ -48,22 +62,26 @@ export class FakeBackendService {
 
     console.log( 'getFamily list: ', list );
 
-    return list.length ? list : null;
+    return (foundApplicants && list.length) ? list : null;
   }
 
-  parentDobMatch( input: PersonInterface[], family: PersonInterface[] ): boolean {
+  /**
+   * Match applicant/spouse date of births -
+   * @param {PersonInterface[]} input
+   * @param {PersonInterface[]} family
+   * @returns {boolean}
+   */
+  public parentDobMatch( input: PersonInterface[], family: PersonInterface[] ): boolean {
 
-    /*
     const list = family.map( person => {
       if ( person.perType === PersonType.applicantType || person.perType === PersonType.spouseType ) {
         return person.dateOfBirth;
       }
-    }).filter( x => x );*/
+    }).filter( x => x );
     // console.log( 'get DOB list: ', list );
 
-   /* return input.map( x => list.includes( x.dateOfBirth ) )
-        .filter( found => found === true ).length === input.length;*/
-   return true;
+    return input.map( x => list.includes( x.dateOfBirth ) )
+        .filter( found => found === true ).length === input.length
   }
 }
 

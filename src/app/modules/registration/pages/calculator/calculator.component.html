@@ -30,9 +30,11 @@
       </div>
 
       <div class="form-group">
-        <label for="hasSpouse">Do you have a spouse/common-law partner?
-          <fpcare-toggle id="hasSpouse" [data]='hasSpouse' (dataChange)="hasSpouse = $event; update();"></fpcare-toggle>
-        </label>
+        <fpcare-toggle id="hasSpouse"
+                      [label]="hasSpouseLabel"
+                      [data]='hasSpouse'
+                      (dataChange)="hasSpouse = $event; update();">
+        </fpcare-toggle>
         <p class="text-muted">Note: Failure to notify HIBC when you marry or begin living in a marriage-like relationship may impact the eligibility for your Fair PharmaCare registration.</p>
       </div>
 
@@ -57,10 +59,10 @@
       </div>
 
       <div class="form-group">
-        <label for="bornBefore1939">Were you {{hasSpouse ?'or your spouse ': ''}}born in 1939 or earlier?
-          <fpcare-toggle id='bornBefore1939' [data]='bornBefore1939'
+         <fpcare-toggle id='bornBefore1939'
+                         [label]="bornBefore1939Label"
+                         [data]='bornBefore1939'
                          (dataChange)="bornBefore1939 = $event; update();"></fpcare-toggle>
-        </label>
       </div>
 
       <h2 class="border-bottom">Disability Information (if applicable)</h2>

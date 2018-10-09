@@ -71,6 +71,16 @@ export class RegistrationService {
     return this.registrationItems.findIndex( x => url.includes( x.route ) );
   }
 
+  /**
+   * Check for incomplete registration pages
+   * @returns {boolean}
+   */
+  isRegistrationComplete(): boolean {
+
+    const incompletePages = this.registrationItems.filter( x => x.isComplete !== true );
+    return (incompletePages.length !== 0 ? false : true );
+  }
+
   // Family structure verification
   /**
    * Indicates whether postal code matches
@@ -82,5 +92,4 @@ export class RegistrationService {
     return this.familyStructure.map( person => pc === person.postalCode )
         .filter( x => x === true ).length !== 0;
   }
-
 }

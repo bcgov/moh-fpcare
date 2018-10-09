@@ -1,6 +1,6 @@
 import { FinancialCalculatorModule } from './financial-calculator.module';
 
-xdescribe('FinancialCalculatorModule', () => {
+describe('FinancialCalculatorModule', () => {
   let financialCalculatorModule: FinancialCalculatorModule;
 
   beforeEach(() => {

@@ -8,6 +8,7 @@ import {RegistrationService} from '../../registration.service';
 import {FinanceService} from '../../../financial-calculator/finance.service';
 import {FinancialCalculatorModule} from '../../../financial-calculator/financial-calculator.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {baselineAssist, pre1939Assist} from '../../../financial-calculator/assistenceLevelsTestData';
 
 describe('ReviewComponent', () => {
   let component: ReviewPageComponent;
@@ -36,6 +37,7 @@ describe('ReviewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ReviewPageComponent);
     component = fixture.componentInstance;
+    component['financeService'].setAssistanceLevels(baselineAssist, pre1939Assist);
     fixture.detectChanges();
   });
 

@@ -1,6 +1,6 @@
 <fpcare-results-framework>
    <div *ngIf="response; else noResponse">
-      <div *ngIf='isSuccessful; else eligibilityError'>
+      <div *ngIf='isRegistrationComplete; else incompleteRegistration'>
         <h1 title>Your Application has been submitted</h1>
 
         <div>
@@ -25,10 +25,10 @@
 </fpcare-results-framework>
 
 
-<ng-template #eligibilityError>
-  <h1 title>Fair PharmaCare Registration Status</h1>
+<ng-template #incompleteRegistration>
+    <h1 title>Fair PharmaCare Registration Status</h1>
 
-  <div>
+    <h2 *ngIf="response.error" class="text-danger"><i class="fa fa-exclamation-triangle"></i> Attention, there was an error.</h2>
     <h2>Your status is: </h2>
     <ul>
       <!--
@@ -39,7 +39,6 @@
       -->
       <li [innerHTML]="status"></li>
     </ul>
-  </div>
 </ng-template>
 
 
