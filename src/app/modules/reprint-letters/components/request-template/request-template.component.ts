@@ -37,13 +37,9 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   /** Access to date component */
   @ViewChild('consentModal') consentModal: ConsentModalComponent;
 
-  public captchaApiBaseUrl;
-
   // headers and definitions for aside (repeated in multiple places)
   public phnHdr: string = phn_hdr;
   public phnDef: string =  phn_def;
-
-  protected _hasToken = false;
 
   /** Result page */
   private _url = REPRINT_LETTERS_PATH + '/' + REPRINT_STATUS;
@@ -56,9 +52,6 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   }
 
   ngOnInit() {
-    this.apiService.loadBenefitYear();
-
-    this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
     this.fpcareDataService.reprintLetterType = this.data.letterType;
   }
 
@@ -83,19 +76,9 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
     // Main and sub forms are not empty and are valid
     if ( super.canContinue() ) {
 
-      return (this.fpcareDataService.acceptedCollectionNotice && this._hasToken);
+      return (this.fpcareDataService.acceptedCollectionNotice);
     }
     return false;
-  }
-
-  /** Use the UUID as a cryptographic client nonce to avoid replay attacks. */
-  get nonce(): string {
-    return this.objectId;
-  }
-
-  setToken(token): void {
-    this._hasToken = true;
-    this.apiService.setCaptchaToken(token);
   }
 
   /**
@@ -104,6 +87,11 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
    */
   onAccept( value: boolean ){
     this.fpcareDataService.acceptedCollectionNotice = value;
+
+    if ( value ) {
+      // load the benefit year
+      this.apiService.loadBenefitYear();
+    }
   }
 
   // Methods triggered by the form action bar

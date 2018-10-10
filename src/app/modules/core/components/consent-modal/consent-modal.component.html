@@ -28,13 +28,28 @@
           </a>.
         </p>
         <br>
-        <span class="checkbox checkbox-success checkbox-inline">
-          <input class="btn btn-lg mr-md-2" id="agree" type="checkbox" [(ngModel)]="agreeCheck">
-          <label for="agree"><strong>I have read and understand this information</strong></label>
-        </span>
       </div>
+      
+      <div class="row">
+        <div class="col-md-5 col-sm-12 d-flex align-items-center">
+          <span class="checkbox checkbox-success checkbox-inline pl-4 mb-4 mb-md-0">
+            <input class="btn btn-lg mr-md-2" id="agree" type="checkbox" [(ngModel)]="agreeCheck">
+            <label class='d-inline' for="agree"><strong>I have read and understand this information</strong></label>
+          </span>
+        </div>
+        <div class="col-sm-12 col-md-7">
+            <div class="mt-2 px-3 px-md-2">
+              <captcha [apiBaseUrl]="captchaApiBaseUrl" [nonce]="nonce" (onValidToken)="setToken($event)" class=''></captcha>
+            </div>
+        </div>
+      </div>
+
+      
       <div class="modal-footer">
-        <button [disabled]="!agreeCheck" class="btn btn-block btn-primary pull-left" type="submit" (click)="closeModal()">Continue</button>
+        <button [disabled]="!canContinue()"
+                class="btn btn-block btn-primary pull-left"
+                type="submit"
+                (click)="closeModal()">Continue</button>
       </div>
     </div>
   </div>

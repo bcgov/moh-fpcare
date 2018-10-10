@@ -47,10 +47,6 @@ export class FPCareDataService {
   constructor() {
     // Create applicant
     this.applicant = new Person();
-
-    if (environment.bypassConsentModal){
-      this.acceptedCollectionNotice = true;
-    }
   }
 
   /**

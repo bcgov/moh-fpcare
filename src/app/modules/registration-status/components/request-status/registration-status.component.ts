@@ -24,10 +24,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
   public placeholder = 'A12345678';
 
-  public captchaApiBaseUrl;
-
-  private _hasToken = false;
-
   // headers and definitions for aside (repeated in multiple places)
   public phnHdr: string = phn_hdr;
   public phnDef: string =  phn_def;
@@ -60,8 +56,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   }
 
   ngOnInit() {
-    this.apiService.loadBenefitYear();
-    this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
+
   }
 
   ngAfterViewInit() {
@@ -74,7 +69,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
   canContinue(): boolean {
     // Main and sub forms are not empty and are valid
-    return (super.canContinue() && this._hasToken);
+    return super.canContinue();
   }
 
   /**
@@ -83,11 +78,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    */
   get applicant(): Person {
     return this.fpcareDataService.applicant;
-  }
-
-  /** Use the UUID as a cryptographic client nonce to avoid replay attacks. */
-  get nonce(): string {
-    return this.objectId;
   }
 
   /**
@@ -112,17 +102,17 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     return !!this.applicant.fpcRegNumber;
   }
 
-  setToken(token): void {
-    this._hasToken = true;
-    this.apiService.setCaptchaToken(token);
-  }
-
   /**
    * Method to set the consented value for the collection notice
    * @param {boolean} value
    */
   onAccept( value: boolean ){
     this.fpcareDataService.acceptedCollectionNotice = value;
+
+    if ( value ) {
+      // load the benefit year
+      this.apiService.loadBenefitYear();
+    }
   }
 
   // Methods triggered by the form action bar

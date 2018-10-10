@@ -14,11 +14,8 @@ import {RegistrationService} from '../../registration.service';
 })
 export class CompletePageComponent extends AbstractFormComponent implements OnInit  {
 
-  public captchaApiBaseUrl;
   public applicantAgreement: boolean = false;
   public spouseAgreement: boolean = false;
-
-  private _hasToken = false;
 
   constructor( private fpcService: FPCareDataService
              , protected router: Router
@@ -28,13 +25,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
   }
 
   ngOnInit() {
-    this.captchaApiBaseUrl = environment.captchaApiBaseUrl;
     this.registrationService.setItemIncomplete();
-
-    // Bypass the CAPTCHA if not production.
-    if (!environment.production){
-      this._hasToken = true;
-    }
   }
 
   /**
@@ -62,11 +53,6 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
     return this.fpcService.hasSpouse;
   }
 
-  setToken(token): void {
-    this._hasToken = true;
-    this.apiService.setCaptchaToken(token);
-  }
-
   // Methods triggered by the form action bar
   /**
    * Label for button depending on the whether the applicant has children
@@ -82,7 +68,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
    */
   canContinue(): boolean {
 
-    let valid = (this.applicantAgreement && this._hasToken);
+    let valid = this.applicantAgreement;
 
     if ( this.hasSpouse ) {
       valid = (valid && this.spouseAgreement);

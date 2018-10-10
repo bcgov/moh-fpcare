@@ -52,7 +52,11 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
 
   ngOnInit() {
 
-    // TODO - Ideally instead of nested Observable subscriptions, we should use rxjs delayWhen() or concatMap() to triger sequential operation
+// TODO - Ideally instead of nested Observable subscriptions, we should use rxjs delayWhen() or concatMap() to triger sequential operation
+/** NOTE:  Captcha logic not fully implemented - standalone calculator does not have a consent module so these
+ *         requests are currently white listed - need way to push data to cache
+ */
+
     this.apiService.getBenefitYear().subscribe(benefitResponse => {
       const benefitPayload = new BenefitYearPayload(benefitResponse);
 

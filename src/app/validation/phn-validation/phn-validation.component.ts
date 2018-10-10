@@ -27,7 +27,7 @@ export class PhnValidationComponent extends BaseValidationComponent {
     // Remove spaces - mask format
     const phn = inputVal.replace(/ /g, '');
 
-    return (environment.modChecksOn) ? ValidationService.validatePHN( phn, true ) : true;
+    return ValidationService.validatePHN( phn, true );
   }
 
 }

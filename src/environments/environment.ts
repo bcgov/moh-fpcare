@@ -6,10 +6,7 @@
 export const environment = {
   production: false,
   useDummyData: false,
-  useMockBackend: true,
-
-  /** Enable modulo based validation, i.e. PHN and SIN number checks */
-  modChecksOn: true,
+  useMockBackend: false,
 
   /** Base url for all API requests. Note: This should be a relative URL, not absolute, so it can properly map to dev/test/prod. */
   baseAPIUrl: '/fpcare/api/fpcareIntegration/rest/',
@@ -20,9 +17,6 @@ export const environment = {
 
   /** console.log() HTTP requests from our API and Log services */
   logHTTPRequestsToConsole: false,
-
-  /** Do not show the consent modal by setting the user as already consenting to the collection notice. */
-  bypassConsentModal: true,
 
   /** Do not trigger guards */
   bypassGuards: true,

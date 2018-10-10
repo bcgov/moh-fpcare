@@ -49,10 +49,6 @@
     </div>
   </div>
 
-  <div class="mt-md-3 px-3 px-md-2">
-    <captcha [apiBaseUrl]="captchaApiBaseUrl" [nonce]="objectId" (onValidToken)="setToken($event)"></captcha>
-  </div>
-
   <fpcare-form-action-bar
           [submitLabel]="buttonLabel"
           [canContinue]="canContinue()"

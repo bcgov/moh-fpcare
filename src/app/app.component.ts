@@ -4,7 +4,6 @@ import { UserService } from './services/user.service';
 import { FPCareDataService } from './services/fpcare-data.service';
 import {environment} from 'environments/environment';
 import { ApiService } from './services/api-service.service';
-//import { BenefitYearPayload } from 'app/models/api.model';
 
 import * as version from '../VERSION.generated';
 import { Title } from '@angular/platform-browser';
@@ -21,12 +20,12 @@ export class AppComponent implements OnInit {
 
 
   constructor(private userService: UserService,
-    private dummyDataService: DummyDataService,
-    private fpcareDataService: FPCareDataService,
-    private apiService: ApiService,
-    private titleService: Title,
-    private router: Router,
-    private activatedRoute: ActivatedRoute) {
+              private dummyDataService: DummyDataService,
+              private fpcareDataService: FPCareDataService,
+              private apiService: ApiService,
+              private titleService: Title,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -66,16 +65,6 @@ export class AppComponent implements OnInit {
     if (environment.purgeWhenInactive){
       this.enablePurgeWhenInactive();
     }
-
-    /*
-    * temporary - issue in calculator component that the deductibles require benefit year
-    * so reg status & reprints use this call - and calculator has different call in component to call requests
-    * sequentially.
-    *
-    * Future investigation required
-    */
-    // Retrieve benefit year
-    //this.apiService.loadBenefitYear();
   }
 
   /**
