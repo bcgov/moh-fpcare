@@ -131,7 +131,7 @@ export class ApiService extends AbstractHttpService {
     return this.post<ReprintLetter>(url, {
       uuid: this.generateUUID(),
       clientName: this._clientName,
-      rocessDate: processDate,
+      processDate: processDate,
       benefitYear: input.benefitYear,
       phn: input.phn,
       postalCode: input.postalCode,
