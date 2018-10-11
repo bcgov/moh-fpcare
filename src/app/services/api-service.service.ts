@@ -14,7 +14,6 @@ import {
   ReprintLetter, BenefitYearPayload, PersonInterface
 } from 'app/models/api.model';
 import {FPCareDataService} from './fpcare-data.service';
-import {resolveProjectModule} from '@angular/cli/utilities/require-project-module';
 import {EligibilityInterface} from '../models/api.model';
 
 @Injectable({
@@ -60,7 +59,7 @@ export class ApiService extends AbstractHttpService {
     return this.post<BenefitYearInterface>(url, {
       uuid: this.generateUUID(),
       clientName: this._clientName,
-      processDate: processDate,
+      processDate: processDate
     });
   }
 
@@ -71,7 +70,7 @@ export class ApiService extends AbstractHttpService {
     if (!environment.production) {
       console.log('ApiService token set:', {
         token: this._token,
-        headers: this._headers,
+        headers: this._headers
       });
     }
   }
@@ -80,14 +79,17 @@ export class ApiService extends AbstractHttpService {
    * Request application registration status using the FPC Registration Number
    *
    * @param {{regNumber: string, benefitYear: string}} input
+   * @param processDate
    * @returns {Observable<StatusCheckRegNum>}
    */
-  public statusCheckFamNumber( input: { regNumber: string, benefitYear: string } ): Observable<StatusCheckRegNum> {
+  public statusCheckFamNumber( input: { regNumber: string, benefitYear: string },
+                               processDate = this.getProcessDate() ): Observable<StatusCheckRegNum> {
     const url = environment.baseAPIUrl + 'statusCheckFamNumber';
 
     return this.post<StatusCheckRegNum>(url, {
       uuid: this.generateUUID(),
       clientName: this._clientName,
+      processDate: processDate,
       benefitYear: input.benefitYear,
       famNumber: input.regNumber
     });
@@ -98,14 +100,17 @@ export class ApiService extends AbstractHttpService {
    * Date of birth, and postal code
    *
    * @param {{phn: string, dob: string, postalCode: string, benefitYear: string}} input
+   * @param processDate
    * @returns {Observable<StatusCheckPHN>}
    */
-  public statusCheckPHN( input: {phn: string, dob: string, postalCode: string, benefitYear: string} ): Observable<StatusCheckPHN> {
+  public statusCheckPHN( input: {phn: string, dob: string, postalCode: string, benefitYear: string},
+                         processDate = this.getProcessDate() ): Observable<StatusCheckPHN> {
     const url = environment.baseAPIUrl + 'statusCheckPhn';
 
     return this.post<StatusCheckPHN>(url, {
       uuid: this.generateUUID(),
       clientName: this._clientName,
+      processDate: processDate,
       benefitYear: input.benefitYear,
       phn: input.phn,
       postalCode: input.postalCode,
@@ -119,12 +124,14 @@ export class ApiService extends AbstractHttpService {
    * @param {{phn: string, dob: string, postalCode: string, benefitYear: string, letterType: number}} input
    * @returns {Observable<StatusCheckPHN>}
    */
-  public reprintLetter( input: {phn: string, dob: string, postalCode: string, benefitYear: string, letterType: string} ): Observable<StatusCheckPHN> {
+  public reprintLetter( input: {phn: string, dob: string, postalCode: string, benefitYear: string, letterType: string},
+                        processDate = this.getProcessDate() ): Observable<StatusCheckPHN> {
     const url = environment.baseAPIUrl + 'requestLetter';
 
     return this.post<ReprintLetter>(url, {
       uuid: this.generateUUID(),
       clientName: this._clientName,
+      rocessDate: processDate,
       benefitYear: input.benefitYear,
       phn: input.phn,
       postalCode: input.postalCode,
