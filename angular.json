@@ -35,7 +35,7 @@
           },
           "configurations": {
             "production": {
-              "optimization": true,
+              "optimization": true, // issue causing inline validation to fail
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,

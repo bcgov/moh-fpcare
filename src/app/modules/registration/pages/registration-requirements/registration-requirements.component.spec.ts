@@ -5,6 +5,7 @@ import { CoreModule } from '../../../core/core.module';
 import { APP_BASE_HREF } from '@angular/common';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {RegistrationService} from '../../registration.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('RegistrationRequirementsComponent', () => {
   let component: RegistrationRequirementsComponent;
@@ -17,6 +18,7 @@ describe('RegistrationRequirementsComponent', () => {
       ],
       imports: [
         RouterTestingModule,
+        HttpClientTestingModule,
         CoreModule
       ]
       ,
