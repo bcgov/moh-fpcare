@@ -180,12 +180,12 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
   }
 
   setValid(validationComponent) {
-    if (this.activeComponents[validationComponent.name] == null) {
+    if (this.activeComponents[validationComponent.ERROR_STRING] == null) {
       return;
     }
 
-    this.activeComponents[validationComponent.name].destroy();
-    this.activeComponents[validationComponent.name] = null;
+    this.activeComponents[validationComponent.ERROR_STRING].destroy();
+    this.activeComponents[validationComponent.ERROR_STRING] = null;
 
     //Only remove class if there are no other active components.
     const componentsActive = Object.keys(this.activeComponents)
@@ -230,12 +230,12 @@ export class FPCareRequiredDirective implements AfterViewInit, Validator {
   /** Creates a component and adds it to the view. */
   private addComponent<T extends ValidationComponent>(componentClass): ComponentRef<T> {
     //Max 1 instance of each component type, to stop duplicate messages.
-    if (this.activeComponents[componentClass.name]) {
+    if (this.activeComponents[componentClass.ERROR_STRING]) {
       return;
     }
     const component = this.prepareComponent(componentClass);
     this.insertComponent(component);
-    this.activeComponents[componentClass.name] = component;
+    this.activeComponents[componentClass.ERROR_STRING] = component;
     return component as ComponentRef<T>;
   }
 
