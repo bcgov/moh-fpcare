@@ -9,6 +9,7 @@ import * as version from '../VERSION.generated';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
+import { Logger } from './services/logger.service';
 
 @Component({
   selector: 'app-root',
@@ -25,13 +26,14 @@ export class AppComponent implements OnInit {
               private apiService: ApiService,
               private titleService: Title,
               private router: Router,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private logger: Logger) {
   }
 
   ngOnInit() {
     // Testers have asked for Version to be logged with every build.
     if (version.success){
-      console.log(version.message);
+      console.log('%c' + version.message, 'color: #036; font-size: 20px;');
     }
     else {
       console.error(version.message);
@@ -81,8 +83,13 @@ export class AppComponent implements OnInit {
       }),
       filter(route => route.outlet === 'primary'),
       mergeMap(route => route.data)
-    ).subscribe((data: {title?: string}) => {
+    ).subscribe((data: { title?: string }) => {
       this.setTitle(data.title);
+      this.logger.log({
+        event: 'navigation',
+        title: data.title ? data.title : this.title,
+        url: this.router.url,
+      });
     });
   }
 

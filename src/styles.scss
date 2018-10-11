@@ -287,3 +287,8 @@ button.disabled {
 .has-error .checkbox, .has-error .checkbox-inline, .has-error.checkbox-inline label, .has-error.checkbox label, .has-error .control-label, .has-error .help-block, .has-error .radio, .has-error .radio-inline, .has-error.radio-inline label, .has-error.radio label {
   color: $color-danger;
 }
+
+// Remove the up/down arrows beside number inputs, specifically date
+input[type=number] {
+  -moz-appearance:textfield;
+}

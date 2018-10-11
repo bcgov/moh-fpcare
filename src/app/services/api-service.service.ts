@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { throwError, Observable } from 'rxjs';
-import { LogService } from './log.service';
+import { Logger } from './logger.service';
 import { UUID } from 'angular2-uuid';
 import * as moment from 'moment';
 import {
@@ -31,7 +31,7 @@ export class ApiService extends AbstractHttpService {
   private _clientName: string = 'ppiwebuser';
 
   constructor(protected http: HttpClient,
-              public logService: LogService,
+              public logService: Logger,
               private fpcareDataService: FPCareDataService){
     super(http);
   }
@@ -158,7 +158,7 @@ export class ApiService extends AbstractHttpService {
   }
 
   protected handleError(error: HttpErrorResponse) {
-    console.log( 'Error (handleError: ', error );
+    console.log( 'Error handleError: ', error );
 
     if (error.error instanceof ErrorEvent) {
       //Client-side / network error occured
@@ -169,7 +169,7 @@ export class ApiService extends AbstractHttpService {
       console.error(`Backend returned error code: ${error.status}.  Error body: ${error.error}`);
     }
 
-    // this.logService.logError(error);
+    this.logService.logHttpError(error);
 
     // A user facing erorr message /could/ go here; we shouldn't log dev info through the throwError observable
     return throwError('Something went wrong with the network request.');

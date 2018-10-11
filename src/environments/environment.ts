@@ -26,4 +26,7 @@ export const environment = {
 
   /** Detect if user has been active for 3 hours and then force a refresh to purge local stage. */
   purgeWhenInactive: false,
+
+  /** Should logs be sent to Splunk? If false, no logs are made. */
+  enableLogging: false,
 };

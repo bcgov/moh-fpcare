@@ -15,9 +15,6 @@ export const routes: Routes = [
     children: pageRoutes,
     canActivateChild: [RegistrationGuard]
   },
-
-
-  // TODO: Move this out into just registration routes, it's not a subpage.
   {
     path: REGISTRATION_REQUIREMENTS,
     component: RegistrationRequirementsComponent,

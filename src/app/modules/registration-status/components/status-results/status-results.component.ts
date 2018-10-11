@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ResponseStoreService } from '../../../../services/response-store.service';
 import { StatusCheckPHNPayload, StatusCheckRegNumberPayload } from '../../../../models/api.model';
+import { Logger } from '../../../../services/logger.service';
 
 /**
  * Displays data in ResponseStore.statusCheckPHN or statusCheckRegNumber. This
@@ -14,7 +15,7 @@ import { StatusCheckPHNPayload, StatusCheckRegNumberPayload } from '../../../../
 })
 export class StatusResultsComponent {
 
-  constructor(private responseStore: ResponseStoreService) { }
+  constructor(private responseStore: ResponseStoreService, private logger: Logger) { }
 
   get hasPHN(): boolean {
     return !!this.responseStore.statusCheckPHN;
@@ -53,5 +54,18 @@ export class StatusResultsComponent {
     }
 
     return null;
+  }
+
+  ngOnInit(){
+    if (this.response){
+      // Log result
+      const type = this.hasReg ? 'RegNumber' : 'PHN';
+      const message = `Success - Status Check ${type}`;
+      this.logger.log({
+        event: 'submission',
+        message
+      });
+
+    }
   }
 }

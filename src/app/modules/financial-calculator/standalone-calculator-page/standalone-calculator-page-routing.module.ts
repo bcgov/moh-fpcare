@@ -6,7 +6,7 @@ const routes: Routes = [
   {
     path: '',
     component: CalculatorPageComponent,
-    data: { standalone: true, title: 'Financial Calculator' }
+    data: { standalone: true, title: 'Standalone Financial Calculator' }
   },
   {
     path: '**',

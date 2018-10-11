@@ -3,6 +3,7 @@ import {ReprintLetterPayload} from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {LetterTypes} from '../request-template/request-template.component';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import { Logger } from '../../../../services/logger.service';
 
 @Component({
   selector: 'fpcare-consent-results',
@@ -14,10 +15,21 @@ export class ReprintStatusComponent implements OnInit {
   private _response: ReprintLetterPayload;
 
   constructor( private fpcareDataService: FPCareDataService,
-               private responseStore: ResponseStoreService ) { }
+               private responseStore: ResponseStoreService,
+               private logger: Logger ) { }
 
   ngOnInit() {
     this._response = this.responseStore.reprintLetter;
+
+    if (this._response){
+      // Log result
+      const message = `Success - Status Check ${this.pgTitle}`;
+      this.logger.log({
+        event: 'submission',
+        message
+      });
+
+    }
   }
 
   /**

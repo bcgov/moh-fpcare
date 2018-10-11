@@ -122,7 +122,7 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
     },
     error => { // TODO: Confirm that this will be the error-page component
       this.loading = false;
-      console.log( 'Error occurred: ' + error );
+      console.log( 'Error occurred: ', error );
       this.navigate( this._url );
     });
   }

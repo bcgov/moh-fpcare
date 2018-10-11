@@ -2,11 +2,14 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse, HttpParams } 
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { Base } from '../modules/core/components/base/base.class';
 
 
-export abstract class AbstractHttpService {
+export abstract class AbstractHttpService extends Base {
 
-  constructor(protected http: HttpClient) { }
+  constructor(protected http: HttpClient) {
+    super();
+  }
 
   /** The headers to send along with every GET and POST. */
   protected abstract _headers: HttpHeaders;
@@ -30,7 +33,7 @@ export abstract class AbstractHttpService {
 
   protected setupRequest<T>(observable: Observable<any> ): Observable<T> {
     // All failed requests should trigger the abstract method handleError
-    observable = observable.pipe(catchError(this.handleError));
+    observable = observable.pipe(catchError(this.handleError.bind(this)));
     // Optionally add console logging
     if (environment.logHTTPRequestsToConsole) {
       observable = observable.pipe(tap(

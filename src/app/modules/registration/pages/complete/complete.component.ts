@@ -6,6 +6,7 @@ import {Person} from '../../../../models/person.model';
 import {environment} from '../../../../../environments/environment';
 import {ApiService} from '../../../../services/api-service.service';
 import {RegistrationService} from '../../registration.service';
+import { Logger } from '../../../../services/logger.service';
 
 @Component({
   selector: 'fpcare-complete',
@@ -20,7 +21,8 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
   constructor( private fpcService: FPCareDataService
              , protected router: Router
              , private apiService: ApiService
-             , private registrationService: RegistrationService ) {
+             , private registrationService: RegistrationService
+             , private logger: Logger ) {
     super( router );
   }
 
@@ -85,6 +87,11 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
     console.log('can submit request: ', this.canContinue());
     if (this.canContinue()) {
       this.registrationService.setItemComplete();
+      // TODO - Do the HTTP request to submit the application
+      this.logger.log({
+        event: 'submission',
+        todo: 'TODO'
+      });
    }
   }
 }

@@ -20,7 +20,6 @@ export class HomePageComponent implements OnInit {
   public requestRegStatus: string = '/' + REGISTRATION_STATUS_PATH + '/' + REQUEST_REG_STATUS;
   public registration: string = '/' + REGISTRATION_PATH +  '/' + REGISTRATION_REQUIREMENTS;
 
-  constructor() { }
 
   ngOnInit() {
   }

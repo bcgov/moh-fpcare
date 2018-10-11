@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { LogService } from './log.service';
+import { Logger } from './logger.service';
 import {HttpClientModule} from '@angular/common/http';
 
 describe('LogService', () => {
@@ -10,12 +10,12 @@ describe('LogService', () => {
         HttpClientModule
       ],
       providers: [
-        LogService
+        Logger
       ]
     });
   });
 
-  it('should be created', inject([LogService], (service: LogService) => {
+  it('should be created', inject([Logger], (service: Logger) => {
     expect(service).toBeTruthy();
   }));
 });

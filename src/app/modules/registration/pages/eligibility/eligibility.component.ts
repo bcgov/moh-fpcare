@@ -18,6 +18,7 @@ import {
 } from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {phn_def, phn_hdr} from '../../../../models/fpcare-aside-definitions';
+import { Logger } from '../../../../services/logger.service';
 
 @Component({
   selector: 'fpcare-eligibility',
@@ -44,7 +45,8 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
              , private validationService: ValidationService
              , private registrationService: RegistrationService
              , private apiService: ApiService
-             , private responseStore: ResponseStoreService ) {
+             , private responseStore: ResponseStoreService
+             , private logger: Logger ) {
     super( router );
   }
 
@@ -162,6 +164,11 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
       if ( response.canContinueRegistration ) {
         this.registrationService.familyStructure = this.responseStore.eligibility.persons;
         this.navigate( this._baseUrl + REGISTRATION_PERSONAL );
+        this.logger.log({
+          event: 'eligibilityCheck',
+          success: response.success,
+          regStatusCode: this.responseStore.eligibility.regStatusCode
+        });
       } else {
         this.navigate(this._baseUrl +  REGISTRATION_RESULTS );
       }
