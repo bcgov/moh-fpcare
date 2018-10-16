@@ -6,7 +6,8 @@ import {PharmaCareAssistanceLevelServerResponse} from '../modules/financial-calc
 export enum RegStatusCode {
     SUCCESS = '0',
     ERROR = '1',
-    CONTINUE_REG = '2' // Continue registration
+    CONTINUE_REG = '2', // Continue registration
+    CONTINUE_MAND_CHILD = '3' // Continue registration - children mandatory (parents federally insured)
 }
 
 /**
@@ -16,6 +17,9 @@ export interface PayloadInterface {
     regStatusCode: RegStatusCode;
     regStatusMsg: string;
     uuid: string;
+
+    /** Part of input params. Never consumed by Angular app */
+    processDate?: string;
 
     /** Never used by Angular app, but will be in responses */
     clientName?: string;
@@ -27,9 +31,6 @@ export interface PayloadInterface {
 export interface BenefitYearInterface extends PayloadInterface {
     benefitYear: string;
     taxYear: string;
-
-    /** Part of input params. Never consumed by Angular app */
-    processDate?: string;
 }
 
 /**
@@ -69,9 +70,6 @@ export interface DeductibleInterface extends PayloadInterface {
     pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
 
     benefitYear: string;
-
-    /** Part of input params. Never consumed by Angular app */
-    processDate?: string;
 }
 
 /**
@@ -87,23 +85,57 @@ export enum PersonType {
  * Format of the Persons field for eligibility checks
  */
 export interface PersonInterface {
-  perType: string; // 0 = applicant, 1 = spouse
+  perType: string; // 0 = applicant, 1 = spouse, 2 = dependant
   phn: string;
   dateOfBirth: string; // YYYYMMDD
-  postalCode: string; // blank by default (value returned)
 
+  // eligibility field
+  postalCode?: string; // blank by default (value returned)
+
+
+  // regisration fields
+  givenName?: string;
+  surname?: string;
+  sin?: string;  // required by type 0 & 1
+  netIncome?: string; // required by type 0 & 1
+  rdsp?: string; // required by type 0 & 1
+}
+
+export interface AddressInterface {
+  street; string;
+  city: string;
+  province: string;
+  postalCode: string;
+  country: string;
 }
 
 /**
  * Check Fair PharmaCare eligibility (i.e. Active MSP coverage and not registered in FPC)
  */
 export interface EligibilityInterface extends PayloadInterface {
+
   benefitYear: string;
-
-  /** Part of input params. Never consumed by Angular app */
-  processDate?: string;
-
   persons: PersonInterface[];
+}
+
+/**
+ * Register family in Fair PharmaCare
+ */
+export interface RegistrationInterface extends EligibilityInterface {
+  taxYear: string;
+
+  // address required for request
+  street?: string;
+  city?: string;
+  province?: string;
+  postalCode?: string;
+  country?: string;
+
+  // response information
+  familyNumber?: string;
+  deductibleAmounText?: string;
+  annualMaximumAmountText?: string;
+  copayPercentageText?: string;
 }
 
 
@@ -204,6 +236,9 @@ export class DeductiblePayload extends ServerPayload implements DeductibleInterf
     }
 }
 
+/**
+ * Response Payload
+ */
 export class EligibilityPayload extends ServerPayload implements EligibilityInterface {
     benefitYear: string;
     persons: PersonInterface[];
@@ -213,4 +248,29 @@ export class EligibilityPayload extends ServerPayload implements EligibilityInte
         this.benefitYear = payload.benefitYear;
         this.persons = payload.persons;
     }
+}
+
+/**
+ * Response Payload
+ */
+export class RegistrationPayload extends ServerPayload implements RegistrationInterface {
+  benefitYear: string;
+  taxYear: string;
+  persons: PersonInterface[];
+  familyNumber: string;
+  deductibleAmounText: string;
+  annualMaximumAmountText: string;
+  copayPercentageText: string;
+
+  constructor( payload: RegistrationInterface ) {
+    super(payload);
+    this.benefitYear = payload.benefitYear;
+    this.taxYear = payload.taxYear;
+    this.persons = payload.persons;
+
+    this.familyNumber = payload.familyNumber;
+    this.deductibleAmounText = payload.deductibleAmounText;
+    this.annualMaximumAmountText = payload.annualMaximumAmountText;
+    this.copayPercentageText = payload.copayPercentageText;
+  }
 }

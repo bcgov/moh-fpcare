@@ -4,6 +4,7 @@ import {ResponseStoreService} from '../../../../services/response-store.service'
 import {LetterTypes} from '../request-template/request-template.component';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import { Logger } from '../../../../services/logger.service';
+import {DisplayIcon} from '../../../core/components/results-framework/results-framework.component';
 
 @Component({
   selector: 'fpcare-consent-results',
@@ -70,5 +71,19 @@ export class ReprintStatusComponent implements OnInit {
    */
   get response(): ReprintLetterPayload {
     return this._response;
+  }
+
+  /**
+   *
+   * @returns {number}
+   */
+  getIcon(): number {
+    let iconValue = DisplayIcon.ERROR;
+
+    if ( this.response ) {
+      iconValue = this.response.success ? DisplayIcon.SUCCESS : DisplayIcon.ERROR;
+    }
+
+    return iconValue;
   }
 }

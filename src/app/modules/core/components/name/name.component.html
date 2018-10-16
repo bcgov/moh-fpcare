@@ -5,7 +5,7 @@
          type="text"
          id="name_{{objectId}}"
          name="name_{{objectId}}"
-         [maxlength]="nameMaxLength()"
+         [maxlength]="nameMaxLen"
          fpcareRequired="required,name-check"
          [ngModel]="value"
          (ngModelChange)="onUpdate($event)"/>

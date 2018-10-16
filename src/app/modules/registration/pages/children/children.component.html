@@ -17,12 +17,14 @@
         <div class="form-group">
            <fpcare-name
               [label]="'Given Name'"
+              [nameMaxLen]="maxLenGivenName"
               [(value)]="child.firstName">
            </fpcare-name>
         </div>
          <div class="form-group">
             <fpcare-name
                 [label]="'Surname'"
+                [nameMaxLen]="maxLenSurname"
                 [(value)]="child.lastName">
             </fpcare-name>
          </div>

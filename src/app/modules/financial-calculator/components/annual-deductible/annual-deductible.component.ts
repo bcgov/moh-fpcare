@@ -21,8 +21,12 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
 
   @Input() isReview: boolean = false;
 
-  /** The main data object, retrieved via lookup using familyNetIncome. Used in calclations. */
-  public pharmaCareLevel: PharmaCareAssistanceLevel;
+  /** The main data object, retrieved via lookup using familyNetIncome. Used in calclations.
+   *  Passed in for registration result page
+   */
+  @Input() pharmaCareLevel: PharmaCareAssistanceLevel;
+
+
   /** Currency formatted dollar amount */
   public deductible: string = '10,000';
   /** A percentage value (without the % symbol) of the portion PharmaCare pays after deductible is met  */
@@ -83,16 +87,17 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
           {bornBefore1939: this.bornBefore1939});
 
       //console.log('PharmaCare level: ', this.pharmaCareLevel);
-      // Cannot be _undefined
-      if (this.pharmaCareLevel) {
-        this.deductible = this.financeService.currencyFormat(this.pharmaCareLevel.deductible);
-        this.maximum = this.financeService.currencyFormat(this.pharmaCareLevel.maximum);
-        this.pharmaCarePortion = this.pharmaCareLevel.pharmaCarePortion;
-
-        // Update the progress bar UI, if and only if necessary
-        this.progressBarChange.next(this.pharmaCareLevel);
-      }
     }
+    // Cannot be _undefined
+    if (this.pharmaCareLevel) {
+      this.deductible = this.financeService.currencyFormat(this.pharmaCareLevel.deductible);
+      this.maximum = this.financeService.currencyFormat(this.pharmaCareLevel.maximum);
+      this.pharmaCarePortion = this.pharmaCareLevel.pharmaCarePortion;
+
+      // Update the progress bar UI, if and only if necessary
+      this.progressBarChange.next(this.pharmaCareLevel);
+    }
+
   }
 
   private updateProgressBar() {

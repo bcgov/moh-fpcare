@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReprintStatusComponent } from './reprint-status.component';
 import {CoreModule} from '../../../core/core.module';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('ConsentResultsComponent', () => {
   let component: ReprintStatusComponent;
@@ -13,7 +14,8 @@ describe('ConsentResultsComponent', () => {
         ReprintStatusComponent
       ],
       imports: [
-        CoreModule
+        CoreModule,
+        HttpClientTestingModule
       ],
       providers: [
           FPCareDataService

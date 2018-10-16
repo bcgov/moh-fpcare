@@ -217,7 +217,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   get bornBefore1939Label(): string {
-    return this.hasSpouse ? 'Were you or your spouse born in 1939 or earlier?' : 'Were you in 1939 or earlier?';
+    return this.hasSpouse ? 'Were you or your spouse born in 1939 or earlier?' : 'Were you born in 1939 or earlier?';
   }
 
   get hasSpouseLabel(): string {

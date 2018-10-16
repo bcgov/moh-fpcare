@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ControlContainer, NgForm} from '@angular/forms';
 import {Base} from '../base/base.class';
-import {ValidationService} from '../../../../services/validation.service';
 
 @Component({
   selector: 'fpcare-name',
@@ -16,6 +15,7 @@ export class NameComponent extends Base implements OnInit {
 
   @Input() label: string;
   @Input() value: string;
+  @Input() nameMaxLen: number;
 
   @Output() valueChange: EventEmitter<string> = new EventEmitter<string>();
 
@@ -32,13 +32,5 @@ export class NameComponent extends Base implements OnInit {
    */
   onUpdate( value: string ) {
     this.valueChange.emit( value );
-  }
-
-  /**
-   * Max length a name can be
-   * @returns {number}
-   */
-  nameMaxLength(): number {
-    return ValidationService.MAX_NAME_LENGTH;
   }
 }

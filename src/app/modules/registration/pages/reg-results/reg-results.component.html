@@ -1,5 +1,5 @@
-<fpcare-results-framework>
-   <div *ngIf="response; else noResponse">
+<fpcare-results-framework [displayIcon]="getIcon()" [hasBody]="response">
+   <div body>
       <div *ngIf='isRegistrationComplete; else incompleteRegistration'>
         <h1 title>Your Application has been submitted</h1>
 
@@ -28,8 +28,7 @@
 <ng-template #incompleteRegistration>
     <h1 title>Fair PharmaCare Registration Status</h1>
 
-    <h2 *ngIf="response.error" class="text-danger"><i class="fa fa-exclamation-triangle"></i> Attention, there was an error.</h2>
-    <h2>Your status is: </h2>
+   <h2>Your status is: </h2>
     <ul>
       <!--
         Using innerHTML bypasses angular's security sanitzation, so we can
@@ -39,10 +38,4 @@
       -->
       <li [innerHTML]="status"></li>
     </ul>
-</ng-template>
-
-
-<!-- There's no response object - user hasn't submitted the HTTP request. -->
-<ng-template #noResponse>
-   <h2 class='text-danger'>Something went wrong.</h2>
 </ng-template>

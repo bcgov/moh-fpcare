@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   CanActivateChild, Router
@@ -8,7 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { FPCareDataService } from '../../services/fpcare-data.service';
 import {RegistrationService} from './registration.service';
-import {REGISTRATION_ADDRESS, REGISTRATION_PATH, REGISTRATION_REQUIREMENTS} from '../../models/route-paths.constants';
+import { REGISTRATION_PATH, REGISTRATION_REQUIREMENTS} from '../../models/route-paths.constants';
 import {environment} from '../../../environments/environment';
 
 @Injectable({

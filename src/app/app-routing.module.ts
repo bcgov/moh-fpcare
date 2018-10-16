@@ -5,12 +5,10 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import {
   ERROR_404,
   REGISTRATION_PATH,
-  REGISTRATION_REQUIREMENTS,
   REGISTRATION_STATUS_PATH,
   REPRINT_LETTERS_PATH,
   STANDALONE_CALCULATOR
 } from './models/route-paths.constants';
-import {RegistrationRequirementsComponent} from './modules/registration/pages/registration-requirements/registration-requirements.component';
 import {ErrorPageComponent} from './pages/error-page/error-page.component';
 
 

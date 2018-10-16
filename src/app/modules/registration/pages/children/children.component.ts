@@ -121,6 +121,22 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   }
 
   /**
+   * Maximum length a first name can be
+   * @returns {number}
+   */
+  get maxLenGivenName(): number {
+    return ValidationService.MAX_GIVEN_NAME_LENGTH;
+  }
+
+  /**
+   * Maximum length a last name can be
+   * @returns {number}
+   */
+  get maxLenSurname(): number {
+    return ValidationService.MAX_SURNAME_LENGTH;
+  }
+
+  /**
    * Remove a child from the list
    * @param {idx} number
    */

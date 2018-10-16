@@ -3,15 +3,22 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class ValidationService {
 
-  /** Maximum length of a name */
-  public static MAX_NAME_LENGTH = 30;
-
-  /** Minimum & maximum lengths for Personal Health Number */
-  public static MIN_PHN_LENGTH = 10;
-  public static MAX_PHN_LENGTH = 13;
+  /**
+   * Maximum length of names
+   * These values are aligned the FPCare fields in persons table
+   */
+  public static MAX_GIVEN_NAME_LENGTH = 20;
+  public static MAX_SURNAME_LENGTH = 35;
 
   /** Maximux length of FPC Registation Number (1 letter + 8 digits) */
   public static MAX_REGNUM_LENGTH = 9;
+
+  /**
+   * Maximum lengths for address fields
+   * These values align with the PNet fields in pataddr table
+   */
+  public static MAX_STREET_LENGTH = 50; // Size of ADDR_LINE_1 + ADDR_LINE_2
+  public static MAX_CITY_LENGTH = 25;
 
   constructor() { }
 

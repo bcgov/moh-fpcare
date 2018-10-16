@@ -1,0 +1,28 @@
+@import 'variables.scss';
+
+.fpc-icon--success,
+.fpc-icon--error,
+.fpc-icon--warning
+{
+  display: flex;
+  align-content: center;
+}
+
+.fpc-icon--success::after,
+.fpc-icon--error::after,
+.fpc-icon--warning::after {
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+.fpc-icon--success::after {
+  content: 'Success';
+}
+
+.fpc-icon--error::after {
+  content: 'Error';
+}
+
+.fpc-icon--warning::after {
+  content: 'Warning';
+}

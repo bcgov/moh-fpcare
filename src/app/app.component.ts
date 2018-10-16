@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DummyDataService } from './services/dummy-data.service';
+import {DummyDataService, TestScenario} from './services/dummy-data.service';
 import { UserService } from './services/user.service';
 import { FPCareDataService } from './services/fpcare-data.service';
 import {environment} from 'environments/environment';
@@ -45,19 +45,21 @@ export class AppComponent implements OnInit {
     if ( environment.useDummyData ) {
 
       // Purpose: Development
-      this.fpcareDataService.applicant = this.dummyDataService.createApplicant();
-      // console.log( 'applicant: ', this.fpcareDataService.applicant );
-      this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
-      this.fpcareDataService.hasSpouse = true;
-      // console.log( 'spouse: ', this.fpcareDataService.spouse );
-      this.fpcareDataService.dependants = this.dummyDataService.createChildren( 2 );
-      // console.log( 'children: ', this.fpcareDataService.dependants );
+      //this.registerSingleApplicant( TestScenario.EligNotReg );
 
-      // financial information
-      this.fpcareDataService.applicantIncome = 45000;
-      this.fpcareDataService.spouseIncome = 50000;
-      this.fpcareDataService.bornBefore1939 = true;
-      this.fpcareDataService.disabilityAmount = 5000;
+      this.statusCheckApplicant( TestScenario.Reg );
+
+
+      // Applicant
+      //this.fpcareDataService.applicant = this.dummyDataService.createApplicant();
+
+      // Spouse
+      //this.fpcareDataService.hasSpouse = true;
+      //this.fpcareDataService.spouse = this.dummyDataService.createSpouse();
+
+      // Children
+      //this.fpcareDataService.dependants = this.dummyDataService.createChildren( 2 );
+
     }
 
     if (environment.promptOnExit){
@@ -159,5 +161,48 @@ export class AppComponent implements OnInit {
     window.addEventListener('mousemove', checkInactive);
     window.addEventListener('keypress', checkInactive);
 
+  }
+
+
+  // Test Case Data
+
+  /**
+   * Applicant is either eligible and not registered, registered, or not eligible
+   * @param {TestScenario} testScenario
+   */
+  registerSingleApplicant( testScenario: TestScenario ): void {
+
+    const phn = (TestScenario.EligNotReg ? '9999999973' :
+        (TestScenario.Reg ? '9999999181' : '9999999142' ) );
+
+      this.fpcareDataService.applicant = this.dummyDataService.createPerson(phn, {
+        year: 1965,
+        month: 4,
+        day: 30
+      }, 'V3V2V1');
+
+
+    /* $1400 deductible, $1875 family max */
+    this.fpcareDataService.applicantIncome = this.dummyDataService.generateRandomNumber( 45000.01, 48333.00 );
+    this.fpcareDataService.bornBefore1939 = false;
+
+    // No spouse
+    this.fpcareDataService.hasSpouse = false;
+  }
+
+  /**
+   * Applicant is either registered or not registered
+   * @param {TestScenario} testScenario
+   */
+  statusCheckApplicant( testScenario: TestScenario, usePhn: boolean = true ): void {
+    const phn =  (TestScenario.Reg ? '9999999181' : '9999999142');
+    const famNumber = (TestScenario.Reg ? 'A99999991' : 'A88888880');
+
+    if (usePhn) {
+      this.fpcareDataService.applicant = this.dummyDataService.createPersonforStatusCheck( phn,
+          {year: 1990, month: 9, day: 30}, 'V9E4R1');
+    } else {
+      this.fpcareDataService.applicant = this.dummyDataService.createPersonforStatusCheck( famNumber );
+    }
   }
 }

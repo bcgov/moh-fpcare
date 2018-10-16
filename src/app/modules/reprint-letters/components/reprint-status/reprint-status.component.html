@@ -1,16 +1,10 @@
-<fpcare-results-framework>
+<fpcare-results-framework [displayIcon]="getIcon()" [hasBody]="response">
+
   <h1 title>{{pgTitle}}</h1>
 
-  <div *ngIf='response; else noResponse'>
-    <h2 *ngIf="response.error" class="text-danger"><i class="fa fa-exclamation-triangle"></i> Attention, there was an error.</h2>
+  <div body>
     <h2>{{status}}
     </h2>
   </div>
 
 </fpcare-results-framework>
-
-
-<!-- There's no response object - user hasn't submitted the HTTP request. -->
-<ng-template #noResponse>
-  <h2>Something went wrong.</h2>
-</ng-template>

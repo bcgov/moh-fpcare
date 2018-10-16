@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, ViewChildren, QueryLis
 import { Router, NavigationEnd } from '@angular/router';
 import { Base } from '../base/base.class';
 import { filter, map } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'fpcare-wizard-progress-bar',

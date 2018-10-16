@@ -25,12 +25,14 @@
       <div class="form-group">
          <fpcare-name
            [label]="'Given Name'"
+           [nameMaxLen]="maxLenGivenName"
            [(value)]="applicant.firstName">
          </fpcare-name>
       </div>
       <div class="form-group">
          <fpcare-name
            [label]="'Surname'"
+           [nameMaxLen]="maxLenSurname"
            [(value)]="applicant.lastName">
          </fpcare-name>
       </div>

@@ -7,12 +7,13 @@ import { MailingAddressPageComponent } from './pages/mailing-address/mailing-add
 import { PersonalInfoPageComponent } from './pages/personal-info/personal-info.component';
 import { ReviewPageComponent } from './pages/review/review.component';
 import {
-  ERROR_404,
-  REGISTRATION_ADDRESS, REGISTRATION_AUTHORIZE,
+  REGISTRATION_ADDRESS,
+  REGISTRATION_AUTHORIZE,
   REGISTRATION_CHILD,
   REGISTRATION_ELIGIBILITY,
   REGISTRATION_FINANCIAL,
-  REGISTRATION_PERSONAL, REGISTRATION_REVIEW, REPRINT_COB
+  REGISTRATION_PERSONAL,
+  REGISTRATION_REVIEW
 } from '../../models/route-paths.constants';
 
 export const pageRoutes: Routes = [
@@ -50,5 +51,9 @@ export const pageRoutes: Routes = [
         path: REGISTRATION_AUTHORIZE,
         component: CompletePageComponent,
         data: { title: 'Authorization'}
+    },
+    {
+        path: '',
+        redirectTo: REGISTRATION_FINANCIAL
     }
 ];

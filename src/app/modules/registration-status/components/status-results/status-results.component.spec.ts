@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatusResultsComponent } from './status-results.component';
 import {CoreModule} from '../../../core/core.module';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('StatusResultsComponent', () => {
   let component: StatusResultsComponent;
@@ -12,7 +13,8 @@ describe('StatusResultsComponent', () => {
         StatusResultsComponent
       ],
       imports: [
-        CoreModule
+        CoreModule,
+        HttpClientTestingModule
       ]
     })
     .compileComponents();

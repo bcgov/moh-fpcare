@@ -3,6 +3,12 @@ import { Person } from '../models/person.model';
 import { Address } from '../models/address.model';
 import {SimpleDate} from '../modules/core/components/date/simple-date.interface';
 
+export enum TestScenario {
+  EligNotReg = 0,
+  Reg = 1,
+  NotReg = 2,
+  NotElig = 3
+}
 
 /**
  * Responsible for generating dummy data, useful for development Not responsible
@@ -131,4 +137,43 @@ export class DummyDataService {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   }
 
+  generateRandomNumber( min: number , max: number ): number {
+    return min + (Math.random() * (max - min));
+  }
+
+  // Data that uses fake-backend
+
+  createPerson( phn: string, dob: SimpleDate, postalCode: string ): Person {
+    const result: Person = new Person;
+
+    result.name = this.generatePersonName();
+    result.dateOfBirth = dob;
+    result.phn = phn;
+    result.sin = this.generateSIN();
+    result.address.postal = postalCode;
+    return result;
+  }
+
+  createPersonforStatusCheck( value: string, dob: SimpleDate = {year: null, month: null, day: null},
+                              postalCode: string = null ) {
+    const result: Person = new Person;
+
+    if ( dob && postalCode ) {
+      result.phn = value;
+      result.dateOfBirth = dob;
+      result.address.postal = postalCode;
+    } else {
+      result.fpcRegNumber = value;
+    }
+    return result;
+  }
+
+  /**
+{perType: PersonType.applicantType, phn: '9999999998', dateOfBirth: '19890520', postalCode: 'V1V2V3'},
+{perType: PersonType.spouseType, phn: '9999999927', dateOfBirth: '19900101', postalCode: 'V1V2V3'},
+{perType: PersonType.applicantType, phn: '9999999934', dateOfBirth: '19800229', postalCode: 'V2V2V4'},
+{perType: PersonType.spouseType, phn: '9999999941', dateOfBirth: '19830131', postalCode: 'V2V2V4'},
+{perType: PersonType.dependent, phn: '9999999959', dateOfBirth: '20050317', postalCode: 'V2V2V4'},
+{perType: PersonType.dependent, phn: '9999999966', dateOfBirth: '20091231', postalCode: 'V2V2V4'}
+*/
 }

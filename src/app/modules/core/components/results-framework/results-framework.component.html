@@ -2,15 +2,34 @@
 
   <ng-content select="[title]"></ng-content>
 
-  <!--TODO: Change background color to light blue - need codes for color-->
+  <!-- Icons to display -->
+  <div [ngSwitch]="displayIcon">
+    <p *ngSwitchCase = "errorIcon" class="fpc-icon--error">
+     <i class="fa fa-2x fa-exclamation-triangle text-danger" aria-label="error"></i>
+    </p>
+
+    <p *ngSwitchCase = "successIcon" class="fpc-icon--success">
+      <i class="fa fa-2x fa-check-circle text-success" aria-label="success"></i>
+    </p>
+
+    <p *ngSwitchCase = "warningIcon" class="fpc-icon--warning">
+      <i class="fa fa-2x fa-exclamation-circle text-warning" aria-label="warning"></i>
+    </p>
+  </div>
+
   <div class="p-md-2 bg-light">
-    <ng-content></ng-content>
+    <ng-content select="[body]" *ngIf="hasBody; else noBody;"></ng-content>
   </div>
 
 <!--TODO: Add links-->
-<div class="p-md-2">
-  <h2>More information available on <a href="javascript:void(0)">Frequently Asked Questions</a></h2>
-  <h2>If you require additional assistance, contact <a href="javascript:void(0)">HIBC Health Insurance</a></h2>
+<div class="p-md-4">
+  <p>More information available on <a href="javascript:void(0)">Frequently Asked Questions</a></p>
+  <p>If you require additional assistance, contact <a href="javascript:void(0)">HIBC Health Insurance</a></p>
 </div>
 
 </fpcare-page-framework>
+
+<!-- There's no response object - user hasn't submitted the HTTP request. -->
+<ng-template #noBody>
+  <p class='font-weight-bold p-md-2'>Something went wrong.</p>
+</ng-template>

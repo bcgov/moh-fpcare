@@ -4,6 +4,7 @@ import { RegResultsComponent } from './reg-results.component';
 import {CoreModule} from '../../../core/core.module';
 import {RegistrationService} from '../../registration.service';
 import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('RegResultsComponent', () => {
   let component: RegResultsComponent;
@@ -16,6 +17,7 @@ describe('RegResultsComponent', () => {
       ],
       imports: [
         CoreModule,
+        HttpClientTestingModule,
         RouterTestingModule
       ],
       providers: [

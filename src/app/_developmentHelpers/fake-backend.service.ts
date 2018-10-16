@@ -12,6 +12,8 @@ export class FakeBackendService {
 
   // Already registered in FPCare
   private _fpcRegList: string [] = [ '9999999181', '9999999199', '9999999167' ];
+  private _fpcRegList_RN: string [] = [ 'A99999990', 'A99999991', 'A99999992' ];
+
 
   // Eligible to register in FPCare
   private _eligibleList: PersonInterface[] = [
@@ -28,6 +30,12 @@ export class FakeBackendService {
 
   public isRegistered( phnList: string ): boolean {
     return this._fpcRegList.map( phn => phnList.includes( phn ) )
+        .filter( x => x === true )
+        .length !== 0;
+  }
+
+  public hasFamNumber( famNumList: string ): boolean {
+    return this._fpcRegList_RN.map( famNum => famNumList.includes( famNum ) )
         .filter( x => x === true )
         .length !== 0;
   }
@@ -82,6 +90,10 @@ export class FakeBackendService {
 
     return input.map( x => list.includes( x.dateOfBirth ) )
         .filter( found => found === true ).length === input.length
+  }
+
+  public generateFpcNumber(): string {
+    return 'A' + (Math.random() * 99999999 );
   }
 }
 

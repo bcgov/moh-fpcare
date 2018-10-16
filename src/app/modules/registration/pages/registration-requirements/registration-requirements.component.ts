@@ -24,12 +24,15 @@ export class RegistrationRequirementsComponent extends Base implements OnInit, A
     super();
 
     // Registration items to be completed
-    this.registrationService.registrationItems = pageRoutes.map( x => {
-      return {
-        route: x.path,
-        isComplete: false
-      };
-    });
+    this.registrationService.registrationItems = pageRoutes.map( page => {
+      if ( page.path !== '' ) {
+        return {
+          route: page.path,
+          isComplete: false
+        };
+      }
+    }).filter( x => x );
+
   }
 
   ngOnInit() {

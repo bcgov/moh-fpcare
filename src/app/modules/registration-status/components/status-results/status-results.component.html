@@ -1,25 +1,17 @@
-<fpcare-results-framework>
+<fpcare-results-framework [displayIcon]="getIcon()" [hasBody]="response">
   <h1 title>Fair PharmaCare Registration Status Search Results</h1>
 
-  <div *ngIf='response; else noResponse'>
-    <h2 *ngIf="response.error" class="text-danger"><i class="fa fa-exclamation-triangle"></i> Attention, there was an error.</h2>
-    <h2>Your status for {{ hasReg ? 'Registration' : 'Personal Health'}} Number {{accountNumber}} is:
-    </h2>
-    <ul>
+  <div body>
+    <p class="font-weight-bold">
+      Your status for {{ hasReg ? 'Registration' : 'Personal Health'}} Number {{accountNumber}} is:
+    </p>
       <!--
         Using innerHTML bypasses angular's security sanitzation, so we can
         directly include links.  This is safe only because we know we control
         the messages coming back and no user supplied content will ever appear
         here.
       -->
-      <li [innerHTML]="status"></li>
-    </ul>
+    <p class="font-weight-normal" [innerHTML]="status">"{{status}}"</p>
   </div>
 
 </fpcare-results-framework>
-
-
-<!-- There's no response object - user hasn't submitted the HTTP request. -->
-<ng-template #noResponse>
-  <h2 class='text-danger'>Something went wrong.</h2>
-</ng-template>

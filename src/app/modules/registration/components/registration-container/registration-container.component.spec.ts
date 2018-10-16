@@ -45,7 +45,8 @@ describe('RegistrationContainerComponent', () => {
   });
 
   it('progressStep length should equal pageRoutes length', () => {
-    expect(component.progressSteps.length).toEqual(pageRoutes.length);
+    // redirect path added therefore progress should be one less
+    expect(component.progressSteps.length).toEqual(pageRoutes.length - 1);
   });
 
 });

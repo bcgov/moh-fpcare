@@ -102,6 +102,22 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
     return !this._uniqueSin;
   }
 
+  /**
+   * Maximum length a first name can be
+   * @returns {number}
+   */
+  get maxLenGivenName(): number {
+    return ValidationService.MAX_GIVEN_NAME_LENGTH;
+  }
+
+  /**
+   * Maximum length a last name can be
+   * @returns {number}
+   */
+  get maxLenSurname(): number {
+    return ValidationService.MAX_SURNAME_LENGTH;
+  }
+
   // Methods triggered by the form action bar
 
   /**

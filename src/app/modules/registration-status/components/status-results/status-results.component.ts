@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ResponseStoreService } from '../../../../services/response-store.service';
 import { StatusCheckPHNPayload, StatusCheckRegNumberPayload } from '../../../../models/api.model';
 import { Logger } from '../../../../services/logger.service';
+import {DisplayIcon} from '../../../core/components/results-framework/results-framework.component';
 
 /**
  * Displays data in ResponseStore.statusCheckPHN or statusCheckRegNumber. This
@@ -54,6 +55,20 @@ export class StatusResultsComponent {
     }
 
     return null;
+  }
+
+  /**
+   *
+   * @returns {number}
+   */
+  getIcon(): number {
+    let iconValue = DisplayIcon.ERROR;
+
+    if ( this.response ) {
+      iconValue = this.response.success ? DisplayIcon.SUCCESS : DisplayIcon.ERROR;
+    }
+
+    return iconValue;
   }
 
   ngOnInit(){

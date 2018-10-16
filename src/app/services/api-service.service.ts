@@ -11,10 +11,10 @@ import {
   StatusCheckPHN,
   StatusCheckRegNum,
   DeductibleInterface,
-  ReprintLetter, BenefitYearPayload, PersonInterface
+  ReprintLetter, BenefitYearPayload, PersonInterface, PayloadInterface, AddressInterface
 } from 'app/models/api.model';
 import {FPCareDataService} from './fpcare-data.service';
-import {EligibilityInterface} from '../models/api.model';
+import {EligibilityInterface, RegistrationInterface} from '../models/api.model';
 
 @Injectable({
   providedIn: 'root'
@@ -161,6 +161,30 @@ export class ApiService extends AbstractHttpService {
       processDate: processDate,
       benefitYear: input.benefitYear,
       persons: input.persons
+    });
+  }
+
+  public requestRegistration(
+      input: { benefitYear: string
+             , taxYear: string
+             , persons: PersonInterface[]
+             , address: AddressInterface }
+    , processDate = this.getProcessDate() ) {
+
+    const url = environment.baseAPIUrl + 'requestRegistration';
+
+    return this.post<RegistrationInterface>(url, {
+      uuid: this.generateUUID(),
+      clientName: this._clientName,
+      processDate: processDate,
+      benefitYear: input.benefitYear,
+      taxYear: input.taxYear,
+      persons: input.persons,
+      street: input.address.street,
+      city: input.address.city,
+      province: input.address.province,
+      postalCode: input.address.postalCode,
+      country: input.address.country
     });
   }
 
