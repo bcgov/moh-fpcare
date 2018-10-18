@@ -16,11 +16,10 @@ import {ValidationService} from '../../../../services/validation.service';
 })
 export class MailingAddressPageComponent extends AbstractFormComponent implements OnInit {
 
-  @ViewChild('postalCodeContainer') postalCodeContainer: ElementRef; //TODO - Remove?
   @ViewChildren(FPCareRequiredDirective) fpcareRequired;
 
 
-  /** Page to naviage to when continue process */
+  /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_REVIEW;
 
   public isPostalMatch: boolean = true;
@@ -68,6 +67,15 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
       const pc = this.applicant.getNonFormattedPostalCode();
       this.isPostalMatch = this.registrationService.isPostalCodeMatch( pc );
 
+      // Set postal code
+      if (!this.isPostalMatch && (this.applicant.address.postal !== this.applicant.updAddress.postal)) {
+        // Update postal for updated address
+        this.applicant.updAddress.postal = this.applicant.address.postal;
+      } else if ( this.isPostalMatch && this.applicant.isAddressUpdated ) {
+        // Remove postal code causes updated address structure to be incomplete
+        this.applicant.updAddress.postal = '';
+      }
+
       console.log('checkPostal', this.isPostalMatch, this.registrationService.familyStructure);
     }
   }
@@ -80,22 +88,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     return this.fpcService.applicant;
   }
 
-  highlightPostal(){
-    const BASE_CLASS = 'form-group';
-    const ERROR_CLASS = `${BASE_CLASS} has-error`;
-
-    const el = this.postalCodeContainer.nativeElement;
-
-    if (this.applicant.updAddress.postal){
-      el.className =  BASE_CLASS;
-    }
-    else {
-      el.className = ERROR_CLASS;
-    }
-  }
-
   onGeoLookup(){
-    this.highlightPostal();
 
     // Re-run all fpcareRequire ddirectives, hiding validation errors if the
     // geolookup has fixed them.
