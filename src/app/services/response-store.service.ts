@@ -3,7 +3,8 @@ import {
   StatusCheckPHNPayload,
   StatusCheckRegNumberPayload,
   ReprintLetterPayload,
-  EligibilityPayload, BenefitYearPayload, RegistrationPayload
+  EligibilityPayload,
+  RegistrationPayload
 } from '../models/api.model';
 
 /**
@@ -24,7 +25,7 @@ export class ResponseStoreService {
   private _statusCheckPHN: StatusCheckPHNPayload;
   private _reprintLetter: ReprintLetterPayload;
   private _eligibility: EligibilityPayload;
-  private _registerFPC: RegistrationPayload; // TODO: need class
+  private _registerFPC: RegistrationPayload;
 
   /**
    * Returns the response for a Reg Num Status Check request. Note: A PHN Status

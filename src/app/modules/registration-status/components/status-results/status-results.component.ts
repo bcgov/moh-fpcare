@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { ResponseStoreService } from '../../../../services/response-store.service';
-import { StatusCheckPHNPayload, StatusCheckRegNumberPayload } from '../../../../models/api.model';
+import {
+  StatusCheckPHNPayload,
+  StatusCheckRegNumberPayload
+} from '../../../../models/api.model';
 import { Logger } from '../../../../services/logger.service';
-import {DisplayIcon} from '../../../core/components/results-framework/results-framework.component';
+import {AbstractResultsComponent} from '../../../../models/abstract-results-component';
 
 /**
  * Displays data in ResponseStore.statusCheckPHN or statusCheckRegNumber. This
@@ -14,9 +17,21 @@ import {DisplayIcon} from '../../../core/components/results-framework/results-fr
   templateUrl: './status-results.component.html',
   styleUrls: ['./status-results.component.scss']
 })
-export class StatusResultsComponent {
+export class StatusResultsComponent extends AbstractResultsComponent {
 
-  constructor(private responseStore: ResponseStoreService, private logger: Logger) { }
+  public response:  StatusCheckRegNumberPayload | StatusCheckPHNPayload = null;
+
+  constructor(private responseStore: ResponseStoreService, private logger: Logger) {
+    super();
+
+    if (this.hasReg) {
+      this.response = this.responseStore.statusCheckRegNumber;
+    }
+
+    if (this.hasPHN) {
+      this.response =  this.responseStore.statusCheckPHN;
+    }
+  }
 
   get hasPHN(): boolean {
     return !!this.responseStore.statusCheckPHN;
@@ -36,42 +51,7 @@ export class StatusResultsComponent {
       return this.responseStore.statusCheckPHN.phn;
     }
   }
-
-
-  get status(): string {
-    if (this.response) {
-      return this.response.message;
-    }
-  }
-
-
-  get response(): StatusCheckPHNPayload | StatusCheckRegNumberPayload {
-    if (this.hasReg) {
-      return this.responseStore.statusCheckRegNumber;
-    }
-
-    if (this.hasPHN) {
-      return this.responseStore.statusCheckPHN;
-    }
-
-    return null;
-  }
-
-  /**
-   *
-   * @returns {number}
-   */
-  getIcon(): number {
-    let iconValue = DisplayIcon.ERROR;
-
-    if ( this.response ) {
-      iconValue = this.response.success ? DisplayIcon.SUCCESS : DisplayIcon.ERROR;
-    }
-
-    return iconValue;
-  }
-
-  ngOnInit(){
+  ngOnInit() {
     if (this.response){
       // Log result
       const type = this.hasReg ? 'RegNumber' : 'PHN';

@@ -5,7 +5,6 @@ import {Router} from '@angular/router';
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ApiService} from '../../../../services/api-service.service';
-import {environment} from '../../../../../environments/environment';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {ReprintLetter, ReprintLetterPayload} from '../../../../models/api.model';
 import {REPRINT_LETTERS_PATH, REPRINT_STATUS} from '../../../../models/route-paths.constants';
@@ -107,10 +106,10 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
 
     // Setup the request
     const subscription = this.apiService.reprintLetter({
-        phn: this.fpcareDataService.removeStrFormat( this.applicant.phn ),
+        phn: this.applicant.getNonFormattedPhn(),
         benefitYear: this.fpcareDataService.benefitYear,
         dob: this.applicant.dateOfBirthShort,
-        postalCode: this.fpcareDataService.removeStrFormat( this.applicant.address.postal ),
+        postalCode: this.applicant.getNonFormattedPostalCode(),
         letterType: this.data.letterType
       });
 

@@ -173,18 +173,27 @@ export class ApiService extends AbstractHttpService {
 
     const url = environment.baseAPIUrl + 'requestRegistration';
 
+    if ( input.address ) {
+
+      // Address was updated
+      return this.post<RegistrationInterface>(url, {
+        uuid: this.generateUUID(),
+        clientName: this._clientName,
+        processDate: processDate,
+        benefitYear: input.benefitYear,
+        taxYear: input.taxYear,
+        persons: input.persons,
+        address: input.address
+      });
+    }
+
     return this.post<RegistrationInterface>(url, {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       processDate: processDate,
       benefitYear: input.benefitYear,
       taxYear: input.taxYear,
-      persons: input.persons,
-      street: input.address.street,
-      city: input.address.city,
-      province: input.address.province,
-      postalCode: input.address.postalCode,
-      country: input.address.country
+      persons: input.persons
     });
   }
 

@@ -165,7 +165,18 @@ export class FinanceService {
    * @param {string} str
    * @returns {number}
    */
-  public currencyStrToNumber( str: string ): number {
-    return str ? Number( str.replace(/,/g, '') ) : null;
+  public currencyStrToNumber( str: string, withDollarSign: boolean = false ): number {
+
+    if ( str ) {
+
+      let value = str.replace(/,/g, '');
+
+      if (withDollarSign) {
+        value = value.replace( '$', '');
+      }
+      return Number(value);
+    }
+
+    return null;
   }
 }

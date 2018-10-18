@@ -3,11 +3,13 @@ import { Base } from '../base/base.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import {environment} from '../../../../../environments/environment';
 import {ApiService} from '../../../../services/api-service.service';
+import {growVertical} from '../../../../animations/animations';
 
 @Component({
   selector: 'fpcare-consent-modal',
   templateUrl: './consent-modal.component.html',
-  styleUrls: ['./consent-modal.component.scss']
+  styleUrls: ['./consent-modal.component.scss'],
+  animations: [growVertical]
 })
 export class ConsentModalComponent extends Base implements OnInit {
 

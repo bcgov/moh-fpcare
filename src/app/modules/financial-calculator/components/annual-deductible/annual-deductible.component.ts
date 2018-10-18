@@ -21,8 +21,9 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
 
   @Input() isReview: boolean = false;
 
-  /** The main data object, retrieved via lookup using familyNetIncome. Used in calclations.
-   *  Passed in for registration result page
+  /**
+   * The main data object, retrieved via lookup using familyNetIncome. Used in calclations.
+   * Passed in assistence level for registration result page
    */
   @Input() pharmaCareLevel: PharmaCareAssistanceLevel;
 
@@ -78,6 +79,7 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
   }
 
   ngOnChanges(changes) {
+
     //console.log('Annual deductible ngOnChanges', changes);
 
     // Family net income cannot be undefined
@@ -85,9 +87,10 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
 
       this.pharmaCareLevel = this.financeService.findAssistanceLevel(this.familyNetIncome,
           {bornBefore1939: this.bornBefore1939});
-
-      //console.log('PharmaCare level: ', this.pharmaCareLevel);
     }
+
+    //console.log('PharmaCare level: ', this.pharmaCareLevel);
+
     // Cannot be _undefined
     if (this.pharmaCareLevel) {
       this.deductible = this.financeService.currencyFormat(this.pharmaCareLevel.deductible);

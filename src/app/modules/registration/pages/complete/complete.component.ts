@@ -7,6 +7,21 @@ import {environment} from '../../../../../environments/environment';
 import {ApiService} from '../../../../services/api-service.service';
 import {RegistrationService} from '../../registration.service';
 import { Logger } from '../../../../services/logger.service';
+import {
+  AddressInterface,
+  EligibilityPayload,
+  PersonInterface,
+  PersonType,
+  RegistrationPayload
+} from '../../../../models/api.model';
+import {FinanceService} from '../../../financial-calculator/finance.service';
+import {
+  ERROR_404,
+  REGISTRATION_PATH,
+  REGISTRATION_PERSONAL,
+  REGISTRATION_RESULTS
+} from '../../../../models/route-paths.constants';
+import {ResponseStoreService} from '../../../../services/response-store.service';
 
 @Component({
   selector: 'fpcare-complete',
@@ -15,6 +30,9 @@ import { Logger } from '../../../../services/logger.service';
 })
 export class CompletePageComponent extends AbstractFormComponent implements OnInit  {
 
+  /** Page to naviage to when continue process */
+  private _baseUrl = REGISTRATION_PATH + '/';
+
   public applicantAgreement: boolean = false;
   public spouseAgreement: boolean = false;
 
@@ -22,6 +40,8 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
              , protected router: Router
              , private apiService: ApiService
              , private registrationService: RegistrationService
+             , private financialService: FinanceService
+             , private responseStore: ResponseStoreService
              , private logger: Logger ) {
     super( router );
   }
@@ -84,14 +104,85 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
    */
   continue() {
 
-    console.log('can submit request: ', this.canContinue());
-    if (this.canContinue()) {
-      this.registrationService.setItemComplete();
-      // TODO - Do the HTTP request to submit the application
-      this.logger.log({
-        event: 'submission',
-        todo: 'TODO'
-      });
+    if (!this.canContinue()) {
+      return;
+    }
+
+    this.registrationService.setItemComplete();
+    this.loading = true;
+
+    // Setup the request
+    const subscription = this.apiService.requestRegistration({
+      benefitYear: this.fpcService.benefitYear,
+      taxYear: this.fpcService.taxYear,
+      persons: this.getFamilyList(),
+      address: this.applicant.isAddressUpdated ?
+          { // Address object
+            street: this.applicant.updAddress.street,
+            city: this.applicant.updAddress.city,
+            province: this.applicant.updAddress.province,
+            postalCode: this.applicant.updAddress.postal,
+            country: this.applicant.updAddress.country
+          } : null
+    });
+
+    // Trigger the HTTP request
+    subscription.subscribe(response => {
+
+          this.responseStore.registration = new RegistrationPayload(response);
+          this.loading = false;
+          // this.responseStore.registration.success
+
+          this.navigate( this._baseUrl + REGISTRATION_RESULTS );
+
+          this.logger.log({
+            event: 'submission',
+            success: this.responseStore.registration.success
+          });
+        },
+        (responseError) => {
+          this.loading = false;
+          console.log( 'response error: ', responseError );
+          this.navigate( ERROR_404 );
+        });
    }
-  }
+
+  /**
+   * build family member list for registration
+   * @returns {PersonInterface[]}
+   */
+   private getFamilyList(): PersonInterface[] {
+
+     const list: PersonInterface[] = [];
+
+     list.push(
+         this.registrationService.setPersonInterfaceForReg(
+             this.applicant,
+             PersonType.applicantType,
+             this.financialService.currencyFormat( this.fpcService.applicantIncome ),
+             this.financialService.currencyFormat( this.fpcService.disabilityAmount)
+         )
+     );
+
+     if ( this.hasSpouse ) {
+       list.push(
+           this.registrationService.setPersonInterfaceForReg(
+               this.spouse,
+               PersonType.spouseType,
+               this.financialService.currencyFormat( this.fpcService.spouseIncome )
+               //this.financialService.currencyFormat( this.fpcService.disabilityAmount)
+           )
+       );
+     }
+
+     if ( this.fpcService.hasChildren ) {
+
+       const dependants = this.fpcService.dependants.map(
+         x => this.registrationService.setPersonInterfaceForReg( x, PersonType.dependent ) );
+       list.concat( dependants );
+     }
+
+     console.log('family list: ', list);
+     return list;
+   }
 }

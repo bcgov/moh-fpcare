@@ -1,41 +1,46 @@
 <fpcare-results-framework [displayIcon]="getIcon()" [hasBody]="response">
-   <div body>
-      <div *ngIf='isRegistrationComplete; else incompleteRegistration'>
-        <h1 title>Your Application has been submitted</h1>
 
-        <div>
-          <h2>Registration Number: </h2>
-          What happens next
-          <ul>
-            <li>Important: Keep your registration number - write it down, or print this page for your records</li>
-            <li>
-              To inquire about the status of your registration select <a href="javascript:void(0)">
-              Check the Status of your Registration</a> on the menu and enter your registration numer
-            </li>
-            <li>
-              Based on the information you have provided a temporary Fair PharmaCare deductible will be maintained for your
-              family for a period not exceeding 30 days as follows:
-
-              PLACEHOLDER for information from calculator (Family deductible, Portion FPC Pays, Family Maximum)
-            </li>
-          </ul>
-        </div>
+   <h1 title>{{pgTitle}}</h1>
+      <div body>
+         <div *ngIf='hasRegistration && isRegistrationComplete; else incompleteRegistration'>
+         <p class="font-weight-bold h2">{{dateStamp}} - Registration Number: {{famNumber}}</p>
+            <p class="font-weight-normal"> What happens next </p>
+            <ul>
+               <li>
+                  Important: Keep your registration number - write it down, or print this page for your records
+               </li>
+               <li>
+                  To inquire about the status of your registration, select
+                  <a target="_blank"  [routerLink]="checkRegistrationStatus">
+                     Check the Status of your Registration
+                  </a> on the menu and enter your registration number
+               </li>
+               <li>
+                  Based on the information you have provided a temporary Fair PharmaCare deductible will be maintained
+                  for your family for a period not exceeding 30 days as follows:
+                  <div class="col-md-6" [@growVertical] >
+                     <fpcare-annual-deductible
+                     [pharmaCareLevel]="assistenceLevel">
+                     </fpcare-annual-deductible>
+                  </div>
+               </li>
+            </ul>
       </div>
    </div>
 </fpcare-results-framework>
 
 
 <ng-template #incompleteRegistration>
-    <h1 title>Fair PharmaCare Registration Status</h1>
 
-   <h2>Your status is: </h2>
-    <ul>
-      <!--
-        Using innerHTML bypasses angular's security sanitzation, so we can
-        directly include links.  This is safe only because we know we control
-        the messages coming back and no user supplied content will ever appear
-        here.
-      -->
-      <li [innerHTML]="status"></li>
-    </ul>
+   <p class="font-weight-bold">
+      Your status is:
+   </p>
+   <!--
+     Using innerHTML bypasses angular's security sanitzation, so we can
+     directly include links.  This is safe only because we know we control
+     the messages coming back and no user supplied content will ever appear
+     here.
+   -->
+   <p class="font-weight-normal" [innerHTML]="status">"{{status}}"</p>
+
 </ng-template>

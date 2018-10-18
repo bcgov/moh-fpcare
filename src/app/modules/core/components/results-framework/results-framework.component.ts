@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 export enum DisplayIcon {
   SUCCESS = 0,
@@ -11,16 +11,12 @@ export enum DisplayIcon {
   templateUrl: './results-framework.component.html',
   styleUrls: ['./results-framework.component.scss']
 })
-export class ResultsFrameworkComponent implements OnInit {
+export class ResultsFrameworkComponent {
 
   @Input() displayIcon: DisplayIcon = DisplayIcon.SUCCESS;
   @Input() hasBody: boolean = true;
 
   constructor() { }
-
-  ngOnInit( ) {
-    console.log( 'hasBody: ', this.hasBody );
-  }
 
   get errorIcon() {
     return DisplayIcon.ERROR;

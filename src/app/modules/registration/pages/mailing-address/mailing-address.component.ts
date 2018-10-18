@@ -65,13 +65,9 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
   checkPostal(): void {
     if (this.applicant.address.hasPostal()){
-      const pc = this.fpcService.removeStrFormat( this.applicant.address.postal );
+      const pc = this.applicant.getNonFormattedPostalCode();
       this.isPostalMatch = this.registrationService.isPostalCodeMatch( pc );
 
-      // Populate updated address with postal code entered
-      if ( !this.isPostalMatch && !this.applicant.updAddress.postal ) {
-        this.applicant.updAddress.postal = this.applicant.address.postal;
-      }
       console.log('checkPostal', this.isPostalMatch, this.registrationService.familyStructure);
     }
   }

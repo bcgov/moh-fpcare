@@ -45,9 +45,9 @@ export class AppComponent implements OnInit {
     if ( environment.useDummyData ) {
 
       // Purpose: Development
-      //this.registerSingleApplicant( TestScenario.EligNotReg );
+      this.registerSingleApplicant( TestScenario.EligNotReg );
 
-      this.statusCheckApplicant( TestScenario.Reg );
+      //this.statusCheckApplicant( TestScenario.Reg );
 
 
       // Applicant
@@ -172,8 +172,8 @@ export class AppComponent implements OnInit {
    */
   registerSingleApplicant( testScenario: TestScenario ): void {
 
-    const phn = (TestScenario.EligNotReg ? '9999999973' :
-        (TestScenario.Reg ? '9999999181' : '9999999142' ) );
+    const phn = (testScenario === TestScenario.EligNotReg ? '9999999973' :
+        (testScenario === TestScenario.Reg ? '9999999181' : '9999999142' ) );
 
       this.fpcareDataService.applicant = this.dummyDataService.createPerson(phn, {
         year: 1965,
@@ -195,8 +195,8 @@ export class AppComponent implements OnInit {
    * @param {TestScenario} testScenario
    */
   statusCheckApplicant( testScenario: TestScenario, usePhn: boolean = true ): void {
-    const phn =  (TestScenario.Reg ? '9999999181' : '9999999142');
-    const famNumber = (TestScenario.Reg ? 'A99999991' : 'A88888880');
+    const phn =  (testScenario === TestScenario.Reg ? '9999999181' : '9999999142');
+    const famNumber = (testScenario === TestScenario.Reg ? 'A99999991' : 'A88888880');
 
     if (usePhn) {
       this.fpcareDataService.applicant = this.dummyDataService.createPersonforStatusCheck( phn,

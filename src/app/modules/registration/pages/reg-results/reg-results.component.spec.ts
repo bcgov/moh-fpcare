@@ -5,6 +5,11 @@ import {CoreModule} from '../../../core/core.module';
 import {RegistrationService} from '../../registration.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+<<<<<<< HEAD
+=======
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FinancialCalculatorModule} from '../../../financial-calculator/financial-calculator.module';
+>>>>>>> registration
 
 describe('RegResultsComponent', () => {
   let component: RegResultsComponent;
@@ -18,7 +23,13 @@ describe('RegResultsComponent', () => {
       imports: [
         CoreModule,
         HttpClientTestingModule,
+<<<<<<< HEAD
         RouterTestingModule
+=======
+        RouterTestingModule,
+        FinancialCalculatorModule,
+        BrowserAnimationsModule
+>>>>>>> registration
       ],
       providers: [
         RegistrationService

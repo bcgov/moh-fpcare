@@ -4,72 +4,71 @@ import {PharmaCareAssistanceLevelServerResponse} from '../modules/financial-calc
  * Status code for the request
  */
 export enum RegStatusCode {
-    SUCCESS = '0',
-    ERROR = '1',
-    CONTINUE_REG = '2', // Continue registration
-    CONTINUE_MAND_CHILD = '3' // Continue registration - children mandatory (parents federally insured)
+  SUCCESS = '0',
+  ERROR = '1',
+  WARNING = '2'
 }
 
 /**
  * Common payload data for all requests/responses
  */
 export interface PayloadInterface {
-    regStatusCode: RegStatusCode;
-    regStatusMsg: string;
-    uuid: string;
+  regStatusCode: RegStatusCode;
+  regStatusMsg: string;
+  uuid: string;
 
-    /** Part of input params. Never consumed by Angular app */
-    processDate?: string;
+  /** Part of input params. Never consumed by Angular app */
+  processDate?: string;
 
-    /** Never used by Angular app, but will be in responses */
-    clientName?: string;
+  /** Never used by Angular app, but will be in responses */
+  clientName?: string;
 }
 
 /**
  * Benefit Year
  */
 export interface BenefitYearInterface extends PayloadInterface {
-    benefitYear: string;
-    taxYear: string;
+  benefitYear: string;
+  taxYear: string;
 }
 
 /**
  * Check Status using the Fair PharmaCare Registration number
  */
 export interface StatusCheckRegNum extends PayloadInterface {
-    famNumber: string;
-    benefitYear: string;
+  famNumber: string;
+  benefitYear: string;
 }
 
 /**
  * Check Status using the applicant's PHN, date of birth and postal code
  */
 export interface StatusCheckPHN extends PayloadInterface {
-    benefitYear: string;
-    phn: string;
-    dateOfBirth: string;
-    postalCode: string;
+  benefitYear: string;
+  phn: string;
+  dateOfBirth: string;
+  postalCode: string;
 }
 
 /**
  * Request for reprint of Consent forms and Confirmation of Assistance
  */
 export interface ReprintLetter extends PayloadInterface {
-    benefitYear: string;
-    phn: string;
-    dateOfBirth: string;
-    postalCode: string;
-    letterType: string;
+  benefitYear: string;
+  phn: string;
+  dateOfBirth: string;
+  postalCode: string;
+  letterType: string;
 }
 
 /**
  * Retrieve the Fair PharmaCare deductible levels to calculate the applicant's level of assistance
  */
 export interface DeductibleInterface extends PayloadInterface {
-    assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
-    pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
+  assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
+  pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
 
-    benefitYear: string;
+  benefitYear: string;
 }
 
 /**
@@ -79,6 +78,14 @@ export enum PersonType {
   applicantType = '0',
   spouseType = '1',
   dependent = '2'
+}
+
+/**
+ * Values for dependant mandatory field in eligibility check response message
+ */
+export enum DependentMandatory {
+  NO = '0',
+  YES = '1'
 }
 
 /**
@@ -102,7 +109,7 @@ export interface PersonInterface {
 }
 
 export interface AddressInterface {
-  street; string;
+  street: string;
   city: string;
   province: string;
   postalCode: string;
@@ -116,20 +123,19 @@ export interface EligibilityInterface extends PayloadInterface {
 
   benefitYear: string;
   persons: PersonInterface[];
+  dependentMandatory?: string;
 }
 
 /**
  * Register family in Fair PharmaCare
  */
-export interface RegistrationInterface extends EligibilityInterface {
+export interface RegistrationInterface extends PayloadInterface {
+  benefitYear: string;
   taxYear: string;
+  persons?: PersonInterface[]; // not return in response
 
-  // address required for request
-  street?: string;
-  city?: string;
-  province?: string;
-  postalCode?: string;
-  country?: string;
+  // address required if it was updated
+  address?: AddressInterface;
 
   // response information
   familyNumber?: string;
@@ -138,125 +144,128 @@ export interface RegistrationInterface extends EligibilityInterface {
   copayPercentageText?: string;
 }
 
-
 export class ServerPayload implements PayloadInterface {
-    regStatusCode: RegStatusCode;
-    regStatusMsg: string;
-    uuid: string;
-    private _message: string;
+  regStatusCode: RegStatusCode;
+  regStatusMsg: string;
+  uuid: string;
+  private _message: string;
 
-    constructor(payload: PayloadInterface) {
-        this.regStatusCode = payload.regStatusCode;
-        this.regStatusMsg = payload.regStatusMsg;
-        this.uuid = payload.uuid;
-        this._message = this.processMessage(payload.regStatusMsg);
-    }
+  constructor(payload: PayloadInterface) {
+    this.regStatusCode = payload.regStatusCode;
+    this.regStatusMsg = payload.regStatusMsg;
+    this.uuid = payload.uuid;
+    this._message = this.processMessage(payload.regStatusMsg);
+  }
 
-    get success(): boolean {
-        return this.regStatusCode === RegStatusCode.SUCCESS;
-    }
+  get success(): boolean {
+    return this.regStatusCode === RegStatusCode.SUCCESS;
+  }
 
-    get error(): boolean {
-        return this.regStatusCode === RegStatusCode.ERROR;
-    }
+  get error(): boolean {
+    return this.regStatusCode === RegStatusCode.ERROR;
+  }
 
-    get canContinueRegistration(): boolean {
-        return this.regStatusCode === RegStatusCode.CONTINUE_REG;
-    }
+  get warning(): boolean {
+    return this.regStatusCode === RegStatusCode.WARNING;
+  }
 
-    /**
-     * The human readable message to display to the user. It can be either an
-     * message or success message.
-     */
-    get message(): string {
-        return this._message;
-    }
+  /**
+   * The human readable message to display to the user. It can be either an
+   * message or success message.
+   */
+  get message(): string {
+    return this._message;
+  }
 
-    private processMessage(msg: string): string {
-        // Note: using `href` here isn't ideal as it triggers a complete reload
-        // of the Angular app. I tried using routerLink``, but angular stripped
-        // it out.
-        return msg.replace('<link to Registration Page>',
-            '<a href="registration/requirements">Registration Page');
-    }
+  private processMessage(msg: string): string {
+    // Note: using `href` here isn't ideal as it triggers a complete reload
+    // of the Angular app. I tried using routerLink``, but angular stripped
+    // it out.
+    return msg.replace('<link to Registration Page>',
+        '<a href="registration/requirements">Registration Page');
+  }
 }
 
 export class BenefitYearPayload extends ServerPayload implements BenefitYearInterface {
-    benefitYear: string;
-    taxYear: string;
-    constructor(payload: BenefitYearInterface) {
-        super(payload);
-        this.benefitYear = payload.benefitYear;
-        this.taxYear = payload.taxYear;
-    }
+  benefitYear: string;
+  taxYear: string;
+  constructor(payload: BenefitYearInterface) {
+    super(payload);
+    this.benefitYear = payload.benefitYear;
+    this.taxYear = payload.taxYear;
+  }
 }
 
 // Because we rename famNum to regNum, this does NOT implement the interface but
 // the constructor param still does.
 export class StatusCheckRegNumberPayload extends ServerPayload {
-    //Corresponds to famNumber from API
-    regNumber: string;
+  //Corresponds to famNumber from API
+  regNumber: string;
 
-    constructor(payload: StatusCheckRegNum) {
-        super(payload);
-        this.regNumber = payload.famNumber;
-    }
+  constructor(payload: StatusCheckRegNum) {
+    super(payload);
+    this.regNumber = payload.famNumber;
+  }
 }
 
 export class StatusCheckPHNPayload extends ServerPayload {
-    phn: string;
+  phn: string;
 
-    constructor(payload: StatusCheckPHN) {
-        super(payload);
-        this.phn = payload.phn;
-    }
+  constructor(payload: StatusCheckPHN) {
+    super(payload);
+    this.phn = payload.phn;
+  }
 }
 
 export class ReprintLetterPayload extends ServerPayload {
-    phn: string;
-    letterType: string;
+  phn: string;
+  letterType: string;
 
-    constructor(payload: ReprintLetter) {
-        super(payload);
-        this.phn = payload.phn;
-        this.letterType = payload.letterType;
-    }
+  constructor(payload: ReprintLetter) {
+    super(payload);
+    this.phn = payload.phn;
+    this.letterType = payload.letterType;
+  }
 }
 
-export class DeductiblePayload extends ServerPayload implements DeductibleInterface {
-    benefitYear: string;
-    assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
-    pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
+export class DeductiblePayload extends ServerPayload {
+  benefitYear: string;
+  assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
+  pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
 
-    constructor(payload: DeductibleInterface) {
-        super(payload);
-        this.benefitYear = payload.benefitYear;
-        this.assistanceLevels = payload.assistanceLevels;
-        this.pre1939AssistanceLevels = payload.pre1939AssistanceLevels;
-    }
-}
-
-/**
- * Response Payload
- */
-export class EligibilityPayload extends ServerPayload implements EligibilityInterface {
-    benefitYear: string;
-    persons: PersonInterface[];
-
-    constructor( payload: EligibilityInterface ) {
-        super(payload);
-        this.benefitYear = payload.benefitYear;
-        this.persons = payload.persons;
-    }
+  constructor(payload: DeductibleInterface) {
+    super(payload);
+    this.benefitYear = payload.benefitYear;
+    this.assistanceLevels = payload.assistanceLevels;
+    this.pre1939AssistanceLevels = payload.pre1939AssistanceLevels;
+  }
 }
 
 /**
  * Response Payload
  */
-export class RegistrationPayload extends ServerPayload implements RegistrationInterface {
+export class EligibilityPayload extends ServerPayload {
+
+  benefitYear: string;
+  persons: PersonInterface[];
+  dependantMandatory: string;
+
+  constructor( payload: EligibilityInterface ) {
+    super(payload);
+    this.benefitYear = payload.benefitYear;
+    this.persons = payload.persons;
+    this.dependantMandatory = payload.dependentMandatory;
+  }
+}
+
+/**
+ * Response Payload
+ */
+
+export class RegistrationPayload extends ServerPayload {
   benefitYear: string;
   taxYear: string;
-  persons: PersonInterface[];
+
   familyNumber: string;
   deductibleAmounText: string;
   annualMaximumAmountText: string;
@@ -266,7 +275,6 @@ export class RegistrationPayload extends ServerPayload implements RegistrationIn
     super(payload);
     this.benefitYear = payload.benefitYear;
     this.taxYear = payload.taxYear;
-    this.persons = payload.persons;
 
     this.familyNumber = payload.familyNumber;
     this.deductibleAmounText = payload.deductibleAmounText;

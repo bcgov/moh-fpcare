@@ -98,14 +98,4 @@ export class FPCareDataService {
   canAddChild(): boolean {
     return this._dependants.length <= this.MAX_DEPENDANTS;
   }
-
-  /**
-   *
-   * @param {string} value
-   * @returns {string}
-   */
-  removeStrFormat( value: string ): string {
-
-    return (value ? value.replace(/ /g, '') : null);
-  }
 }

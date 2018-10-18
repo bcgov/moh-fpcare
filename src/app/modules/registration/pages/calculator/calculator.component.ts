@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {RegistrationService} from '../../registration.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { Router, ActivatedRoute } from '@angular/router';
-import {decimalsRegex, FinanceService} from '../../../financial-calculator/finance.service';
+import {FinanceService} from '../../../financial-calculator/finance.service';
 import {REGISTRATION_ELIGIBILITY, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ApiService} from '../../../../services/api-service.service';

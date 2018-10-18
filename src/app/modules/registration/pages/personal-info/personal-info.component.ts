@@ -3,7 +3,6 @@ import {Person} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
-import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ValidationService} from '../../../../services/validation.service';
 import {REGISTRATION_CHILD, REGISTRATION_PATH, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
 import {RegistrationService} from '../../registration.service';

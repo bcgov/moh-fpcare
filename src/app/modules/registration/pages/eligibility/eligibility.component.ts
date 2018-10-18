@@ -127,12 +127,12 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
       subscription = this.apiService.checkEligibility({
         persons: [
           { perType: PersonType.applicantType,
-            phn: this.fpcareDataService.removeStrFormat( this.applicant.phn ),
+            phn: this.applicant.getNonFormattedPhn(),
             dateOfBirth: this.applicant.dateOfBirthShort,
             postalCode: ''
           },
           { perType: PersonType.spouseType,
-            phn: this.fpcareDataService.removeStrFormat( this.spouse.phn ),
+            phn: this.spouse.getNonFormattedPhn(),
             dateOfBirth: this.spouse.dateOfBirthShort,
             postalCode: ''
           }
@@ -143,7 +143,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
       subscription = this.apiService.checkEligibility({
         persons: [
           {perType: PersonType.applicantType,
-            phn: this.fpcareDataService.removeStrFormat( this.applicant.phn) ,
+            phn: this.applicant.getNonFormattedPhn(),
             dateOfBirth: this.applicant.dateOfBirthShort,
             postalCode: ''
           }
@@ -156,18 +156,15 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
     // Trigger the HTTP request
     subscription.subscribe(response => {
 
-      console.log( 'response: ', response );
-
       this.responseStore.eligibility = new EligibilityPayload(response);
       this.loading = false;
 
-      if ( response.canContinueRegistration ) {
+      if ( this.responseStore.eligibility.success ) {
         this.registrationService.familyStructure = this.responseStore.eligibility.persons;
         this.navigate( this._baseUrl + REGISTRATION_PERSONAL );
         this.logger.log({
           event: 'eligibilityCheck',
-          success: response.success,
-          regStatusCode: this.responseStore.eligibility.regStatusCode
+          success: this.responseStore.eligibility.success
         });
       } else {
         this.navigate(this._baseUrl +  REGISTRATION_RESULTS );

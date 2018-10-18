@@ -121,5 +121,33 @@ export class Person extends Base {
     const dobDt = new Date( this.dateOfBirth.year, this.dateOfBirth.month, this.dateOfBirth.day );
     return moment( today ).diff( dobDt, 'year' );
   }
+
+
+  // Remove formatting
+  getNonFormattedPhn(): string {
+    return this.removeStrFormat( this.phn );
+  }
+
+  getNonFormattedSin(): string {
+    return this.removeStrFormat( this.sin );
+  }
+
+  getNonFormattedPostalCode(): string {
+    return this.removeStrFormat( this.address.postal );
+  }
+
+  getNonFormattedUpdPostalCode(): string {
+    return this.removeStrFormat( this.updAddress.postal );
+  }
+
+  /**
+   *
+   * @param {string} value
+   * @returns {string}
+   */
+  private removeStrFormat( value: string ): string {
+
+    return (value ? value.replace(/ /g, '') : null);
+  }
 }
 

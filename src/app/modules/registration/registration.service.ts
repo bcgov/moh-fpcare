@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
-import {PersonInterface} from '../../models/api.model';
+import {PersonInterface, PersonType} from '../../models/api.model';
+import {Person} from '../../models/person.model';
 
 export interface RegistrationItem {
   route: string;
@@ -91,5 +92,37 @@ export class RegistrationService {
     // TODO:  Confirm what happens when all family members do not have the same postal code
     return this.familyStructure.map( person => pc === person.postalCode )
         .filter( x => x === true ).length !== 0;
+  }
+  
+  setPersonInterfaceForReg( person: Person,
+                            personType: PersonType,
+                            netIncome: string = null,
+                            rdsp: string = null ): PersonInterface {
+
+    let famMember: PersonInterface;
+
+    if ( personType !== PersonType.dependent ) {
+
+      famMember = {
+        perType: personType,
+        phn: person.getNonFormattedPhn(),
+        dateOfBirth: person.dateOfBirthShort,
+        givenName: person.firstName,
+        surname: person.lastName,
+        sin : person.getNonFormattedSin(),
+        netIncome: netIncome,
+        rdsp: rdsp
+      };
+    } else {
+      famMember = {
+        perType: personType,
+        phn: person.getNonFormattedPhn(),
+        dateOfBirth: person.dateOfBirthShort,
+        givenName: person.firstName,
+        surname: person.lastName,
+      };
+    }
+
+    return famMember;
   }
 }

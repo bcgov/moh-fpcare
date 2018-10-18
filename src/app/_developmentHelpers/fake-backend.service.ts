@@ -1,18 +1,27 @@
 import { Injectable } from '@angular/core';
 import {PersonInterface, PersonType} from '../models/api.model';
+import {FinanceService} from '../modules/financial-calculator/finance.service';
 
-
+export interface FpcareAssistLevel {
+  deductible: string;
+  maximum: string;
+  pharmaCarePortion: string;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class FakeBackendService {
 
+  public baselineAssistLevels;
+  public pre1939AssistLevels;
+
   /* PHNs not eligible - not in lists below: '9999999142, 9999999135, 9999999103 */
 
   // Already registered in FPCare
-  private _fpcRegList: string [] = [ '9999999181', '9999999199', '9999999167' ];
-  private _fpcRegList_RN: string [] = [ 'A99999990', 'A99999991', 'A99999992' ];
+  private _fpcRegList: string [] = ['9999999181', '9999999199', '9999999167'];
+  private _fpcRegList_RN: string [] = ['A99999990', 'A99999991', 'A99999992'];
+
 
 
   // Eligible to register in FPCare
@@ -26,11 +35,14 @@ export class FakeBackendService {
     {perType: PersonType.dependent, phn: '9999999966', dateOfBirth: '20091231', postalCode: 'V2V2V4'}
   ];
 
-  constructor() { }
+  constructor( private financeService: FinanceService ) {
+    this.baselineAssistLevels = this.financeService.PharmaCareAssistanceLevels;
+    this.pre1939AssistLevels = this.financeService.Pre1939PharmaCareAssistanceLevels;
+  }
 
-  public isRegistered( phnList: string ): boolean {
-    return this._fpcRegList.map( phn => phnList.includes( phn ) )
-        .filter( x => x === true )
+  public isRegistered(phnList: string): boolean {
+    return this._fpcRegList.map(phn => phnList.includes(phn))
+        .filter(x => x === true)
         .length !== 0;
   }
 
@@ -42,33 +54,33 @@ export class FakeBackendService {
 
 
   // Returns values for development
-  public getFamily( phnList: string[] ): PersonInterface[] | any {
+  public getFamily(phnList: string[]): PersonInterface[] | any {
 
     //console.log( 'getFamily phnList: ', phnList );
 
-    const list = this._eligibleList.map( person => {
-      if ( phnList.includes( person.phn ) ) {
+    const list = this._eligibleList.map(person => {
+      if (phnList.includes(person.phn)) {
         return person;
       }
-    } ).filter( x => x );
+    }).filter(x => x);
 
 
     const foundApplicants = (list.length === phnList.length);
 
-    if ( list.length ) {
+    if (list.length) {
 
       // search dependants
-      const dependents = this._eligibleList.map( person => {
-        if ( list[0].postalCode === person.postalCode &&
-            !phnList.includes( person.phn ) ) {
+      const dependents = this._eligibleList.map(person => {
+        if (list[0].postalCode === person.postalCode &&
+            !phnList.includes(person.phn)) {
           return person;
         }
-      } ).filter( x => x );
+      }).filter(x => x);
 
       list.push(...dependents);
     }
 
-    console.log( 'getFamily list: ', list );
+    console.log('getFamily list: ', list);
 
     return (foundApplicants && list.length) ? list : null;
   }
@@ -79,21 +91,60 @@ export class FakeBackendService {
    * @param {PersonInterface[]} family
    * @returns {boolean}
    */
-  public parentDobMatch( input: PersonInterface[], family: PersonInterface[] ): boolean {
+  public parentDobMatch(input: PersonInterface[], family: PersonInterface[]): boolean {
 
-    const list = family.map( person => {
-      if ( person.perType === PersonType.applicantType || person.perType === PersonType.spouseType ) {
+    const list = family.map(person => {
+      if (person.perType === PersonType.applicantType || person.perType === PersonType.spouseType) {
         return person.dateOfBirth;
       }
-    }).filter( x => x );
+    }).filter(x => x);
     // console.log( 'get DOB list: ', list );
 
-    return input.map( x => list.includes( x.dateOfBirth ) )
-        .filter( found => found === true ).length === input.length
+    return input.map(x => list.includes(x.dateOfBirth))
+        .filter(found => found === true).length === input.length
   }
 
+  /**
+   * Randomly generate FPCare Family Number
+   * @returns {string}
+   */
   public generateFpcNumber(): string {
-    return 'A' + (Math.random() * 99999999 );
+    return 'A' + Math.ceil((Math.random() * 99999999));
+  }
+
+  /**
+   *
+   * @param {PersonInterface[]} familyMembers
+   * @returns {FpcareAssistLevel}
+   */
+  getFamilyAssistenceLevel( familyMembers: PersonInterface[] ): FpcareAssistLevel {
+
+    const familyNetIncomeArray = familyMembers.map( person => {
+      if ( person.perType !== PersonType.dependent ) {
+        return person.netIncome;
+      }
+    }).filter( x => x );
+
+    const familyNetRdspArray = familyMembers.map( person => {
+      if ( person.perType !== PersonType.dependent ) {
+        return person.rdsp;
+      }
+    }).filter( x => x );
+
+    let netIncome = 0;
+    familyNetIncomeArray.forEach(
+        x => netIncome = netIncome + this.financeService.currencyStrToNumber( x )
+      );
+    familyNetRdspArray.forEach(
+        x => netIncome = netIncome -  this.financeService.currencyStrToNumber( x )
+      );
+
+    const level = this.financeService.findAssistanceLevel( netIncome );
+
+    return {
+      deductible: this.financeService.currencyFormat( level.deductible, true ),
+      maximum: this.financeService.currencyFormat( level.maximum, true ),
+      pharmaCarePortion: level.pharmaCarePortion.toString() + '%'
+    };
   }
 }
-

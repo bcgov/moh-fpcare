@@ -1,45 +1,85 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ResponseStoreService} from '../../../../services/response-store.service';
-import {EligibilityPayload} from '../../../../models/api.model';
 import {RegistrationService} from '../../registration.service';
-import {DisplayIcon} from '../../../core/components/results-framework/results-framework.component';
+import {AbstractResultsComponent} from '../../../../models/abstract-results-component';
+import {EligibilityPayload, RegistrationPayload} from '../../../../models/api.model';
+import {PharmaCareAssistanceLevel} from '../../../financial-calculator/assistance-levels.interface';
+import {FinanceService} from '../../../financial-calculator/finance.service';
+import {growVertical} from '../../../../animations/animations';
+import * as moment from 'moment';
+import {REGISTRATION_STATUS_PATH, REQUEST_REG_STATUS} from '../../../../models/route-paths.constants';
 
 @Component({
   selector: 'fpcare-reg-results',
   templateUrl: './reg-results.component.html',
-  styleUrls: ['./reg-results.component.scss']
+  styleUrls: ['./reg-results.component.scss'],
+  animations: [growVertical]
 })
-export class RegResultsComponent {
+export class RegResultsComponent extends AbstractResultsComponent implements OnInit {
+
+  public response: EligibilityPayload | RegistrationPayload = null;
+  public assistenceLevel: PharmaCareAssistanceLevel;
+  public pgTitle: string = 'Fair PharmaCare Registration Status';
+  public famNumber: string = null;
 
   constructor( private responseStore: ResponseStoreService
-             , private registrationService: RegistrationService ) { }
+             , private registrationService: RegistrationService
+             , private financeService: FinanceService ) {
+    super();
 
-  get status(): string {
-    if (this.response) {
-      return this.response.message;
+    if ( this.hasRegistration ) {
+      this.response = this.responseStore.registration;
+    } else {
+      this.response = this.responseStore.eligibility;
     }
   }
 
-  // TODO: add registrationpayload to this function
-  get response(): EligibilityPayload {
-    return this.responseStore.eligibility;
-  }
+  ngOnInit() {
 
-  get isRegistrationComplete(): boolean {
-    return this.registrationService.isRegistrationComplete();
+    if (this.hasRegistration) {
+      this.pgTitle = 'Your Application has been submitted';
+      this.famNumber = this.responseStore.registration.familyNumber;
+      this.assistenceLevel = this.getAssistenceLevel();
+    }
   }
 
   /**
    *
-   * @returns {number}
+   * @returns {boolean}
    */
-  getIcon(): number {
-    let iconValue = DisplayIcon.ERROR;
+  get hasRegistration(): boolean {
+    return !!this.responseStore.registration;
+  }
 
-    if ( this.response ) {
-      iconValue = this.response.success ? DisplayIcon.SUCCESS : DisplayIcon.ERROR;
-    }
+  /**
+   *
+   * @returns {boolean}
+   */
+  get isRegistrationComplete(): boolean {
+    return this.registrationService.isRegistrationComplete();
+  }
 
-    return iconValue;
+  get dateStamp(): string {
+    return moment().format('MMMM DD, YYYY');
+  }
+
+  get checkRegistrationStatus(): string {
+    return  '/' + REGISTRATION_STATUS_PATH + '/' + REQUEST_REG_STATUS;
+  }
+
+  /**
+   *
+   * @returns {PharmaCareAssistanceLevel}
+   */
+  private getAssistenceLevel(): PharmaCareAssistanceLevel {
+    return  {
+      startRange: null,
+      endRange: null,
+      maximum: this.financeService.currencyStrToNumber(
+          this.responseStore.registration.annualMaximumAmountText, true ),
+      deductible: this.financeService.currencyStrToNumber(
+          this.responseStore.registration.deductibleAmounText, true ),
+      pharmaCarePortion: Number(this.responseStore.registration.copayPercentageText.replace('%', ''))
+    };
   }
 }

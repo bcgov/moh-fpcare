@@ -3,7 +3,6 @@ import { Person } from '../../../../models/person.model';
 import { Router } from '@angular/router';
 import { FPCareDataService } from '../../../../services/fpcare-data.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
-import { environment } from 'environments/environment';
 import { ApiService } from '../../../../services/api-service.service';
 import { ResponseStoreService } from '../../../../services/response-store.service';
 import { StatusCheckPHNPayload, StatusCheckRegNumberPayload, StatusCheckPHN, StatusCheckRegNum } from 'app/models/api.model';
@@ -132,10 +131,10 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     let subscription;
     if (this.disableRegNum()) {
       subscription = this.apiService.statusCheckPHN({
-        phn: this.fpcareDataService.removeStrFormat( this.applicant.phn ),
+        phn: this.applicant.getNonFormattedPhn(),
         benefitYear: this.fpcareDataService.benefitYear,
         dob: this.applicant.dateOfBirthShort,
-        postalCode: this.fpcareDataService.removeStrFormat( this.applicant.address.postal )
+        postalCode: this.applicant.getNonFormattedPostalCode()
       });
     }
     else {
