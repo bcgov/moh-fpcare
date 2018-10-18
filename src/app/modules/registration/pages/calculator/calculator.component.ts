@@ -183,9 +183,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
       this.totalFamilyIncome = this.calculateTotalFamilyIncome();
     }
 
-    if ( undefined !== this.disability || undefined !== this.spouseDisability ) {
-      this.totalFamilyRdsp = this.calculateTotalFamilyRdsp();
-    }
+    this.totalFamilyRdsp = this.calculateTotalFamilyRdsp();
 
     // Update fpcare-data service values
     this.fpcareDataService.applicantIncome = this.financeService.currencyStrToNumber(this.income);
