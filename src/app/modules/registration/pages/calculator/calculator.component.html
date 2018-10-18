@@ -67,21 +67,42 @@
 
       <h2 class="border-bottom">Disability Information (if applicable)</h2>
       <div class="form-group">
-          <label class='no-bold' for="disability">How much did you report for a Registered Disability Savings Plan on your income tax return {{taxYear}} (Line 125)?</label>
+          <label class='no-bold' for="ap_disability">
+             How much did you report for a Registered Disability Savings Plan on your income tax return {{taxYear}} (Line 125)?
+          </label>
           <div class="input-group mb-3 col-md-6">
             <div class="input-group-prepend">
               <span class="input-group-text">$</span>
             </div>
             <input class="form-control"
                 type="text"
-                id="disability"
-                name="disability"
-                [ngModel]="disabilityFormatted"
-                (ngModelChange)="disabilityFormatted = $event; update();"
+                id="ap_disability"
+                name="ap_disability"
+                [ngModel]="disability"
+                (ngModelChange)="disability = $event; update();"
                 [textMask]="{mask: moneyMask}"
                 placeholder="Enter Disability Savings Amounts"/>
           </div>
       </div>
+
+     <div class="form-group" *ngIf='hasSpouse'>
+        <label class='no-bold' for="sp_disability">
+           How much did your spouse / common law partner report for a Registered Disability Savings Plan on your income tax return {{taxYear}} (Line 125)?
+        </label>
+        <div class="input-group mb-3 col-md-6">
+           <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+           </div>
+           <input class="form-control"
+                  type="text"
+                  id="sp_disability"
+                  name="sp_disability"
+                  [ngModel]="spouseDisability"
+                  (ngModelChange)="spouseDisability = $event; update();"
+                  [textMask]="{mask: moneyMask}"
+                  placeholder="Enter Disability Savings Amounts"/>
+        </div>
+     </div>
         
   </form>
 
@@ -90,7 +111,7 @@
       [income]="totalFamilyIncome"
       [bornBefore1939]="bornBefore1939"
       [hasSpouse]="hasSpouse"
-      [disabilitySavingsAmount]="disabilityAmount"
+      [disabilitySavingsAmount]="totalFamilyRdsp"
       (incomeAdjustment)="onIncomeAdjustment($event)"
     ></fpcare-financial-calculator>
   </aside>

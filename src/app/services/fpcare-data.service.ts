@@ -38,6 +38,7 @@ export class FPCareDataService {
   public applicantIncome: number; /** Income for applicant */
   public spouseIncome: number; /** Income for applicant's spouse */
   public disabilityAmount: number; /** Amount for disability */
+  public spouseDisabilityAmount: number; /** Amount for disability */
   public adjustedIncome: number;
   public bornBefore1939: boolean;
 

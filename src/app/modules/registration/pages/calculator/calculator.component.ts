@@ -17,6 +17,8 @@ import {BenefitYearPayload, DeductiblePayload} from '../../../../models/api.mode
 export class CalculatorPageComponent extends AbstractFormComponent implements OnInit {
   /** Numeric value for income + spouseIncome (if applicable) */
   public totalFamilyIncome: number;
+  /** Numeric value for RDSP + spouse RDSP (if applicable) */
+  public totalFamilyRdsp: number;
   /** The text mask responsible for the currency formatting. */
   public moneyMask;
   /** Formatted currency string for applicant's income */
@@ -24,9 +26,9 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   /** Formatted currency string for applicant's spouse's income */
   public spouseIncome: string;
   /** Formatted currency string for disability amount */
-  public disabilityFormatted: string;
-  /** Numeric value for disability */
-  public disabilityAmount: number;
+  public disability: string;
+  /** Formatted currency string for disability amount */
+  public spouseDisability: string;
 
   /** Text displayed on button */
   public buttonText: string = 'Apply for Fair PharmaCare Assistance';
@@ -97,12 +99,16 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
 
       this.income = this.financeService.currencyFormat( this.fpcareDataService.applicantIncome );
 
-      if ( this.hasSpouse ) {
-        this.spouseIncome = this.financeService.currencyFormat( this.fpcareDataService.spouseIncome );
+      if ( this.fpcareDataService.disabilityAmount ) {
+        this.disability = this.financeService.currencyFormat(this.fpcareDataService.disabilityAmount);
       }
 
-      if ( this.fpcareDataService.disabilityAmount ) {
-        this.disabilityFormatted = this.financeService.currencyFormat(this.fpcareDataService.disabilityAmount);
+      if ( this.hasSpouse ) {
+        this.spouseIncome = this.financeService.currencyFormat( this.fpcareDataService.spouseIncome );
+
+        if (this.fpcareDataService.spouseDisabilityAmount ) {
+          this.spouseDisability = this.financeService.currencyFormat(this.fpcareDataService.spouseDisabilityAmount);
+        }
       }
 
       // Update data - user may have used back button on browser
@@ -126,6 +132,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     if ( !value ) {
       // set blank - no spouse
       this.spouseIncome = '';
+      this.spouseDisability = '';
     } else {
       // Spouse
       this.fpcareDataService.addSpouse();
@@ -172,17 +179,15 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
       this.totalFamilyIncome = this.calculateTotalFamilyIncome();
     }
 
-    if (this.disabilityFormatted && this.disabilityFormatted.length) {
-      this.disabilityAmount = this.financeService.currencyStrToNumber(this.disabilityFormatted);
-    }
-    else {
-      this.disabilityAmount = 0;
+    if ( undefined !== this.disability || undefined !== this.spouseDisability ) {
+      this.totalFamilyRdsp = this.calculateTotalFamilyRdsp();
     }
 
     // Update fpcare-data service values
     this.fpcareDataService.applicantIncome = this.financeService.currencyStrToNumber(this.income);
     this.fpcareDataService.spouseIncome = this.financeService.currencyStrToNumber(this.spouseIncome);
-    this.fpcareDataService.disabilityAmount = this.disabilityAmount;
+    this.fpcareDataService.disabilityAmount = this.financeService.currencyStrToNumber(this.disability);
+    this.fpcareDataService.spouseDisabilityAmount = this.financeService.currencyStrToNumber(this.spouseDisability);
   }
 
   /**
@@ -214,6 +219,21 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     }
 
     return this.financeService.calculateFamilyNetIncome( incomeNum, spouseNum );
+  }
+
+  private calculateTotalFamilyRdsp(): number {
+    let rdspNum = 0;
+    let spouseNum = 0;
+
+    if (this.disability) {
+      rdspNum = this.financeService.currencyStrToNumber( this.disability );
+    }
+
+    if ( this.hasSpouse && this.spouseDisability ) {
+      spouseNum = this.financeService.currencyStrToNumber( this.spouseDisability );
+    }
+
+    return this.financeService.calculateFamilyRdsp( rdspNum, spouseNum );
   }
 
   get bornBefore1939Label(): string {

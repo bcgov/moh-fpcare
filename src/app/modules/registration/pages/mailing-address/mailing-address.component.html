@@ -54,7 +54,8 @@
                   id="province"
                   name="province"
                   fpcareRequired>
-            <option *ngFor="let prov of provinceName" value="{{prov}}">{{ prov }}</option>
+            <option *ngFor="let prov of provinceName; let i = index;"
+                    value="{{prov}}">{{ prov }}</option>
           </select>
         </div>
 

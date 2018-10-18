@@ -150,6 +150,17 @@ export class FinanceService {
     return Number( familyNetIncome.toFixed(2) );
   }
 
+  public calculateFamilyRdsp(applicantRdsp: number = 0, spouseRdsp: number = 0) {
+    // Family RDSP amount (I05) = Applicants  RDSP amount  + Spouses  RDSP amount
+    /**
+     * ST17305 Fix
+     * There is some bug in typescript that causes incorrect values to be calculated when one number has 2 decimals
+     * and the other has 1 decimal. (e.g. 1000,9 + 1000.01 results in 1000.9099999 rather then 1000.91)
+     */
+    const familyTotalRdsp = applicantRdsp + spouseRdsp;
+    return Number( familyTotalRdsp.toFixed(2) );
+  }
+
   public calculateFamilyAdjustedIncome(familyNetIncome: number, disability: number): number {
     //Family Adjusted Income = Family Net Income - Family RDSP amount (I05)
     const adjustedIncome = familyNetIncome - disability;
