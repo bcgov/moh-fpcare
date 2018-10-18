@@ -113,6 +113,16 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       regStatusCode: RegStatusCode.SUCCESS,
       regStatusMsg: ''
     };
+   /* return {
+      uuid: request.body.uuid,
+      processDate: request.body.processDate,
+      clientName: request.body.clientName,
+      benefitYear: request.body.benefitYear,
+      assistanceLevels: [],
+      pre1939AssistanceLevels: [],
+      regStatusCode: RegStatusCode.ERROR,
+      regStatusMsg: 'database error'
+    };*/
   }
 
   private getCheckStatusFamNumResponse( request: HttpRequest<any> ): StatusCheckRegNum {

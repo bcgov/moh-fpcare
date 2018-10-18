@@ -75,6 +75,10 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
           if (benefitPayload.success){
             this.financeService.setAssistanceLevels(deductiblePayload.assistanceLevels,
                 deductiblePayload.pre1939AssistanceLevels);
+
+            if (deductiblePayload.error) {
+              this.financeService.failedToLoadAssistanceLevels(deductiblePayload.error);
+            }
           }
         },
         (deductibleError) => {
