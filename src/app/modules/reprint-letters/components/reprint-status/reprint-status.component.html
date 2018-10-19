@@ -3,18 +3,13 @@
   <h1 title>{{pgTitle}}</h1>
 
   <div body>
-<<<<<<< HEAD
-    <h2>{{status}}
-    </h2>
-=======
     <!--
       Using innerHTML bypasses angular's security sanitzation, so we can
       directly include links.  This is safe only because we know we control
       the messages coming back and no user supplied content will ever appear
       here.
     -->
-    <p class="font-weight-normal" [innerHTML]="status">"{{status}}"</p>
->>>>>>> registration
+     <p class="font-weight-normal" [innerHTML]="status">"{{status}}"</p>
   </div>
 
 </fpcare-results-framework>
