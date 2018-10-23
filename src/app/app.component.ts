@@ -10,6 +10,7 @@ import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Logger } from './services/logger.service';
+import {PersonType} from './models/api.model';
 
 @Component({
   selector: 'app-root',
@@ -45,7 +46,9 @@ export class AppComponent implements OnInit {
     if ( environment.useDummyData ) {
 
       // Purpose: Development
-      this.registerSingleApplicant( TestScenario.EligNotReg );
+      // this.registerSingleApplicant( TestScenario.EligNotReg );
+      //this.registrationBornBefore1939();
+      this.registerfamily();
 
       //this.statusCheckApplicant( TestScenario.Reg );
 
@@ -204,5 +207,67 @@ export class AppComponent implements OnInit {
     } else {
       this.fpcareDataService.applicant = this.dummyDataService.createPersonforStatusCheck( famNumber );
     }
+  }
+
+  registrationBornBefore1939(): void {
+
+    // applicant
+    this.fpcareDataService.applicant = this.dummyDataService.createPerson('9999999207', {
+      year: 1941,
+      month: 5,
+      day: 20
+    }, 'V1V2V5');
+    this.fpcareDataService.applicantIncome = this.dummyDataService.generateRandomNumber( 3000.01, 5000.00 );
+
+
+    // spouse
+    this.fpcareDataService.addSpouse();
+    this.fpcareDataService.hasSpouse = true;
+    this.fpcareDataService.spouse = this.dummyDataService.createPerson('9999999214', {
+      year: 1938,
+      month: 11,
+      day: 1
+    }, 'V1V2V5');
+    this.fpcareDataService.spouseIncome = this.dummyDataService.generateRandomNumber( 0, 3000.00 );
+
+    this.fpcareDataService.bornBefore1939 = true;
+  }
+
+  registerfamily(): void {
+
+    // Applicant
+    this.fpcareDataService.applicant = this.dummyDataService.createPerson('9999999934', {
+      year: 1980,
+      month: 2,
+      day: 29
+    }, 'V3V2V4');
+    this.fpcareDataService.applicantIncome = this.dummyDataService.generateRandomNumber( 51667.01, 55000.00 );
+
+    // Spouse
+    this.fpcareDataService.hasSpouse = true;
+    this.fpcareDataService.addSpouse();
+    this.fpcareDataService.spouse = this.dummyDataService.createPerson('9999999941', {
+      year: 1983,
+      month: 1,
+      day: 31
+    }, 'V3V2V4');
+    this.fpcareDataService.spouseIncome = this.dummyDataService.generateRandomNumber( 45000.01, 48333.00 );
+
+    this.fpcareDataService.bornBefore1939 = false;
+
+    // Children
+/*    this.fpcareDataService.addChild();
+    this.fpcareDataService.dependants[0] = this.dummyDataService.createPerson('9999999959', {
+      year: 2005,
+      month: 3,
+      day: 17
+    }, 'V3V2V4');
+
+    this.fpcareDataService.addChild();
+    this.fpcareDataService.dependants[1] = this.dummyDataService.createPerson('9999999966', {
+      year: 2009,
+      month: 12,
+      day: 31
+    }, 'V3V2V4');*/
   }
 }

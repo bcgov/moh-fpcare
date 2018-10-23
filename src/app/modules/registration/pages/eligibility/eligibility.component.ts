@@ -39,6 +39,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
 
   /** Page to naviage to when continue process */
   private _baseUrl = REGISTRATION_PATH + '/';
+  private _SENIOR_ASSISTENCE_YEAR = 1939;
 
   constructor( protected router: Router
              , private fpcareDataService: FPCareDataService
@@ -160,7 +161,14 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
       this.loading = false;
 
       if ( this.responseStore.eligibility.success ) {
-        this.registrationService.familyStructure = this.responseStore.eligibility.persons;
+        /**
+         * Set born before 1939 flag based on birthdates entered
+         * ST17390
+         */
+        this.fpcareDataService.bornBefore1939 =
+            ((this.applicant.dateOfBirth.year <= this._SENIOR_ASSISTENCE_YEAR ) ||
+             (this.hasSpouse && this.spouse.dateOfBirth.year <= this._SENIOR_ASSISTENCE_YEAR )) ? true : false;
+
         this.navigate( this._baseUrl + REGISTRATION_PERSONAL );
         this.logger.log({
           event: 'eligibilityCheck',

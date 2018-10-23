@@ -32,7 +32,9 @@ export class FakeBackendService {
     {perType: PersonType.applicantType, phn: '9999999934', dateOfBirth: '19800229', postalCode: 'V2V2V4'},
     {perType: PersonType.spouseType, phn: '9999999941', dateOfBirth: '19830131', postalCode: 'V2V2V4'},
     {perType: PersonType.dependent, phn: '9999999959', dateOfBirth: '20050317', postalCode: 'V2V2V4'},
-    {perType: PersonType.dependent, phn: '9999999966', dateOfBirth: '20091231', postalCode: 'V2V2V4'}
+    {perType: PersonType.dependent, phn: '9999999966', dateOfBirth: '20091231', postalCode: 'V2V2V4'},
+    {perType: PersonType.applicantType, phn: '9999999207', dateOfBirth: '19410520', postalCode: 'V1V2V5'},
+    {perType: PersonType.spouseType, phn: '9999999214', dateOfBirth: '19381101', postalCode: 'V1V2V5'},
   ];
 
   constructor( private financeService: FinanceService ) {
@@ -50,6 +52,10 @@ export class FakeBackendService {
     return this._fpcRegList_RN.map( famNum => famNumList.includes( famNum ) )
         .filter( x => x === true )
         .length !== 0;
+  }
+
+  public hasDependants( familyMem: PersonInterface[] ): boolean {
+    return familyMem.filter( x => x.perType === PersonType.dependent ).length !== 0;
   }
 
 

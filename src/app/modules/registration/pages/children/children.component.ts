@@ -3,10 +3,17 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
 import {Router} from '@angular/router';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
-import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ValidationService} from '../../../../services/validation.service';
-import {REGISTRATION_ADDRESS, REGISTRATION_PATH, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
+import {
+  REGISTRATION_ADDRESS,
+  REGISTRATION_PATH,
+  REGISTRATION_RESULTS,
+  REGISTRATION_REVIEW
+} from '../../../../models/route-paths.constants';
 import {RegistrationService} from '../../registration.service';
+import {ResponseStoreService} from '../../../../services/response-store.service';
+import {DependentMandatory, PersonInterface, PersonType} from '../../../../models/api.model';
+import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 
 @Component({
   selector: 'fpcare-children',
@@ -19,19 +26,36 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
   /** Indicates whether or not the same PHNs has been used for another family member */
   private _uniquePhns = true;
+  private _dependentMandatory = false;
+  private _childList: PersonInterface[];
 
   /** Page to navigate to when continue process */
-  private _url = REGISTRATION_PATH + '/' + REGISTRATION_ADDRESS;
+  /** Page to naviage to when continue process */
+  private _baseUrl = REGISTRATION_PATH + '/';
 
   constructor( private fpcService: FPCareDataService
              , private validationService: ValidationService
              , protected router: Router
+             , private responseStore: ResponseStoreService
              , private registrationService: RegistrationService ) {
     super( router );
   }
 
   ngOnInit() {
     this.registrationService.setItemIncomplete();
+
+    if ( this.responseStore.eligibility &&
+         this.responseStore.eligibility.dependantMandatory === DependentMandatory.YES ) {
+      // Flag dependants mandatory so that the skip button is not available
+      this._dependentMandatory = true;
+      this.fpcService.addChild();
+
+      this._childList = this.responseStore.eligibility.persons.map( person => {
+        if ( person.perType === PersonType.dependent ) {
+          return person;
+        }
+      }).filter( x => x );
+    }
   }
 
   /**
@@ -74,7 +98,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * @returns {boolean}
    */
   get hasChildren(): boolean {
-    return this.fpcService.hasChildren;
+    return this.fpcService.hasChildren || this._dependentMandatory;
   }
 
   /**
@@ -142,6 +166,12 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   removeChild( idx: number ) {
     this.children.splice( idx, 1 );
+
+    // Child to be added if mandatory
+    if ( this._dependentMandatory && this.children.length === 0 ) {
+      this.fpcService.addChild();
+    }
+
   }
 
   // Methods triggered by the form action bar
@@ -150,10 +180,39 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * Navigates to the next page
    */
   continue () {
-    if ( this.canContinue() ) {
-      this.registrationService.setItemComplete();
-      this.navigate( this._url );
+
+    if ( !this.canContinue() ) {
+      return;
     }
+
+    this.registrationService.setItemComplete();
+
+    // Children have been entered - need to valid with information returned by eligibility check
+    if ( this.hasChildren ) {
+
+      // Validate children
+      const childActiveMSP = this.children.map( child => this.isInFamily( child.getNonFormattedPhn() ) )
+          .filter( x => x !== true )
+          .length === 0;
+
+      if ( !childActiveMSP ) {
+        //Set message #26 - need to pull actual message from front-end message cache
+        this.registrationService.processError = true;
+        this.registrationService.processErrorMsg = 'Child does not have active MSP (message to be updated when cache working)';
+      } else {
+        const childInfoCorrect = this.children.map(child => this.isInfoCorrect( child.getNonFormattedPhn(), child.dateOfBirthShort) )
+            .filter(x => x !== true).length === 0;
+
+        if (!childInfoCorrect) {
+          //Set message #48 - need to pull actual message from front-end message cache
+          this.registrationService.processError = true;
+          this.registrationService.processErrorMsg = 'We could not confirm some of the information entered (message to be updated when cache working)';
+        }
+      }
+    }
+
+    this.navigate( this._baseUrl +
+        ( this.registrationService.processError ? REGISTRATION_RESULTS : REGISTRATION_ADDRESS ) );
   }
 
   /**
@@ -179,5 +238,26 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
       phnList.push(this.fpcService.spouse.phn);
     }
     return phnList;
+  }
+
+  /**
+   * Check whether child is in the family, no children reported on MSP return false if children entered
+   * @param {string} phn
+   * @returns {boolean}
+   */
+  isInFamily( phn: string ): boolean {
+    // No children on MSP cannot register with children
+    return ( this._childList ? this._childList.filter( child => child.phn === phn ).length !== 0 : false );
+  }
+
+  /**
+   * Check whether child information matches that returned by eligibility check, No children on MSP return false
+   * @param {string} phn
+   * @param {SimpleDate} dob
+   * @returns {boolean}
+   */
+  isInfoCorrect( phn: string, dob: string ): boolean {
+    return ( this._childList ? this._childList.filter( child => child.phn === phn && child.dateOfBirth === dob )
+        .length !== 0 : false );
   }
 }

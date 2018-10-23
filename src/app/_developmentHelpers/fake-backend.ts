@@ -182,7 +182,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       clientName: request.body.clientName,
       benefitYear: request.body.benefitYear,
       persons: ( family ? family : '' ),
-      dependentMandatory: DependentMandatory.NO,
+      dependentMandatory: (this.fakebackendService.hasDependants ? DependentMandatory.YES : DependentMandatory.NO),
       regStatusMsg: 'Fake backend - ' + ( alreadyRegistered ? 'Already registered' :
           ( family ? ( eligible ? 'Success' : 'DOBs do not match' ) : 'Not eligible' ) ),
       regStatusCode: ( alreadyRegistered ? RegStatusCode.WARNING :

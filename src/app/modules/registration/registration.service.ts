@@ -13,8 +13,13 @@ export class RegistrationService {
 
   public registrationItems: RegistrationItem [] = [];
 
-  /** Family structure returned by check eligibility call to backend */
-  public familyStructure: PersonInterface[] = [];
+  /**
+   * Used for front-end errors.
+   * ex.
+   * Dependents entered by applicant do not match those returned by eligibility check
+   */
+  public processErrorMsg: string;
+  public processError: boolean = false;
 
   constructor( private router: Router ) {}
 
@@ -84,16 +89,13 @@ export class RegistrationService {
 
   // Family structure verification
   /**
-   * Indicates whether postal code matches
-   * @param {string} pc
-   * @returns {boolean}
+   *
+   * @param {Person} person
+   * @param {PersonType} personType
+   * @param {string} netIncome
+   * @param {string} rdsp
+   * @returns {PersonInterface}
    */
-  isPostalCodeMatch( pc: string ): boolean {
-    // TODO:  Confirm what happens when all family members do not have the same postal code
-    return this.familyStructure.map( person => pc === person.postalCode )
-        .filter( x => x === true ).length !== 0;
-  }
-  
   setPersonInterfaceForReg( person: Person,
                             personType: PersonType,
                             netIncome: string = null,

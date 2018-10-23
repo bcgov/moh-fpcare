@@ -10,6 +10,7 @@ export enum ProvinceNames {
   ON = 'Ontario',
   PE = 'Prince Edward Island',
   QC = 'Quebec',
+
   SK = 'Saskatchewan',
   YT = 'Yukon'
 }
@@ -17,3 +18,18 @@ export enum ProvinceNames {
 export enum CountryNames {
   CAN = 'Canada'
 }
+
+export const provinceList = Object.keys(ProvinceNames);
+export const countryList = Object.keys(CountryNames);
+
+export const defaultProv = provinceList.filter( x => {
+  if ( ProvinceNames[x] === ProvinceNames.BC) {
+    return x;
+  }
+})[0];
+
+export const defaultCountry = countryList.filter( x => {
+  if ( CountryNames[x] === CountryNames.CAN ) {
+    return x;
+  }
+})[0];

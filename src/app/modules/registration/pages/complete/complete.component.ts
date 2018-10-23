@@ -121,7 +121,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
             street: this.applicant.updAddress.street,
             city: this.applicant.updAddress.city,
             province: this.applicant.updAddress.province,
-            postalCode: this.applicant.updAddress.postal,
+            postalCode: this.applicant.getNonFormattedPostalCode(),
             country: this.applicant.updAddress.country
           } : null
     });

@@ -6,8 +6,15 @@ import { REGISTRATION_PATH, REGISTRATION_REVIEW } from '../../../../models/route
 import { FPCareDataService } from '../../../../services/fpcare-data.service';
 import { RegistrationService } from '../../registration.service';
 import { FPCareRequiredDirective } from '../../../../validation/fpcare-required.directive';
-import { CountryNames, ProvinceNames } from '../../../../models/province-names.enum';
+import {
+  CountryNames,
+  defaultCountry, defaultProv,
+  provinceList,
+  ProvinceNames
+} from '../../../../models/province-names.enum';
 import {ValidationService} from '../../../../services/validation.service';
+import {PersonInterface, PersonType} from '../../../../models/api.model';
+import {ResponseStoreService} from '../../../../services/response-store.service';
 
 @Component({
   selector: 'fpcare-mailing-address',
@@ -18,15 +25,16 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
   @ViewChildren(FPCareRequiredDirective) fpcareRequired;
 
-
   /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_REVIEW;
+  private _postalCode: string[];
 
   public isPostalMatch: boolean = true;
 
   constructor( private fpcService: FPCareDataService
              , protected router: Router
              , private registrationService: RegistrationService
+             , private responseStore: ResponseStoreService
              , private cd: ChangeDetectorRef) {
     super( router );
   }
@@ -34,17 +42,35 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   ngOnInit() {
 
     // Update address not complete, set defaults
-    if ( !this.applicant.updAddress.isComplete() ) {
+    if (!this.applicant.updAddress.isComplete()) {
 
-      // Set country -- Pnet pataddr table only allows 3 characters for country field
-      this.applicant.updAddress.country = CountryNames.CAN;
-      this.applicant.updAddress.province = ProvinceNames.BC;
+      // Set country -- Canada only country in Countries
+      this.applicant.updAddress.country = defaultCountry;
+      this.applicant.updAddress.province = defaultProv;
     }
 
     this.registrationService.setItemIncomplete();
 
+    if (this.responseStore.eligibility) {
+
+      // Store the list of family members - used to validate postal code
+      this._postalCode = this.responseStore.eligibility.persons.map(person => {
+        if (person.perType === PersonType.applicantType) {
+          return person.postalCode;
+        }
+      }).filter(x => x);
+    }
+
     // Handles case when returning to page with data (e.g. back/forward nav)
     this.checkPostal();
+  }
+
+  get countryName(): string {
+    return CountryNames[this.applicant.updAddress.country];
+  }
+
+  getProvinceID( index ) {
+    return provinceList[index];
   }
 
   /**
@@ -52,7 +78,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    * @returns {any[]}
    */
   get provinceName() {
-    return Object.keys(ProvinceNames).map( key => ProvinceNames[key] );
+    return provinceList.map( key => ProvinceNames[key] );
   }
   /**
    * Check to verify whether user can continue or not
@@ -65,7 +91,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   checkPostal(): void {
     if (this.applicant.address.hasPostal()){
       const pc = this.applicant.getNonFormattedPostalCode();
-      this.isPostalMatch = this.registrationService.isPostalCodeMatch( pc );
+      this.isPostalMatch = this.isPostalCodeMatch( pc );
 
       // Set postal code
       if (!this.isPostalMatch && (this.applicant.address.postal !== this.applicant.updAddress.postal)) {
@@ -76,7 +102,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
         this.applicant.updAddress.postal = '';
       }
 
-      console.log('checkPostal', this.isPostalMatch, this.registrationService.familyStructure);
+      console.log('checkPostal', this.isPostalMatch, this._postalCode );
     }
   }
 
@@ -114,6 +140,18 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     return ValidationService.MAX_STREET_LENGTH;
   }
 
+
+  /**
+   * Indicates whether postal code matches
+   * @param {string} pc
+   * @returns {boolean}
+   */
+  isPostalCodeMatch( pc: string ): boolean {
+
+    // No postal code force update
+    return (this._postalCode ? this._postalCode.map( postalCode => pc === postalCode )
+        .filter( x => x === true ).length !== 0 : false );
+  }
   // Methods triggered by the form action bar
 
   /**

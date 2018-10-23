@@ -55,10 +55,12 @@
                   name="province"
                   fpcareRequired>
             <option *ngFor="let prov of provinceName; let i = index;"
-                    value="{{prov}}">{{ prov }}</option>
+                    value="{{getProvinceID(i)}}">{{ prov }}</option>
           </select>
         </div>
-
+        <div class="form-group">
+          <fpcare-postal-code [value]="applicant.updAddress.postal" disabled></fpcare-postal-code>
+        </div>
         <div class="form-group">
           <label for="country">Country</label>
           <input class="form-control"
@@ -66,7 +68,7 @@
                  id="country"
                  name="country"
                  disabled
-                 [ngModel]="applicant.updAddress.country" />
+                 [ngModel]="countryName" />
         </div>
       </div>
     </div>

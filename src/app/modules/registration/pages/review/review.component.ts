@@ -10,6 +10,7 @@ import {
 } from '../../../../models/route-paths.constants';
 import {RegistrationService} from '../../registration.service';
 import {FinanceService} from '../../../financial-calculator/finance.service';
+import {CountryNames, ProvinceNames} from '../../../../models/province-names.enum';
 
 @Component({
   selector: 'fpcare-review',
@@ -202,7 +203,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getProvince(): string {
-    return  this.isAddressUpdated ? this.applicant.updAddress.province : this.applicant.address.province;
+    return  ProvinceNames[(this.isAddressUpdated ? this.applicant.updAddress.province : this.applicant.address.province)];
   }
 
   /**
@@ -210,7 +211,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   getCountry(): string {
-    return  this.isAddressUpdated ? this.applicant.updAddress.country : this.applicant.address.country;
+    return  CountryNames[(this.isAddressUpdated ? this.applicant.updAddress.country : this.applicant.address.country)];
   }
 
   /**

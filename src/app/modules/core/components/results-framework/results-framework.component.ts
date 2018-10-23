@@ -15,6 +15,7 @@ export class ResultsFrameworkComponent {
 
   @Input() displayIcon: DisplayIcon = DisplayIcon.SUCCESS;
   @Input() hasBody: boolean = true;
+  @Input() displayPrint: boolean = false;
 
   constructor() { }
 

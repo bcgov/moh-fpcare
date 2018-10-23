@@ -2,19 +2,27 @@
 
   <ng-content select="[title]"></ng-content>
 
-  <!-- Icons to display -->
-  <div [ngSwitch]="displayIcon">
-    <p *ngSwitchCase = "errorIcon" class="fpc-icon--error">
-     <i class="fa fa-2x fa-exclamation-triangle text-danger" aria-label="error"></i>
-    </p>
+  <div class="d-flex row">
+    <!-- Icons to display -->
+    <div class="col-md-6" [ngSwitch]="displayIcon">
+      <p *ngSwitchCase = "errorIcon" class="fpc-icon--error">
+       <i class="fa fa-2x fa-exclamation-triangle text-danger" aria-label="error"></i>
+      </p>
 
-    <p *ngSwitchCase = "successIcon" class="fpc-icon--success">
-      <i class="fa fa-2x fa-check-circle text-success" aria-label="success"></i>
-    </p>
+      <p *ngSwitchCase = "successIcon" class="fpc-icon--success">
+        <i class="fa fa-2x fa-check-circle text-success" aria-label="success"></i>
+      </p>
 
-    <p *ngSwitchCase = "warningIcon" class="fpc-icon--warning">
-      <i class="fa fa-2x fa-exclamation-circle text-warning" aria-label="warning"></i>
-    </p>
+      <p *ngSwitchCase = "warningIcon" class="fpc-icon--warning">
+        <i class="fa fa-2x fa-exclamation-circle text-warning" aria-label="warning"></i>
+      </p>
+    </div>
+
+    <div class="col-md-6" *ngIf="displayPrint">
+      <button class="btn btn-default float-right fpc-icon--print" onclick="window.print();return false;" aria-label="print">
+        <i class="fa fa-print fa-lg pointer" aria-hidden="true"></i>
+      </button>
+    </div>
   </div>
 
   <div class="p-md-2 bg-light">

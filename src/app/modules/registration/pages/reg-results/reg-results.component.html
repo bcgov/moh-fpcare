@@ -1,29 +1,44 @@
-<fpcare-results-framework [displayIcon]="getIcon()" [hasBody]="response">
+<fpcare-results-framework [displayIcon]="getIcon()" [hasBody]="response"
+                          [displayPrint]="hasRegistration && isSuccess">
 
    <h1 title>{{pgTitle}}</h1>
-      <div body>
-         <div *ngIf='hasRegistration && isRegistrationComplete; else incompleteRegistration'>
-         <p class="font-weight-bold h2">{{dateStamp}} - Registration Number: {{famNumber}}</p>
-            <p class="font-weight-normal"> What happens next </p>
-            <ul>
-               <li>
-                  Important: Keep your registration number - write it down, or print this page for your records
-               </li>
-               <li>
-                  To inquire about the status of your registration, select
-                  <a target="_blank"  [routerLink]="checkRegistrationStatus">
-                     Check the Status of your Registration
-                  </a> on the menu and enter your registration number
-               </li>
-               <li>
-                  Based on the information you have provided a temporary Fair PharmaCare deductible will be maintained
-                  for your family for a period not exceeding 30 days as follows:
-                  <div class="col-md-6" [@growVertical] >
-                     <fpcare-annual-deductible
-                     [pharmaCareLevel]="assistenceLevel">
-                     </fpcare-annual-deductible>
-                  </div>
-               </li>
+
+   <div body>
+      <div *ngIf='hasRegistration && isRegistrationComplete; else incompleteRegistration'>
+      <p class="font-weight-bold h2">{{dateStamp}} - Registration Number: {{famNumber}}</p>
+         <p class="font-weight-normal">What happens next</p>
+         <ul>
+            <li>
+               You are registered for Fair Pharmacare.
+            </li>
+            <li>
+               You have temporary coverage until we check your income with the Canada Revenue Agency
+            </li>
+            <li>
+               If your income is verified, you will receive a confirmation letter within 30 days detailing your level
+               of coverage.
+            </li>
+            <li>
+               If we cannot verify your income, you will receive a letter within 30 days asking for more information.
+            </li>
+            <li>
+               Important: Keep your registration number - write it down, or print this page for your records.
+            </li>
+            <li>
+               To inquire about the status of your registration, select
+               <a target="_blank"  [routerLink]="checkRegistrationStatus">
+                  Check the Status of your Registration
+               </a> on the menu and enter your registration number.
+            </li>
+            <li>
+               Based on the information you have provided a temporary Fair PharmaCare deductible will be maintained
+               for your family for a period not exceeding 30 days as follows:
+               <div class="col-md-6" [@growVertical] >
+                  <fpcare-annual-deductible
+                  [pharmaCareLevel]="assistenceLevel">
+                  </fpcare-annual-deductible>
+               </div>
+            </li>
             </ul>
       </div>
    </div>

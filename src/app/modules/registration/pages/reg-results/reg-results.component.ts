@@ -68,6 +68,34 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
   }
 
   /**
+   * Override status method
+   * @returns {string}
+   */
+  get status(): string {
+    if ( this.registrationService.processError ) {
+      return this.registrationService.processErrorMsg;
+    } else if (this.response) {
+      return this.response.message;
+    }
+  }
+
+  /**
+   * Override isError method
+   * @returns {boolean}
+   */
+  get isError(): boolean {
+    return this.response.error || this.registrationService.processError;
+  }
+
+  /**
+   * Override isSuccess method
+   * @returns {boolean}
+   */
+  get isSuccess(): boolean {
+    return this.response.success && !this.registrationService.processError;
+  }
+
+  /**
    *
    * @returns {PharmaCareAssistanceLevel}
    */

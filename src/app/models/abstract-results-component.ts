@@ -21,10 +21,22 @@ export abstract class AbstractResultsComponent extends Base {
     let iconValue = DisplayIcon.ERROR;
 
     if ( this.response ) {
-      iconValue = this.response.success ? DisplayIcon.SUCCESS :
-          (this.response.error ? DisplayIcon.ERROR : DisplayIcon.WARNING );
+      iconValue = this.isSuccess ? DisplayIcon.SUCCESS :
+          (this.isError ? DisplayIcon.ERROR : DisplayIcon.WARNING );
     }
 
     return iconValue;
+  }
+
+  get isSuccess(): boolean {
+    return this.response.success;
+  }
+
+  get isWarning(): boolean {
+    return this.response.warning;
+  }
+
+  get isError(): boolean {
+    return this.response.error;
   }
 }

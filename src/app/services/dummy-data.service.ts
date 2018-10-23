@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Person } from '../models/person.model';
 import { Address } from '../models/address.model';
 import {SimpleDate} from '../modules/core/components/date/simple-date.interface';
+import {CountryNames, ProvinceNames} from '../models/province-names.enum';
 
 export enum TestScenario {
   EligNotReg = 0,
@@ -127,8 +128,8 @@ export class DummyDataService {
 
     address.street = `${Math.ceil(Math.random() * 8000)} ${this.getRandomElFromArray( streetNames )} St.`;
     address.postal = `${this.getRandomElFromArray( postalCodes )}`;
-    address.country = 'Canada';
-    address.province = 'British Columbia';
+    address.country = CountryNames.CAN;
+    address.province = ProvinceNames.BC;
     address.city = 'Victoria';
     return address;
   }
@@ -167,13 +168,4 @@ export class DummyDataService {
     }
     return result;
   }
-
-  /**
-{perType: PersonType.applicantType, phn: '9999999998', dateOfBirth: '19890520', postalCode: 'V1V2V3'},
-{perType: PersonType.spouseType, phn: '9999999927', dateOfBirth: '19900101', postalCode: 'V1V2V3'},
-{perType: PersonType.applicantType, phn: '9999999934', dateOfBirth: '19800229', postalCode: 'V2V2V4'},
-{perType: PersonType.spouseType, phn: '9999999941', dateOfBirth: '19830131', postalCode: 'V2V2V4'},
-{perType: PersonType.dependent, phn: '9999999959', dateOfBirth: '20050317', postalCode: 'V2V2V4'},
-{perType: PersonType.dependent, phn: '9999999966', dateOfBirth: '20091231', postalCode: 'V2V2V4'}
-*/
 }
