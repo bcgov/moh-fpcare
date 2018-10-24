@@ -22,3 +22,4 @@ export const REGISTRATION_AUTHORIZE = 'authorize';
 export const REGISTRATION_RESULTS = 'results';
 
 export const ERROR_404 = 'error404';
+export const MAITENANCE = 'maintenance';

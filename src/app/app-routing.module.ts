@@ -7,7 +7,8 @@ import {
   REGISTRATION_PATH,
   REGISTRATION_STATUS_PATH,
   REPRINT_LETTERS_PATH,
-  STANDALONE_CALCULATOR
+  STANDALONE_CALCULATOR,
+  MAITENANCE
 } from './models/route-paths.constants';
 import {ErrorPageComponent} from './pages/error-page/error-page.component';
 
@@ -21,13 +22,13 @@ const routes: Routes = [
     component: HomePageComponent,
     data: { breadcrumb: 'Home'}
   },
-  {
-    path: 'demo',
-    component: DemoPageComponent,
-    data: {
-      breadcrumb: 'Demo'
-    }
-  },
+  // {
+  //   path: 'demo',
+  //   component: DemoPageComponent,
+  //   data: {
+  //     breadcrumb: 'Demo'
+  //   }
+  // },
 
   // Lazy loading modules below
   {
@@ -49,6 +50,10 @@ const routes: Routes = [
   {
     path: ERROR_404,
     component: ErrorPageComponent
+  },
+  {
+    path: MAITENANCE,
+    loadChildren: 'app/modules/splash-page/splash-page.module#SplashPageModule',
   },
   {
     path: '**',

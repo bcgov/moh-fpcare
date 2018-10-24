@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -35,7 +35,7 @@ const providerList: any = [
     ValidationService,
     RegistrationService,
     Title,
-  ];
+];
 
 if ( environment.useMockBackend ) {
   // provider used to create fake backend - development of registration modules

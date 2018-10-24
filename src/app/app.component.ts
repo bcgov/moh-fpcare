@@ -11,6 +11,8 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Logger } from './services/logger.service';
 import {PersonType} from './models/api.model';
+import { SpaEnvService } from './services/spa-env.service';
+import { SplashPageService } from './modules/splash-page/splash-page.service';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +30,8 @@ export class AppComponent implements OnInit {
               private titleService: Title,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private logger: Logger) {
+              private logger: Logger,
+              public SpaEnvService: SpaEnvService) {
   }
 
   ngOnInit() {

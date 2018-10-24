@@ -21,6 +21,19 @@ npm install
 npm run dev # Runs a local dev server
 ```
 
+## Maitenance Mode / Splash Page
+
+You need access to OpenShift to enable the splash page.  It is controlled via env variables for the "spa-env-server" pod.
+
+To enable the splash page:
+
+1. Go to the correct OpenShift environment (e.g. dev/test/prod)
+2. Applications > Deployments > spa-env-server
+3. Environment tab
+4. Set SPA_ENV_MSP_MAINTENANCE_START and SPA_ENV_MSP_MAINTENANCE_END
+
+The spa-env-server will automatically set the maintence mode flag between these times.
+
 ## Versioning Deployments
 
 Prior to TEST and PROD builds you must update the version number. There are two npm scripts which do this: `npm run test-version` and `npm run prod-version`.  These commands 
