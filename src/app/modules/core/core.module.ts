@@ -34,6 +34,7 @@ import { CaptchaComponent } from 'mygovbc-captcha-widget/src/app/captcha/captcha
 import { PhnComponent } from './components/phn/phn.component';
 import { SinComponent } from './components/sin/sin.component';
 import {NameComponent} from './components/name/name.component';
+import { ModalFocusDirective } from './components/consent-modal/modal-focus.directive';
 
 
 const componentList = [
@@ -63,7 +64,8 @@ const componentList = [
   FileUploaderComponent,
   FPCareDateComponent,
   ResultsFrameworkComponent,
-  CaptchaComponent
+  CaptchaComponent,
+  ModalFocusDirective
 ];
 
 @NgModule({

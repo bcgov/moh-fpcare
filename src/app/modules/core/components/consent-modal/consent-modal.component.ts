@@ -1,4 +1,4 @@
-import {Component, ViewChild, EventEmitter, Output, OnInit} from '@angular/core';
+import {Component, ViewChild, EventEmitter, Output, OnInit, ElementRef, ChangeDetectorRef} from '@angular/core';
 import { Base } from '../base/base.class';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import {environment} from '../../../../../environments/environment';
@@ -19,10 +19,11 @@ export class ConsentModalComponent extends Base implements OnInit {
   private _hasToken = false;
 
   @ViewChild('informationCollectionModal') public informationCollectionModal: ModalDirective;
+  @ViewChild('agree') checkbox: ElementRef<HTMLInputElement>;
 
   @Output() onConsented = new EventEmitter<boolean>();
 
-  constructor( private apiService: ApiService ) {
+  constructor( private apiService: ApiService, private cd: ChangeDetectorRef ) {
     super();
   }
 
@@ -40,6 +41,11 @@ export class ConsentModalComponent extends Base implements OnInit {
   public closeModal(): void {
     this.informationCollectionModal.hide();
     this.onConsented.emit( this.agreeCheck );
+  }
+
+  public modalShown(event){
+    //Set focus on the checkbox
+    this.checkbox.nativeElement.focus();
   }
 
   /** Use the UUID as a cryptographic client nonce to avoid replay attacks. */
