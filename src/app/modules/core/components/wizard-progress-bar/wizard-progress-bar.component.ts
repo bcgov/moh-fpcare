@@ -46,14 +46,18 @@ export class WizardProgressBarComponent extends Base implements OnInit {
   }
 
   calculateProgressPercentage(): Number {
-    const denominator = this.progressSteps.length + 1;
+    const denominator = this.progressSteps.length;
     const numerator = this.activeIndex + 1;
 
     if (denominator === 0 || numerator >= denominator){
       return 100;
     }
 
-    return Math.round((numerator / denominator) * 100);
+    // Because we've switched from space-evenly to space-around (for IE), we
+    // have to handle the half-space that space-around adds to the start/end of
+    // the container
+    const halfSpace = 1 / (denominator * 2);
+    return Math.round(((numerator / denominator) - halfSpace) * 100);
   }
 
   getActiveIndex(url): number {

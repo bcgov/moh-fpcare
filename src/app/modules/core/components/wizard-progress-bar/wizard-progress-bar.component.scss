@@ -11,7 +11,8 @@
 
 .step-container {
   display: flex;
-  justify-content: space-evenly;
+  // IE10 doesn't support space-evenly, so use space-between
+  justify-content: space-around;
 }
 
 progressbar {
