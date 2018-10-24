@@ -1,15 +1,19 @@
 <div bsModal #informationCollectionModal="bs-modal"
+     fpcModalFocus
      class="modal fade"
      tabindex="-1"
      role="dialog"
-     aria-hidden="true">
+     aria-labelledby="consentModalTitle"
+     aria-describedby="consentModalDesc"
+     aria-hidden="true"
+     (onShown)="modalShown($event)">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header modal-header-primary">
-        <h2 class="modal-title pull-left">Information Collection Notice</h2>
+        <h2 class="modal-title pull-left" id="consentModalTitle">Information Collection Notice</h2>
       </div>
       <div class="modal-body">
-        <p>
+        <p id='consentModalDesc'>
           Keep your personal information secure - especially when using a shared computer at a library, school or
           cafe.  To remove any information you entered, either complete the application and submit it or, if you don't
           finish, close the web browser.
@@ -32,8 +36,10 @@
 
       <div class="d-flex align-items-center p-md-2">
         <span class="checkbox checkbox-success checkbox-inline pl-4 mb-4 mb-md-0">
-          <input class="btn btn-lg mr-md-2" id="agree" type="checkbox" [(ngModel)]="agreeCheck">
-          <label class='d-inline' for="agree"><strong>I have read and understand this information</strong></label>
+          <label class='d-inline'>
+            <input class="btn btn-lg mr-md-2" name='agree' id="agree" type="checkbox" [(ngModel)]="agreeCheck" #agree>
+            <strong>I have read and understand this information</strong>
+          </label>
         </span>
       </div>
       <div *ngIf="agreeCheck" [@growVertical]>
