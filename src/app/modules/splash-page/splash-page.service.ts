@@ -27,6 +27,9 @@ export class SplashPageService {
 
 
   constructor(private http: HttpClient, private envService: SpaEnvService, private router: Router) {
+  }
+  
+  public setup(): void {
     this.load().then(isMaitenance => {
       if (isMaitenance) {
         this.router.navigate(['maintenance']);

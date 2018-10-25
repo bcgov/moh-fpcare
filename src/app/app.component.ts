@@ -31,10 +31,12 @@ export class AppComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private logger: Logger,
-              public SpaEnvService: SpaEnvService) {
+              public SplashPageService: SplashPageService) {
   }
 
   ngOnInit() {
+    console.log(this.SplashPageService);
+    this.SplashPageService.setup();
     // Testers have asked for Version to be logged with every build.
     if (version.success){
       console.log('%c' + version.message, 'color: #036; font-size: 20px;');
