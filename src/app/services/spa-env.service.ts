@@ -36,7 +36,7 @@ export type SpaEnvResponse = typeof serverEnvs;
 
 /**
  * Responsible for retrieving values from the spa-env-server on OpenShift.
- * 
+ *
  * Subscribe to SpaEnvService.values() to get the env values.
  */
 @Injectable({
@@ -55,18 +55,15 @@ export class SpaEnvService extends AbstractHttpService {
   constructor(protected http: HttpClient, private logService: Logger) {
     super(http);
 
-    this.loadEnvs();
+    this.loadEnvs().subscribe(response => this._values.next(response));
   }
 
-  public loadEnvs(){
+  private loadEnvs(){
     const url = environment.envServerUrl;
 
-    return this.post<SpaEnvResponse>(url, null).pipe(
-        // When the SpaEnv server is being deployed it can return an HTML error
-        // page, and it should resolve shortly, so we try again.
-        retry(3),
-        tap(response => this._values.next(response))
-      );
+    // When the SpaEnv server is being deployed it can return an HTML error
+    // page, and it should resolve shortly, so we try again.
+    return this.post<SpaEnvResponse>(url, null).pipe(retry(3));
   }
 
   protected handleError(error: HttpErrorResponse) {

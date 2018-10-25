@@ -3,11 +3,12 @@ import { SpaEnvService, SpaEnvResponse } from '../../services/spa-env.service';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { filter, distinctUntilChanged } from 'rxjs/operators';
 
 /**
  * Responsible for determing if the splash page (aka maintenance mode) is
  * enabled. It uses the spa-env-server to get these values.
- * 
+ * \
  * Subscribe to .values() to get the spa env values.
  */
 @Injectable({
@@ -23,12 +24,19 @@ export class SplashPageService {
    * Currently this is all the values from the SpaEnvService, because all those
    * values are used for the splash service.
    */
-  public values: Observable<SpaEnvResponse> = this._values.asObservable();
+  public values: Observable<SpaEnvResponse> = this._values.asObservable()
+    .pipe(
+      filter(x => x !== null),
+      distinctUntilChanged()
+    );
 
 
   constructor(private http: HttpClient, private envService: SpaEnvService, private router: Router) {
   }
-  
+
+  /**
+   * Check if maitenance mode is active, and if so redirect to splash page.
+   */
   public setup(): void {
     this.load().then(isMaitenance => {
       if (isMaitenance) {
@@ -43,7 +51,7 @@ export class SplashPageService {
         resolve(this.maintenanceMode);
       }
       else {
-        this.envService.loadEnvs().subscribe(envs => {
+        this.envService.values.subscribe(envs => {
           this.loaded = true;
           this.maintenanceMode = envs.SPA_ENV_MSP_MAINTENANCE_FLAG.toLowerCase() === 'true';
           this._values.next(envs);

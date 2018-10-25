@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SplashPageService } from '../../splash-page.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'fpcare-splash-page',
@@ -15,16 +16,13 @@ export class SplashPageComponent implements OnInit {
   public startTime: string;
   public endTime: string;
   public message: string;
-
   private sub$: Subscription;
 
   ngOnInit() {
     this.sub$ = this.splashService.values.subscribe(splashVals => {
-      if (splashVals){
-        this.startTime = splashVals.SPA_ENV_MSP_MAINTENANCE_START;
-        this.endTime = splashVals.SPA_ENV_MSP_MAINTENANCE_END;
-        this.message = splashVals.SPA_ENV_MSP_MAINTENANCE_MESSAGE;
-      }
+      this.startTime = splashVals.SPA_ENV_MSP_MAINTENANCE_START;
+      this.endTime = splashVals.SPA_ENV_MSP_MAINTENANCE_END;
+      this.message = splashVals.SPA_ENV_MSP_MAINTENANCE_MESSAGE;
 
       // This effectively replaces a canLoad/canActivate route guard.
       // Unfortunately, these guards don't play nice with direct deep linking,
@@ -36,7 +34,6 @@ export class SplashPageComponent implements OnInit {
       }
     });
   }
-
 
   ngOnDestroy(){
     this.sub$.unsubscribe();
