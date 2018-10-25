@@ -81,7 +81,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
    * @returns {string}
    */
   get buttonLabel(): string {
-    return 'Submit Applicaion';
+    return 'Submit Application';
   }
 
   /**

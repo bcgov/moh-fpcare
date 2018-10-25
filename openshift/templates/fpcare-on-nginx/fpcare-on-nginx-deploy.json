@@ -79,6 +79,18 @@
                   {
                     "name": "HTTP_BASIC_PASSWORD",
                     "value": "${HTTP_BASIC_PASSWORD}"
+                  },
+                  {
+                    "name": "USE_SPLUNK_FORWARDER",
+                    "value": "${USE_SPLUNK_FORWARDER}"
+                  },
+                  {
+                    "name": "SPLUNK_AUTH_TOKEN",
+                    "value": "${SPLUNK_AUTH_TOKEN}"
+                  },
+                  {
+                    "name": "SPA_ENV_AUTH_TOKEN",
+                    "value": "${SPA_ENV_AUTH_TOKEN}"
                   }
                 ],
                 "resources": {
@@ -281,7 +293,27 @@
       "displayName": "HTTP Basic Password",
       "name": "HTTP_BASIC_PASSWORD",
       "value": ""
+    },
+    {
+      "description": "If true use the Splunk Forwarder",
+      "displayName": "USE_SPLUNK_FORWARDER",
+      "name": "USE_SPLUNK_FORWARDER",
+      "required": true,
+      "value": "false"
+    },
+    {
+      "description": "Splunk Forwarder AUTH Token",
+      "displayName": "SPLUNK_AUTH_TOKEN",
+      "required": true,
+      "name": "SPLUNK_AUTH_TOKEN",
+      "value": ""
+    },
+    {
+      "description": "SPA Environment Server AUTH Token",
+      "displayName": "SPA_ENV_AUTH_TOKEN",
+      "required": true,
+      "name": "SPA_ENV_AUTH_TOKEN",
+      "value": ""
     }
-
   ]
 }

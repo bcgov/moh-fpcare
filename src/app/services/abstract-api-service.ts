@@ -27,6 +27,9 @@ export abstract class AbstractHttpService extends Base {
   }
 
   protected post<T>(url, body): Observable<T> {
+    if (environment.logHTTPRequestsToConsole) {
+      console.log( 'Post Request: ', body );
+    }
     const observable = this.http.post(url, body, this.httpOptions);
     return this.setupRequest(observable);
   }

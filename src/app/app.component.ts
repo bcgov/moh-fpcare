@@ -10,7 +10,7 @@ import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Logger } from './services/logger.service';
-import {PersonType} from './models/api.model';
+//import * as Md5 from 'js-md5';
 
 @Component({
   selector: 'app-root',
@@ -42,6 +42,8 @@ export class AppComponent implements OnInit {
 
     this.updateTitleOnRouteChange();
 
+    // Debugging purposes - MD5 hashing
+    //(window as any).md5 = Md5;
 
     if ( environment.useDummyData ) {
 
@@ -216,7 +218,7 @@ export class AppComponent implements OnInit {
       year: 1941,
       month: 5,
       day: 20
-    }, 'V1V2V5');
+    });
     this.fpcareDataService.applicantIncome = this.dummyDataService.generateRandomNumber( 3000.01, 5000.00 );
 
 
@@ -227,7 +229,7 @@ export class AppComponent implements OnInit {
       year: 1938,
       month: 11,
       day: 1
-    }, 'V1V2V5');
+    });
     this.fpcareDataService.spouseIncome = this.dummyDataService.generateRandomNumber( 0, 3000.00 );
 
     this.fpcareDataService.bornBefore1939 = true;
@@ -240,7 +242,7 @@ export class AppComponent implements OnInit {
       year: 1980,
       month: 2,
       day: 29
-    }, 'V3V2V4');
+    });
     this.fpcareDataService.applicantIncome = this.dummyDataService.generateRandomNumber( 51667.01, 55000.00 );
 
     // Spouse
@@ -250,7 +252,7 @@ export class AppComponent implements OnInit {
       year: 1983,
       month: 1,
       day: 31
-    }, 'V3V2V4');
+    });
     this.fpcareDataService.spouseIncome = this.dummyDataService.generateRandomNumber( 45000.01, 48333.00 );
 
     this.fpcareDataService.bornBefore1939 = false;
@@ -261,13 +263,13 @@ export class AppComponent implements OnInit {
       year: 2005,
       month: 3,
       day: 17
-    }, 'V3V2V4');
+    }, 'V2V2V4');
 
     this.fpcareDataService.addChild();
     this.fpcareDataService.dependants[1] = this.dummyDataService.createPerson('9999999966', {
       year: 2009,
       month: 12,
       day: 31
-    }, 'V3V2V4');*/
+    }, 'V2V2V4');*/
   }
 }

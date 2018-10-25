@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {PersonInterface, PersonType} from '../models/api.model';
 import {FinanceService} from '../modules/financial-calculator/finance.service';
+import * as Md5 from 'js-md5';
+
 
 export interface FpcareAssistLevel {
   deductible: string;
@@ -66,7 +68,13 @@ export class FakeBackendService {
 
     const list = this._eligibleList.map(person => {
       if (phnList.includes(person.phn)) {
-        return person;
+
+        return {
+          perType: person.perType,
+          phn: Md5.base64( person.phn ),
+          dateOfBirth: Md5.base64( person.dateOfBirth ),
+          postalCode: Md5.base64( person.postalCode )
+        };
       }
     }).filter(x => x);
 
@@ -77,9 +85,15 @@ export class FakeBackendService {
 
       // search dependants
       const dependents = this._eligibleList.map(person => {
-        if (list[0].postalCode === person.postalCode &&
-            !phnList.includes(person.phn)) {
-          return person;
+        if (list[0].postalCode === Md5.base64( person.postalCode ) &&
+            !phnList.includes( person.phn )) {
+
+          return {
+            perType: person.perType,
+            phn: Md5.base64( person.phn ),
+            dateOfBirth: Md5.base64( person.dateOfBirth ),
+            postalCode: Md5.base64( person.postalCode )
+          };
         }
       }).filter(x => x);
 
@@ -106,8 +120,8 @@ export class FakeBackendService {
     }).filter(x => x);
     // console.log( 'get DOB list: ', list );
 
-    return input.map(x => list.includes(x.dateOfBirth))
-        .filter(found => found === true).length === input.length
+    return input.map(x => list.includes(Md5.base64( x.dateOfBirth ) ))
+        .filter(found => found === true).length === input.length;
   }
 
   /**

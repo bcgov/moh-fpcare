@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
 import {PersonInterface, PersonType} from '../../models/api.model';
 import {Person} from '../../models/person.model';
+import * as Md5 from 'js-md5';
 
 export interface RegistrationItem {
   route: string;
@@ -126,5 +127,17 @@ export class RegistrationService {
     }
 
     return famMember;
+  }
+
+  /**
+   * Compare
+   * @param {string} value
+   * @param {string} hashed
+   * @returns {boolean}
+   */
+  public compare( value: string, hashed: string ): boolean {
+    const hashedValue = Md5.base64( value );
+    console.log( 'Compare: ' + hashedValue + ' - ' + hashed );
+    return (hashed === hashedValue);
   }
 }

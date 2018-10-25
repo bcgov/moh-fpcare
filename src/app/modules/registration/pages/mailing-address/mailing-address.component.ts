@@ -13,7 +13,7 @@ import {
   ProvinceNames
 } from '../../../../models/province-names.enum';
 import {ValidationService} from '../../../../services/validation.service';
-import {PersonInterface, PersonType} from '../../../../models/api.model';
+import {PersonType} from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 
 @Component({
@@ -89,9 +89,8 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   }
 
   checkPostal(): void {
-    if (this.applicant.address.hasPostal()){
-      const pc = this.applicant.getNonFormattedPostalCode();
-      this.isPostalMatch = this.isPostalCodeMatch( pc );
+    if (this.applicant.address.hasPostal()) {
+      this.isPostalMatch = this.isPostalCodeMatch( this.applicant.getNonFormattedPostalCode() );
 
       // Set postal code
       if (!this.isPostalMatch && (this.applicant.address.postal !== this.applicant.updAddress.postal)) {
@@ -140,7 +139,6 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     return ValidationService.MAX_STREET_LENGTH;
   }
 
-
   /**
    * Indicates whether postal code matches
    * @param {string} pc
@@ -148,8 +146,10 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   isPostalCodeMatch( pc: string ): boolean {
 
+    console.log( 'isPostalCodeMatch: ', pc );
     // No postal code force update
-    return (this._postalCode ? this._postalCode.map( postalCode => pc === postalCode )
+    return (this._postalCode ? this._postalCode.map(
+        postalCode => this.registrationService.compare( pc, postalCode ) )
         .filter( x => x === true ).length !== 0 : false );
   }
   // Methods triggered by the form action bar
@@ -162,7 +162,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     if ( this.canContinue() ) {
 
       this.registrationService.setItemComplete();
-      this.navigate(  this._url );
+      this.navigate( this._url );
     }
   }
 }

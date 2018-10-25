@@ -43,12 +43,16 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
   ngOnInit() {
     this.registrationService.setItemIncomplete();
+    this.registrationService.processError = false;
 
-    if ( this.responseStore.eligibility &&
-         this.responseStore.eligibility.dependantMandatory === DependentMandatory.YES ) {
-      // Flag dependants mandatory so that the skip button is not available
-      this._dependentMandatory = true;
-      this.fpcService.addChild();
+    if ( this.responseStore.eligibility ) {
+
+      this._dependentMandatory = (this.responseStore.eligibility.dependantMandatory === DependentMandatory.YES);
+
+      if ( this._dependentMandatory && !this.hasChildren ) {
+        // Create child so that the skip button is not available
+        this.fpcService.addChild();
+      }
 
       this._childList = this.responseStore.eligibility.persons.map( person => {
         if ( person.perType === PersonType.dependent ) {
@@ -98,7 +102,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * @returns {boolean}
    */
   get hasChildren(): boolean {
-    return this.fpcService.hasChildren || this._dependentMandatory;
+    return this.fpcService.hasChildren;
   }
 
   /**
@@ -247,7 +251,8 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   isInFamily( phn: string ): boolean {
     // No children on MSP cannot register with children
-    return ( this._childList ? this._childList.filter( child => child.phn === phn ).length !== 0 : false );
+    return ( this._childList ? this._childList.filter(
+        child => this.registrationService.compare( phn, child.phn ) ).length !== 0 : false );
   }
 
   /**
@@ -257,7 +262,9 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * @returns {boolean}
    */
   isInfoCorrect( phn: string, dob: string ): boolean {
-    return ( this._childList ? this._childList.filter( child => child.phn === phn && child.dateOfBirth === dob )
+    return ( this._childList ? this._childList.filter(
+        child => this.registrationService.compare( phn, child.phn ) &&
+            this.registrationService.compare( dob, child.dateOfBirth ) )
         .length !== 0 : false );
   }
 }

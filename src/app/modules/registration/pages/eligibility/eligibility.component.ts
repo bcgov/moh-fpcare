@@ -20,6 +20,7 @@ import {ResponseStoreService} from '../../../../services/response-store.service'
 import {phn_def, phn_hdr} from '../../../../models/fpcare-aside-definitions';
 import { Logger } from '../../../../services/logger.service';
 
+
 @Component({
   selector: 'fpcare-eligibility',
   templateUrl: './eligibility.component.html',
@@ -52,7 +53,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
   }
 
   ngOnInit() {
-    this.registrationService.setItemIncomplete() ;
+    this.registrationService.setItemIncomplete();
   }
 
   /**
@@ -153,8 +154,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
       });
     }
 
-// TODO: response will eventually be encrypted, comparing data entered by applicant will need to be encrypted to be validated
-    // Trigger the HTTP request
+   // Trigger the HTTP request
     subscription.subscribe(response => {
 
       this.responseStore.eligibility = new EligibilityPayload(response);
