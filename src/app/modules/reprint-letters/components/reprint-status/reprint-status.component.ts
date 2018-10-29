@@ -58,4 +58,11 @@ export class ReprintStatusComponent extends AbstractResultsComponent implements 
 
     return title;
   }
+
+  /**
+   * Upon leaving page set response store to null
+   */
+  protected destroyResults(): void {
+    this.responseStore.reprintLetter = null;
+  }
 }

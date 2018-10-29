@@ -113,8 +113,6 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
 
     // Setup the request
     const subscription = this.apiService.requestRegistration({
-      benefitYear: this.fpcService.benefitYear,
-      taxYear: this.fpcService.taxYear,
       persons: this.getFamilyList(),
       address: this.applicant.isAddressUpdated ?
           { // Address object
@@ -159,8 +157,8 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
          this.registrationService.setPersonInterfaceForReg(
              this.applicant,
              PersonType.applicantType,
-             this.financialService.currencyFormat( this.fpcService.applicantIncome ),
-             this.financialService.currencyFormat( this.fpcService.disabilityAmount)
+             this.fpcService.applicantIncome.toString(),
+             this.fpcService.disabilityAmount.toString()
          )
      );
 
@@ -169,8 +167,8 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
            this.registrationService.setPersonInterfaceForReg(
                this.spouse,
                PersonType.spouseType,
-               this.financialService.currencyFormat( this.fpcService.spouseIncome )
-               //this.financialService.currencyFormat( this.fpcService.disabilityAmount)
+               this.fpcService.spouseIncome.toString(),
+               this.fpcService.spouseDisabilityAmount.toString()
            )
        );
      }

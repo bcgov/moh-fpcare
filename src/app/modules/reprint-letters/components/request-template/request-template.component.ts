@@ -86,11 +86,6 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
    */
   onAccept( value: boolean ){
     this.fpcareDataService.acceptedCollectionNotice = value;
-
-    if ( value ) {
-      // load the benefit year
-      this.apiService.loadBenefitYear();
-    }
   }
 
   // Methods triggered by the form action bar
@@ -107,7 +102,6 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
     // Setup the request
     const subscription = this.apiService.reprintLetter({
         phn: this.applicant.getNonFormattedPhn(),
-        benefitYear: this.fpcareDataService.benefitYear,
         dob: this.applicant.dateOfBirthShort,
         postalCode: this.applicant.getNonFormattedPostalCode(),
         letterType: this.data.letterType

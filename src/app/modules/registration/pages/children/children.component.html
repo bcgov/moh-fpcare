@@ -10,7 +10,7 @@
       <!--Array starts at 0 add one -->
       <h2 class="border-bottom">
         Child #{{children.indexOf(child)+1}}
-        <i class="fa fa-times ml-3 pointer" aria-hidden="true" (click)="removeChild( i )"></i>
+        <i class="fa fa-times mr-3 pointer float-right" aria-hidden="true" (click)="removeChild( i )"></i>
       </h2>
 
       <div class="p-md-2 col-md-6">
@@ -23,7 +23,7 @@
         </div>
          <div class="form-group">
             <fpcare-name
-                [label]="'Surname'"
+                [label]="'Family Name'"
                 [nameMaxLen]="maxLenSurname"
                 [(value)]="child.lastName">
             </fpcare-name>

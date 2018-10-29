@@ -4,7 +4,7 @@
    <h1 title>{{pgTitle}}</h1>
 
    <div body>
-      <div *ngIf='hasRegistration && isRegistrationComplete; else incompleteRegistration'>
+      <div *ngIf='hasRegistration && isSuccess; else incompleteRegistration'>
       <p class="font-weight-bold h2">{{dateStamp}} - Registration Number: {{famNumber}}</p>
          <p class="font-weight-normal">What happens next</p>
          <ul>

@@ -101,29 +101,43 @@
         <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editFinancialInfo()"></i>
       </h2>
       <div class="bg-light section">
-        <div class="line-item">
-          <div class="line-item--text">Your net annual income</div>
-          <div class="line-item--value">{{applicantIncome}}</div>
+        <div class="pb-2">
+          <div class="line-item">
+            <div class="line-item--text">Your net annual income</div>
+            <div class="line-item--value">{{applicantIncome}}</div>
+          </div>
+          <div class="line-item">
+            <div class="line-item--text">Spouse/common-law partner</div>
+            <div class="line-item--value">{{hasSpouse ? 'Yes' : 'No'}}</div>
+          </div>
+          <div *ngIf="hasSpouse" class="line-item">
+            <div class="line-item--text">Spouse's annual income</div>
+            <div class="line-item--value">{{spouseIncome}}</div>
+          </div>
+          <div class="line-item">
+            <div class="line-item--text font-weight-bold">Total family annual income </div>
+            <div class="line-item--value font-weight-bold">{{totalFamilyAnnualIncome}}</div>
+          </div>
         </div>
-        <div class="line-item">
-          <div class="line-item--text">Spouse/common-law partner</div>
-          <div class="line-item--value">{{hasSpouse ? 'Yes' : 'No'}}</div>
+
+        <div class="pb-2">
+          <div class="line-item">
+            <div class="line-item--text">Registered Disability Savings Plan amount</div>
+            <div class="line-item--value">{{disabilityAmount}}</div>
+          </div>
+          <div *ngIf="hasSpouse" class="line-item">
+            <div class="line-item--text">Registered Disability Savings Plan amount</div>
+            <div class="line-item--value">{{spouseDisabilityAmount}}</div>
+          </div>
+          <div class="line-item">
+            <div class="line-item--text font-weight-bold">Total family deductions</div>
+            <div class="line-item--value font-weight-bold">{{totalDisabilityAmount}}</div>
+          </div>
         </div>
-        <div *ngIf="hasSpouse" class="line-item">
-          <div class="line-item--text">Spouse's annual income</div>
-          <div class="line-item--value">{{spouseIncome}}</div>
-        </div>
-        <div class="line-item">
-          <div class="line-item--text">Registered disability Savings Plan amount</div>
-          <div class="line-item--value">{{disabilityAmount}}</div>
-        </div>
-        <div class="line-item">
-          <div class="line-item--text">Total deductions</div>
-          <div class="line-item--value">{{disabilityAmount}}</div>
-        </div>
-        <div class="line-item">
-          <div class="line-item--text">Adjusted income</div>
-          <div class="line-item--value">{{adjustedIncome}}</div>
+
+        <div class="line-item pb-2">
+          <div class="line-item--text font-weight-bold">Adjusted income</div>
+          <div class="line-item--value font-weight-bold">{{adjustedIncome}}</div>
         </div>
       </div>
     </div>

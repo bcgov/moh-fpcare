@@ -7,11 +7,10 @@ import { Logger } from './logger.service';
 import { UUID } from 'angular2-uuid';
 import * as moment from 'moment';
 import {
-  BenefitYearInterface,
   StatusCheckPHN,
   StatusCheckRegNum,
   DeductibleInterface,
-  ReprintLetter, BenefitYearPayload, PersonInterface, PayloadInterface, AddressInterface
+  ReprintLetter, PersonInterface, PayloadInterface, AddressInterface
 } from 'app/models/api.model';
 import {FPCareDataService} from './fpcare-data.service';
 import {EligibilityInterface, RegistrationInterface} from '../models/api.model';
@@ -27,40 +26,10 @@ export class ApiService extends AbstractHttpService {
    */
   protected _headers: HttpHeaders = new HttpHeaders();
   private _token: string;
-  private _clientName: string = 'ppiwebuser';
+  private _clientName: string = 'ppiweb';
 
-  constructor(protected http: HttpClient,
-              public logService: Logger,
-              private fpcareDataService: FPCareDataService){
+  constructor( protected http: HttpClient, public logService: Logger ){
     super(http);
-  }
-
-  /**
-   * temporary - issue in calculator component that the deductibles require benefit year
-   * so reg status & reprints use this call - and calculator has different call in component to call requests
-   * sequentially.
-   *
-   * Code commented out in app.component
-   */
-  public loadBenefitYear() {
-    this.getBenefitYear().subscribe(response => {
-      const payload = new BenefitYearPayload(response);
-
-      if (payload.success){
-        this.fpcareDataService.benefitYear = payload.benefitYear;
-        this.fpcareDataService.taxYear = payload.taxYear;
-      }
-    });
-  }
-
-  public getBenefitYear(processDate = this.getProcessDate()) {
-    const url = environment.baseAPIUrl + 'getCalendar';
-
-    return this.post<BenefitYearInterface>(url, {
-      uuid: this.generateUUID(),
-      clientName: this._clientName,
-      processDate: processDate
-    });
   }
 
   public setCaptchaToken(token: string){
@@ -82,7 +51,7 @@ export class ApiService extends AbstractHttpService {
    * @param processDate
    * @returns {Observable<StatusCheckRegNum>}
    */
-  public statusCheckFamNumber( input: { regNumber: string, benefitYear: string },
+  public statusCheckFamNumber( input: { regNumber: string },
                                processDate = this.getProcessDate() ): Observable<StatusCheckRegNum> {
     const url = environment.baseAPIUrl + 'statusCheckFamNumber';
 
@@ -90,7 +59,6 @@ export class ApiService extends AbstractHttpService {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       processDate: processDate,
-      benefitYear: input.benefitYear,
       famNumber: input.regNumber
     });
   }
@@ -103,7 +71,7 @@ export class ApiService extends AbstractHttpService {
    * @param processDate
    * @returns {Observable<StatusCheckPHN>}
    */
-  public statusCheckPHN( input: {phn: string, dob: string, postalCode: string, benefitYear: string},
+  public statusCheckPHN( input: {phn: string, dob: string, postalCode: string},
                          processDate = this.getProcessDate() ): Observable<StatusCheckPHN> {
     const url = environment.baseAPIUrl + 'statusCheckPhn';
 
@@ -111,7 +79,6 @@ export class ApiService extends AbstractHttpService {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       processDate: processDate,
-      benefitYear: input.benefitYear,
       phn: input.phn,
       postalCode: input.postalCode,
       dateOfBirth: input.dob
@@ -124,7 +91,7 @@ export class ApiService extends AbstractHttpService {
    * @param {{phn: string, dob: string, postalCode: string, benefitYear: string, letterType: number}} input
    * @returns {Observable<StatusCheckPHN>}
    */
-  public reprintLetter( input: {phn: string, dob: string, postalCode: string, benefitYear: string, letterType: string},
+  public reprintLetter( input: {phn: string, dob: string, postalCode: string, letterType: string},
                         processDate = this.getProcessDate() ): Observable<StatusCheckPHN> {
     const url = environment.baseAPIUrl + 'requestLetter';
 
@@ -132,7 +99,6 @@ export class ApiService extends AbstractHttpService {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       processDate: processDate,
-      benefitYear: input.benefitYear,
       phn: input.phn,
       postalCode: input.postalCode,
       dateOfBirth: input.dob,
@@ -140,18 +106,17 @@ export class ApiService extends AbstractHttpService {
     });
   }
 
-  public getDeductibles( input: {benefitYear: string}, processDate = this.getProcessDate() ) {
+  public getDeductibles( processDate = this.getProcessDate() ) {
     const url = environment.baseAPIUrl + 'getDeductibles';
 
     return this.post<DeductibleInterface>(url, {
       uuid: this.generateUUID(),
       clientName: this._clientName,
-      benefitYear: input.benefitYear,
       processDate: processDate
     });
   }
 
-  public checkEligibility( input: {benefitYear: string, persons: PersonInterface[]}
+  public checkEligibility( input: {persons: PersonInterface[]}
                        , processDate = this.getProcessDate() ) {
     const url = environment.baseAPIUrl + 'checkEligibility';
 
@@ -159,17 +124,12 @@ export class ApiService extends AbstractHttpService {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       processDate: processDate,
-      benefitYear: input.benefitYear,
       persons: input.persons
     });
   }
 
   public requestRegistration(
-      input: { benefitYear: string
-             , taxYear: string
-             , persons: PersonInterface[]
-             , address: AddressInterface }
-    , processDate = this.getProcessDate() ) {
+      input: { persons: PersonInterface[], address: AddressInterface }, processDate = this.getProcessDate() ) {
 
     const url = environment.baseAPIUrl + 'requestRegistration';
 
@@ -180,8 +140,6 @@ export class ApiService extends AbstractHttpService {
         uuid: this.generateUUID(),
         clientName: this._clientName,
         processDate: processDate,
-        benefitYear: input.benefitYear,
-        taxYear: input.taxYear,
         persons: input.persons,
         address: input.address
       });
@@ -191,8 +149,6 @@ export class ApiService extends AbstractHttpService {
       uuid: this.generateUUID(),
       clientName: this._clientName,
       processDate: processDate,
-      benefitYear: input.benefitYear,
-      taxYear: input.taxYear,
       persons: input.persons
     });
   }

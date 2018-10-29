@@ -117,11 +117,9 @@ export class Person extends Base {
    * @returns {Number}
    */
   getAge(): Number {
-    const today = new Date();
     const dobDt = new Date( this.dateOfBirth.year, this.dateOfBirth.month, this.dateOfBirth.day );
-    return moment( today ).diff( dobDt, 'year' );
+    return Math.ceil(  moment( ).diff( dobDt, 'year', true ) );
   }
-
 
   // Remove formatting
   getNonFormattedPhn(): string {

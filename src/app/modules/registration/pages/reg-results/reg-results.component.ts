@@ -36,15 +36,19 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
 
   ngOnInit() {
 
-    if (this.hasRegistration) {
+    if ( this.hasRegistration ) {
       this.pgTitle = 'Your Application has been submitted';
-      this.famNumber = this.responseStore.registration.familyNumber;
-      this.assistenceLevel = this.getAssistenceLevel();
+
+      // Registration was successful
+      if ( this.isSuccess ) {
+        this.famNumber = this.responseStore.registration.familyNumber;
+        this.assistenceLevel = this.getAssistenceLevel();
+      }
     }
   }
 
   /**
-   *
+   * Registration for FPCare was submitted to be processed
    * @returns {boolean}
    */
   get hasRegistration(): boolean {
@@ -52,17 +56,17 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
   }
 
   /**
-   *
-   * @returns {boolean}
+   * Today's date
+   * @returns {string}
    */
-  get isRegistrationComplete(): boolean {
-    return this.registrationService.isRegistrationComplete();
-  }
-
   get dateStamp(): string {
     return moment().format('MMMM DD, YYYY');
   }
 
+  /**
+   * Link to Check FPCare registration status
+   * @returns {string}
+   */
   get checkRegistrationStatus(): string {
     return  '/' + REGISTRATION_STATUS_PATH + '/' + REQUEST_REG_STATUS;
   }
@@ -109,5 +113,13 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
           this.responseStore.registration.deductibleAmounText, true ),
       pharmaCarePortion: Number(this.responseStore.registration.copayPercentageText.replace('%', ''))
     };
+  }
+
+  /**
+   * Upon leaving page set response store to null
+   */
+  protected destroyResults(): void {
+    this.responseStore.registration = null;
+    this.responseStore.eligibility = null;
   }
 }

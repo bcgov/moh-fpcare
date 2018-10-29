@@ -25,26 +25,16 @@ export interface PayloadInterface {
 }
 
 /**
- * Benefit Year
- */
-export interface BenefitYearInterface extends PayloadInterface {
-  benefitYear: string;
-  taxYear: string;
-}
-
-/**
  * Check Status using the Fair PharmaCare Registration number
  */
 export interface StatusCheckRegNum extends PayloadInterface {
   famNumber: string;
-  benefitYear: string;
 }
 
 /**
  * Check Status using the applicant's PHN, date of birth and postal code
  */
 export interface StatusCheckPHN extends PayloadInterface {
-  benefitYear: string;
   phn: string;
   dateOfBirth: string;
   postalCode: string;
@@ -54,7 +44,6 @@ export interface StatusCheckPHN extends PayloadInterface {
  * Request for reprint of Consent forms and Confirmation of Assistance
  */
 export interface ReprintLetter extends PayloadInterface {
-  benefitYear: string;
   phn: string;
   dateOfBirth: string;
   postalCode: string;
@@ -67,8 +56,8 @@ export interface ReprintLetter extends PayloadInterface {
 export interface DeductibleInterface extends PayloadInterface {
   assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
   pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
-
-  benefitYear: string;
+  benefitYear?: string;
+  taxYear?: string;
 }
 
 /**
@@ -120,8 +109,6 @@ export interface AddressInterface {
  * Check Fair PharmaCare eligibility (i.e. Active MSP coverage and not registered in FPC)
  */
 export interface EligibilityInterface extends PayloadInterface {
-
-  benefitYear: string;
   persons: PersonInterface[];
   dependentMandatory?: string;
 }
@@ -130,8 +117,6 @@ export interface EligibilityInterface extends PayloadInterface {
  * Register family in Fair PharmaCare
  */
 export interface RegistrationInterface extends PayloadInterface {
-  benefitYear: string;
-  taxYear: string;
   persons?: PersonInterface[]; // not return in response
 
   // address required if it was updated
@@ -186,16 +171,6 @@ export class ServerPayload implements PayloadInterface {
   }
 }
 
-export class BenefitYearPayload extends ServerPayload implements BenefitYearInterface {
-  benefitYear: string;
-  taxYear: string;
-  constructor(payload: BenefitYearInterface) {
-    super(payload);
-    this.benefitYear = payload.benefitYear;
-    this.taxYear = payload.taxYear;
-  }
-}
-
 // Because we rename famNum to regNum, this does NOT implement the interface but
 // the constructor param still does.
 export class StatusCheckRegNumberPayload extends ServerPayload {
@@ -230,12 +205,14 @@ export class ReprintLetterPayload extends ServerPayload {
 
 export class DeductiblePayload extends ServerPayload {
   benefitYear: string;
+  taxYear: string;
   assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
   pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
 
   constructor(payload: DeductibleInterface) {
     super(payload);
     this.benefitYear = payload.benefitYear;
+    this.taxYear = payload.taxYear;
     this.assistanceLevels = payload.assistanceLevels;
     this.pre1939AssistanceLevels = payload.pre1939AssistanceLevels;
   }
@@ -245,14 +222,11 @@ export class DeductiblePayload extends ServerPayload {
  * Response Payload
  */
 export class EligibilityPayload extends ServerPayload {
-
-  benefitYear: string;
   persons: PersonInterface[];
   dependantMandatory: string;
 
   constructor( payload: EligibilityInterface ) {
     super(payload);
-    this.benefitYear = payload.benefitYear;
     this.persons = payload.persons;
     this.dependantMandatory = payload.dependentMandatory;
   }
@@ -261,11 +235,7 @@ export class EligibilityPayload extends ServerPayload {
 /**
  * Response Payload
  */
-
 export class RegistrationPayload extends ServerPayload {
-  benefitYear: string;
-  taxYear: string;
-
   familyNumber: string;
   deductibleAmounText: string;
   annualMaximumAmountText: string;
@@ -273,8 +243,6 @@ export class RegistrationPayload extends ServerPayload {
 
   constructor( payload: RegistrationInterface ) {
     super(payload);
-    this.benefitYear = payload.benefitYear;
-    this.taxYear = payload.taxYear;
 
     this.familyNumber = payload.familyNumber;
     this.deductibleAmounText = payload.deductibleAmounText;

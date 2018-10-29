@@ -91,18 +91,25 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   checkPostal(): void {
     if (this.applicant.address.hasPostal()) {
       this.isPostalMatch = this.isPostalCodeMatch( this.applicant.getNonFormattedPostalCode() );
-
-      // Set postal code
-      if (!this.isPostalMatch && (this.applicant.address.postal !== this.applicant.updAddress.postal)) {
-        // Update postal for updated address
-        this.applicant.updAddress.postal = this.applicant.address.postal;
-      } else if ( this.isPostalMatch && this.applicant.isAddressUpdated ) {
-        // Remove postal code causes updated address structure to be incomplete
-        this.applicant.updAddress.postal = '';
-      }
-
       console.log('checkPostal', this.isPostalMatch, this._postalCode );
     }
+  }
+
+  /**
+   *
+   * @returns {string}
+   */
+  get updatePostalCode(): string {
+
+    // Set postal code
+    if (!this.isPostalMatch && (this.applicant.address.postal !== this.applicant.updAddress.postal)) {
+      // Update postal for updated address
+      this.applicant.updAddress.postal = this.applicant.address.postal;
+    } else if ( this.isPostalMatch && this.applicant.isAddressUpdated ) {
+      // Remove postal code causes updated address structure to be incomplete
+      this.applicant.updAddress.postal = '';
+    }
+    return this.applicant.updAddress.postal;
   }
 
   /**
@@ -115,7 +122,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
   onGeoLookup(){
 
-    // Re-run all fpcareRequire ddirectives, hiding validation errors if the
+    // Re-run all fpcareRequire directives, hiding validation errors if the
     // geolookup has fixed them.
     setTimeout(() => {
       this.fpcareRequired.map(x => x.runAll());

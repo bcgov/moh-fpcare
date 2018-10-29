@@ -107,11 +107,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    */
   onAccept( value: boolean ){
     this.fpcareDataService.acceptedCollectionNotice = value;
-
-    if ( value ) {
-      // load the benefit year
-      this.apiService.loadBenefitYear();
-    }
   }
 
   // Methods triggered by the form action bar
@@ -132,14 +127,12 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     if (this.disableRegNum()) {
       subscription = this.apiService.statusCheckPHN({
         phn: this.applicant.getNonFormattedPhn(),
-        benefitYear: this.fpcareDataService.benefitYear,
         dob: this.applicant.dateOfBirthShort,
         postalCode: this.applicant.getNonFormattedPostalCode()
       });
     }
     else {
       subscription = this.apiService.statusCheckFamNumber({
-        benefitYear: this.fpcareDataService.benefitYear,
         regNumber: this.applicant.fpcRegNumber
       });
     }

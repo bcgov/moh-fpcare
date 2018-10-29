@@ -138,8 +138,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
             dateOfBirth: this.spouse.dateOfBirthShort,
             postalCode: ''
           }
-        ],
-        benefitYear: this.fpcareDataService.benefitYear
+        ]
       });
     } else {
       subscription = this.apiService.checkEligibility({
@@ -149,8 +148,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
             dateOfBirth: this.applicant.dateOfBirthShort,
             postalCode: ''
           }
-        ],
-        benefitYear: this.fpcareDataService.benefitYear
+        ]
       });
     }
 

@@ -24,14 +24,14 @@
 
       <div class="form-group">
          <fpcare-name
-           [label]="'Given Name'"
+           [label]="labelGivenName"
            [nameMaxLen]="maxLenGivenName"
            [(value)]="applicant.firstName">
          </fpcare-name>
       </div>
       <div class="form-group">
          <fpcare-name
-           [label]="'Surname'"
+           [label]="labelSurname"
            [nameMaxLen]="maxLenSurname"
            [(value)]="applicant.lastName">
          </fpcare-name>
@@ -65,13 +65,15 @@
       <div class="p-md-2 col-md-6">
         <div class="form-group">
            <fpcare-name
-               [label]="'Given Name'"
+               [label]="labelGivenName"
+               [nameMaxLen]="maxLenGivenName"
                [(value)]="spouse.firstName">
            </fpcare-name>
         </div>
         <div class="form-group">
            <fpcare-name
-               [label]="'Surname'"
+               [label]="labelSurname"
+               [nameMaxLen]="maxLenSurname"
                [(value)]="spouse.lastName">
            </fpcare-name>
         </div>

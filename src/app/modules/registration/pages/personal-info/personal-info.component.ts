@@ -117,6 +117,22 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
     return ValidationService.MAX_SURNAME_LENGTH;
   }
 
+  /**
+   *
+   * @returns {string}
+   */
+  get labelGivenName(): string {
+    return 'Given Name';
+  }
+
+  /**
+   *
+   * @returns {string}
+   */
+  get labelSurname(): string {
+    return 'Family Name';
+  }
+
   // Methods triggered by the form action bar
 
   /**

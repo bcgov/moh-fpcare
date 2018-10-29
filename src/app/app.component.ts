@@ -244,6 +244,7 @@ export class AppComponent implements OnInit {
       day: 29
     });
     this.fpcareDataService.applicantIncome = this.dummyDataService.generateRandomNumber( 51667.01, 55000.00 );
+    this.fpcareDataService.disabilityAmount = this.dummyDataService.generateRandomNumber( 0, 500 );
 
     // Spouse
     this.fpcareDataService.hasSpouse = true;
@@ -254,6 +255,7 @@ export class AppComponent implements OnInit {
       day: 31
     });
     this.fpcareDataService.spouseIncome = this.dummyDataService.generateRandomNumber( 45000.01, 48333.00 );
+    this.fpcareDataService.spouseDisabilityAmount = this.dummyDataService.generateRandomNumber( 0, 1000 );
 
     this.fpcareDataService.bornBefore1939 = false;
 

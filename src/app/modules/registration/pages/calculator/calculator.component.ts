@@ -6,7 +6,8 @@ import {FinanceService} from '../../../financial-calculator/finance.service';
 import {REGISTRATION_ELIGIBILITY, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ApiService} from '../../../../services/api-service.service';
-import {BenefitYearPayload, DeductiblePayload} from '../../../../models/api.model';
+import {DeductiblePayload} from '../../../../models/api.model';
+import * as moment from 'moment';
 
 
 @Component({
@@ -29,6 +30,12 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   public disability: string;
   /** Formatted currency string for disability amount */
   public spouseDisability: string;
+
+  /** FPC benefit year - calendar year */
+  private _benefitYear: string;
+  /** FPC tax year is 2 years prior to benefit year */
+  private _taxYear: string;
+
 
   /** Text displayed on button */
   public buttonText: string = 'Apply for Fair PharmaCare Assistance';
@@ -54,38 +61,27 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
 
   ngOnInit() {
 
-// TODO - Ideally instead of nested Observable subscriptions, we should use rxjs delayWhen() or concatMap() to triger sequential operation
-/** NOTE:  Captcha logic not fully implemented - standalone calculator does not have a consent module so these
- *         requests are currently white listed - need way to push data to cache
- */
+    // Default values to display on page, just encase call fails
+ /*   const benefitYear = moment().year(); - Waiting response from BSA - plan to have defaults on load but not errors
+    this._benefitYear = benefitYear.toString();
+    this._taxYear = (benefitYear - 2).toString();*/
 
-    this.apiService.getBenefitYear().subscribe(benefitResponse => {
-      const benefitPayload = new BenefitYearPayload(benefitResponse);
+    this.apiService.getDeductibles().subscribe((deductibleResponse) => {
+        const deductiblePayload = new DeductiblePayload(deductibleResponse);
 
-      if (benefitPayload.success){
-        this.fpcareDataService.benefitYear = benefitPayload.benefitYear;
-        this.fpcareDataService.taxYear = benefitPayload.taxYear;
-      }
-
-      // Nested observable call - should be unnested and sequential.
-      this.apiService.getDeductibles( { benefitYear: this.fpcareDataService.benefitYear }).subscribe(
-        (deductibleResponse) => {
-          const deductiblePayload = new DeductiblePayload(deductibleResponse);
-
-          if (benefitPayload.success){
-            this.financeService.setAssistanceLevels(deductiblePayload.assistanceLevels,
-                deductiblePayload.pre1939AssistanceLevels);
-
-            if (deductiblePayload.error) {
-              this.financeService.failedToLoadAssistanceLevels(deductiblePayload.error);
-            }
+        if ( deductiblePayload.success ){
+          this.financeService.setAssistanceLevels(deductiblePayload.assistanceLevels,
+              deductiblePayload.pre1939AssistanceLevels);
+          this._taxYear = deductiblePayload.taxYear;
+          this._benefitYear = deductiblePayload.benefitYear;
+        } else {
+            this.financeService.failedToLoadAssistanceLevels(deductiblePayload.error);
           }
-        },
-        (deductibleError) => {
-          // When API service returns an error we need to manually trigger an error in financeService
-          this.financeService.failedToLoadAssistanceLevels(deductibleError);
-        });
-    });
+      },
+      (deductibleError) => {
+        // When API service returns an error we need to manually trigger an error in financeService
+        this.financeService.failedToLoadAssistanceLevels(deductibleError);
+      });
 
     // Retrieve standalone state from router data
     this.activatedRoute.data.subscribe((data: {standalone: boolean}) => {
@@ -205,7 +201,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
    * @returns {string}
    */
   get taxYear(): string {
-    return this.fpcareDataService.taxYear;
+    return this._taxYear;
   }
 
   private calculateTotalFamilyIncome(): number {
