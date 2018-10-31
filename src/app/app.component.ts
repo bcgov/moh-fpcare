@@ -10,6 +10,7 @@ import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Logger } from './services/logger.service';
+import {ResponseStoreService} from './services/response-store.service';
 //import * as Md5 from 'js-md5';
 
 @Component({
@@ -18,6 +19,7 @@ import { Logger } from './services/logger.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
   title = 'FPCare – Applicant Enrollment';
 
 
@@ -28,7 +30,8 @@ export class AppComponent implements OnInit {
               private titleService: Title,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private logger: Logger) {
+              private logger: Logger,
+              private responseStore: ResponseStoreService) {
   }
 
   ngOnInit() {
@@ -41,6 +44,13 @@ export class AppComponent implements OnInit {
     }
 
     this.updateTitleOnRouteChange();
+
+    // Load messages from cache
+    // TODO: Comment back in once message cache is operational
+    //this.apiService.getMessages().subscribe(
+    //    (response) => { this.responseStore.cacheMsgs = response; },
+    //    (responseError) => { /* What to do there is an error??? */ }
+    //    );
 
     // Debugging purposes - MD5 hashing
     //(window as any).md5 = Md5;

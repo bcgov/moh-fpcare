@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {RegistrationService} from '../../registration.service';
 import {AbstractResultsComponent} from '../../../../models/abstract-results-component';
-import {EligibilityPayload, RegistrationPayload} from '../../../../models/api.model';
+import {EligibilityPayload, RegistrationPayload, ServerPayload} from '../../../../models/api.model';
 import {PharmaCareAssistanceLevel} from '../../../financial-calculator/assistance-levels.interface';
 import {FinanceService} from '../../../financial-calculator/finance.service';
 import {growVertical} from '../../../../animations/animations';
@@ -17,7 +17,7 @@ import {REGISTRATION_STATUS_PATH, REQUEST_REG_STATUS} from '../../../../models/r
 })
 export class RegResultsComponent extends AbstractResultsComponent implements OnInit {
 
-  public response: EligibilityPayload | RegistrationPayload = null;
+  public response: EligibilityPayload | RegistrationPayload | ServerPayload = null;
   public assistenceLevel: PharmaCareAssistanceLevel;
   public pgTitle: string = 'Fair PharmaCare Registration Status';
   public famNumber: string = null;
@@ -29,9 +29,12 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
 
     if ( this.hasRegistration ) {
       this.response = this.responseStore.registration;
-    } else {
+    } else if ( this.hasEligibility && !this.registrationService.validationError) {
       this.response = this.responseStore.eligibility;
+    } else {
+      this.response = this.responseStore.internalResponse;
     }
+
   }
 
   ngOnInit() {
@@ -55,6 +58,10 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
     return !!this.responseStore.registration;
   }
 
+  get hasEligibility(): boolean {
+    return !!this.responseStore.eligibility;
+  }
+
   /**
    * Today's date
    * @returns {string}
@@ -69,34 +76,6 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
    */
   get checkRegistrationStatus(): string {
     return  '/' + REGISTRATION_STATUS_PATH + '/' + REQUEST_REG_STATUS;
-  }
-
-  /**
-   * Override status method
-   * @returns {string}
-   */
-  get status(): string {
-    if ( this.registrationService.processError ) {
-      return this.registrationService.processErrorMsg;
-    } else if (this.response) {
-      return this.response.message;
-    }
-  }
-
-  /**
-   * Override isError method
-   * @returns {boolean}
-   */
-  get isError(): boolean {
-    return this.response.error || this.registrationService.processError;
-  }
-
-  /**
-   * Override isSuccess method
-   * @returns {boolean}
-   */
-  get isSuccess(): boolean {
-    return this.response.success && !this.registrationService.processError;
   }
 
   /**
@@ -119,7 +98,18 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
    * Upon leaving page set response store to null
    */
   protected destroyResults(): void {
-    this.responseStore.registration = null;
-    this.responseStore.eligibility = null;
+
+    if (this.hasEligibility && !this.responseStore.eligibility.success) {
+      // Clear eligibility check complete - error/warning occurred
+      this.responseStore.eligibility = null;
+    } else if (this.registrationService.validationError) {
+      // Clear internal validation response
+      this.responseStore.internalResponse = null;
+    } else {
+      // Clear all response registration submitted
+      this.responseStore.registration = null;
+      this.responseStore.eligibility = null;
+      this.responseStore.internalResponse = null;
+    }
   }
 }

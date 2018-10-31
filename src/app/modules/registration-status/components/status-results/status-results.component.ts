@@ -68,7 +68,7 @@ export class StatusResultsComponent extends AbstractResultsComponent {
    * Upon leaving page set response store to null
    */
   protected destroyResults(): void {
-    this.responseStore.statusCheckRegNumber.regNumber = null;
-    this.responseStore.statusCheckPHN.phn = null;
+    this.responseStore.statusCheckRegNumber = null;
+    this.responseStore.statusCheckPHN = null;
   }
 }

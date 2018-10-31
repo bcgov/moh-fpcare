@@ -8,6 +8,7 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ApiService} from '../../../../services/api-service.service';
 import {DeductiblePayload} from '../../../../models/api.model';
 import * as moment from 'moment';
+import {ResponseStoreService} from '../../../../services/response-store.service';
 
 
 @Component({
@@ -55,7 +56,8 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
              , private fpcareDataService: FPCareDataService
              , private registrationService: RegistrationService
              , private activatedRoute: ActivatedRoute
-             , private apiService: ApiService ) {
+             , private apiService: ApiService
+             , private responseStore: ResponseStoreService ) {
     super(router);
   }
 
@@ -69,7 +71,7 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     this.apiService.getDeductibles().subscribe((deductibleResponse) => {
         const deductiblePayload = new DeductiblePayload(deductibleResponse);
 
-        if ( deductiblePayload.success ){
+        if ( deductiblePayload.success ) {
           this.financeService.setAssistanceLevels(deductiblePayload.assistanceLevels,
               deductiblePayload.pre1939AssistanceLevels);
           this._taxYear = deductiblePayload.taxYear;

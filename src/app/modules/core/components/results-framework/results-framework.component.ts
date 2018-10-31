@@ -1,4 +1,6 @@
 import {Component, Input} from '@angular/core';
+import {RegistrationService} from '../../../registration/registration.service';
+import {ResponseStoreService} from '../../../../services/response-store.service';
 
 export enum DisplayIcon {
   SUCCESS = 0,
@@ -17,7 +19,7 @@ export class ResultsFrameworkComponent {
   @Input() hasBody: boolean = true;
   @Input() displayPrint: boolean = false;
 
-  constructor() { }
+  constructor( private responseStore: ResponseStoreService ) { }
 
   get errorIcon() {
     return DisplayIcon.ERROR;
@@ -29,5 +31,14 @@ export class ResultsFrameworkComponent {
 
   get warningIcon() {
     return DisplayIcon.WARNING;
+  }
+
+  /**
+   * When no response return the following message
+   * @returns {string}
+   */
+  get noResponseMsg(): string {
+    this.responseStore.internalError =  'SRQ_099';
+    return this.responseStore.internalResponse.message;
   }
 }

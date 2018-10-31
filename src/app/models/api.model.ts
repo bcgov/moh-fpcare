@@ -129,6 +129,15 @@ export interface RegistrationInterface extends PayloadInterface {
   copayPercentageText?: string;
 }
 
+/**
+ * Request messages for front-end validation
+ */
+export interface MessageInterface {
+  msgCode: string;  // SRQ #
+  msgText: string;  // Text for message
+  msgType: string;  // Type of message: Success (0), Error (1), Warning(2)
+}
+
 export class ServerPayload implements PayloadInterface {
   regStatusCode: RegStatusCode;
   regStatusMsg: string;
@@ -219,7 +228,7 @@ export class DeductiblePayload extends ServerPayload {
 }
 
 /**
- * Response Payload
+ * Response Payload for eligibility check
  */
 export class EligibilityPayload extends ServerPayload {
   persons: PersonInterface[];
@@ -233,7 +242,7 @@ export class EligibilityPayload extends ServerPayload {
 }
 
 /**
- * Response Payload
+ * Response Payload for registration
  */
 export class RegistrationPayload extends ServerPayload {
   familyNumber: string;
@@ -250,3 +259,4 @@ export class RegistrationPayload extends ServerPayload {
     this.copayPercentageText = payload.copayPercentageText;
   }
 }
+

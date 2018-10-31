@@ -1,4 +1,4 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
 import {Router} from '@angular/router';
@@ -7,12 +7,18 @@ import {ValidationService} from '../../../../services/validation.service';
 import {
   REGISTRATION_ADDRESS,
   REGISTRATION_PATH,
-  REGISTRATION_RESULTS,
-  REGISTRATION_REVIEW
+  REGISTRATION_RESULTS
 } from '../../../../models/route-paths.constants';
 import {RegistrationService} from '../../registration.service';
 import {ResponseStoreService} from '../../../../services/response-store.service';
-import {DependentMandatory, PersonInterface, PersonType} from '../../../../models/api.model';
+import {
+  DependentMandatory,
+  MessageInterface,
+  PersonInterface,
+  PersonType,
+  RegStatusCode,
+  ServerPayload
+} from '../../../../models/api.model';
 import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 
 @Component({
@@ -22,43 +28,41 @@ import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 })
 export class ChildrenPageComponent extends AbstractFormComponent implements OnInit {
 
-  public MAX_CHILD_AGE = 25;
-
   /** Indicates whether or not the same PHNs has been used for another family member */
-  private _uniquePhns = true;
-  private _dependentMandatory = false;
+  private _uniquePhns: boolean = true;
+  private _dependentMandatory: boolean = false;
   private _childList: PersonInterface[];
 
   /** Page to navigate to when continue process */
   /** Page to naviage to when continue process */
   private _baseUrl = REGISTRATION_PATH + '/';
 
-  constructor( private fpcService: FPCareDataService
-             , private validationService: ValidationService
-             , protected router: Router
-             , private responseStore: ResponseStoreService
-             , private registrationService: RegistrationService ) {
-    super( router );
+  constructor(private fpcService: FPCareDataService
+      , private validationService: ValidationService
+      , protected router: Router
+      , private responseStore: ResponseStoreService
+      , private registrationService: RegistrationService) {
+    super(router);
   }
 
   ngOnInit() {
     this.registrationService.setItemIncomplete();
-    this.registrationService.processError = false;
+    this.registrationService.validationError = false;
 
-    if ( this.responseStore.eligibility ) {
+    if (this.responseStore.eligibility) {
 
       this._dependentMandatory = (this.responseStore.eligibility.dependantMandatory === DependentMandatory.YES);
 
-      if ( this._dependentMandatory && !this.hasChildren ) {
+      if (this._dependentMandatory && !this.hasChildren) {
         // Create child so that the skip button is not available
         this.fpcService.addChild();
       }
 
-      this._childList = this.responseStore.eligibility.persons.map( person => {
-        if ( person.perType === PersonType.dependent ) {
+      this._childList = this.responseStore.eligibility.persons.filter(person => {
+        if (person.perType === PersonType.dependent) {
           return person;
         }
-      }).filter( x => x );
+      });
     }
   }
 
@@ -68,22 +72,18 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   canContinue(): boolean {
 
-    if ( !this.hasChildren ) {
+    if (!this.hasChildren) {
       // no children, continue
       return true;
     }
 
     // Main and sub forms are not empty and are valid
-    if ( super.canContinue() ) {
+    if (super.canContinue()) {
 
       // Check that PHNs are unique
       this._uniquePhns = this.validationService.isUnique(this.familyPhnList);
 
-      // Check that individuals are allowed on Parents FPC account
-      const notLegitDeps = this.children.map(x => !this.legitimateDependant(x))
-          .filter(legit => legit === true ).length === 0;
-
-      return (this._uniquePhns && notLegitDeps);
+      return this._uniquePhns;
     }
 
     return false;
@@ -110,13 +110,15 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * @param {Person} child
    * @returns {boolean}
    */
-  hasUniquePhnError( child: Person ): boolean {
+  hasUniquePhnError(child: Person): boolean {
 
-    if ( !this._uniquePhns ) {
+    if (!this._uniquePhns) {
       // Is this the PHN that is duplicated
-      const list = this.familyPhnList.filter( x => { return x === child.phn; } );
+      const list = this.familyPhnList.filter(x => {
+        return x === child.phn;
+      });
 
-      if ( list.length > 1 ) {
+      if (list.length > 1) {
         // This PHN is duplicated
         return true;
       }
@@ -138,7 +140,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   get buttonLabel(): string {
 
-    return ( this.hasChildren ) ? 'Continue' : 'Skip this step';
+    return (this.hasChildren) ? 'Continue' : 'Skip this step';
   }
 
   /**
@@ -166,16 +168,16 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
   /**
    * Remove a child from the list
-   * @param {idx} number
+   * @param index
    */
-  removeChild( idx: number ) {
-    this.children.splice( idx, 1 );
+  removeChild(index: number) {
+
+    this.children.splice(index, 1);
 
     // Child to be added if mandatory
-    if ( this._dependentMandatory && this.children.length === 0 ) {
+    if (this._dependentMandatory && this.children.length === 0) {
       this.fpcService.addChild();
     }
-
   }
 
   // Methods triggered by the form action bar
@@ -183,49 +185,28 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   /**
    * Navigates to the next page
    */
-  continue () {
+  continue() {
 
-    if ( !this.canContinue() ) {
+    if (!this.canContinue()) {
       return;
     }
 
     this.registrationService.setItemComplete();
 
     // Children have been entered - need to valid with information returned by eligibility check
-    if ( this.hasChildren ) {
+    if (this.hasChildren) {
 
-      // Validate children
-      const childActiveMSP = this.children.map( child => this.isInFamily( child.getNonFormattedPhn() ) )
-          .filter( x => x !== true )
-          .length === 0;
-
-      if ( !childActiveMSP ) {
-        //Set message #26 - need to pull actual message from front-end message cache
-        this.registrationService.processError = true;
-        this.registrationService.processErrorMsg = 'Child does not have active MSP (message to be updated when cache working)';
-      } else {
-        const childInfoCorrect = this.children.map(child => this.isInfoCorrect( child.getNonFormattedPhn(), child.dateOfBirthShort) )
-            .filter(x => x !== true).length === 0;
-
-        if (!childInfoCorrect) {
-          //Set message #48 - need to pull actual message from front-end message cache
-          this.registrationService.processError = true;
-          this.registrationService.processErrorMsg = 'We could not confirm some of the information entered (message to be updated when cache working)';
-        }
+      if ( !this.childrenHaveMsp() ) {
+        this.registrationService.validationError = true;
+        this.responseStore.internalError = 'SRQ_026';
+      } else if ( !this.correctDob() ) {
+        this.registrationService.validationError = true;
+        this.responseStore.internalError = 'SRQ_048';
       }
     }
 
-    this.navigate( this._baseUrl +
-        ( this.registrationService.processError ? REGISTRATION_RESULTS : REGISTRATION_ADDRESS ) );
-  }
-
-  /**
-   *
-   * @param {Person} child
-   * @returns {boolean}
-   */
-  legitimateDependant( child: Person ): boolean {
-    return !child.isDobEmpty() ? (child.getAge() < this.MAX_CHILD_AGE) : true;
+    this.navigate(this._baseUrl +
+        (this.registrationService.validationError ? REGISTRATION_RESULTS : REGISTRATION_ADDRESS) );
   }
 
   /**
@@ -234,11 +215,11 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   private get familyPhnList(): string [] {
 
-    const phnList = this.children.map( x => x.phn );
+    const phnList = this.children.map(x => x.phn);
 
-    phnList.push( this.fpcService.applicant.phn );
+    phnList.push(this.fpcService.applicant.phn);
 
-    if ( this.fpcService.hasSpouse ) {
+    if (this.fpcService.hasSpouse) {
       phnList.push(this.fpcService.spouse.phn);
     }
     return phnList;
@@ -249,10 +230,14 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * @param {string} phn
    * @returns {boolean}
    */
-  isInFamily( phn: string ): boolean {
-    // No children on MSP cannot register with children
-    return ( this._childList ? this._childList.filter(
-        child => this.registrationService.compare( phn, child.phn ) ).length !== 0 : false );
+  private isInFamily(phn: string): boolean {
+
+    // No children on MSP, cannot register with children
+    if (this._childList) {
+      const child = this._childList.find(x => this.registrationService.compare(phn, x.phn));
+      return !!child;
+    }
+    return false;
   }
 
   /**
@@ -261,10 +246,36 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * @param {SimpleDate} dob
    * @returns {boolean}
    */
-  isInfoCorrect( phn: string, dob: string ): boolean {
-    return ( this._childList ? this._childList.filter(
-        child => this.registrationService.compare( phn, child.phn ) &&
-            this.registrationService.compare( dob, child.dateOfBirth ) )
-        .length !== 0 : false );
+  private isDobCorrect(phn: string, dob: string): boolean {
+
+    if (this._childList) {
+      const child = this._childList.find(x => this.registrationService.compare(phn, x.phn) &&
+          this.registrationService.compare(dob, x.dateOfBirth));
+      return !!child;
+    }
+    return false;
+  }
+
+  /**
+   * Verify children have active MSP
+   * @returns {boolean}
+   */
+  private childrenHaveMsp(): boolean {
+
+    // Validate children
+    return this.children.map(child => this.isInFamily(child.getNonFormattedPhn()))
+        .filter(x => x !== true)
+        .length === 0;
+  }
+
+  /**
+   * Verify children's birthdates are correct
+   * @returns {boolean}
+   */
+  private correctDob(): boolean {
+
+    return this.children.map(child =>
+        this.isDobCorrect(child.getNonFormattedPhn(), child.dateOfBirthShort))
+        .filter(x => x !== true).length === 0;
   }
 }

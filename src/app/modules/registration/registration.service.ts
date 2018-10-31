@@ -16,11 +16,8 @@ export class RegistrationService {
 
   /**
    * Used for front-end errors.
-   * ex.
-   * Dependents entered by applicant do not match those returned by eligibility check
    */
-  public processErrorMsg: string;
-  public processError: boolean = false;
+  public validationError: boolean = false;
 
   constructor( private router: Router ) {}
 
@@ -99,8 +96,8 @@ export class RegistrationService {
    */
   setPersonInterfaceForReg( person: Person,
                             personType: PersonType,
-                            netIncome: string = null,
-                            rdsp: string = null ): PersonInterface {
+                            netIncome: number = 0,
+                            rdsp: number = 0 ): PersonInterface {
 
     let famMember: PersonInterface;
 
@@ -113,8 +110,8 @@ export class RegistrationService {
         givenName: person.firstName,
         surname: person.lastName,
         sin : person.getNonFormattedSin(),
-        netIncome: netIncome,
-        rdsp: rdsp
+        netIncome: (netIncome ? netIncome.toString() : ''),
+        rdsp: (rdsp ? rdsp.toString() : '' )
       };
     } else {
       famMember = {

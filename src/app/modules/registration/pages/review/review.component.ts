@@ -180,12 +180,12 @@ export class ReviewPageComponent extends Base implements OnInit {
     this.navigate( REGISTRATION_FINANCIAL );
   }
 
-  editSpouse() {
-    if ( this.hasSpouse ) {
+  editSpouse() { // TODO: BSA to provide ST ticket for how to deal with link if no spouse
+   // if ( this.hasSpouse ) {
       this.editPersonalInfo();
-    } else {
-      this.editFinancialInfo();
-    }
+   // } else {
+   //   this.editFinancialInfo();
+   // }
   }
   /**
    * Retrieve the updated street address

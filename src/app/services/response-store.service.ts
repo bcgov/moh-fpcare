@@ -4,7 +4,10 @@ import {
   StatusCheckRegNumberPayload,
   ReprintLetterPayload,
   EligibilityPayload,
-  RegistrationPayload
+  RegistrationPayload,
+  ServerPayload,
+  MessageInterface,
+  RegStatusCode
 } from '../models/api.model';
 
 /**
@@ -19,13 +22,34 @@ import {
 })
 export class ResponseStoreService {
 
+  // When wording changes in database table PLIADMIN.PLI_MESSAGE this will need to be updated.
+  private _hardCodeMsg: MessageInterface[] = [
+    { msgCode: 'SRQ_026',
+      msgText: 'SRQ_026 - Cache needs to be implemented',
+      msgType: RegStatusCode.ERROR}, // TODO: to removed once cache is implemented
+    { msgCode: 'SRQ_048',
+      msgText: 'SRQ_048 - Cache needs to be implemented',
+      msgType: RegStatusCode.ERROR}, // TODO: to removed once cache is implemented
+
+    { msgCode: 'SRQ_045',
+      msgText: 'The Fair PharmaCare registration system is temporarily unavailable due to system maintenance.<br/> \n' +
+      'Please try again later.',
+      msgType: RegStatusCode.WARNING},
+    { msgCode: 'SRQ_099',
+      msgText: 'This error occurred because the system encountered an unanticipated situation which forced it to stop',
+      msgType: RegStatusCode.ERROR}
+  ];
+  public cacheMsgs: MessageInterface[];
+
   constructor() { }
 
   private _statusCheckRegNumber: StatusCheckRegNumberPayload;
   private _statusCheckPHN: StatusCheckPHNPayload;
-  private _reprintLetter: ReprintLetterPayload;
-  private _eligibility: EligibilityPayload;
-  private _registerFPC: RegistrationPayload;
+
+  public  internalResponse: ServerPayload;
+  public reprintLetter: ReprintLetterPayload;
+  public eligibility: EligibilityPayload;
+  public registration: RegistrationPayload;
 
   /**
    * Returns the response for a Reg Num Status Check request. Note: A PHN Status
@@ -52,29 +76,32 @@ export class ResponseStoreService {
   }
 
   /**
-   * Returns the response for a Reprint Letter request.
+   * Set internal response to be displayed on result pages
+   * @param {string} msgCode
    */
-  get reprintLetter(): ReprintLetterPayload { return this._reprintLetter; }
+  set internalError( msgCode: string ) {
 
-  set reprintLetter(val: ReprintLetterPayload){
-    this._reprintLetter = val;
+    const errMsg = this.findMessage( msgCode );
+
+    this.internalResponse = new ServerPayload({
+      regStatusCode: RegStatusCode[errMsg.msgCode],
+      regStatusMsg: errMsg.msgText,
+      uuid: ''
+    });
   }
 
   /**
-   * Returns the response for eligibility
+   * Find message based on msgCode
+   * @param {string} msgCode
+   * @returns {MessageInterface}
    */
-  get eligibility(): EligibilityPayload { return this._eligibility; }
+  private findMessage( msgCode: string ): MessageInterface {
 
-  set eligibility( val: EligibilityPayload ) {
-    this._eligibility = val;
-  }
+    if ( this.cacheMsgs ) {
+      return this.cacheMsgs.find(val => val.msgCode === msgCode);
+    }
 
-  /**
-   * Returns the response for registration
-   */
-  get registration(): RegistrationPayload { return this._registerFPC; }
-
-  set registration( val: RegistrationPayload ) {
-    this._registerFPC = val;
+    // hard-coded messages
+    return this._hardCodeMsg.find( val => val.msgCode === msgCode );
   }
 }

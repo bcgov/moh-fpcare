@@ -1,6 +1,6 @@
 import { AbstractHttpService } from './abstract-api-service';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { Logger } from './logger.service';
@@ -10,10 +10,12 @@ import {
   StatusCheckPHN,
   StatusCheckRegNum,
   DeductibleInterface,
-  ReprintLetter, PersonInterface, PayloadInterface, AddressInterface
-} from 'app/models/api.model';
-import {FPCareDataService} from './fpcare-data.service';
-import {EligibilityInterface, RegistrationInterface} from '../models/api.model';
+  ReprintLetter,
+  PersonInterface,
+  AddressInterface,
+  EligibilityInterface,
+  RegistrationInterface, MessageInterface
+} from '../models/api.model';
 
 @Injectable({
   providedIn: 'root'
@@ -151,6 +153,19 @@ export class ApiService extends AbstractHttpService {
       processDate: processDate,
       persons: input.persons
     });
+  }
+
+  /**
+   * Get request to retreive front-end error messsage
+   * @returns {Observable<StatusMsgsInterface>}
+   */
+  public getMessages() {
+    const url = environment.baseAPIUrl + 'getMessages';
+
+    const queryParams = new HttpParams();
+    queryParams.set('appLevel', 'FEND');
+
+    return this.get<MessageInterface[]>(url, queryParams);
   }
 
   protected handleError(error: HttpErrorResponse) {

@@ -6,6 +6,8 @@ import {ConsentModalComponent} from '../../../core/components/consent-modal/cons
 import {REGISTRATION_FINANCIAL, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 import {RegistrationService} from '../../registration.service';
 import {pageRoutes} from '../../registration-page-routing';
+import {ApiService} from '../../../../services/api-service.service';
+import {ResponseStoreService} from '../../../../services/response-store.service';
 
 @Component({
   selector: 'fpcare-registration-requirements',
@@ -20,7 +22,7 @@ export class RegistrationRequirementsComponent extends Base implements OnInit, A
 
   constructor( private router: Router,
                private fpcareDataService: FPCareDataService,
-               private registrationService: RegistrationService ) {
+               private registrationService: RegistrationService) {
     super();
 
     // Registration items to be completed

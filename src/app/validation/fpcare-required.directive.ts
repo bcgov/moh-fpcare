@@ -1,6 +1,6 @@
 import {
   Directive, ElementRef, Input, HostListener, Renderer2, Inject,
-  ViewContainerRef, ChangeDetectorRef, ComponentRef, ComponentFactoryResolver, AfterViewInit
+  ViewContainerRef, ComponentRef, ComponentFactoryResolver, AfterViewInit
 } from '@angular/core';
 
 import {ValidationComponent} from './validation-component.interface';

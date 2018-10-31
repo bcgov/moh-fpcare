@@ -157,8 +157,8 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
          this.registrationService.setPersonInterfaceForReg(
              this.applicant,
              PersonType.applicantType,
-             this.fpcService.applicantIncome.toString(),
-             this.fpcService.disabilityAmount.toString()
+             this.fpcService.applicantIncome,
+             this.fpcService.disabilityAmount
          )
      );
 
@@ -167,8 +167,8 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
            this.registrationService.setPersonInterfaceForReg(
                this.spouse,
                PersonType.spouseType,
-               this.fpcService.spouseIncome.toString(),
-               this.fpcService.spouseDisabilityAmount.toString()
+               this.fpcService.spouseIncome,
+               this.fpcService.spouseDisabilityAmount
            )
        );
      }
@@ -179,8 +179,6 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
          x => this.registrationService.setPersonInterfaceForReg( x, PersonType.dependent ) );
        list.concat( dependants );
      }
-
-     console.log('family list: ', list);
      return list;
    }
 }

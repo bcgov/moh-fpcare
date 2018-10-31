@@ -40,7 +40,7 @@
 
 
       <div class="form-group" *ngIf='hasSpouse'>
-          <label class='no-bold' for="spouseIncome">Enter your spouse's / common law partner's net income from {{taxYear}} &mdash; see Line 236 of your Notice of Assessment or Reassessment from Canada Revenue Agency.</label>
+          <label class='no-bold' for="spouseIncome">Enter your spouse's / common-law partner's net income from {{taxYear}} &mdash; see Line 236 of your spouse's Notice of Assessment or Reassessment from Canada Revenue Agency.</label>
 
           <div class="input-group mb-3 col-md-6">
             <div class="input-group-prepend">
@@ -54,7 +54,7 @@
                 [ngModel]="spouseIncome"
                 (ngModelChange)="spouseIncome = $event; update()"
                 [textMask]="{mask: moneyMask}"
-                placeholder="Enter Your Income"/>
+                placeholder="Enter Your Spouse's Income"/>
           </div>
       </div>
 
@@ -87,7 +87,7 @@
 
      <div class="form-group" *ngIf='hasSpouse'>
         <label class='no-bold' for="sp_disability">
-           How much did your spouse / common law partner report for a Registered Disability Savings Plan on your income tax return {{taxYear}} (Line 125)?
+           How much did your spouse / common-law partner report for a Registered Disability Savings Plan on your spouse's income tax return {{taxYear}} (Line 125)?
         </label>
         <div class="input-group mb-3 col-md-6">
            <div class="input-group-prepend">

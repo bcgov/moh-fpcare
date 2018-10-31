@@ -13,7 +13,7 @@ import {Injectable} from '@angular/core';
 import {
   DeductibleInterface,
   DependentMandatory,
-  EligibilityInterface,
+  EligibilityInterface, MessageInterface,
   RegistrationInterface,
   RegStatusCode,
   StatusCheckPHN,
@@ -58,7 +58,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
           // status codes subject to change and new field added for mandatory children
           payload = this.getEligibilityResponse( request );
 
-        } else if (request.url.endsWith('/requestRegistration') ) {
+        } else if (request.url.endsWith('/requestRegistration')) {
 
           console.log( 'Request Registration - fake backend' );
           payload = this.getRegistrationResponse( request );
@@ -72,10 +72,17 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
 
         // Pass through to actual service
         return next.handle( request );
-      } else {
-        // Pass through to actual service
-        return next.handle( request );
+      } else if ( 'GET' === request.method ) {
+
+        if (request.url.endsWith('/getMessages')) {
+          console.log( 'Get messages - fake backend' );
+          return of(new HttpResponse({ status: 200, body: this.getMessages() }))
+              .pipe(delay(1000));
+        }
       }
+
+      // Pass through to actual service
+      return next.handle( request );
     }
     ));
   }
@@ -163,7 +170,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       dependentMandatory: DependentMandatory.NO,
       //(this.fakebackendService.hasDependants ? DependentMandatory.YES : DependentMandatory.NO),
       regStatusMsg: 'Fake backend - ' + ( alreadyRegistered ? 'Already registered' :
-          ( family ? ( eligible ? 'Success' : 'DOBs do not match' ) : 'Not eligible' ) ),
+          ( family ? ( eligible ? 'Eligible for FPCare' : 'DOBs do not match' ) : 'Not eligible' ) ),
       regStatusCode: ( alreadyRegistered ? RegStatusCode.WARNING :
           ( family && eligible ? RegStatusCode.SUCCESS : RegStatusCode.ERROR ) )
     };
@@ -197,6 +204,16 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
        regStatusCode: RegStatusCode.ERROR,
        regStatusMsg: 'Failed'
      };*/
+  }
+
+  private getMessages(): MessageInterface[] {
+
+    return  [
+        {msgCode: 'SRQ_026', msgText: 'SRQ_026 (fake-backend)', msgType: RegStatusCode.ERROR },
+        {msgCode: 'SRQ_048', msgText: 'SRQ_048 (fake-backend)', msgType: RegStatusCode.ERROR },
+        {msgCode: 'SRQ_045', msgText: 'SRQ_045 (fake-backend)', msgType: RegStatusCode.WARNING },
+        {msgCode: 'SRQ_099', msgText: 'SRQ_099 (fake-backend)', msgType: RegStatusCode.ERROR },
+      ];
   }
 }
 
