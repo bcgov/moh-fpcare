@@ -27,6 +27,9 @@ export class ResponseStoreService {
     { msgCode: 'SRQ_026',
       msgText: 'SRQ_026 - Cache needs to be implemented',
       msgType: RegStatusCode.ERROR}, // TODO: to removed once cache is implemented
+    { msgCode: 'SRQ_029',
+      msgText: 'SRQ_029 - Cache needs to be implemented',
+      msgType: RegStatusCode.ERROR}, // TODO: to removed once cache is implemented
     { msgCode: 'SRQ_048',
       msgText: 'SRQ_048 - Cache needs to be implemented',
       msgType: RegStatusCode.ERROR}, // TODO: to removed once cache is implemented

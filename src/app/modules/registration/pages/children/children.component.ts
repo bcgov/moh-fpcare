@@ -201,7 +201,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
         this.responseStore.internalError = 'SRQ_026';
       } else if ( !this.correctDob() ) {
         this.registrationService.validationError = true;
-        this.responseStore.internalError = 'SRQ_048';
+        this.responseStore.internalError = 'SRQ_029';
       }
     }
 
