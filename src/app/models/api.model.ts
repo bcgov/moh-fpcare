@@ -172,11 +172,12 @@ export class ServerPayload implements PayloadInterface {
   }
 
   private processMessage(msg: string): string {
+
     // Note: using `href` here isn't ideal as it triggers a complete reload
     // of the Angular app. I tried using routerLink``, but angular stripped
     // it out.
-    return msg.replace('<link to Registration Page>',
-        '<a href="registration/requirements">Registration Page');
+    return (msg ? msg.replace('<link to Registration Page>',
+        '<a href="registration/requirements">Registration Page') : msg );
   }
 }
 

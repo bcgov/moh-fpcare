@@ -29,7 +29,7 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
 
     if ( this.hasRegistration ) {
       this.response = this.responseStore.registration;
-    } else if ( this.hasEligibility && !this.registrationService.validationError) {
+    } else if ( this.hasEligibility && !this.registrationService.internalError) {
       this.response = this.responseStore.eligibility;
     } else {
       this.response = this.responseStore.internalResponse;
@@ -102,7 +102,7 @@ export class RegResultsComponent extends AbstractResultsComponent implements OnI
     if (this.hasEligibility && !this.responseStore.eligibility.success) {
       // Clear eligibility check complete - error/warning occurred
       this.responseStore.eligibility = null;
-    } else if (this.registrationService.validationError) {
+    } else if (this.registrationService.internalError) {
       // Clear internal validation response
       this.responseStore.internalResponse = null;
     } else {

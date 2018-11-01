@@ -17,7 +17,7 @@ export class RegistrationService {
   /**
    * Used for front-end errors.
    */
-  public validationError: boolean = false;
+  public internalError: boolean = false;
 
   constructor( private router: Router ) {}
 

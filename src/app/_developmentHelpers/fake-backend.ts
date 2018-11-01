@@ -171,8 +171,10 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       //(this.fakebackendService.hasDependants ? DependentMandatory.YES : DependentMandatory.NO),
       regStatusMsg: 'Fake backend - ' + ( alreadyRegistered ? 'Already registered' :
           ( family ? ( eligible ? 'Eligible for FPCare' : 'DOBs do not match' ) : 'Not eligible' ) ),
+      //regStatusMsg: null,
       regStatusCode: ( alreadyRegistered ? RegStatusCode.WARNING :
           ( family && eligible ? RegStatusCode.SUCCESS : RegStatusCode.ERROR ) )
+      //regStatusCode: null
     };
   }
 

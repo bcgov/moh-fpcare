@@ -47,7 +47,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
   ngOnInit() {
     this.registrationService.setItemIncomplete();
-    this.registrationService.validationError = false;
+    this.registrationService.internalError = false;
 
     if (this.responseStore.eligibility) {
 
@@ -197,16 +197,16 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
     if (this.hasChildren) {
 
       if ( !this.childrenHaveMsp() ) {
-        this.registrationService.validationError = true;
+        this.registrationService.internalError = true;
         this.responseStore.internalError = 'SRQ_026';
       } else if ( !this.correctDob() ) {
-        this.registrationService.validationError = true;
+        this.registrationService.internalError = true;
         this.responseStore.internalError = 'SRQ_029';
       }
     }
 
     this.navigate(this._baseUrl +
-        (this.registrationService.validationError ? REGISTRATION_RESULTS : REGISTRATION_ADDRESS) );
+        (this.registrationService.internalError ? REGISTRATION_RESULTS : REGISTRATION_ADDRESS) );
   }
 
   /**

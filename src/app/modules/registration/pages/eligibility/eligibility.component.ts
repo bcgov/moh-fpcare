@@ -173,6 +173,11 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
           success: this.responseStore.eligibility.success
         });
       } else {
+
+        // Something went wrong with our response
+        if ( !this.responseStore.eligibility.message ) {
+          this.responseStore.eligibility = null;
+        }
         this.navigate(this._baseUrl +  REGISTRATION_RESULTS );
       }
     },

@@ -86,6 +86,8 @@ export class ResponseStoreService {
 
     const errMsg = this.findMessage( msgCode );
 
+    console.log( 'Internal Error: ', errMsg );
+
     this.internalResponse = new ServerPayload({
       regStatusCode: RegStatusCode[errMsg.msgCode],
       regStatusMsg: errMsg.msgText,
