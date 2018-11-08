@@ -8,8 +8,6 @@ import {ApiService} from '../../../../services/api-service.service';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {ReprintLetter, ReprintLetterPayload} from '../../../../models/api.model';
 import {REPRINT_LETTERS_PATH, REPRINT_STATUS} from '../../../../models/route-paths.constants';
-import {phn_def, phn_hdr} from '../../../../models/fpcare-aside-definitions';
-
 
 /**
  * Letter types
@@ -35,10 +33,6 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
 
   /** Access to date component */
   @ViewChild('consentModal') consentModal: ConsentModalComponent;
-
-  // headers and definitions for aside (repeated in multiple places)
-  public phnHdr: string = phn_hdr;
-  public phnDef: string =  phn_def;
 
   /** Result page */
   private _url = REPRINT_LETTERS_PATH + '/' + REPRINT_STATUS;

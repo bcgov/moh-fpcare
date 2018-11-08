@@ -6,7 +6,6 @@ import {Person} from '../../../../models/person.model';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ValidationService} from '../../../../services/validation.service';
 import {
-  ERROR_404,
   REGISTRATION_PATH,
   REGISTRATION_PERSONAL,
   REGISTRATION_RESULTS
@@ -17,9 +16,7 @@ import {
   EligibilityPayload, PersonType,
 } from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
-import {phn_def, phn_hdr} from '../../../../models/fpcare-aside-definitions';
 import { Logger } from '../../../../services/logger.service';
-
 
 @Component({
   selector: 'fpcare-eligibility',
@@ -32,11 +29,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
   @ViewChildren(FPCareDateComponent) dobForm: QueryList<FPCareDateComponent>;
 
   /** Indicates whether or not the same PHN has been used for spouse */
-  private _uniquePhn = true;
-
-  // headers and definitions for aside (repeated in multiple places)
-  public phnHdr: string = phn_hdr;
-  public phnDef: string =  phn_def;
+  public uniquePhnError = false;
 
   /** Page to naviage to when continue process */
   private _baseUrl = REGISTRATION_PATH + '/';
@@ -65,13 +58,8 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
     // Main and sub forms are not empty and are valid
     if ( super.canContinue() ) {
 
-      if ( !this.hasSpouse ) {
-        return true;
-      }
-
-      // Check PHNs are unique
-      this._uniquePhn = this.validationService.isUnique( [this.applicant.phn, this.spouse.phn] );
-      return this._uniquePhn;
+      //If spouse exists, ensure unique PHNs, otherwise return true
+      return this.hasSpouse ? !this.uniquePhnError : true;
     }
     return false;
   }
@@ -93,20 +81,24 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
   }
 
   /**
-   * Indicates whether the PHNs are the same
-   * @returns {boolean}
-   */
-  get hasUniquePhnError(): boolean {
-    return !this._uniquePhn;
-  }
-
-  /**
    * Flag indicating presence of spouse
    * Displays spouse information section if true, otherwise it's hidden
    * @returns {boolean}
    */
   get hasSpouse(): boolean {
     return this.fpcareDataService.hasSpouse;
+  }
+
+  /**
+   *
+   * @returns {string[]}
+   */
+  get familyPhnList(): string [] {
+
+    if ( this.hasSpouse ) {
+      return [this.applicant.phn, this.spouse.phn];
+    }
+    return [];
   }
 
   /**
@@ -184,7 +176,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
         (responseError) => {
           this.loading = false;
           console.log( 'response error: ', responseError );
-          this.navigate( ERROR_404 );
+          this.navigate(this._baseUrl +  REGISTRATION_RESULTS );
     });
   }
 }

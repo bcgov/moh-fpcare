@@ -27,7 +27,7 @@
                   [useCurrentDate]="false"
                   [date]="applicant.dateOfBirth"
                   [restrictDate]="'past'"
-                  [label]="'Birth Date'">
+                  [label]="'Birthdate'">
           </fpcare-date>
         </div>
 
@@ -39,11 +39,7 @@
   </form>
 
   <aside>
-
-    <div>
-      <p class="h5">{{phnHdr}}</p>
-      <p>{{phnDef}}</p>
-   </div>
+    <fpcare-phn-definition></fpcare-phn-definition>
   </aside>
 
   <fpcare-form-action-bar

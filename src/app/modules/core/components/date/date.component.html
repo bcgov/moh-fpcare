@@ -14,11 +14,12 @@
                    name="month"
                    #monthRef="ngModel"
                    [disabled]="disabled"
-                   [required]="required">
+                   [required]="required"
+                   validateCalendarMonth>
               <!-- TODO: May not be the correct way to add placeholder - further investigation requried -->
               <option value="null" disabled hidden>month</option>
                <!-- We show the blank option so the user can clear out their data.-->
-              <option value="0">&nbsp;</option>
+              <option value="blank">&nbsp;</option>
               <option *ngFor="let month of monthNames; let i = index;" [value]="i+1"> {{ month }}</option>
            </select>
            <label class="visuallyhidden" for="day{{objectId}}">Day</label>

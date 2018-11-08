@@ -13,11 +13,8 @@ import {RegistrationService} from '../../registration.service';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {
   DependentMandatory,
-  MessageInterface,
   PersonInterface,
-  PersonType,
-  RegStatusCode,
-  ServerPayload
+  PersonType
 } from '../../../../models/api.model';
 import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 
@@ -29,7 +26,8 @@ import {SimpleDate} from '../../../core/components/date/simple-date.interface';
 export class ChildrenPageComponent extends AbstractFormComponent implements OnInit {
 
   /** Indicates whether or not the same PHNs has been used for another family member */
-  private _uniquePhns: boolean = true;
+  public uniquePhnError = false;
+
   private _dependentMandatory: boolean = false;
   private _childList: PersonInterface[];
 
@@ -38,7 +36,6 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   private _baseUrl = REGISTRATION_PATH + '/';
 
   constructor(private fpcService: FPCareDataService
-      , private validationService: ValidationService
       , protected router: Router
       , private responseStore: ResponseStoreService
       , private registrationService: RegistrationService) {
@@ -77,16 +74,10 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
       return true;
     }
 
-    // Main and sub forms are not empty and are valid
-    if (super.canContinue()) {
-
-      // Check that PHNs are unique
-      this._uniquePhns = this.validationService.isUnique(this.familyPhnList);
-
-      return this._uniquePhns;
-    }
-
-    return false;
+    /* Main and sub forms are not empty and are valid
+     * If children exist, ensure PHNs are unique
+     */
+    return super.canContinue() ?  this.uniquePhnError : false;
   }
 
   /**
@@ -107,23 +98,18 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
   /**
    *
-   * @param {Person} child
-   * @returns {boolean}
+   * @returns {string[]}
    */
-  hasUniquePhnError(child: Person): boolean {
+  get familyPhnList(): string [] {
 
-    if (!this._uniquePhns) {
-      // Is this the PHN that is duplicated
-      const list = this.familyPhnList.filter(x => {
-        return x === child.phn;
-      });
+    const phnList = this.children.map(x => x.phn);
 
-      if (list.length > 1) {
-        // This PHN is duplicated
-        return true;
-      }
+    phnList.push(this.fpcService.applicant.phn);
+
+    if (this.fpcService.hasSpouse) {
+      phnList.push(this.fpcService.spouse.phn);
     }
-    return false;
+    return phnList;
   }
 
   /**
@@ -207,22 +193,6 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
 
     this.navigate(this._baseUrl +
         (this.registrationService.internalError ? REGISTRATION_RESULTS : REGISTRATION_ADDRESS) );
-  }
-
-  /**
-   *
-   * @returns {string[]}
-   */
-  private get familyPhnList(): string [] {
-
-    const phnList = this.children.map(x => x.phn);
-
-    phnList.push(this.fpcService.applicant.phn);
-
-    if (this.fpcService.hasSpouse) {
-      phnList.push(this.fpcService.spouse.phn);
-    }
-    return phnList;
   }
 
   /**

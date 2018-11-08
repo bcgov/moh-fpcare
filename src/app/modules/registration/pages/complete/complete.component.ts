@@ -3,25 +3,21 @@ import {AbstractFormComponent} from '../../../../models/abstract-form-component'
 import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
-import {environment} from '../../../../../environments/environment';
 import {ApiService} from '../../../../services/api-service.service';
 import {RegistrationService} from '../../registration.service';
 import { Logger } from '../../../../services/logger.service';
 import {
-  AddressInterface,
-  EligibilityPayload,
   PersonInterface,
   PersonType,
   RegistrationPayload
 } from '../../../../models/api.model';
 import {FinanceService} from '../../../financial-calculator/finance.service';
 import {
-  ERROR_404,
   REGISTRATION_PATH,
-  REGISTRATION_PERSONAL,
   REGISTRATION_RESULTS
 } from '../../../../models/route-paths.constants';
 import {ResponseStoreService} from '../../../../services/response-store.service';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'fpcare-complete',
@@ -30,11 +26,12 @@ import {ResponseStoreService} from '../../../../services/response-store.service'
 })
 export class CompletePageComponent extends AbstractFormComponent implements OnInit  {
 
-  /** Page to naviage to when continue process */
+  /** Page to navigate to when continue process */
   private _baseUrl = REGISTRATION_PATH + '/';
 
   public applicantAgreement: boolean = false;
   public spouseAgreement: boolean = false;
+  public links = environment.links;
 
   constructor( private fpcService: FPCareDataService
              , protected router: Router
@@ -141,7 +138,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
         (responseError) => {
           this.loading = false;
           console.log( 'response error: ', responseError );
-          this.navigate( ERROR_404 );
+          this.navigate(this._baseUrl +  REGISTRATION_RESULTS );
         });
    }
 

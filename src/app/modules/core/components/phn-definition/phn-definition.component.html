@@ -1,0 +1,15 @@
+<div class="pb-md-2">
+  <p class="h5">Personal Health Number (PHN)</p>
+  <p>
+    {{phnDefinition}}
+    <a role="button"
+       aria-haspopup="true"
+       href="javascript:void(0)"
+       (click)="openSample()">Open sample</a>
+  </p>
+  <fpcare-sample-modal
+      #bcscSample
+      [title]="'BC Services Card Samples'"
+      [images]="imageList">
+  </fpcare-sample-modal>
+</div>

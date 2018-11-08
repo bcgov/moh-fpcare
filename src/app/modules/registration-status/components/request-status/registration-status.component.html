@@ -11,18 +11,16 @@
     </h1>
 
     <p>
-      To inquire about the status of your Fair PharmaCare registration, enter you Registration
-      Number.  If you do not have your registration number available, enter your Personal Health
-      Number, Birthdate and Mailing Postal Code.
+      To inquire about the status of your Fair PharmaCare registration, enter your Registration Number. If you do not
+      have your registration number available, enter your Personal Health Number (PHN), Birthdate and Mailing Postal Code.
     </p>
     <p>
-      If you registered by phone, a consent form has been mailed to you.  You will need to
-      complete and sign the consent form to check your income with the Canada Revenue Agency
-      (CRA) and confirm your level of financial assistance under Fair PharmaCare.  If you have
-      returned your consent form, please allow 4 weeks for processing.
+      If you registered by phone, a consent form has been mailed to you. You will need to complete and sign the consent
+      form to allow us to check your income with the Canada Revenue Agency and confirm your level of financial
+      assistance under Fair PharmaCare. If you have returned your consent form, please allow four weeks for processing.
     </p>
     <p>
-      If you registered by mail, please allow 6-8 weeks for us to process your application.
+      If you registered by mail, please allow six to eight weeks before you can use this application.
     </p>
   </div>
 
@@ -46,7 +44,7 @@
                   [date]="applicant.dateOfBirth"
                   [restrictDate]="'past'"
                   [disabled]="disablePhn()"
-                  [label]="'Birth Date'">
+                  [label]="'Birthdate'">
           </fpcare-date>
         </div>
 
@@ -81,13 +79,10 @@
 
   <aside>
 
-    <div>
-      <p class="h5">{{phnHdr}}</p>
-      <p>{{phnDef}}</p>
+      <fpcare-phn-definition></fpcare-phn-definition>
 
       <p class="h5">Registration Number</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
+      <p>This information is provided upon completion of the Registration process.</p>
 
   </aside>
 

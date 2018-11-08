@@ -7,7 +7,7 @@ import {
   RegistrationPayload,
   ServerPayload,
   MessageInterface,
-  RegStatusCode
+  RegStatusCode, SRQ_099Msg
 } from '../models/api.model';
 
 /**
@@ -22,26 +22,6 @@ import {
 })
 export class ResponseStoreService {
 
-  // When wording changes in database table PLIADMIN.PLI_MESSAGE this will need to be updated.
-  private _hardCodeMsg: MessageInterface[] = [
-    { msgCode: 'SRQ_026',
-      msgText: 'SRQ_026 - Cache needs to be implemented',
-      msgType: RegStatusCode.ERROR}, // TODO: to removed once cache is implemented
-    { msgCode: 'SRQ_029',
-      msgText: 'SRQ_029 - Cache needs to be implemented',
-      msgType: RegStatusCode.ERROR}, // TODO: to removed once cache is implemented
-    { msgCode: 'SRQ_048',
-      msgText: 'SRQ_048 - Cache needs to be implemented',
-      msgType: RegStatusCode.ERROR}, // TODO: to removed once cache is implemented
-
-    { msgCode: 'SRQ_045',
-      msgText: 'The Fair PharmaCare registration system is temporarily unavailable due to system maintenance.<br/> \n' +
-      'Please try again later.',
-      msgType: RegStatusCode.WARNING},
-    { msgCode: 'SRQ_099',
-      msgText: 'This error occurred because the system encountered an unanticipated situation which forced it to stop',
-      msgType: RegStatusCode.ERROR}
-  ];
   public cacheMsgs: MessageInterface[];
 
   constructor() { }
@@ -102,11 +82,13 @@ export class ResponseStoreService {
    */
   private findMessage( msgCode: string ): MessageInterface {
 
+    let msg: MessageInterface;
+
     if ( this.cacheMsgs ) {
-      return this.cacheMsgs.find(val => val.msgCode === msgCode);
+      msg = this.cacheMsgs.find(val => val.msgCode === msgCode);
     }
 
-    // hard-coded messages
-    return this._hardCodeMsg.find( val => val.msgCode === msgCode );
+    // If no message found, return error 99
+    return ( msg ? msg : SRQ_099Msg );
   }
 }

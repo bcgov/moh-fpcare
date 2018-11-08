@@ -1,8 +1,15 @@
 <fpcare-page-framework layout='default'>
 
   <h1>Child Information</h1>
+   <p>
+      Enter your child or children's personal information if applicable.
+   </p>
 
-  <h2>Your child's personal information</h2>
+   <p class="text-muted font-italic">
+      Note: In the case of shared custody, children can be included in only one parent's Fair PharmaCare account.
+   </p>
+
+   <h2>Your child's personal information</h2>
 
   <!-- Repeat for each child -->
   <form #formRef="ngForm" novalidate>
@@ -34,16 +41,13 @@
                   [useCurrentDate]="false"
                   [(date)]="child.dateOfBirth"
                   [restrictDate]="'past'"
-                  [label]="'Birth Date'">
+                  [label]="'Birthdate'">
           </fpcare-date>
         </div>
         <div class="form-group">
            <fpcare-phn
-               [(value)]="child.phn">
+               [(value)]="child.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError">
            </fpcare-phn>
-          <div *ngIf="hasUniquePhnError(child)" role="alert" aria-live="assertive">
-            <div class="text-danger">This Personal Health Number was already used for another family member.</div>
-          </div>
         </div>
       </div>
     </div>
@@ -54,8 +58,7 @@
   </button>
 
   <aside>
-    <strong>Child Info aside!</strong>
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque modi ipsum cumque tempore dolore explicabo libero, dolor dignissimos debitis minus voluptate quas culpa dolores atque inventore unde iure. Reiciendis, ea.
+    <fpcare-phn-definition [driverLicense]="false"></fpcare-phn-definition>
   </aside>
 
   <fpcare-form-action-bar

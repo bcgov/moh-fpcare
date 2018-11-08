@@ -108,14 +108,15 @@ export class ApiService extends AbstractHttpService {
     });
   }
 
-  public getDeductibles( processDate = this.getProcessDate() ) {
+  /**
+   * Get request to retreive deductibles
+   * @returns {Observable<DeductibleInterface>}
+   */
+  public getDeductibles() {
     const url = environment.baseAPIUrl + 'getDeductibles';
 
-    return this.post<DeductibleInterface>(url, {
-      uuid: this.generateUUID(),
-      clientName: this._clientName,
-      processDate: processDate
-    });
+    const queryParams = new HttpParams();
+    return this.get<DeductibleInterface>(url, queryParams);
   }
 
   public checkEligibility( input: {persons: PersonInterface[]}

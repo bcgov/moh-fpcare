@@ -14,6 +14,7 @@ import {growVertical} from '../../../../animations/animations';
 export class ConsentModalComponent extends Base implements OnInit {
 
   public captchaApiBaseUrl;
+  public links = environment.links;
 
   private _agreeCheck: boolean = false;
   private _hasToken = false;

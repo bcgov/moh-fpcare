@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {RegistrationService} from '../../../registration/registration.service';
-import {ResponseStoreService} from '../../../../services/response-store.service';
+import {environment} from '../../../../../environments/environment';
+import {SRQ_099Msg} from '../../../../models/api.model';
 
 export enum DisplayIcon {
   SUCCESS = 0,
@@ -19,7 +19,9 @@ export class ResultsFrameworkComponent {
   @Input() hasBody: boolean = true;
   @Input() displayPrint: boolean = false;
 
-  constructor( private responseStore: ResponseStoreService ) { }
+  public links = environment.links;
+
+  constructor() { }
 
   get errorIcon() {
     return DisplayIcon.ERROR;
@@ -38,7 +40,6 @@ export class ResultsFrameworkComponent {
    * @returns {string}
    */
   get noResponseMsg(): string {
-    this.responseStore.internalError =  'SRQ_099';
-    return this.responseStore.internalResponse.message;
+    return SRQ_099Msg.msgText;
   }
 }

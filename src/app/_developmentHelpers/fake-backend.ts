@@ -37,12 +37,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       if ( 'POST' === request.method ) {
         let payload = null;
 
-        if (request.url.endsWith('/getDeductibles')) {
-
-          console.log('Get Deductibles - fake backend');
-          payload = this.getDeductibleResponse( request );
-
-        } else if (request.url.endsWith('/statusCheckFamNumber')) {
+        if (request.url.endsWith('/statusCheckFamNumber')) {
 
           console.log('Status Check (Family Number) - fake backend');
           payload =  this.getCheckStatusFamNumResponse( request );
@@ -75,9 +70,14 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       } else if ( 'GET' === request.method ) {
 
         if (request.url.endsWith('/getMessages')) {
-          console.log( 'Get messages - fake backend' );
-          return of(new HttpResponse({ status: 200, body: this.getMessages() }))
+          console.log('Get messages - fake backend');
+
+        } else if (request.url.endsWith('/getDeductibles')) {
+
+          console.log('Get Deductibles - fake backend');
+          return of(new HttpResponse({status: 200, body: this.getDeductible()}))
               .pipe(delay(1000));
+
         }
       }
 
@@ -87,29 +87,19 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
     ));
   }
 
-  private getDeductibleResponse( request: HttpRequest<any> ): DeductibleInterface {
+  private getDeductible(): DeductibleInterface {
 
     return {
-      uuid: request.body.uuid,
-      processDate: request.body.processDate,
-      clientName: request.body.clientName,
       benefitYear: '2019',
       taxYear: '2017',
       assistanceLevels: baselineAssist,
       pre1939AssistanceLevels: pre1939Assist,
-      regStatusCode: RegStatusCode.SUCCESS,
-      regStatusMsg: ''
     };
   /*  return {
-      uuid: request.body.uuid,
-      processDate: request.body.processDate,
-      clientName: request.body.clientName,
       benefitYear: '',
       taxYear: '',
       assistanceLevels: [],
-      pre1939AssistanceLevels: [],
-      regStatusCode: RegStatusCode.ERROR,
-      regStatusMsg: 'database error - system down'
+      pre1939AssistanceLevels: []
     };*/
   }
 

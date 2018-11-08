@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {RegistrationService} from '../../registration.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -6,9 +6,9 @@ import {FinanceService} from '../../../financial-calculator/finance.service';
 import {REGISTRATION_ELIGIBILITY, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ApiService} from '../../../../services/api-service.service';
-import {DeductiblePayload} from '../../../../models/api.model';
-import * as moment from 'moment';
-import {ResponseStoreService} from '../../../../services/response-store.service';
+import {environment} from '../../../../../environments/environment';
+import {SampleModalComponent} from '../../../core/components/sample-modal/sample-modal.component';
+import {ImageInterface} from '../../../../models/image-interface';
 
 
 @Component({
@@ -17,6 +17,9 @@ import {ResponseStoreService} from '../../../../services/response-store.service'
   styleUrls: ['./calculator.component.scss']
 })
 export class CalculatorPageComponent extends AbstractFormComponent implements OnInit {
+
+  @ViewChild('taxDocuments') taxDocuments: SampleModalComponent;
+
   /** Numeric value for income + spouseIncome (if applicable) */
   public totalFamilyIncome: number;
   /** Numeric value for RDSP + spouse RDSP (if applicable) */
@@ -41,6 +44,8 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   /** Text displayed on button */
   public buttonText: string = 'Apply for Fair PharmaCare Assistance';
 
+  public links = environment.links;
+
   /**
    * Is the form standalone? If false, it's part of Registration's flow, if
    * true, it's a page treated in isolation. This includes, for example,
@@ -56,29 +61,18 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
              , private fpcareDataService: FPCareDataService
              , private registrationService: RegistrationService
              , private activatedRoute: ActivatedRoute
-             , private apiService: ApiService
-             , private responseStore: ResponseStoreService ) {
+             , private apiService: ApiService ) {
     super(router);
   }
 
   ngOnInit() {
 
-    // Default values to display on page, just encase call fails
- /*   const benefitYear = moment().year(); - Waiting response from BSA - plan to have defaults on load but not errors
-    this._benefitYear = benefitYear.toString();
-    this._taxYear = (benefitYear - 2).toString();*/
-
     this.apiService.getDeductibles().subscribe((deductibleResponse) => {
-        const deductiblePayload = new DeductiblePayload(deductibleResponse);
 
-        if ( deductiblePayload.success ) {
-          this.financeService.setAssistanceLevels(deductiblePayload.assistanceLevels,
-              deductiblePayload.pre1939AssistanceLevels);
-          this._taxYear = deductiblePayload.taxYear;
-          this._benefitYear = deductiblePayload.benefitYear;
-        } else {
-            this.financeService.failedToLoadAssistanceLevels(deductiblePayload.error);
-          }
+        this.financeService.setAssistanceLevels(deductibleResponse.assistanceLevels,
+            deductibleResponse.pre1939AssistanceLevels);
+        this._taxYear = deductibleResponse.taxYear;
+        this._benefitYear = deductibleResponse.benefitYear;
       },
       (deductibleError) => {
         // When API service returns an error we need to manually trigger an error in financeService
@@ -206,6 +200,29 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
     return this._taxYear;
   }
 
+  /**
+   *
+   */
+  openSample() {
+    this.taxDocuments.openModal();
+  }
+
+  /**
+   *
+   * @returns {ImageInterface[]}
+   */
+  get imageList(): ImageInterface[] {
+
+    return [
+      { path: 'assets/income_tax_t1_sample.png',
+        desc: 'Income Tax T1 General Sample image',
+        title: 'Income Tax T1 General Sample' },
+      { path: 'assets/notice_of_assess_sample.png',
+        desc: 'Notice Of Assessment Sample image',
+        title: 'Notice Of Assessment Sample'}
+    ];
+  }
+
   private calculateTotalFamilyIncome(): number {
     let incomeNum = 0;
     let spouseNum = 0;
@@ -237,10 +254,10 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   get bornBefore1939Label(): string {
-    return this.hasSpouse ? 'Were you or your spouse born in 1939 or earlier?' : 'Were you born in 1939 or earlier?';
+    return 'Were you ' + (this.hasSpouse ? 'or your spouse / common-law partner ' : '') + ' born in 1939 or earlier?';
   }
 
   get hasSpouseLabel(): string {
-    return 'Do you have a spouse/common-law partner?';
+    return 'Do you have a spouse / common-law partner?';
   }
 }

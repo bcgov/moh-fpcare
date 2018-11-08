@@ -14,11 +14,10 @@ export class CalendarMonthValidatorDirective {
   validate(control: FormControl): {[key: string]: boolean; }  {
 
     // Get value out of control
-    const month: string = control.value;
+    const month: string =  control.value;
 
-    if (month){
-      const m: number = parseInt(month, 10);
-
+    const m: number = parseInt(month, 10);
+    if ( month && !isNaN(m) ) {
       if (!(m > 0 && m < 13)){
         return {'calendarMonthOutOfRange': true};
       }

@@ -1,5 +1,5 @@
 <div class='form-group'>
-  <label for="phn_{{objectId}}">Personal Health Number</label>
+  <label for="phn_{{objectId}}">Personal Health Number (PHN)</label>
   <input class="form-control"
          spellcheck="false"
          type="text"
@@ -11,4 +11,8 @@
          (ngModelChange)="onUpdate($event)"
          [textMask]="{mask: mask}"
          [disabled]="disabled" />
+</div>
+
+<div *ngIf="!uniquePhns" role="alert" aria-live="assertive">
+  <div class="text-danger">{{uniquePhnErrMsg}}</div>
 </div>

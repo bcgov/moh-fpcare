@@ -1,11 +1,14 @@
-import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Person} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {ValidationService} from '../../../../services/validation.service';
-import {REGISTRATION_CHILD, REGISTRATION_PATH, REGISTRATION_REVIEW} from '../../../../models/route-paths.constants';
+import {REGISTRATION_CHILD, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
 import {RegistrationService} from '../../registration.service';
+import {SampleModalComponent} from '../../../core/components/sample-modal/sample-modal.component';
+import {ImageInterface} from '../../../../models/image-interface';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'fpcare-personal-info',
@@ -14,8 +17,11 @@ import {RegistrationService} from '../../registration.service';
 })
 export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit {
 
+  @ViewChild('sinSample') sinSample: SampleModalComponent;
+
   /** Indicates whether or not the same SIN has been used for spouse */
-  private _uniqueSin = true;
+  public uniqueSinError = true;
+  public links = environment.links;
 
   /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_CHILD;
@@ -40,13 +46,8 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
     // Main and sub forms are not empty and are valid
     if ( super.canContinue() ) {
 
-      if ( !this.hasSpouse ) {
-        return true;
-      }
-
-      // Check SINs are unique
-      this._uniqueSin = this.validationService.isUnique( [this.applicant.sin, this.spouse.sin] );
-      return this._uniqueSin;
+      // If spouse exists, ensure unique SINs
+      return this.hasSpouse ? this.uniqueSinError : true;
     }
 
     return false;
@@ -94,11 +95,15 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   }
 
   /**
-   * Indicates whether the SINs are the same
-   * @returns {boolean}
+   *
+   * @returns {string[]}
    */
-  hasUniqueSinError(): boolean {
-    return !this._uniqueSin;
+  get familySinList(): string [] {
+
+    if ( this.hasSpouse ) {
+      return [this.applicant.sin, this.spouse.sin];
+    }
+    return [];
   }
 
   /**
@@ -131,6 +136,24 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    */
   get labelSurname(): string {
     return 'Family Name';
+  }
+
+  /**
+   *
+   */
+  openSample() {
+    this.sinSample.openModal();
+  }
+
+  /**
+   *
+   * @returns {ImageInterface[]}
+   */
+  get imageList(): ImageInterface[] {
+
+    return [
+      {path: 'assets/sin_card_sample.png', desc: 'Social Insurance Number Card Sample image'}
+    ];
   }
 
   // Methods triggered by the form action bar

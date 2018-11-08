@@ -110,8 +110,8 @@ export class RegistrationService {
         givenName: person.firstName,
         surname: person.lastName,
         sin : person.getNonFormattedSin(),
-        netIncome: (netIncome ? netIncome.toString() : ''),
-        rdsp: (rdsp ? rdsp.toString() : '' )
+        netIncome: (netIncome ? netIncome.toFixed(2) : '0.00'),
+        rdsp: (rdsp ? rdsp.toFixed( 2 ) : '0.00' )
       };
     } else {
       famMember = {

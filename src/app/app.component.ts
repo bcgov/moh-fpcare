@@ -46,11 +46,10 @@ export class AppComponent implements OnInit {
     this.updateTitleOnRouteChange();
 
     // Load messages from cache
-    // TODO: Comment back in once message cache is operational
-    //this.apiService.getMessages().subscribe(
-    //    (response) => { this.responseStore.cacheMsgs = response; },
-    //    (responseError) => { /* What to do there is an error??? */ }
-    //    );
+    this.apiService.getMessages().subscribe(
+        (response) => { this.responseStore.cacheMsgs = response; },
+        (responseError) => { /* TODO: What to do there is an error??? */ }
+        );
 
     // Debugging purposes - MD5 hashing
     //(window as any).md5 = Md5;

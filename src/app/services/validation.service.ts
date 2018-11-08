@@ -29,7 +29,7 @@ export class ValidationService {
    */
   isUnique( list: string[] ): boolean {
     const sortedList = list.sort().filter( x => x );
-    const uniqueList = list.filter( this.filterUnique );
+    const uniqueList = sortedList.filter( this.filterUnique );
     return ( uniqueList.length === sortedList.length );
   }
 

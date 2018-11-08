@@ -35,6 +35,8 @@ import { PhnComponent } from './components/phn/phn.component';
 import { SinComponent } from './components/sin/sin.component';
 import {NameComponent} from './components/name/name.component';
 import { ModalFocusDirective } from './components/consent-modal/modal-focus.directive';
+import { PhnDefinitionComponent } from './components/phn-definition/phn-definition.component';
+import { SampleModalComponent } from './components/sample-modal/sample-modal.component';
 
 
 const componentList = [
@@ -65,7 +67,9 @@ const componentList = [
   FPCareDateComponent,
   ResultsFrameworkComponent,
   CaptchaComponent,
-  ModalFocusDirective
+  ModalFocusDirective,
+  PhnDefinitionComponent,
+  SampleModalComponent
 ];
 
 @NgModule({
