@@ -58,3 +58,27 @@ header .nav-link {
   margin-top: -1em;
   & > .d-flex { margin-top: 1em; }
 }
+
+.skip-to-content {
+  color: white;
+
+  // styling... TODO refine
+  // border: 5px solid white;
+  // border-radius: 10px;
+  // margin: auto;
+  // padding: 5px;
+
+  border-radius: 2px;
+  border: 2px solid white;
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: underline;
+  width: 109px;
+  text-align: center;
+  background: hsla(0, 0%, 100%, 0.1);
+
+  // Only visible if focused
+  opacity: 0;
+  height: 0;
+  &:focus { opacity: 1; height: auto; }
+}
