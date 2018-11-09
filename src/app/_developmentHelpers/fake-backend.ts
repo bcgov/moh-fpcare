@@ -13,9 +13,9 @@ import {Injectable} from '@angular/core';
 import {
   DeductibleInterface,
   DependentMandatory,
-  EligibilityInterface, MessageInterface,
+  EligibilityInterface, MessageInterface, PayloadInterface, PersonInterface,
   RegistrationInterface,
-  RegStatusCode,
+  RegStatusCode, ReprintLetter,
   StatusCheckPHN,
   StatusCheckRegNum,
 } from '../models/api.model';
@@ -40,12 +40,17 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
         if (request.url.endsWith('/statusCheckFamNumber')) {
 
           console.log('Status Check (Family Number) - fake backend');
-          payload =  this.getCheckStatusFamNumResponse( request );
+          payload = this.getCheckStatusFamNumResponse(request);
 
         } else if (request.url.endsWith('/statusCheckPhn')) {
 
           console.log('Status Check (PHN) - fake backend');
-          payload = this.getCheckStatusPhnResponse( request );
+          payload = this.getCheckStatusPhnResponse(request);
+
+        } else if (request.url.endsWith('/requestLetter')) {
+
+          console.log( 'Letter Reprint - fake backend' );
+          payload = this.getReprint( request );
 
         } else if (request.url.endsWith('/checkEligibility')) {
 
@@ -125,9 +130,9 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       uuid: request.body.uuid,
       processDate: request.body.processDate,
       clientName: request.body.clientName,
-      phn: request.body.phn,
-      dateOfBirth: request.body.dateOfBirth,
-      postalCode: request.body.postalCode,
+      phn: '',
+      dateOfBirth: '',
+      postalCode: '',
       regStatusCode: (registered ? RegStatusCode.SUCCESS : RegStatusCode.ERROR),
       regStatusMsg: (registered ? 'Registered with some status' : 'Not registered')
     };
@@ -137,6 +142,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
 
     let family;
     let eligible = false;
+
     const alreadyRegistered = this.fakebackendService.isRegistered(
         request.body.persons.map( x => x.phn )
     );
@@ -156,7 +162,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       uuid: request.body.uuid,
       processDate: request.body.processDate,
       clientName: request.body.clientName,
-      persons: ( family ? family : '' ),
+      persons: (family ? family : ''),
       dependentMandatory: DependentMandatory.NO,
       //(this.fakebackendService.hasDependants ? DependentMandatory.YES : DependentMandatory.NO),
       regStatusMsg: 'Fake backend - ' + ( alreadyRegistered ? 'Already registered' :
@@ -207,6 +213,20 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
         {msgCode: 'SRQ_099', msgText: 'SRQ_099 (fake-backend)', msgType: RegStatusCode.ERROR },
       ];
   }
+
+  private getReprint( request: HttpRequest<any> ): ReprintLetter {
+    return {
+      uuid: request.body.uuid,
+      processDate: request.body.processDate,
+      clientName: request.body.clientName,
+      phn: '',
+      dateOfBirth: '',
+      postalCode: '',
+      letterType: request.body.letterType,
+      regStatusCode: RegStatusCode.SUCCESS,
+      regStatusMsg: 'Success'
+    }
+  };
 }
 
 export let fakeBackendProvider = {

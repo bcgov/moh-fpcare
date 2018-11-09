@@ -134,7 +134,7 @@ export class RegistrationService {
    */
   public compare( value: string, hashed: string ): boolean {
     const hashedValue = Md5.base64( value );
-    console.log( 'Compare: ' + hashedValue + ' - ' + hashed );
+    //console.log( 'Compare: ' + hashedValue + ' - ' + hashed );
     return (hashed === hashedValue);
   }
 }

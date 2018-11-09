@@ -192,34 +192,35 @@ export class ServerPayload implements PayloadInterface {
   }
 }
 
-// Because we rename famNum to regNum, this does NOT implement the interface but
-// the constructor param still does.
+/**
+ * Response payload for check status when using Registration Number
+ * Registration Number can be retrived from  person model
+ */
 export class StatusCheckRegNumberPayload extends ServerPayload {
-  //Corresponds to famNumber from API
-  regNumber: string;
-
   constructor(payload: StatusCheckRegNum) {
     super(payload);
-    this.regNumber = payload.famNumber;
   }
 }
 
+/**
+ * Response payload for check status when using PHN
+ * PHN, DOB and Postal Code fields are returned blank
+ */
 export class StatusCheckPHNPayload extends ServerPayload {
-  phn: string;
-
   constructor(payload: StatusCheckPHN) {
     super(payload);
-    this.phn = payload.phn;
   }
 }
 
+/**
+ * Response payload for letter reprints
+ * PHN, DOB and Postal Code fields are returned blank
+ */
 export class ReprintLetterPayload extends ServerPayload {
-  phn: string;
   letterType: string;
 
   constructor(payload: ReprintLetter) {
     super(payload);
-    this.phn = payload.phn;
     this.letterType = payload.letterType;
   }
 }

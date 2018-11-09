@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { Person } from '../../../../models/person.model';
@@ -55,7 +55,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
       // Store the list of family members - used to validate postal code
       this._postalCode = this.responseStore.eligibility.persons.map(person => {
-        if (person.perType === PersonType.applicantType) {
+        if (person.perType !== PersonType.dependent) {
           return person.postalCode;
         }
       }).filter(x => x);
@@ -91,7 +91,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   checkPostal(): void {
     if (this.applicant.address.hasPostal()) {
       this.isPostalMatch = this.isPostalCodeMatch( this.applicant.getNonFormattedPostalCode() );
-      console.log('checkPostal', this.isPostalMatch, this._postalCode );
+      //console.log('checkPostal', this.isPostalMatch, this._postalCode );
     }
   }
 
@@ -153,7 +153,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   isPostalCodeMatch( pc: string ): boolean {
 
-    console.log( 'isPostalCodeMatch: ', pc );
+    //console.log( 'isPostalCodeMatch: ', pc );
     // No postal code force update
     return (this._postalCode ? this._postalCode.map(
         postalCode => this.registrationService.compare( pc, postalCode ) )

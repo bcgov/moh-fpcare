@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable, ɵNOT_FOUND_CHECK_ONLY_ELEMENT_INJECTOR} from '@angular/core';
 import {PersonInterface, PersonType} from '../models/api.model';
 import {FinanceService} from '../modules/financial-calculator/finance.service';
 import * as Md5 from 'js-md5';
@@ -8,6 +8,10 @@ export interface FpcareAssistLevel {
   deductible: string;
   maximum: string;
   pharmaCarePortion: string;
+}
+
+export interface FBEServicePerson extends PersonInterface {
+  familyId?: number;
 }
 
 @Injectable({
@@ -27,16 +31,16 @@ export class FakeBackendService {
 
 
   // Eligible to register in FPCare
-  private _eligibleList: PersonInterface[] = [
-    {perType: PersonType.applicantType, phn: '9999999973', dateOfBirth: '19650430', postalCode: 'V3V2V1'},
-    {perType: PersonType.applicantType, phn: '9999999998', dateOfBirth: '19890520', postalCode: 'V1V2V3'},
-    {perType: PersonType.spouseType, phn: '9999999927', dateOfBirth: '19900101', postalCode: 'V1V2V3'},
-    {perType: PersonType.applicantType, phn: '9999999934', dateOfBirth: '19800229', postalCode: 'V2V2V4'},
-    {perType: PersonType.spouseType, phn: '9999999941', dateOfBirth: '19830131', postalCode: 'V2V2V4'},
-    {perType: PersonType.dependent, phn: '9999999959', dateOfBirth: '20050317', postalCode: 'V2V2V4'},
-    {perType: PersonType.dependent, phn: '9999999966', dateOfBirth: '20091231', postalCode: 'V2V2V4'},
-    {perType: PersonType.applicantType, phn: '9999999207', dateOfBirth: '19410520', postalCode: 'V1V2V5'},
-    {perType: PersonType.spouseType, phn: '9999999214', dateOfBirth: '19381101', postalCode: 'V1V2V5'},
+  private _eligibleList: FBEServicePerson[] = [
+    {perType: PersonType.applicantType, phn: '9999999973', dateOfBirth: '19650430', postalCode: 'V3V2V1', familyId: 1},
+    {perType: PersonType.applicantType, phn: '9999999998', dateOfBirth: '19890520', postalCode: 'V1V2V3', familyId: 2},
+    {perType: PersonType.spouseType, phn: '9999999927', dateOfBirth: '19900101', postalCode: '', familyId: 2},
+    {perType: PersonType.applicantType, phn: '9999999934', dateOfBirth: '19800229', postalCode: '', familyId: 3},
+    {perType: PersonType.spouseType, phn: '9999999941', dateOfBirth: '19830131', postalCode: 'V2V2V4', familyId: 3},
+    {perType: PersonType.dependent, phn: '9999999959', dateOfBirth: '20050317', postalCode: 'V2V2V4', familyId: 3},
+    {perType: PersonType.dependent, phn: '9999999966', dateOfBirth: '20091231', postalCode: 'V2V2V4', familyId: 3},
+    {perType: PersonType.applicantType, phn: '9999999207', dateOfBirth: '19410520', postalCode: 'V1V2V5', familyId: 4},
+    {perType: PersonType.spouseType, phn: '9999999214', dateOfBirth: '19381101', postalCode: 'V1V2V5', familyId: 4},
   ];
 
   constructor( private financeService: FinanceService ) {
@@ -64,35 +68,33 @@ export class FakeBackendService {
   // Returns values for development
   public getFamily(phnList: string[]): PersonInterface[] | any {
 
-    //console.log( 'getFamily phnList: ', phnList );
-
-    const list = this._eligibleList.map(person => {
+    const list: FBEServicePerson[] = this._eligibleList.map(person => {
       if (phnList.includes(person.phn)) {
-
         return {
           perType: person.perType,
           phn: Md5.base64( person.phn ),
           dateOfBirth: Md5.base64( person.dateOfBirth ),
-          postalCode: Md5.base64( person.postalCode )
+          postalCode: Md5.base64( person.postalCode ),
+          familyId: person.familyId
         };
       }
     }).filter(x => x);
-
 
     const foundApplicants = (list.length === phnList.length);
 
     if (list.length) {
 
       // search dependants
-      const dependents = this._eligibleList.map(person => {
-        if (list[0].postalCode === Md5.base64( person.postalCode ) &&
+      const dependents: FBEServicePerson[] = this._eligibleList.map(person => {
+        if (list[0].familyId === person.familyId &&
             !phnList.includes( person.phn )) {
 
           return {
             perType: person.perType,
             phn: Md5.base64( person.phn ),
             dateOfBirth: Md5.base64( person.dateOfBirth ),
-            postalCode: Md5.base64( person.postalCode )
+            postalCode: Md5.base64( person.postalCode ),
+            familyId: person.familyId
           };
         }
       }).filter(x => x);
@@ -100,9 +102,16 @@ export class FakeBackendService {
       list.push(...dependents);
     }
 
-    console.log('getFamily list: ', list);
+    console.log('getFamily list: ', list );
 
-    return (foundApplicants && list.length) ? list : null;
+    return (foundApplicants && list.length) ? list.map(
+        person => { return {
+          perType: person.perType,
+          phn:  person.phn ,
+          dateOfBirth: person.dateOfBirth,
+          postalCode: person.postalCode
+        };
+        }) : null;
   }
 
   /**

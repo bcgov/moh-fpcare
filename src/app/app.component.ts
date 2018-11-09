@@ -59,9 +59,10 @@ export class AppComponent implements OnInit {
       // Purpose: Development
       // this.registerSingleApplicant( TestScenario.EligNotReg );
       //this.registrationBornBefore1939();
-      this.registerfamily();
+      //this.registerfamily();
 
       //this.statusCheckApplicant( TestScenario.Reg );
+      this.statusCheckApplicant( TestScenario.Reg, false );
 
 
       // Applicant
