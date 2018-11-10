@@ -66,24 +66,24 @@
              <div *ngIf='(yearRef.touched || showError) && !isValid()
                && formRef?.errors?.dateNotInPast !== true
                && formRef?.errors?.dateNotInFuture !== true'>
-               <div class="text-danger" i18n="@@yearErrorBadFormat">This does not appear to be a valid date</div>
+               <div class="text-danger" i18n="@@yearErrorBadFormat">Not a valid {{label}}</div>
              </div>
 
              <div *ngIf='(dayRef.touched || showError)'>
                <div class="text-danger" *ngIf="dayRef?.errors?.calendarDayOutOfRange" i18n="@@calendarDayOutOfRange">Day of the month is out of range</div>
              </div>
              <div *ngIf='(yearRef.touched || showError)'>
-               <div class="text-danger" *ngIf="yearRef?.errors?.yearDistantPast" i18n="@@yearErrorDistantPast">Date is too far in the past</div>
+               <div class="text-danger" *ngIf="yearRef?.errors?.yearDistantPast" i18n="@@yearErrorDistantPast">{{label}} is too far in the past</div>
              </div>
              <div *ngIf='(yearRef.touched || showError)'>
-               <div class="text-danger" *ngIf="yearRef?.errors?.yearDistantFuture" i18n="@@yearErrorDistantFuture">Date is too far in the future</div>
+               <div class="text-danger" *ngIf="yearRef?.errors?.yearDistantFuture" i18n="@@yearErrorDistantFuture">{{label}} is too far in the future</div>
              </div>
 
              <div *ngIf='(formRef.touched || showError)'>
-               <div class="text-danger" *ngIf="formRef?.errors?.dateNotInPast" i18n="@@dateErrorMustBeInFuture">Date must be in the future.</div>
+               <div class="text-danger" *ngIf="formRef?.errors?.dateNotInPast" i18n="@@dateErrorMustBeInFuture">{{label}} must be in the future.</div>
              </div>
              <div *ngIf='(formRef.touched || showError)'>
-               <div class="text-danger" *ngIf="formRef?.errors?.dateNotInFuture" i18n="@@dateErrorMustBeInPast">Date must be in the past</div>
+               <div class="text-danger" *ngIf="formRef?.errors?.dateNotInFuture" i18n="@@dateErrorMustBeInPast">{{label}} must be in the past</div>
              </div>
            </div>
        </div>

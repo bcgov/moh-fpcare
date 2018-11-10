@@ -31,7 +31,7 @@ export class FPCareDateComponent extends Base implements OnInit {
   /** Sets the default values to the client-side current date. */
   @Input() useCurrentDate = false;
   @Input() disabled: boolean;
-  @Input() label: string;
+  @Input() label: string = 'date';
 
   @Input() date: SimpleDate;
   @Output() onDateChange: EventEmitter<SimpleDate> = new EventEmitter<SimpleDate>();

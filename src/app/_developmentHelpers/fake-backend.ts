@@ -76,6 +76,8 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
 
         if (request.url.endsWith('/getMessages')) {
           console.log('Get messages - fake backend');
+          return of(new HttpResponse({status: 200, body: this.getMessages()}))
+              .pipe(delay(1000));
 
         } else if (request.url.endsWith('/getDeductibles')) {
 
