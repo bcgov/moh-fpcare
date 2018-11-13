@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Logger } from './logger.service';
 import { throwError, BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'environments/environment';
-import { tap, retry } from 'rxjs/operators';
+import { tap, retry, filter } from 'rxjs/operators';
 
 /**
  * The list of all server envs we expect back from the spa-env-server. By adding
@@ -12,10 +12,10 @@ import { tap, retry } from 'rxjs/operators';
  * will be updated.
  */
 const serverEnvs = {
-  SPA_ENV_MSP_MAINTENANCE_FLAG: '',
-  SPA_ENV_MSP_MAINTENANCE_START: '',
-  SPA_ENV_MSP_MAINTENANCE_END: '',
-  SPA_ENV_MSP_MAINTENANCE_MESSAGE: '',
+  SPA_ENV_FPC_MAINTENANCE_FLAG: '',
+  SPA_ENV_FPC_MAINTENANCE_START: '',
+  SPA_ENV_FPC_MAINTENANCE_END: '',
+  SPA_ENV_FPC_MAINTENANCE_MESSAGE: '',
 };
 
 // Used in HTTP request
@@ -50,7 +50,8 @@ export class SpaEnvService extends AbstractHttpService {
 
   private _values = new BehaviorSubject<SpaEnvResponse>( null );
   /** The values retrieved from the SpaEnv server. */
-  public values: Observable<SpaEnvResponse> = this._values.asObservable();
+  public values: Observable<SpaEnvResponse> = this._values.asObservable()
+    .pipe(filter(x => !!x)); // filter null response out, init value
 
   constructor(protected http: HttpClient, private logService: Logger) {
     super(http);

@@ -53,7 +53,7 @@ export class SplashPageService {
       else {
         this.envService.values.subscribe(envs => {
           this.loaded = true;
-          this.maintenanceMode = envs.SPA_ENV_MSP_MAINTENANCE_FLAG.toLowerCase() === 'true';
+          this.maintenanceMode = envs.SPA_ENV_FPC_MAINTENANCE_FLAG.toLowerCase() === 'true';
           this._values.next(envs);
           resolve(this.maintenanceMode);
         });

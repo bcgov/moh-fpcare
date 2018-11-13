@@ -30,7 +30,7 @@ To enable the splash page:
 1. Go to the correct OpenShift environment (e.g. dev/test/prod)
 2. Applications > Deployments > spa-env-server
 3. Environment tab
-4. Set SPA_ENV_MSP_MAINTENANCE_START and SPA_ENV_MSP_MAINTENANCE_END
+4. Set SPA_ENV_FPC_MAINTENANCE_START and SPA_ENV_FPC_MAINTENANCE_END
 
 The spa-env-server will automatically set the maintence mode flag between these times.
 
