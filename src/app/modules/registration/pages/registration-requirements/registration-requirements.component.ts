@@ -7,6 +7,9 @@ import {REGISTRATION_FINANCIAL, REGISTRATION_PATH} from '../../../../models/rout
 import {RegistrationService} from '../../registration.service';
 import {pageRoutes} from '../../registration-page-routing';
 import {environment} from '../../../../../environments/environment';
+import {ResponseStoreService} from '../../../../services/response-store.service';
+import {ApiService} from '../../../../services/api-service.service';
+import * as moment from 'moment'
 
 @Component({
   selector: 'fpcare-registration-requirements',
@@ -20,10 +23,15 @@ export class RegistrationRequirementsComponent extends Base implements OnInit, A
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_FINANCIAL;
 
   public links = environment.links;
+  public benefitYearEx: number;
+  public taxYearEx: number;
 
   constructor( private router: Router,
                private fpcareDataService: FPCareDataService,
-               private registrationService: RegistrationService) {
+               private registrationService: RegistrationService,
+               private apiService: ApiService,
+               private responseStore: ResponseStoreService
+  ) {
     super();
 
     // Registration items to be completed
@@ -39,6 +47,14 @@ export class RegistrationRequirementsComponent extends Base implements OnInit, A
   }
 
   ngOnInit() {
+    const year = moment().year();
+    this.benefitYearEx = year;
+    this.taxYearEx = year - 2;
+
+    // Load messages from cache
+    this.apiService.getMessages().subscribe(
+        (response) => { this.responseStore.cacheMsgs = response; }
+    );
   }
 
   ngAfterViewInit() {

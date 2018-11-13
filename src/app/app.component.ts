@@ -3,14 +3,11 @@ import {DummyDataService, TestScenario} from './services/dummy-data.service';
 import { UserService } from './services/user.service';
 import { FPCareDataService } from './services/fpcare-data.service';
 import {environment} from 'environments/environment';
-import { ApiService } from './services/api-service.service';
-
 import * as version from '../VERSION.generated';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Logger } from './services/logger.service';
-import {ResponseStoreService} from './services/response-store.service';
 //import * as Md5 from 'js-md5';
 
 @Component({
@@ -26,12 +23,10 @@ export class AppComponent implements OnInit {
   constructor(private userService: UserService,
               private dummyDataService: DummyDataService,
               private fpcareDataService: FPCareDataService,
-              private apiService: ApiService,
               private titleService: Title,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private logger: Logger,
-              private responseStore: ResponseStoreService) {
+              private logger: Logger) {
   }
 
   ngOnInit() {
@@ -44,12 +39,6 @@ export class AppComponent implements OnInit {
     }
 
     this.updateTitleOnRouteChange();
-
-    // Load messages from cache
-    this.apiService.getMessages().subscribe(
-        (response) => { this.responseStore.cacheMsgs = response; },
-        (responseError) => { /* TODO: What to do there is an error??? */ }
-        );
 
     // Debugging purposes - MD5 hashing
     //(window as any).md5 = Md5;
