@@ -38,6 +38,7 @@ export class AppComponent implements OnInit {
       console.error(version.message);
     }
 
+
     this.updateTitleOnRouteChange();
 
     // Debugging purposes - MD5 hashing
