@@ -43,6 +43,7 @@ export class AppComponent implements OnInit {
       console.error(version.message);
     }
 
+
     this.updateTitleOnRouteChange();
 
     // Load messages from cache
