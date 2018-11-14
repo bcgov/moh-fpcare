@@ -8,7 +8,7 @@ import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Logger } from './services/logger.service';
-//import * as Md5 from 'js-md5';
+import { SplashPageService } from './modules/splash-page/splash-page.service';
 
 @Component({
   selector: 'app-root',
@@ -26,10 +26,12 @@ export class AppComponent implements OnInit {
               private titleService: Title,
               private router: Router,
               private activatedRoute: ActivatedRoute,
-              private logger: Logger) {
+              private logger: Logger,
+              public splash: SplashPageService) {
   }
 
   ngOnInit() {
+    this.splash.setup();
     // Testers have asked for Version to be logged with every build.
     if (version.success){
       console.log('%c' + version.message, 'color: #036; font-size: 20px;');
