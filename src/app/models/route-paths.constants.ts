@@ -20,3 +20,4 @@ export const REGISTRATION_ADDRESS = 'address';
 export const REGISTRATION_REVIEW = 'review';
 export const REGISTRATION_AUTHORIZE = 'authorize';
 export const REGISTRATION_RESULTS = 'results';
+export const MAINTENANCE = 'maintenance';

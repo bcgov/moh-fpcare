@@ -3,6 +3,7 @@ import { SplashPageService } from '../../splash-page.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import * as moment from 'moment';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'fpcare-splash-page',
@@ -17,8 +18,10 @@ export class SplashPageComponent implements OnInit {
   public endTime: string;
   public message: string;
   private sub$: Subscription;
+  public links;
 
   ngOnInit() {
+    this.links = environment.links;
     this.sub$ = this.splashService.values.subscribe(splashVals => {
       this.startTime = splashVals.SPA_ENV_FPC_MAINTENANCE_START;
       this.endTime = splashVals.SPA_ENV_FPC_MAINTENANCE_END;

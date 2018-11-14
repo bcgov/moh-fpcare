@@ -3,7 +3,6 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MyDateRangePickerModule } from 'mydaterangepicker';
-import { StickyModule } from 'ng2-sticky-kit';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -46,7 +45,7 @@ if ( environment.useMockBackend ) {
     AppComponent,
     DemoPageComponent,
     HomePageComponent,
-    BlankPageComponent
+    BlankPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +55,6 @@ if ( environment.useMockBackend ) {
     FPCareDataModule.forRoot(),
     CoreModule,
     ModalModule.forRoot(),
-    StickyModule,
     NgxMyDatePickerModule.forRoot(),
     TabsModule.forRoot(),
     BsDropdownModule.forRoot(),

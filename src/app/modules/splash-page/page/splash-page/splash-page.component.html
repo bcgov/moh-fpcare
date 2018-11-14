@@ -1,19 +1,22 @@
-<fpcare-page-framework layout='single'>
+<fpcare-page-framework layout='default'>
 
-    <h1><i class="fa fa-2x fa-exclamation-circle" aria-label="warning"></i> Maitenance Mode</h1>
+    <h1>Maintenance Mode</h1>
 
-    <p>Start time: {{startTime}}</p>
-    <p>End time: {{ endTime }}</p>
-    <p>Message: {{ message }} </p>
+    <p>The online system for Fair PharmaCare is currently unavailable. We apologize for the inconvenience. Please try again after the maintenence window is over by refreshing your browser.</p>
 
+    <h2 class="border-bottom">Maintenance times:</h2>
+    <p>Maintenance window start: <strong>{{startTime}}</strong></p>
+    <p>Maintenance window end: <strong>{{ endTime }}</strong></p>
+    <p class="font-italic text-muted ml-4">Note: Times are in PST / British Columbia's timezone.</p>
+
+    <h2 class="border-bottom">Maintenance message:</h2>
     <div class="p-md-2 bg-light">
-        <!-- Once the maintenence mode window is over you can refresh your browser to begin. -->
         {{ message }}
     </div>
 
-<div class="p-md-4">
-  <p>More information available on <a href="javascript:void(0)">Frequently Asked Questions</a></p>
-  <p>If you require additional assistance, contact <a href="javascript:void(0)">HIBC Health Insurance</a></p>
-</div>
+    <div class="p-md-4">
+        <p>More information is available on <a target="_blank" href="{{links.FAQ}}">Frequently Asked Questions</a></p>
+        <p>If you require additional assistance, contact <a target="_blank" href="{{links.HIBC}}">HIBC Health Insurance</a></p>
+    </div>
 
 </fpcare-page-framework>

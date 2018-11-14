@@ -7,7 +7,7 @@ import {
   REGISTRATION_STATUS_PATH,
   REPRINT_LETTERS_PATH,
   STANDALONE_CALCULATOR,
-  MAITENANCE
+  MAINTENANCE
 } from './models/route-paths.constants';
 
 
@@ -46,7 +46,7 @@ const routes: Routes = [
     loadChildren: 'app/modules/financial-calculator/standalone-calculator-page/standalone-calculator-page.module#StandaloneCalculatorPageModule'
   },
   {
-    path: MAITENANCE,
+    path: MAINTENANCE,
     loadChildren: 'app/modules/splash-page/splash-page.module#SplashPageModule',
   },
   {
