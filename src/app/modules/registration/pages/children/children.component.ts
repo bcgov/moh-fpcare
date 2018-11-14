@@ -31,7 +31,6 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
   private _dependentMandatory: boolean = false;
   private _childList: PersonInterface[];
 
-  /** Page to navigate to when continue process */
   /** Page to naviage to when continue process */
   private _baseUrl = REGISTRATION_PATH + '/';
 
@@ -77,7 +76,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
     /* Main and sub forms are not empty and are valid
      * If children exist, ensure PHNs are unique
      */
-    return super.canContinue() ?  this.uniquePhnError : false;
+    return super.canContinue() ?  !this.uniquePhnError : false;
   }
 
   /**

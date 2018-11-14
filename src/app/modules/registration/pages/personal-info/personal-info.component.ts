@@ -20,7 +20,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   @ViewChild('sinSample') sinSample: SampleModalComponent;
 
   /** Indicates whether or not the same SIN has been used for spouse */
-  public uniqueSinError = true;
+  public uniqueSinError = false;
   public links = environment.links;
 
   /** Page to navigate to when continue process */
@@ -47,7 +47,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
     if ( super.canContinue() ) {
 
       // If spouse exists, ensure unique SINs
-      return this.hasSpouse ? this.uniqueSinError : true;
+      return this.hasSpouse ? !this.uniqueSinError : true;
     }
 
     return false;
