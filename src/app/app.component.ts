@@ -31,7 +31,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.splash.setup();
+    if (!environment.bypassSplashPage){
+      this.splash.setup();
+    }
     // Testers have asked for Version to be logged with every build.
     if (version.success){
       console.log('%c' + version.message, 'color: #036; font-size: 20px;');
