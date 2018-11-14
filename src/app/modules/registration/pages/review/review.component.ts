@@ -4,9 +4,12 @@ import {Router} from '@angular/router';
 import {Person} from '../../../../models/person.model';
 import {Base} from '../../../core/components/base/base.class';
 import {
-  REGISTRATION_ADDRESS, REGISTRATION_AUTHORIZE,
+  REGISTRATION_ADDRESS,
+  REGISTRATION_AUTHORIZE,
   REGISTRATION_CHILD,
-  REGISTRATION_ELIGIBILITY, REGISTRATION_FINANCIAL, REGISTRATION_PATH
+  REGISTRATION_FINANCIAL,
+  REGISTRATION_PATH,
+  REGISTRATION_PERSONAL
 } from '../../../../models/route-paths.constants';
 import {RegistrationService} from '../../registration.service';
 import {FinanceService} from '../../../financial-calculator/finance.service';
@@ -61,7 +64,8 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   get applicantIncome(): string {
-    return this.financeService.currencyFormat( this.fpcService.applicantIncome, true );
+    const num = this.fpcService.applicantIncome ? this.fpcService.applicantIncome : 0;
+    return this.financeService.currencyFormat( num, true );
   }
 
   /**
@@ -69,15 +73,17 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   get spouseIncome(): string {
-    return this.financeService.currencyFormat( this.fpcService.spouseIncome, true );
+    const num = this.fpcService.spouseIncome ? this.fpcService.spouseIncome : 0;
+    return this.financeService.currencyFormat( num, true );
   }
 
   /**
-   * Retrieves the Registered Disability Savings for applicant/spouse
+   * Retrieves the Registered Disability Savings for applicant
    * @returns {string}
    */
   get disabilityAmount(): string {
-    return this.financeService.currencyFormat( this.fpcService.disabilityAmount, true );
+    const num = this.fpcService.disabilityAmount ? this.fpcService.disabilityAmount : 0;
+    return this.financeService.currencyFormat( num, true );
   }
 
   /**
@@ -85,7 +91,8 @@ export class ReviewPageComponent extends Base implements OnInit {
    * @returns {string}
    */
   get adjustedIncome(): string {
-    return this.financeService.currencyFormat( this.fpcService.adjustedIncome, true );
+    const num = this.fpcService.adjustedIncome ? this.fpcService.adjustedIncome : 0;
+    return this.financeService.currencyFormat( num, true );
   }
 
   /**
@@ -120,7 +127,6 @@ export class ReviewPageComponent extends Base implements OnInit {
     return this.fpcService.hasChildren;
   }
 
-
   /**
    * Retrieves the applicant's date of birth as a string
    * @returns {string}
@@ -150,7 +156,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * Link to Eligibility page so applicant can edit data
    */
   editPersonalInfo() {
-    this.navigate( REGISTRATION_ELIGIBILITY );
+    this.navigate( REGISTRATION_PERSONAL );
   }
 
   /**
@@ -174,13 +180,12 @@ export class ReviewPageComponent extends Base implements OnInit {
     this.navigate( REGISTRATION_FINANCIAL );
   }
 
-  editSpouse() {
-    if ( this.hasSpouse ) {
+  editSpouse() { // TODO: BSA to provide ST ticket for how to deal with link if no spouse
+   // if ( this.hasSpouse ) {
       this.editPersonalInfo();
-    }
-    else {
-      this.editFinancialInfo();
-    }
+   // } else {
+   //   this.editFinancialInfo();
+   // }
   }
   /**
    * Retrieve the updated street address
@@ -222,6 +227,33 @@ export class ReviewPageComponent extends Base implements OnInit {
     return  this.isAddressUpdated ? this.applicant.updAddress.postal : this.applicant.address.postal ;
   }
 
+  /**
+   *
+   * @returns {boolean}
+   */
+  get isAddressUpdated(): boolean {
+    return this.applicant.isAddressUpdated;
+  }
+
+  get totalFamilyAnnualIncome(): string {
+    const num = this.financeService.calculateFamilyNetIncome( this.fpcService.applicantIncome, this.fpcService.spouseIncome );
+    return this.financeService.currencyFormat( num, true );
+  }
+
+  /**
+   * Retrieves the Registered Disability Savings for spouse
+   * @returns {string}
+   */
+  get spouseDisabilityAmount(): string {
+    const num = this.fpcService.spouseDisabilityAmount ? this.fpcService.spouseDisabilityAmount : 0;
+    return this.financeService.currencyFormat( num, true );
+  }
+
+  get totalDisabilityAmount(): string {
+    const num = this.financeService.calculateFamilyRdsp( this.fpcService.disabilityAmount, this.fpcService.spouseDisabilityAmount );
+    return this.financeService.currencyFormat( num, true );
+  }
+
   // Methods triggered by the form action bar
 
   /**
@@ -232,13 +264,6 @@ export class ReviewPageComponent extends Base implements OnInit {
     this.navigate(REGISTRATION_AUTHORIZE);
   }
 
-  /**
-   *
-   * @returns {boolean}
-   */
-  get isAddressUpdated(): boolean {
-    return this.applicant.isAddressUpdated;
-  }
 
   /** Navigates to a route then automatically scrolls to the top of the page. */
   private navigate(page: string){

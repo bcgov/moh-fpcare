@@ -6,6 +6,7 @@ import {
 } from '../../../../models/api.model';
 import { Logger } from '../../../../services/logger.service';
 import {AbstractResultsComponent} from '../../../../models/abstract-results-component';
+import {FPCareDataService} from '../../../../services/fpcare-data.service';
 
 /**
  * Displays data in ResponseStore.statusCheckPHN or statusCheckRegNumber. This
@@ -21,7 +22,9 @@ export class StatusResultsComponent extends AbstractResultsComponent {
 
   public response:  StatusCheckRegNumberPayload | StatusCheckPHNPayload = null;
 
-  constructor(private responseStore: ResponseStoreService, private logger: Logger) {
+  constructor( private responseStore: ResponseStoreService,
+               private logger: Logger,
+               private fpcareDataService: FPCareDataService ) {
     super();
 
     if (this.hasReg) {
@@ -44,11 +47,12 @@ export class StatusResultsComponent extends AbstractResultsComponent {
   get accountNumber(): string {
     //We can't use `this.response` here because we need the unique fields for each different type
     if (this.hasReg) {
-      return this.responseStore.statusCheckRegNumber.regNumber;
+      return this.fpcareDataService.applicant.fpcRegNumber;
     }
 
     if (this.hasPHN) {
-      return this.responseStore.statusCheckPHN.phn;
+      // PHN is not being return in the response payload, use value entered by registrant
+      return this.fpcareDataService.applicant.getNonFormattedPhn();
     }
   }
   ngOnInit() {
@@ -62,5 +66,13 @@ export class StatusResultsComponent extends AbstractResultsComponent {
       });
 
     }
+  }
+
+  /**
+   * Upon leaving page set response store to null
+   */
+  protected destroyResults(): void {
+    this.responseStore.statusCheckRegNumber = null;
+    this.responseStore.statusCheckPHN = null;
   }
 }

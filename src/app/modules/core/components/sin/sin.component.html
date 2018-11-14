@@ -1,5 +1,5 @@
 <div class='form-group'>
-  <label for="sin_{{objectId}}">Social Insurance Number</label>
+  <label for="sin_{{objectId}}">Social Insurance Number (SIN)</label>
   <input class="form-control"
          spellcheck="false"
          type="text"
@@ -11,4 +11,8 @@
          (ngModelChange)="onUpdate($event)"
          [textMask]="{mask: mask}"
          [disabled]="disabled" />
+</div>
+
+<div *ngIf="!uniqueSins" role="alert" aria-live="assertive">
+  <div class="text-danger">{{uniqueSinErrMsg}}</div>
 </div>

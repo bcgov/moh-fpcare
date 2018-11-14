@@ -113,7 +113,7 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
+            "protractorConfig": "./test/protractor.conf.js",
             "devServerTarget": "fpcare:serve"
           }
         },

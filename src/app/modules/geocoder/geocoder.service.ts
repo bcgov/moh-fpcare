@@ -3,15 +3,16 @@ import { AbstractHttpService } from '../../services/abstract-api-service';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
+import {defaultCountry, defaultProv} from '../../models/province-names.enum';
 
 export interface GeoAddressResult {
     /** String from the API that includes street, city, province, and country. */
     fullAddress: string;
     city: string;
     street: string;
-    //hardcoded as application is ONLY for BC
-    country: 'Canada';
-    province: 'British Columbia';
+    // Set to defaults in response
+    country: string;
+    province: string;
 }
 
 @Injectable({
@@ -62,8 +63,8 @@ export class GeocoderService extends AbstractHttpService {
                 fullAddress: props.fullAddress,
                 city,
                 street,
-                country: 'Canada',
-                province: 'British Columbia',
+                country: defaultCountry, // Default to Canada
+                province: defaultProv    // Default to BC
             };
         });
     }

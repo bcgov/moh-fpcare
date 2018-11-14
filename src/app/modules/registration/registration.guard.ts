@@ -15,7 +15,7 @@ import {environment} from '../../../environments/environment';
 })
 export class RegistrationGuard implements CanActivateChild {
 
-  /** Page to naviage to when continue process */
+  /** Page to navigate to when continue process */
   private _requirementsUrl = REGISTRATION_PATH + '/' + REGISTRATION_REQUIREMENTS;
 
   constructor( private fpcareDataService: FPCareDataService
@@ -38,10 +38,10 @@ export class RegistrationGuard implements CanActivateChild {
       return true;
     }
 
-    console.log( 'canActivateChild: ', next, state,
+   /* console.log( 'canActivateChild: ', next, state,
         this.fpcareDataService.acceptedCollectionNotice,
         this.registrationService.registrationItems,
-        this.router.url );
+        this.router.url ); */
 
      if ( !this.fpcareDataService.acceptedCollectionNotice || this.registrationService.isEmpty() ) {
        this.router.navigate( [this._requirementsUrl] );
@@ -49,7 +49,7 @@ export class RegistrationGuard implements CanActivateChild {
      }
 
      if ( !this.registrationService.isComplete( state.url ) ) {
-       console.log( 'Some registration item is not complete' );
+      // console.log( 'Some registration item is not complete' );
        return false;
      }
 

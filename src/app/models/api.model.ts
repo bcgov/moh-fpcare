@@ -25,26 +25,16 @@ export interface PayloadInterface {
 }
 
 /**
- * Benefit Year
- */
-export interface BenefitYearInterface extends PayloadInterface {
-  benefitYear: string;
-  taxYear: string;
-}
-
-/**
  * Check Status using the Fair PharmaCare Registration number
  */
 export interface StatusCheckRegNum extends PayloadInterface {
   famNumber: string;
-  benefitYear: string;
 }
 
 /**
  * Check Status using the applicant's PHN, date of birth and postal code
  */
 export interface StatusCheckPHN extends PayloadInterface {
-  benefitYear: string;
   phn: string;
   dateOfBirth: string;
   postalCode: string;
@@ -54,7 +44,6 @@ export interface StatusCheckPHN extends PayloadInterface {
  * Request for reprint of Consent forms and Confirmation of Assistance
  */
 export interface ReprintLetter extends PayloadInterface {
-  benefitYear: string;
   phn: string;
   dateOfBirth: string;
   postalCode: string;
@@ -64,11 +53,11 @@ export interface ReprintLetter extends PayloadInterface {
 /**
  * Retrieve the Fair PharmaCare deductible levels to calculate the applicant's level of assistance
  */
-export interface DeductibleInterface extends PayloadInterface {
+export interface DeductibleInterface {
   assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
   pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
-
-  benefitYear: string;
+  benefitYear?: string;
+  taxYear?: string;
 }
 
 /**
@@ -120,8 +109,6 @@ export interface AddressInterface {
  * Check Fair PharmaCare eligibility (i.e. Active MSP coverage and not registered in FPC)
  */
 export interface EligibilityInterface extends PayloadInterface {
-
-  benefitYear: string;
   persons: PersonInterface[];
   dependentMandatory?: string;
 }
@@ -130,8 +117,6 @@ export interface EligibilityInterface extends PayloadInterface {
  * Register family in Fair PharmaCare
  */
 export interface RegistrationInterface extends PayloadInterface {
-  benefitYear: string;
-  taxYear: string;
   persons?: PersonInterface[]; // not return in response
 
   // address required if it was updated
@@ -143,6 +128,26 @@ export interface RegistrationInterface extends PayloadInterface {
   annualMaximumAmountText?: string;
   copayPercentageText?: string;
 }
+
+/**
+ * Request messages for front-end validation
+ */
+export interface MessageInterface {
+  msgCode: string;  // SRQ #
+  msgText: string;  // Text for message
+  msgType: string;  // Type of message: Success (0), Error (1), Warning(2)
+  appLayer?: string; // Code identifying layer message relates to
+}
+
+/**
+ * Hard coded so that is can be displayed whenever system has encounters an issue
+ * @type {{msgCode: string; msgText: string; msgType: RegStatusCode}}
+ */
+export const SRQ_099Msg = {
+  msgCode: 'SRQ_099',
+  msgText: 'This error occurred because the system encountered an unanticipated situation which forced it to stop',
+  msgType: RegStatusCode.ERROR
+};
 
 export class ServerPayload implements PayloadInterface {
   regStatusCode: RegStatusCode;
@@ -178,94 +183,66 @@ export class ServerPayload implements PayloadInterface {
   }
 
   private processMessage(msg: string): string {
+
     // Note: using `href` here isn't ideal as it triggers a complete reload
     // of the Angular app. I tried using routerLink``, but angular stripped
     // it out.
-    return msg.replace('<link to Registration Page>',
-        '<a href="registration/requirements">Registration Page');
-  }
-}
-
-export class BenefitYearPayload extends ServerPayload implements BenefitYearInterface {
-  benefitYear: string;
-  taxYear: string;
-  constructor(payload: BenefitYearInterface) {
-    super(payload);
-    this.benefitYear = payload.benefitYear;
-    this.taxYear = payload.taxYear;
-  }
-}
-
-// Because we rename famNum to regNum, this does NOT implement the interface but
-// the constructor param still does.
-export class StatusCheckRegNumberPayload extends ServerPayload {
-  //Corresponds to famNumber from API
-  regNumber: string;
-
-  constructor(payload: StatusCheckRegNum) {
-    super(payload);
-    this.regNumber = payload.famNumber;
-  }
-}
-
-export class StatusCheckPHNPayload extends ServerPayload {
-  phn: string;
-
-  constructor(payload: StatusCheckPHN) {
-    super(payload);
-    this.phn = payload.phn;
-  }
-}
-
-export class ReprintLetterPayload extends ServerPayload {
-  phn: string;
-  letterType: string;
-
-  constructor(payload: ReprintLetter) {
-    super(payload);
-    this.phn = payload.phn;
-    this.letterType = payload.letterType;
-  }
-}
-
-export class DeductiblePayload extends ServerPayload {
-  benefitYear: string;
-  assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
-  pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
-
-  constructor(payload: DeductibleInterface) {
-    super(payload);
-    this.benefitYear = payload.benefitYear;
-    this.assistanceLevels = payload.assistanceLevels;
-    this.pre1939AssistanceLevels = payload.pre1939AssistanceLevels;
+    return (msg ? msg.replace('<link to Registration Page>',
+        '<a href="registration/requirements">Registration Page') : msg );
   }
 }
 
 /**
- * Response Payload
+ * Response payload for check status when using Registration Number
+ * Registration Number can be retrived from  person model
+ */
+export class StatusCheckRegNumberPayload extends ServerPayload {
+  constructor(payload: StatusCheckRegNum) {
+    super(payload);
+  }
+}
+
+/**
+ * Response payload for check status when using PHN
+ * PHN, DOB and Postal Code fields are returned blank
+ */
+export class StatusCheckPHNPayload extends ServerPayload {
+  constructor(payload: StatusCheckPHN) {
+    super(payload);
+  }
+}
+
+/**
+ * Response payload for letter reprints
+ * PHN, DOB and Postal Code fields are returned blank
+ */
+export class ReprintLetterPayload extends ServerPayload {
+  letterType: string;
+
+  constructor(payload: ReprintLetter) {
+    super(payload);
+    this.letterType = payload.letterType;
+  }
+}
+
+/**
+ * Response Payload for eligibility check
  */
 export class EligibilityPayload extends ServerPayload {
-
-  benefitYear: string;
   persons: PersonInterface[];
   dependantMandatory: string;
 
   constructor( payload: EligibilityInterface ) {
     super(payload);
-    this.benefitYear = payload.benefitYear;
     this.persons = payload.persons;
     this.dependantMandatory = payload.dependentMandatory;
   }
 }
 
 /**
- * Response Payload
+ * Response Payload for registration
  */
-
 export class RegistrationPayload extends ServerPayload {
-  benefitYear: string;
-  taxYear: string;
-
   familyNumber: string;
   deductibleAmounText: string;
   annualMaximumAmountText: string;
@@ -273,8 +250,6 @@ export class RegistrationPayload extends ServerPayload {
 
   constructor( payload: RegistrationInterface ) {
     super(payload);
-    this.benefitYear = payload.benefitYear;
-    this.taxYear = payload.taxYear;
 
     this.familyNumber = payload.familyNumber;
     this.deductibleAmounText = payload.deductibleAmounText;
@@ -282,3 +257,4 @@ export class RegistrationPayload extends ServerPayload {
     this.copayPercentageText = payload.copayPercentageText;
   }
 }
+

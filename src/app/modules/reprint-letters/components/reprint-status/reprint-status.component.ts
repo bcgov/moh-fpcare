@@ -26,14 +26,13 @@ export class ReprintStatusComponent extends AbstractResultsComponent implements 
 
   ngOnInit() {
 
-    if (this.response){
+    if (this.response) {
       // Log result
-      const message = `Success - Status Check ${this.pgTitle}`;
+      const message = `Success - Reprint Status ${this.pgTitle}`;
       this.logger.log({
         event: 'submission',
         message
       });
-
     }
   }
 
@@ -57,5 +56,12 @@ export class ReprintStatusComponent extends AbstractResultsComponent implements 
     }
 
     return title;
+  }
+
+  /**
+   * Upon leaving page set response store to null
+   */
+  protected destroyResults(): void {
+    this.responseStore.reprintLetter = null;
   }
 }

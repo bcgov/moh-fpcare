@@ -1,11 +1,11 @@
 <fpcare-page-framework layout='default'>
 
   <h1>
-    Tell us a bit about who's applying for Fair PharmaCare coverage
+    Tell us a bit about who's applying for Fair PharmaCare
   </h1>
 
   <div>
-    Enter each person's Personal Health Number as shown on your B.C. Services Card.
+    Enter each person's Personal Health Number as shown on their BC Services.
   </div>
 
   <form #formRef="ngForm" novalidate>
@@ -20,7 +20,7 @@
                 [useCurrentDate]="false"
                 [(date)]="applicant.dateOfBirth"
                 [restrictDate]="'past'"
-                [label]="'Birth Date'">
+                [label]="'Birthdate'">
         </fpcare-date>
 
         <div class="form-group">
@@ -41,14 +41,11 @@
                   [useCurrentDate]="false"
                   [(date)]="spouse.dateOfBirth"
                   [restrictDate]="'past'"
-                  [label]="'Birth Date'">
+                  [label]="'Birthdate'">
           </fpcare-date>
 
           <div class="form-group">
-            <fpcare-phn [(value)]="spouse.phn"></fpcare-phn>
-            <div *ngIf="hasUniquePhnError" role="alert" aria-live="assertive">
-              <div class="text-danger">This Personal Health Number was already used for registrant.</div>
-            </div>
+            <fpcare-phn [(value)]="spouse.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError"></fpcare-phn>
           </div>
 
         </div>
@@ -58,9 +55,7 @@
   </form>
 
   <aside>
-    <div>
-      <p class="h5">{{phnHdr}}</p>
-      <p>{{phnDef}}</p></div>
+    <fpcare-phn-definition></fpcare-phn-definition>
   </aside>
 
   <fpcare-form-action-bar

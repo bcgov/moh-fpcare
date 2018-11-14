@@ -5,6 +5,7 @@ import {CoreModule} from '../../../core/core.module';
 import {RouterTestingModule} from '@angular/router/testing';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ValidationService} from '../../../../services/validation.service';
 
 describe('RegistrationStatusComponent', () => {
   let component: RegistrationStatusComponent;
@@ -22,7 +23,8 @@ describe('RegistrationStatusComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        FPCareDataService
+        FPCareDataService,
+        ValidationService
       ]
     })
     .compileComponents();

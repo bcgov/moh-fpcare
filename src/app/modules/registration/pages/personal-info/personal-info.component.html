@@ -4,13 +4,10 @@
   <div>
     <h1>Family Information</h1>
     <p>
-      Enter each person's name as shown on your income tax return. (If your name as it appears on your
-      BC Service Card is different from the name show on your income tax return, continue with your
-      Fair PharmaCare registration and notifiy
-       <a href="https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp"
-          target="_blank">Medical Services Plan</a>
-      or <a href="https://www.canada.ca/en/revenue-agency.html"
-            target="_blank">Canada Revenue Agency</a> as soon as possible).
+       Enter each person's name as it appears on the income tax return. If your name is different on your BC Services
+       Card, continue with this Fair PharmaCare registration, but notify either
+       <a target="_blank" href="{{links.MSP}}">Medical Services Plan</a> or the
+       <a target="_blank" href="{{links.CRA}}">Canada Revenue Agency</a> of the difference as soon as possible.
     </p>
   </div>
 
@@ -24,14 +21,14 @@
 
       <div class="form-group">
          <fpcare-name
-           [label]="'Given Name'"
+           [label]="labelGivenName"
            [nameMaxLen]="maxLenGivenName"
            [(value)]="applicant.firstName">
          </fpcare-name>
       </div>
       <div class="form-group">
          <fpcare-name
-           [label]="'Surname'"
+           [label]="labelSurname"
            [nameMaxLen]="maxLenSurname"
            [(value)]="applicant.lastName">
          </fpcare-name>
@@ -65,23 +62,24 @@
       <div class="p-md-2 col-md-6">
         <div class="form-group">
            <fpcare-name
-               [label]="'Given Name'"
+               [label]="labelGivenName"
+               [nameMaxLen]="maxLenGivenName"
                [(value)]="spouse.firstName">
            </fpcare-name>
         </div>
         <div class="form-group">
            <fpcare-name
-               [label]="'Surname'"
+               [label]="labelSurname"
+               [nameMaxLen]="maxLenSurname"
                [(value)]="spouse.lastName">
            </fpcare-name>
         </div>
         <div class="form-group">
            <fpcare-sin
-               [(value)]="spouse.sin">
+               [(value)]="spouse.sin"
+               [sinList]="familySinList"
+               (uniqueSinError)="uniqueSinError">
            </fpcare-sin>
-          <div *ngIf="hasUniqueSinError()" role="alert" aria-live="assertive">
-            <div class="text-danger">This Social Insurance Number was already used for registrant.</div>
-          </div>
         </div>
         <div class="form-group">
           <!-- DOB ready only field - set in previous page -->
@@ -104,9 +102,33 @@
   </form>
 
   <aside>
-    <p><strong>Personal Info aside!</strong>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque modi ipsum cumque tempore dolore explicabo libero, dolor dignissimos debitis minus voluptate quas culpa dolores atque inventore unde iure. Reiciendis, ea.
-    </p>
+     <div>
+      <p class="h5">A family can be a: </p>
+        <ul>
+           <li>single person</li>
+           <li>married or common-law couple</li>
+           <li>single person with children</li>
+           <li>couple with children</li>
+        </ul>
+     </div>
+
+     <fpcare-phn-definition></fpcare-phn-definition>
+
+     <div>
+        <p class="h5">Social Insurance Number</p>
+        <p>This information is used only to check your income with the Canada Revenue Agency.
+           <a role="button"
+              aria-haspopup="true"
+              href="javascript:void(0)"
+              (click)="openSample()">Open sample</a>
+        </p>
+        <fpcare-sample-modal
+            #sinSample
+            [title]="'Social Insurance Card Sample'"
+            [images]="imageList">
+        </fpcare-sample-modal>
+     </div>
+
   </aside>
 
   <fpcare-form-action-bar

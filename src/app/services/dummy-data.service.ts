@@ -144,14 +144,17 @@ export class DummyDataService {
 
   // Data that uses fake-backend
 
-  createPerson( phn: string, dob: SimpleDate, postalCode: string ): Person {
+  createPerson( phn: string, dob: SimpleDate, postalCode: string = null ): Person {
     const result: Person = new Person;
 
     result.name = this.generatePersonName();
     result.dateOfBirth = dob;
     result.phn = phn;
     result.sin = this.generateSIN();
-    result.address.postal = postalCode;
+
+    if (postalCode) {
+      result.address.postal = postalCode;
+    }
     return result;
   }
 

@@ -2,7 +2,7 @@
 
   <h1>Mailing Address</h1>
   <div class="p-md-2">
-    This information is used to confirm your identity and also to mail out Fair PharmaCare letters.
+    We use your address to mail Fair PharmaCare letters to you.
   </div>
 
   <form #formRef="ngForm" novalidate>
@@ -20,9 +20,14 @@
       <h2 class="border-bottom">
         Update Your Mailing Address
       </h2>
+      <p>
+        Please provide your current mailing address.
+      </p>
       <div class="p-md-2 col-md-6">
         <div class="form-group">
-          <fpcare-geocoder-input label='(optional) Address Lookup' [(address)]='applicant.updAddress'  (addressChange)='onGeoLookup()'></fpcare-geocoder-input>
+          <fpcare-geocoder-input label='(optional) Address Lookup'
+                                 [(address)]='applicant.updAddress'
+                                 (addressChange)='onGeoLookup()'></fpcare-geocoder-input>
         </div>
         <div class="form-group">
           <label for="street">Street</label>
@@ -59,7 +64,7 @@
           </select>
         </div>
         <div class="form-group">
-          <fpcare-postal-code [value]="applicant.updAddress.postal" disabled></fpcare-postal-code>
+          <fpcare-postal-code [value]="updatePostalCode" disabled></fpcare-postal-code>
         </div>
         <div class="form-group">
           <label for="country">Country</label>
@@ -75,19 +80,17 @@
   </form>
 
   <aside>
-    <div>
       <p class="h5">Postal Code</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
+      <p>
+        This information is used to confirm your identity and also to mail out Fair PharmaCare letters.
+      </p>
 
-    <div>
       <p class="h5">Address Lookup</p>
       <p>
-          If you have a unit number, e.g. you live in an appartment, 
-          put the number at the beginning followed by a space and two dashes <strong>- -</strong>
+        The system will suggest addresses when you begin typing.  Pick your address from the list or enter it manually
+        if not listed.  For apartments and suites, first enter the suite number followed by a space or two dashes (--)
+        to find the exact match.
       </p>
-    </div>
   </aside>
 
   <fpcare-form-action-bar

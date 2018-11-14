@@ -1,8 +1,15 @@
 <fpcare-page-framework layout='default'>
 
   <h1>Child Information</h1>
+   <p>
+      Enter your child or children's personal information if applicable.
+   </p>
 
-  <h2>Your child's personal information</h2>
+   <p class="text-muted font-italic">
+      Note: In the case of shared custody, children can be included in only one parent's Fair PharmaCare account.
+   </p>
+
+   <h2>Your child's personal information</h2>
 
   <!-- Repeat for each child -->
   <form #formRef="ngForm" novalidate>
@@ -10,7 +17,7 @@
       <!--Array starts at 0 add one -->
       <h2 class="border-bottom">
         Child #{{children.indexOf(child)+1}}
-        <i class="fa fa-times ml-3 pointer" aria-hidden="true" (click)="removeChild( i )"></i>
+        <i class="fa fa-times mr-3 pointer float-right" aria-hidden="true" (click)="removeChild( i )"></i>
       </h2>
 
       <div class="p-md-2 col-md-6">
@@ -23,7 +30,7 @@
         </div>
          <div class="form-group">
             <fpcare-name
-                [label]="'Surname'"
+                [label]="'Family Name'"
                 [nameMaxLen]="maxLenSurname"
                 [(value)]="child.lastName">
             </fpcare-name>
@@ -34,19 +41,13 @@
                   [useCurrentDate]="false"
                   [(date)]="child.dateOfBirth"
                   [restrictDate]="'past'"
-                  [label]="'Birth Date'">
+                  [label]="'Birthdate'">
           </fpcare-date>
-          <div *ngIf="!legitimateDependant(child)" role="alert" aria-live="assertive">
-            <div class="text-danger">Individual is too old.</div>
-          </div>
         </div>
         <div class="form-group">
            <fpcare-phn
-               [(value)]="child.phn">
+               [(value)]="child.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError">
            </fpcare-phn>
-          <div *ngIf="hasUniquePhnError(child)" role="alert" aria-live="assertive">
-            <div class="text-danger">This Personal Health Number was already used for another family member.</div>
-          </div>
         </div>
       </div>
     </div>
@@ -57,8 +58,7 @@
   </button>
 
   <aside>
-    <strong>Child Info aside!</strong>
-    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eaque modi ipsum cumque tempore dolore explicabo libero, dolor dignissimos debitis minus voluptate quas culpa dolores atque inventore unde iure. Reiciendis, ea.
+    <fpcare-phn-definition [driverLicense]="false"></fpcare-phn-definition>
   </aside>
 
   <fpcare-form-action-bar

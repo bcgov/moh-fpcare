@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
 import {PersonInterface, PersonType} from '../../models/api.model';
 import {Person} from '../../models/person.model';
+import * as Md5 from 'js-md5';
 
 export interface RegistrationItem {
   route: string;
@@ -15,11 +16,8 @@ export class RegistrationService {
 
   /**
    * Used for front-end errors.
-   * ex.
-   * Dependents entered by applicant do not match those returned by eligibility check
    */
-  public processErrorMsg: string;
-  public processError: boolean = false;
+  public internalError: boolean = false;
 
   constructor( private router: Router ) {}
 
@@ -98,8 +96,8 @@ export class RegistrationService {
    */
   setPersonInterfaceForReg( person: Person,
                             personType: PersonType,
-                            netIncome: string = null,
-                            rdsp: string = null ): PersonInterface {
+                            netIncome: number = 0,
+                            rdsp: number = 0 ): PersonInterface {
 
     let famMember: PersonInterface;
 
@@ -112,8 +110,8 @@ export class RegistrationService {
         givenName: person.firstName,
         surname: person.lastName,
         sin : person.getNonFormattedSin(),
-        netIncome: netIncome,
-        rdsp: rdsp
+        netIncome: (netIncome ? netIncome.toFixed(2) : '0.00'),
+        rdsp: (rdsp ? rdsp.toFixed( 2 ) : '0.00' )
       };
     } else {
       famMember = {
@@ -126,5 +124,17 @@ export class RegistrationService {
     }
 
     return famMember;
+  }
+
+  /**
+   * Compare
+   * @param {string} value
+   * @param {string} hashed
+   * @returns {boolean}
+   */
+  public compare( value: string, hashed: string ): boolean {
+    const hashedValue = Md5.base64( value );
+    //console.log( 'Compare: ' + hashedValue + ' - ' + hashed );
+    return (hashed === hashedValue);
   }
 }

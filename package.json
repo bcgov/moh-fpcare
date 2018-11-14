@@ -1,6 +1,6 @@
 {
   "name": "fpcare",
-  "version": "0.8.0",
+  "version": "0.10.0",
   "license": "Apache-2.0",
   "scripts": {
     "ng": "ng",
@@ -15,7 +15,8 @@
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e --environment prod"
+    "e2e": "ng e2e --webdriver-update false",
+    "pree2e": "webdriver-manager update --versions.chrome=2.40"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +38,7 @@
     "core-js": "^2.4.1",
     "float-label-css": "^1.0.2",
     "font-awesome": "^4.6.3",
+    "js-md5": "^0.7.3",
     "lodash": "^4.17.10",
     "moment": "2.22.1",
     "mydaterangepicker": "^4.2.1",

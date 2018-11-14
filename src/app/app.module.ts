@@ -25,7 +25,6 @@ import { HttpClientModule } from '@angular/common/http';
 import {RegistrationService} from './modules/registration/registration.service';
 import {fakeBackendProvider} from './_developmentHelpers/fake-backend';
 import {environment} from '../environments/environment';
-import {ErrorPageComponent} from './pages/error-page/error-page.component';
 
 // List of providers for applicant
 const providerList: any = [
@@ -47,8 +46,7 @@ if ( environment.useMockBackend ) {
     AppComponent,
     DemoPageComponent,
     HomePageComponent,
-    BlankPageComponent,
-    ErrorPageComponent
+    BlankPageComponent
   ],
   imports: [
     BrowserModule,

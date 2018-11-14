@@ -18,7 +18,7 @@ export const environment = {
   envServerUrl: '/fpcare/api/env',
 
   /** console.log() HTTP requests from our API and Log services */
-  logHTTPRequestsToConsole: false,
+  logHTTPRequestsToConsole: true,
 
   /** Do not trigger guards */
   bypassGuards: true,
@@ -31,4 +31,14 @@ export const environment = {
 
   /** Should logs be sent to Splunk? If false, no logs are made. */
   enableLogging: false,
+
+  /** Link used in app */
+  links: {
+    FAQ: 'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/who-we-cover/fair-pharmacare-plan/frequently-asked-questions-about-registration-income-and-consent',
+    FormularySearch: 'https://pharmacareformularysearch.gov.bc.ca/',
+    HIBC: 'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/contact-us',
+    FPCareInfo: 'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/who-we-cover/fair-pharmacare-plan/register-for-fair-pharmacare',
+    MSP: 'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp',
+    CRA: 'https://www.canada.ca/en/revenue-agency.html'
+  }
 };

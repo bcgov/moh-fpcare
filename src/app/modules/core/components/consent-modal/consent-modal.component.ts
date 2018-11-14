@@ -13,9 +13,10 @@ import {growVertical} from '../../../../animations/animations';
 })
 export class ConsentModalComponent extends Base implements OnInit {
 
-  public agreeCheck: boolean = false;
-
   public captchaApiBaseUrl;
+  public links = environment.links;
+
+  private _agreeCheck: boolean = false;
   private _hasToken = false;
 
   @ViewChild('informationCollectionModal') public informationCollectionModal: ModalDirective;
@@ -51,6 +52,26 @@ export class ConsentModalComponent extends Base implements OnInit {
   /** Use the UUID as a cryptographic client nonce to avoid replay attacks. */
   get nonce(): string {
     return this.objectId;
+  }
+
+  /**
+   * Set the agreed flag
+   * @param {boolean} val
+   */
+  set agreeCheck(val: boolean) {
+    this._agreeCheck = val;
+
+    if ( !val ) {
+      this._hasToken = false;
+    }
+  }
+
+  /**
+   * Retrieve the agreed flag
+   * @returns {boolean}
+   */
+  get agreeCheck(): boolean {
+    return this._agreeCheck;
   }
 
   setToken(token): void {

@@ -6,6 +6,7 @@ export abstract class AbstractResultsComponent extends Base {
 
   // Any class extending this one, must have a response structure that extends ServerPayload
   public response: ServerPayload = null;
+  protected abstract destroyResults(): void;
 
   get status(): string {
     if (this.response) {
@@ -38,5 +39,9 @@ export abstract class AbstractResultsComponent extends Base {
 
   get isError(): boolean {
     return this.response.error;
+  }
+
+  ngOnDestroy() {
+    this.destroyResults();
   }
 }

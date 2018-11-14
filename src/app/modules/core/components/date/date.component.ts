@@ -31,7 +31,7 @@ export class FPCareDateComponent extends Base implements OnInit {
   /** Sets the default values to the client-side current date. */
   @Input() useCurrentDate = false;
   @Input() disabled: boolean;
-  @Input() label: string;
+  @Input() label: string = 'date';
 
   @Input() date: SimpleDate;
   @Output() onDateChange: EventEmitter<SimpleDate> = new EventEmitter<SimpleDate>();
@@ -83,11 +83,9 @@ export class FPCareDateComponent extends Base implements OnInit {
   }
 
   setMonthValueOnModel(value: string) {
-    if (value) {
-      this.date.month = parseInt(value, 10);
-    } else {
-      this.date.month = null;
-    }
+
+    const parsed = parseInt(value, 10);
+    this.date.month = (isNaN( parsed ) ? null : parsed);
     this.triggerDayValidation();
     this.onDateChange.emit(this.date);
   }

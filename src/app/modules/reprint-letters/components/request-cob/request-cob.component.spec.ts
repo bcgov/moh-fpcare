@@ -6,6 +6,7 @@ import {ComponentData, LetterTypes, RequestTemplateComponent} from '../request-t
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {ValidationService} from '../../../../services/validation.service';
 
 /**
  * TODO:
@@ -28,7 +29,8 @@ describe('RequestCobComponent', () => {
         HttpClientTestingModule
       ],
       providers: [
-        FPCareDataService
+        FPCareDataService,
+        ValidationService
       ]
     })
       .compileComponents();

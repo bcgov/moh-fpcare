@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { Person } from '../../../../models/person.model';
@@ -13,7 +13,7 @@ import {
   ProvinceNames
 } from '../../../../models/province-names.enum';
 import {ValidationService} from '../../../../services/validation.service';
-import {PersonInterface, PersonType} from '../../../../models/api.model';
+import {PersonType} from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 
 @Component({
@@ -55,7 +55,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
       // Store the list of family members - used to validate postal code
       this._postalCode = this.responseStore.eligibility.persons.map(person => {
-        if (person.perType === PersonType.applicantType) {
+        if (person.perType !== PersonType.dependent) {
           return person.postalCode;
         }
       }).filter(x => x);
@@ -89,21 +89,27 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   }
 
   checkPostal(): void {
-    if (this.applicant.address.hasPostal()){
-      const pc = this.applicant.getNonFormattedPostalCode();
-      this.isPostalMatch = this.isPostalCodeMatch( pc );
-
-      // Set postal code
-      if (!this.isPostalMatch && (this.applicant.address.postal !== this.applicant.updAddress.postal)) {
-        // Update postal for updated address
-        this.applicant.updAddress.postal = this.applicant.address.postal;
-      } else if ( this.isPostalMatch && this.applicant.isAddressUpdated ) {
-        // Remove postal code causes updated address structure to be incomplete
-        this.applicant.updAddress.postal = '';
-      }
-
-      console.log('checkPostal', this.isPostalMatch, this._postalCode );
+    if (this.applicant.address.hasPostal()) {
+      this.isPostalMatch = this.isPostalCodeMatch( this.applicant.getNonFormattedPostalCode() );
+      //console.log('checkPostal', this.isPostalMatch, this._postalCode );
     }
+  }
+
+  /**
+   *
+   * @returns {string}
+   */
+  get updatePostalCode(): string {
+
+    // Set postal code
+    if (!this.isPostalMatch && (this.applicant.address.postal !== this.applicant.updAddress.postal)) {
+      // Update postal for updated address
+      this.applicant.updAddress.postal = this.applicant.address.postal;
+    } else if ( this.isPostalMatch && this.applicant.isAddressUpdated ) {
+      // Remove postal code causes updated address structure to be incomplete
+      this.applicant.updAddress.postal = '';
+    }
+    return this.applicant.updAddress.postal;
   }
 
   /**
@@ -116,7 +122,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
   onGeoLookup(){
 
-    // Re-run all fpcareRequire ddirectives, hiding validation errors if the
+    // Re-run all fpcareRequire directives, hiding validation errors if the
     // geolookup has fixed them.
     setTimeout(() => {
       this.fpcareRequired.map(x => x.runAll());
@@ -140,7 +146,6 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     return ValidationService.MAX_STREET_LENGTH;
   }
 
-
   /**
    * Indicates whether postal code matches
    * @param {string} pc
@@ -148,8 +153,10 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   isPostalCodeMatch( pc: string ): boolean {
 
+    //console.log( 'isPostalCodeMatch: ', pc );
     // No postal code force update
-    return (this._postalCode ? this._postalCode.map( postalCode => pc === postalCode )
+    return (this._postalCode ? this._postalCode.map(
+        postalCode => this.registrationService.compare( pc, postalCode ) )
         .filter( x => x === true ).length !== 0 : false );
   }
   // Methods triggered by the form action bar
@@ -162,7 +169,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     if ( this.canContinue() ) {
 
       this.registrationService.setItemComplete();
-      this.navigate(  this._url );
+      this.navigate( this._url );
     }
   }
 }

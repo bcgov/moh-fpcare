@@ -4,7 +4,10 @@ import {
   StatusCheckRegNumberPayload,
   ReprintLetterPayload,
   EligibilityPayload,
-  RegistrationPayload
+  RegistrationPayload,
+  ServerPayload,
+  MessageInterface,
+  RegStatusCode, SRQ_099Msg
 } from '../models/api.model';
 
 /**
@@ -19,13 +22,17 @@ import {
 })
 export class ResponseStoreService {
 
+  public cacheMsgs: MessageInterface[];
+
   constructor() { }
 
   private _statusCheckRegNumber: StatusCheckRegNumberPayload;
   private _statusCheckPHN: StatusCheckPHNPayload;
-  private _reprintLetter: ReprintLetterPayload;
-  private _eligibility: EligibilityPayload;
-  private _registerFPC: RegistrationPayload;
+
+  public  internalResponse: ServerPayload;
+  public reprintLetter: ReprintLetterPayload;
+  public eligibility: EligibilityPayload;
+  public registration: RegistrationPayload;
 
   /**
    * Returns the response for a Reg Num Status Check request. Note: A PHN Status
@@ -52,29 +59,36 @@ export class ResponseStoreService {
   }
 
   /**
-   * Returns the response for a Reprint Letter request.
+   * Set internal response to be displayed on result pages
+   * @param {string} msgCode
    */
-  get reprintLetter(): ReprintLetterPayload { return this._reprintLetter; }
+  set internalError( msgCode: string ) {
 
-  set reprintLetter(val: ReprintLetterPayload){
-    this._reprintLetter = val;
+    const errMsg = this.findMessage( msgCode );
+
+    console.log( 'Internal Error: ', errMsg );
+
+    this.internalResponse = new ServerPayload({
+      regStatusCode: RegStatusCode[errMsg.msgCode],
+      regStatusMsg: errMsg.msgText,
+      uuid: ''
+    });
   }
 
   /**
-   * Returns the response for eligibility
+   * Find message based on msgCode
+   * @param {string} msgCode
+   * @returns {MessageInterface}
    */
-  get eligibility(): EligibilityPayload { return this._eligibility; }
+  private findMessage( msgCode: string ): MessageInterface {
 
-  set eligibility( val: EligibilityPayload ) {
-    this._eligibility = val;
-  }
+    let msg: MessageInterface;
 
-  /**
-   * Returns the response for registration
-   */
-  get registration(): RegistrationPayload { return this._registerFPC; }
+    if ( this.cacheMsgs ) {
+      msg = this.cacheMsgs.find(val => val.msgCode === msgCode);
+    }
 
-  set registration( val: RegistrationPayload ) {
-    this._registerFPC = val;
+    // If no message found, return error 99
+    return ( msg ? msg : SRQ_099Msg );
   }
 }

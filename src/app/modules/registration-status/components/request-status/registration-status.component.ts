@@ -9,7 +9,6 @@ import { StatusCheckPHNPayload, StatusCheckRegNumberPayload, StatusCheckPHN, Sta
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
 import {REGISTRATION_STATUS_PATH, RESULT_REG_STATUS} from '../../../../models/route-paths.constants';
 import {ValidationService} from '../../../../services/validation.service';
-import {phn_def, phn_hdr} from '../../../../models/fpcare-aside-definitions';
 
 @Component({
   selector: 'fpcare-registration-status',
@@ -22,10 +21,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   @ViewChild('consentModal') consentModal: ConsentModalComponent;
 
   public placeholder = 'A12345678';
-
-  // headers and definitions for aside (repeated in multiple places)
-  public phnHdr: string = phn_hdr;
-  public phnDef: string =  phn_def;
 
   /** Result page */
   private _url = REGISTRATION_STATUS_PATH + '/' + RESULT_REG_STATUS;
@@ -107,11 +102,6 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
    */
   onAccept( value: boolean ){
     this.fpcareDataService.acceptedCollectionNotice = value;
-
-    if ( value ) {
-      // load the benefit year
-      this.apiService.loadBenefitYear();
-    }
   }
 
   // Methods triggered by the form action bar
@@ -132,14 +122,12 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     if (this.disableRegNum()) {
       subscription = this.apiService.statusCheckPHN({
         phn: this.applicant.getNonFormattedPhn(),
-        benefitYear: this.fpcareDataService.benefitYear,
         dob: this.applicant.dateOfBirthShort,
         postalCode: this.applicant.getNonFormattedPostalCode()
       });
     }
     else {
       subscription = this.apiService.statusCheckFamNumber({
-        benefitYear: this.fpcareDataService.benefitYear,
         regNumber: this.applicant.fpcRegNumber
       });
     }

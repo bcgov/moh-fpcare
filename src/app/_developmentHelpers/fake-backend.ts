@@ -11,12 +11,11 @@ import {mergeMap, delay} from 'rxjs/operators';
 import {of} from 'rxjs/internal/observable/of';
 import {Injectable} from '@angular/core';
 import {
-  BenefitYearInterface,
   DeductibleInterface,
   DependentMandatory,
-  EligibilityInterface,
+  EligibilityInterface, MessageInterface, PayloadInterface, PersonInterface,
   RegistrationInterface,
-  RegStatusCode,
+  RegStatusCode, ReprintLetter,
   StatusCheckPHN,
   StatusCheckRegNum,
 } from '../models/api.model';
@@ -38,25 +37,20 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       if ( 'POST' === request.method ) {
         let payload = null;
 
-        if (request.url.endsWith('/getCalendar')) {
-
-          console.log('Get Calendar - fake backend');
-          payload = this.getCalendarResponse( request );
-
-        } else if (request.url.endsWith('/getDeductibles')) {
-
-          console.log('Get Deductibles - fake backend');
-          payload = this.getDeductibleResponse( request );
-
-        } else if (request.url.endsWith('/statusCheckFamNumber')) {
+        if (request.url.endsWith('/statusCheckFamNumber')) {
 
           console.log('Status Check (Family Number) - fake backend');
-          payload =  this.getCheckStatusFamNumResponse( request );
+          payload = this.getCheckStatusFamNumResponse(request);
 
         } else if (request.url.endsWith('/statusCheckPhn')) {
 
           console.log('Status Check (PHN) - fake backend');
-          payload = this.getCheckStatusPhnResponse( request );
+          payload = this.getCheckStatusPhnResponse(request);
+
+        } else if (request.url.endsWith('/requestLetter')) {
+
+          console.log( 'Letter Reprint - fake backend' );
+          payload = this.getReprint( request );
 
         } else if (request.url.endsWith('/checkEligibility')) {
 
@@ -64,7 +58,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
           // status codes subject to change and new field added for mandatory children
           payload = this.getEligibilityResponse( request );
 
-        } else if (request.url.endsWith('/requestRegistration') ) {
+        } else if (request.url.endsWith('/requestRegistration')) {
 
           console.log( 'Request Registration - fake backend' );
           payload = this.getRegistrationResponse( request );
@@ -78,50 +72,41 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
 
         // Pass through to actual service
         return next.handle( request );
-      } else {
-        // Pass through to actual service
-        return next.handle( request );
+      } else if ( 'GET' === request.method ) {
+
+        if (request.url.endsWith('/getMessages')) {
+          console.log('Get messages - fake backend');
+          return of(new HttpResponse({status: 200, body: this.getMessages()}))
+              .pipe(delay(1000));
+
+        } else if (request.url.endsWith('/getDeductibles')) {
+
+          console.log('Get Deductibles - fake backend');
+          return of(new HttpResponse({status: 200, body: this.getDeductible()}))
+              .pipe(delay(1000));
+
+        }
       }
+
+      // Pass through to actual service
+      return next.handle( request );
     }
     ));
   }
 
-  // Response methods
-  private getCalendarResponse( request: HttpRequest<any> ): BenefitYearInterface {
+  private getDeductible(): DeductibleInterface {
 
     return {
-      uuid: request.body.uuid,
-      processDate: request.body.processDate,
-      clientName: request.body.clientName,
       benefitYear: '2019',
       taxYear: '2017',
-      regStatusCode: RegStatusCode.SUCCESS,
-      regStatusMsg: ''
-    };
-  }
-
-
-  private getDeductibleResponse( request: HttpRequest<any> ): DeductibleInterface {
-
-    return {
-      uuid: request.body.uuid,
-      processDate: request.body.processDate,
-      clientName: request.body.clientName,
-      benefitYear: request.body.benefitYear,
       assistanceLevels: baselineAssist,
       pre1939AssistanceLevels: pre1939Assist,
-      regStatusCode: RegStatusCode.SUCCESS,
-      regStatusMsg: ''
     };
-   /* return {
-      uuid: request.body.uuid,
-      processDate: request.body.processDate,
-      clientName: request.body.clientName,
-      benefitYear: request.body.benefitYear,
+  /*  return {
+      benefitYear: '',
+      taxYear: '',
       assistanceLevels: [],
-      pre1939AssistanceLevels: [],
-      regStatusCode: RegStatusCode.ERROR,
-      regStatusMsg: 'database error'
+      pre1939AssistanceLevels: []
     };*/
   }
 
@@ -133,7 +118,6 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       uuid: request.body.uuid,
       processDate: request.body.processDate,
       clientName: request.body.clientName,
-      benefitYear: request.body.benefitYear,
       famNumber: request.body.famNumber,
       regStatusCode: (registered ? RegStatusCode.SUCCESS : RegStatusCode.ERROR),
       regStatusMsg: (registered ? 'Registered with some status' : 'Not registered')
@@ -148,10 +132,9 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       uuid: request.body.uuid,
       processDate: request.body.processDate,
       clientName: request.body.clientName,
-      benefitYear: request.body.benefitYear,
-      phn: request.body.phn,
-      dateOfBirth: request.body.dateOfBirth,
-      postalCode: request.body.postalCode,
+      phn: '',
+      dateOfBirth: '',
+      postalCode: '',
       regStatusCode: (registered ? RegStatusCode.SUCCESS : RegStatusCode.ERROR),
       regStatusMsg: (registered ? 'Registered with some status' : 'Not registered')
     };
@@ -161,6 +144,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
 
     let family;
     let eligible = false;
+
     const alreadyRegistered = this.fakebackendService.isRegistered(
         request.body.persons.map( x => x.phn )
     );
@@ -180,26 +164,26 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       uuid: request.body.uuid,
       processDate: request.body.processDate,
       clientName: request.body.clientName,
-      benefitYear: request.body.benefitYear,
-      persons: ( family ? family : '' ),
-      dependentMandatory: (this.fakebackendService.hasDependants ? DependentMandatory.YES : DependentMandatory.NO),
+      persons: (family ? family : ''),
+      dependentMandatory: DependentMandatory.NO,
+      //(this.fakebackendService.hasDependants ? DependentMandatory.YES : DependentMandatory.NO),
       regStatusMsg: 'Fake backend - ' + ( alreadyRegistered ? 'Already registered' :
-          ( family ? ( eligible ? 'Success' : 'DOBs do not match' ) : 'Not eligible' ) ),
+          ( family ? ( eligible ? 'Eligible for FPCare' : 'DOBs do not match' ) : 'Not eligible' ) ),
+      //regStatusMsg: null,
       regStatusCode: ( alreadyRegistered ? RegStatusCode.WARNING :
           ( family && eligible ? RegStatusCode.SUCCESS : RegStatusCode.ERROR ) )
+      //regStatusCode: null
     };
   }
 
   private getRegistrationResponse( request: HttpRequest<any> ): RegistrationInterface {
 
-    const assistLevel: FpcareAssistLevel = this.fakebackendService.getFamilyAssistenceLevel( request.body.persons );
+    const assistLevel: FpcareAssistLevel = this.fakebackendService.getFamilyAssistenceLevel(request.body.persons);
 
     return {
       uuid: request.body.uuid,
       processDate: request.body.processDate,
       clientName: request.body.clientName,
-      benefitYear: request.body.benefitYear,
-      taxYear: request.body.taxYear,
       familyNumber: this.fakebackendService.generateFpcNumber(),
       deductibleAmounText: assistLevel.deductible,
       annualMaximumAmountText: assistLevel.maximum,
@@ -207,7 +191,44 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       regStatusCode: RegStatusCode.SUCCESS,
       regStatusMsg: 'Success'
     };
+
+
+  /*return {
+       uuid: request.body.uuid,
+       processDate: request.body.processDate,
+       clientName: request.body.clientName,
+       familyNumber: '',
+       deductibleAmounText: '',
+       annualMaximumAmountText: '',
+       copayPercentageText: '',
+       regStatusCode: RegStatusCode.ERROR,
+       regStatusMsg: 'Failed'
+     };*/
   }
+
+  private getMessages(): MessageInterface[] {
+
+    return  [
+        {msgCode: 'SRQ_026', msgText: 'SRQ_026 (fake-backend)', msgType: RegStatusCode.ERROR },
+        {msgCode: 'SRQ_048', msgText: 'SRQ_048 (fake-backend)', msgType: RegStatusCode.ERROR },
+        {msgCode: 'SRQ_045', msgText: 'SRQ_045 (fake-backend)', msgType: RegStatusCode.WARNING },
+        {msgCode: 'SRQ_099', msgText: 'SRQ_099 (fake-backend)', msgType: RegStatusCode.ERROR },
+      ];
+  }
+
+  private getReprint( request: HttpRequest<any> ): ReprintLetter {
+    return {
+      uuid: request.body.uuid,
+      processDate: request.body.processDate,
+      clientName: request.body.clientName,
+      phn: '',
+      dateOfBirth: '',
+      postalCode: '',
+      letterType: request.body.letterType,
+      regStatusCode: RegStatusCode.SUCCESS,
+      regStatusMsg: 'Success'
+    }
+  };
 }
 
 export let fakeBackendProvider = {

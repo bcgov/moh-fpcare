@@ -29,10 +29,8 @@
     <ng-content select="[body]" *ngIf="hasBody; else noBody;"></ng-content>
   </div>
 
-<!--TODO: Add links-->
 <div class="p-md-4">
-  <p>More information available on <a href="javascript:void(0)">Frequently Asked Questions</a></p>
-  <p>If you require additional assistance, contact <a href="javascript:void(0)">HIBC Health Insurance</a></p>
+  <p>More information is available on <a target="_blank" href="{{links.FAQ}}">Frequently Asked Questions</a></p>
 </div>
 
 </fpcare-page-framework>
@@ -40,6 +38,6 @@
 <!-- There's no response object - user hasn't submitted the HTTP request. -->
 <ng-template #noBody>
   <p class='font-weight-bold p-md-2'>
-    This error occurred because the system encountered an unanticipated situation which forced it to stop.
+    {{noResponseMsg}}
   </p>
 </ng-template>

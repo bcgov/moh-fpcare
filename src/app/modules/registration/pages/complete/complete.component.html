@@ -7,30 +7,27 @@
   <div>
     <h2 class="border-bottom">Declaration and Consent</h2>
     <p>
-      I consent to allow the Canada Revenue Agency to release information from my income tax returns and other
-      required taxpayer information to the B.C. Ministry of Health and Health Insurance BC.
-    </p>
-    <p>
-      The information provided will be used solely to determine, verify and  administer my and/or family's Fair
-      PharmaCare Plan coverage, but may be aggregated for planning and evaluation purposes.
+      I consent to allow the Canada Revenue Agency to release information from my income tax returns and other required
+      taxpayer information to the B.C. Ministry of Health and Health Insurance BC.
     </p>
     <p>
       I understand my information will be collected, used and disclosed in accordance with the British Columbia
-      Pharmaceutical Services Act and Freedom of Information and Protection Privacy Act. It will not be disclosed to
-      any persons without my consent.
+      Pharmaceutical Services Act and the Freedom of Information and Protection of Privacy Act. It will not be
+      disclosed to any persons without my consent.
     </p>
     <p>
-      This consent is valid for the two taxation years before the year in which I sign this document, for the year
-      in which I sign it and for each following taxation year in which I and/or my family am eligible for the Fair
+      This consent is valid for the two taxation years before the year in which I sign this document, for the year in
+      which I sign it and for each following taxation year in which I and/or my family am eligible for the Fair
       PharmaCare Plan.
     </p>
     <p>
-      I understand that I can withdraw this consent at any time by writing to Health Insurance BC, PO Box 9655 Stn
-      Prov Govt, Victoria BC V8W 9P2.
+      I understand that I can withdraw this consent at any time by writing to
+      <a target="_blank" href="{{links.HIBC}}">Health Insurance BC</a>, PO Box 9655 Stn Prov Govt, Victoria BC V8W 9P2.
     </p>
   </div>
 
   <div>
+    <h2 class="border-bottom">Your Information</h2>
     <p class="h3">{{applicant.name}}, do you agree?</p>
     <span class="checkbox checkbox-success checkbox-inline mb-4 mb-md-0">
       <input type="checkbox" class="btn btn-lg mr-md-2" id="ap_agree" [(ngModel)]="applicantAgreement">
@@ -39,11 +36,15 @@
   </div>
 
   <div *ngIf="hasSpouse" >
+    <h2 class="border-bottom">Spouse Information</h2>
     <p class="h3">{{spouse.name}}, do you agree?</p>
     <span class="checkbox checkbox-success checkbox-inline mb-4 mb-md-0">
       <input type="checkbox" class="btn btn-lg mr-md-2" id="sp_agree" [(ngModel)]="spouseAgreement">
       <label class="form-check-label" for="sp_agree">Yes, I agree</label>
     </span>
+    <p class="text-muted font-italic">
+      Note: If you are married or living and cohabiting in a marriage-like relationship, your spouse must also sign.
+    </p>
   </div>
 
   <fpcare-form-action-bar

@@ -9,6 +9,41 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <app-root>Loading...</app-root>
+  <app-root><span id="loading">Loading...</span></app-root>
+  <noscript>
+    <p>
+      JavaScript must be enabled to use this site. If you are unsure why you are seeing this message your browser is not supported. Please update your browser to the latest version of Chrome, FireFox, Safari, or Edge.
+
+      <b>TODO: Get specific language!</b>
+    </p>
+  </noscript>
+  <div id="failedToLoad" style='display: none;'>
+    <p>
+      You are using an old browser that is not supported. Please update to the latest version of Chrome, FireFox, Safari, or Edge.
+    </p>
+  </div>
 </body>
+<script>
+    (function () {
+      // Make sure browser is not IE10 or lower; if so, show error.
+      browserCheck();
+
+      function browserCheck() {
+        var isBelowIE11 = window.navigator.userAgent.indexOf('MSIE') > 0; //ie10 and lower - we don't support
+        if (isBelowIE11) {
+          failedToLoad();
+        }
+      }
+      function failedToLoad() {
+        var elLoading = document.getElementById('loading');
+        var elFailed = document.getElementById('failedToLoad');
+        if (elLoading && elFailed) {
+          elLoading.style.display = 'none';
+          elFailed.style.display = 'block';
+        }
+      }
+
+    })();
+
+</script>
 </html>

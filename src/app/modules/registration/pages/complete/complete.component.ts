@@ -3,25 +3,21 @@ import {AbstractFormComponent} from '../../../../models/abstract-form-component'
 import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Person} from '../../../../models/person.model';
-import {environment} from '../../../../../environments/environment';
 import {ApiService} from '../../../../services/api-service.service';
 import {RegistrationService} from '../../registration.service';
 import { Logger } from '../../../../services/logger.service';
 import {
-  AddressInterface,
-  EligibilityPayload,
   PersonInterface,
   PersonType,
   RegistrationPayload
 } from '../../../../models/api.model';
 import {FinanceService} from '../../../financial-calculator/finance.service';
 import {
-  ERROR_404,
   REGISTRATION_PATH,
-  REGISTRATION_PERSONAL,
   REGISTRATION_RESULTS
 } from '../../../../models/route-paths.constants';
 import {ResponseStoreService} from '../../../../services/response-store.service';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'fpcare-complete',
@@ -30,11 +26,12 @@ import {ResponseStoreService} from '../../../../services/response-store.service'
 })
 export class CompletePageComponent extends AbstractFormComponent implements OnInit  {
 
-  /** Page to naviage to when continue process */
+  /** Page to navigate to when continue process */
   private _baseUrl = REGISTRATION_PATH + '/';
 
   public applicantAgreement: boolean = false;
   public spouseAgreement: boolean = false;
+  public links = environment.links;
 
   constructor( private fpcService: FPCareDataService
              , protected router: Router
@@ -81,7 +78,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
    * @returns {string}
    */
   get buttonLabel(): string {
-    return 'Submit Applicaion';
+    return 'Submit Application';
   }
 
   /**
@@ -113,8 +110,6 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
 
     // Setup the request
     const subscription = this.apiService.requestRegistration({
-      benefitYear: this.fpcService.benefitYear,
-      taxYear: this.fpcService.taxYear,
       persons: this.getFamilyList(),
       address: this.applicant.isAddressUpdated ?
           { // Address object
@@ -143,7 +138,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
         (responseError) => {
           this.loading = false;
           console.log( 'response error: ', responseError );
-          this.navigate( ERROR_404 );
+          this.navigate(this._baseUrl +  REGISTRATION_RESULTS );
         });
    }
 
@@ -159,8 +154,8 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
          this.registrationService.setPersonInterfaceForReg(
              this.applicant,
              PersonType.applicantType,
-             this.financialService.currencyFormat( this.fpcService.applicantIncome ),
-             this.financialService.currencyFormat( this.fpcService.disabilityAmount)
+             this.fpcService.applicantIncome,
+             this.fpcService.disabilityAmount
          )
      );
 
@@ -169,8 +164,8 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
            this.registrationService.setPersonInterfaceForReg(
                this.spouse,
                PersonType.spouseType,
-               this.financialService.currencyFormat( this.fpcService.spouseIncome )
-               //this.financialService.currencyFormat( this.fpcService.disabilityAmount)
+               this.fpcService.spouseIncome,
+               this.fpcService.spouseDisabilityAmount
            )
        );
      }
@@ -181,8 +176,6 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
          x => this.registrationService.setPersonInterfaceForReg( x, PersonType.dependent ) );
        list.concat( dependants );
      }
-
-     console.log('family list: ', list);
      return list;
    }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {Person} from '../models/person.model';
-import { environment } from 'environments/environment';
 
 /**
  * FPCareDataService is responsible for storing and searching data. It is not
@@ -28,11 +27,6 @@ export class FPCareDataService {
 
   /** Variable to record the letter type if response is not returned by API service */
   public reprintLetterType: string;
-
-  /** FPC benefit year - calendar year */
-  public benefitYear: string;
-  /** FPC tax year is 2 years prior to benefit year */
-  public taxYear: string;
 
   /** Financial Information for applicant */
   public applicantIncome: number; /** Income for applicant */
@@ -97,6 +91,6 @@ export class FPCareDataService {
    * @returns {boolean}
    */
   canAddChild(): boolean {
-    return this._dependants.length <= this.MAX_DEPENDANTS;
+    return this._dependants.length < this.MAX_DEPENDANTS;
   }
 }
