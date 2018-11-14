@@ -1,6 +1,5 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ImageInterface} from '../../../../models/image-interface';
-import {ConsentModalComponent} from '../consent-modal/consent-modal.component';
 import {SampleModalComponent} from '../sample-modal/sample-modal.component';
 
 @Component({

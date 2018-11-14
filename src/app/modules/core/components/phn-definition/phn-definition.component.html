@@ -1,15 +1,9 @@
 <div class="pb-md-2">
   <p class="h5">Personal Health Number (PHN)</p>
-  <p>
+  <div>
     {{phnDefinition}}
-    <a role="button"
-       aria-haspopup="true"
-       href="javascript:void(0)"
-       (click)="openSample()">Open sample</a>
-  </p>
-  <fpcare-sample-modal
-      #bcscSample
-      [title]="'BC Services Card Samples'"
-      [images]="imageList">
-  </fpcare-sample-modal>
+    <div *ngFor="let image of imageList" class="phn-sample--row">
+      <img class="phn-sample--image" id="image_{{objectId}}" src="{{image.path}}" alt="{{image.desc}}"/>
+    </div>
+  </div>
 </div>

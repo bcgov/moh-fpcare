@@ -116,17 +116,11 @@
 
      <div>
         <p class="h5">Social Insurance Number</p>
-        <p>This information is used only to check your income with the Canada Revenue Agency.
-           <a role="button"
-              aria-haspopup="true"
-              href="javascript:void(0)"
-              (click)="openSample()">Open sample</a>
-        </p>
-        <fpcare-sample-modal
-            #sinSample
-            [title]="'Social Insurance Card Sample'"
-            [images]="imageList">
-        </fpcare-sample-modal>
+        <div>This information is used only to check your income with the Canada Revenue Agency.
+           <div *ngFor="let image of imageList" class="sin-sample--row">
+              <img class="sin-sample--image" id="image_{{objectId}}" src="{{image.path}}" alt="{{image.desc}}"/>
+           </div>
+        </div>
      </div>
 
   </aside>
