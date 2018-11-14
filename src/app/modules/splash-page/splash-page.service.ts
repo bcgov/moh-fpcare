@@ -40,7 +40,11 @@ export class SplashPageService {
   public setup(): void {
     this.load().then(isMaitenance => {
       if (isMaitenance) {
-        this.router.navigate(['maintenance']);
+        // this.router.navigate(['maintenance']);
+      }
+      else {
+        //look at start-time and if it's soon
+        console.log('not maintenence mode');
       }
     });
   }
@@ -52,6 +56,7 @@ export class SplashPageService {
       }
       else {
         this.envService.values.subscribe(envs => {
+          console.log('SplashPage Service has envs', envs)
           this.loaded = true;
           this.maintenanceMode = envs.SPA_ENV_FPC_MAINTENANCE_FLAG.toLowerCase() === 'true';
           this._values.next(envs);

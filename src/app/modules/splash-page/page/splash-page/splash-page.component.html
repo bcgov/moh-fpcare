@@ -1,18 +1,19 @@
-<p>Start time: {{startTime}}</p>
-<p>End time: {{ endTime }}</p>
-<p>Message: {{ message }} </p>
+<fpcare-page-framework layout='single'>
 
+    <h1><i class="fa fa-2x fa-exclamation-circle" aria-label="warning"></i> Maitenance Mode</h1>
 
+    <p>Start time: {{startTime}}</p>
+    <p>End time: {{ endTime }}</p>
+    <p>Message: {{ message }} </p>
 
+    <div class="p-md-2 bg-light">
+        <!-- Once the maintenence mode window is over you can refresh your browser to begin. -->
+        {{ message }}
+    </div>
 
-<p><em>DONE</em></p>
-<ul>
-    <li>Retrieve maintence mode value from SPA-ENV server / HTTP request to get OpenShift</li>
-    <li>Locking user to this page</li>
-    <p>Documenting in readme</p>
-</ul>
+<div class="p-md-4">
+  <p>More information available on <a href="javascript:void(0)">Frequently Asked Questions</a></p>
+  <p>If you require additional assistance, contact <a href="javascript:void(0)">HIBC Health Insurance</a></p>
+</div>
 
-<p><em>REMAINING</em></p>
-<ul>
-    <li>Designing this page</li>
-</ul>
+</fpcare-page-framework>
