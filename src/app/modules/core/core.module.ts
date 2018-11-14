@@ -2,10 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlertComponent } from './components/alert/alert.component';
 import { AlertModule, TooltipModule, ProgressbarModule, ModalModule } from 'ngx-bootstrap';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { FPCareToggleComponent } from './components/toggle/toggle.component';
 import { PostalCodeComponent } from './components/postal-code/postal-code.component';
 import { PageFrameworkComponent } from './components/page-framework/page-framework.component';
@@ -77,11 +75,9 @@ const componentList = [
     CommonModule,
     AlertModule.forRoot(),
     TooltipModule.forRoot(),
-    NgxChartsModule,
     FormsModule,
     ProgressbarModule.forRoot(),
     RouterModule,
-    NgxMyDatePickerModule.forRoot(),
     ModalModule.forRoot(),
     TextMaskModule,
   ],

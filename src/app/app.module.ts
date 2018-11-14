@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -6,7 +6,6 @@ import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './modules/core/core.module';
@@ -54,7 +53,6 @@ if ( environment.useMockBackend ) {
     FPCareDataModule.forRoot(),
     CoreModule,
     ModalModule.forRoot(),
-    NgxMyDatePickerModule.forRoot(),
     TabsModule.forRoot(),
     BsDropdownModule.forRoot(),
     ButtonsModule.forRoot(),
