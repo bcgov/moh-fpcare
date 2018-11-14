@@ -98,12 +98,6 @@ html, body {
   height: 100%;
 }
 
-#wrap {
-  // Guarnatee a 5rem margin, while also always being full-height.
-  min-height: calc(100% - 5rem);
-  margin-bottom: 5rem;
-  height: auto!important;
-}
 
 .footer {
   position: absolute;
