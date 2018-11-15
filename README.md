@@ -34,6 +34,10 @@ To enable the splash page:
 
 The spa-env-server will automatically set the maintence mode flag between these times.
 
+You do not need to touch SPA_ENV_FPC_MAINTENANCE_FLAG. It can remain 'false', and the splsah page will still work.
+
+SPA_ENV_FPC_MAINTENANCE_MESSAGE is an optional field.  If anything is provided it will be displayed on the page below the default splash page. If it is empty, only the default page is shown with no custom message.
+
 ## Versioning Deployments
 
 Prior to TEST and PROD builds you must update the version number. There are two npm scripts which do this: `npm run test-version` and `npm run prod-version`.  These commands 

@@ -23,10 +23,11 @@ export class SplashPageComponent implements OnInit {
   ngOnInit() {
     this.links = environment.links;
     this.sub$ = this.splashService.values.subscribe(splashVals => {
-      this.startTime = splashVals.SPA_ENV_FPC_MAINTENANCE_START;
-      this.endTime = splashVals.SPA_ENV_FPC_MAINTENANCE_END;
-      this.message = splashVals.SPA_ENV_FPC_MAINTENANCE_MESSAGE;
-
+      if (splashVals){
+        this.startTime = splashVals.SPA_ENV_FPC_MAINTENANCE_START;
+        this.endTime = splashVals.SPA_ENV_FPC_MAINTENANCE_END;
+        this.message = splashVals.SPA_ENV_FPC_MAINTENANCE_MESSAGE;
+      }
       // This effectively replaces a canLoad/canActivate route guard.
       // Unfortunately, these guards don't play nice with direct deep linking,
       // and redirect to a blank page.  This instead redirects to homepage.

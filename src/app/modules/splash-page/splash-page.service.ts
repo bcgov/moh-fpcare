@@ -26,7 +26,6 @@ export class SplashPageService {
    */
   public values: Observable<SpaEnvResponse> = this._values.asObservable()
     .pipe(
-      filter(x => x !== null),
       distinctUntilChanged()
     );
 
