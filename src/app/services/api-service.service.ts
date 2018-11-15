@@ -161,12 +161,9 @@ export class ApiService extends AbstractHttpService {
    * @returns {Observable<StatusMsgsInterface>}
    */
   public getMessages() {
-    const url = environment.baseAPIUrl + 'getMessages';
+    const url = environment.baseAPIUrl + 'loadMessages';
 
-    const queryParams = new HttpParams();
-    queryParams.set('appLevel', 'FEND');
-
-    return this.get<MessageInterface[]>(url, queryParams);
+    return this.get<MessageInterface[]>(url);
   }
 
   protected handleError(error: HttpErrorResponse) {
