@@ -24,7 +24,7 @@ export const environment = {
   bypassGuards: true,
 
   /** Bypass maintenance mode / splash page. */
-  bypassSplashPage: true,
+  bypassSplashPage: false,
 
   /** The user is shown a 'Are you sure you want to leave?' prompt when trying to navigate away or close the browser. */
   promptOnExit: false,

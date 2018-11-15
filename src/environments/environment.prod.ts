@@ -6,7 +6,7 @@ export const environment = {
   captchaApiBaseUrl: '/fpcare/api/captcha',
   loggingURL: '/fpcare/api/logging',
   envServerUrl: '/fpcare/api/env',
-  logHTTPRequestsToConsole: true,
+  logHTTPRequestsToConsole: false,
   bypassSplashPage: false,
   bypassGuards: false,
   promptOnExit: true,
