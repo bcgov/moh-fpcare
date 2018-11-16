@@ -13,7 +13,8 @@ import {Injectable} from '@angular/core';
 import {
   DeductibleInterface,
   DependentMandatory,
-  EligibilityInterface, MessageInterface, PayloadInterface, PersonInterface,
+  EligibilityInterface,
+  MessageInterface,
   RegistrationInterface,
   RegStatusCode, ReprintLetter,
   StatusCheckPHN,
@@ -227,7 +228,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       letterType: request.body.letterType,
       regStatusCode: RegStatusCode.SUCCESS,
       regStatusMsg: 'Success'
-    }
+    };
   };
 }
 

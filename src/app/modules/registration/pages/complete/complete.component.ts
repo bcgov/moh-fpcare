@@ -169,12 +169,12 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
            )
        );
      }
-
+     
      if ( this.fpcService.hasChildren ) {
 
        const dependants = this.fpcService.dependants.map(
          x => this.registrationService.setPersonInterfaceForReg( x, PersonType.dependent ) );
-       list.concat( dependants );
+       list.push(...dependants);
      }
      return list;
    }

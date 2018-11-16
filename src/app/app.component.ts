@@ -53,8 +53,8 @@ export class AppComponent implements OnInit {
       // Purpose: Development
       // this.registerSingleApplicant( TestScenario.EligNotReg );
       //this.registrationBornBefore1939();
-      //this.registerfamily();
-      this.statusCheckApplicant( TestScenario.Reg );
+      this.registerfamily();
+      //this.statusCheckApplicant( TestScenario.Reg );
       //this.statusCheckApplicant( TestScenario.Reg, false );
 
 
@@ -263,7 +263,7 @@ export class AppComponent implements OnInit {
     this.fpcareDataService.bornBefore1939 = false;
 
     // Children
-/*    this.fpcareDataService.addChild();
+    this.fpcareDataService.addChild();
     this.fpcareDataService.dependants[0] = this.dummyDataService.createPerson('9999999959', {
       year: 2005,
       month: 3,
@@ -275,6 +275,6 @@ export class AppComponent implements OnInit {
       year: 2009,
       month: 12,
       day: 31
-    }, 'V2V2V4');*/
+    }, 'V2V2V4');
   }
 }
