@@ -14,7 +14,7 @@ import {
   DeductibleInterface,
   DependentMandatory,
   EligibilityInterface,
-  MessageInterface,
+  MessageInterface, MessagePayloadInterface,
   RegistrationInterface,
   RegStatusCode, ReprintLetter,
   StatusCheckPHN,
@@ -96,18 +96,29 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
   }
 
   private getDeductible(): DeductibleInterface {
+    const dt: string = new Date().toDateString();
 
     return {
       benefitYear: '2019',
       taxYear: '2017',
       assistanceLevels: baselineAssist,
       pre1939AssistanceLevels: pre1939Assist,
+      uuid: '123',
+      processDate: dt,
+      clientName: '',
+      regStatusCode: RegStatusCode.SUCCESS,
+      regStatusMsg: ''
     };
   /*  return {
       benefitYear: '',
       taxYear: '',
       assistanceLevels: [],
-      pre1939AssistanceLevels: []
+      pre1939AssistanceLevels: [],
+      uuid: '123',
+      processDate: dt,
+      clientName: '',
+      regStatusCode: RegStatusCode.ERROR,
+      regStatusMsg: ''
     };*/
   }
 
@@ -207,14 +218,23 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
      };*/
   }
 
-  private getMessages(): MessageInterface[] {
+  private getMessages(): MessagePayloadInterface {
 
-    return  [
-        {msgCode: 'SRQ_026', msgText: 'SRQ_026 (fake-backend)', msgType: RegStatusCode.ERROR },
-        {msgCode: 'SRQ_048', msgText: 'SRQ_048 (fake-backend)', msgType: RegStatusCode.ERROR },
-        {msgCode: 'SRQ_045', msgText: 'SRQ_045 (fake-backend)', msgType: RegStatusCode.WARNING },
-        {msgCode: 'SRQ_099', msgText: 'SRQ_099 (fake-backend)', msgType: RegStatusCode.ERROR },
-      ];
+    const dt: string = new Date().toDateString();
+    return {
+      uuid: '456',
+      processDate: dt,
+      clientName: '',
+      messages: [
+        {msgCode: 'SRQ_026', msgText: 'SRQ_026 (fake-backend)', msgType: RegStatusCode.ERROR},
+        {msgCode: 'SRQ_029', msgText: 'SRQ_029 (fake-backend)', msgType: RegStatusCode.ERROR},
+        {msgCode: 'SRQ_048', msgText: 'SRQ_048 (fake-backend)', msgType: RegStatusCode.ERROR},
+        {msgCode: 'SRQ_045', msgText: 'SRQ_045 (fake-backend)', msgType: RegStatusCode.WARNING},
+        {msgCode: 'SRQ_099', msgText: 'SRQ_099 (fake-backend)', msgType: RegStatusCode.ERROR},
+      ],
+      regStatusCode: RegStatusCode.SUCCESS,
+      regStatusMsg: ''
+    };
   }
 
   private getReprint( request: HttpRequest<any> ): ReprintLetter {

@@ -14,7 +14,7 @@ import {
   PersonInterface,
   AddressInterface,
   EligibilityInterface,
-  RegistrationInterface, MessageInterface
+  RegistrationInterface, MessageInterface, MessagePayloadInterface
 } from '../models/api.model';
 
 @Injectable({
@@ -29,6 +29,7 @@ export class ApiService extends AbstractHttpService {
   protected _headers: HttpHeaders = new HttpHeaders();
   private _token: string;
   private _clientName: string = 'ppiweb';
+  public uuid: string;
 
   constructor( protected http: HttpClient, public logService: Logger ){
     super(http);
@@ -58,7 +59,7 @@ export class ApiService extends AbstractHttpService {
     const url = environment.baseAPIUrl + 'statusCheckFamNumber';
 
     return this.post<StatusCheckRegNum>(url, {
-      uuid: this.generateUUID(),
+      uuid: this.uuid,
       clientName: this._clientName,
       processDate: processDate,
       famNumber: input.regNumber
@@ -78,7 +79,7 @@ export class ApiService extends AbstractHttpService {
     const url = environment.baseAPIUrl + 'statusCheckPhn';
 
     return this.post<StatusCheckPHN>(url, {
-      uuid: this.generateUUID(),
+      uuid: this.uuid,
       clientName: this._clientName,
       processDate: processDate,
       phn: input.phn,
@@ -98,7 +99,7 @@ export class ApiService extends AbstractHttpService {
     const url = environment.baseAPIUrl + 'requestLetter';
 
     return this.post<ReprintLetter>(url, {
-      uuid: this.generateUUID(),
+      uuid: this.uuid,
       clientName: this._clientName,
       processDate: processDate,
       phn: input.phn,
@@ -124,7 +125,7 @@ export class ApiService extends AbstractHttpService {
     const url = environment.baseAPIUrl + 'checkEligibility';
 
     return this.post<EligibilityInterface>(url, {
-      uuid: this.generateUUID(),
+      uuid: this.uuid,
       clientName: this._clientName,
       processDate: processDate,
       persons: input.persons
@@ -140,7 +141,7 @@ export class ApiService extends AbstractHttpService {
 
       // Address was updated
       return this.post<RegistrationInterface>(url, {
-        uuid: this.generateUUID(),
+        uuid: this.uuid,
         clientName: this._clientName,
         processDate: processDate,
         persons: input.persons,
@@ -149,7 +150,7 @@ export class ApiService extends AbstractHttpService {
     }
 
     return this.post<RegistrationInterface>(url, {
-      uuid: this.generateUUID(),
+      uuid: this.uuid,
       clientName: this._clientName,
       processDate: processDate,
       persons: input.persons
@@ -163,7 +164,7 @@ export class ApiService extends AbstractHttpService {
   public getMessages() {
     const url = environment.baseAPIUrl + 'loadMessages';
 
-    return this.get<MessageInterface[]>(url);
+    return this.get<MessagePayloadInterface>(url);
   }
 
   protected handleError(error: HttpErrorResponse) {
@@ -182,10 +183,6 @@ export class ApiService extends AbstractHttpService {
 
     // A user facing erorr message /could/ go here; we shouldn't log dev info through the throwError observable
     return throwError('Something went wrong with the network request.');
-  }
-
-  private generateUUID(): string {
-    return UUID.UUID().toString();
   }
 
   /**

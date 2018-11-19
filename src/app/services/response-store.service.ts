@@ -7,7 +7,8 @@ import {
   RegistrationPayload,
   ServerPayload,
   MessageInterface,
-  RegStatusCode, SRQ_099Msg
+  RegStatusCode,
+  SRQ_099Msg
 } from '../models/api.model';
 
 /**

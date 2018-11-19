@@ -53,7 +53,7 @@ export interface ReprintLetter extends PayloadInterface {
 /**
  * Retrieve the Fair PharmaCare deductible levels to calculate the applicant's level of assistance
  */
-export interface DeductibleInterface {
+export interface DeductibleInterface extends PayloadInterface {
   assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
   pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
   benefitYear?: string;
@@ -148,6 +148,11 @@ export const SRQ_099Msg = {
   msgText: 'This error occurred because the system encountered an unanticipated situation which forced it to stop',
   msgType: RegStatusCode.ERROR
 };
+
+export interface MessagePayloadInterface extends PayloadInterface {
+  appLayer?: string; // Code identifying layer message relates to
+  messages?: MessageInterface[];
+}
 
 export class ServerPayload implements PayloadInterface {
   regStatusCode: RegStatusCode;
@@ -258,3 +263,32 @@ export class RegistrationPayload extends ServerPayload {
   }
 }
 
+/**
+ * Message cache payload
+ */
+export class MessagePayload extends ServerPayload {
+  messages: MessageInterface[];
+
+  constructor( payload: MessagePayloadInterface ) {
+    super(payload);
+    this.messages = payload.messages;
+  }
+}
+
+/**
+ * Deductible band payload
+ */
+export class DeductiblePayload extends ServerPayload {
+  assistanceLevels: PharmaCareAssistanceLevelServerResponse[];
+  pre1939AssistanceLevels: PharmaCareAssistanceLevelServerResponse[];
+  benefitYear: string;
+  taxYear: string;
+
+  constructor( payload: DeductibleInterface ) {
+    super(payload);
+    this.assistanceLevels = payload.assistanceLevels;
+    this.pre1939AssistanceLevels = payload.pre1939AssistanceLevels;
+    this.benefitYear = payload.benefitYear;
+    this.taxYear = payload.taxYear;
+  }
+}

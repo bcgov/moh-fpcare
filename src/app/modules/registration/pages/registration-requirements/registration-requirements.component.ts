@@ -3,13 +3,19 @@ import { Router } from '@angular/router';
 import {Base} from '../../../core/components/base/base.class';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
-import {REGISTRATION_FINANCIAL, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
+import {
+  REGISTRATION_ADDRESS,
+  REGISTRATION_FINANCIAL,
+  REGISTRATION_PATH,
+  REGISTRATION_RESULTS
+} from '../../../../models/route-paths.constants';
 import {RegistrationService} from '../../registration.service';
 import {pageRoutes} from '../../registration-page-routing';
 import {environment} from '../../../../../environments/environment';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {ApiService} from '../../../../services/api-service.service';
-import * as moment from 'moment'
+import * as moment from 'moment';
+import {MessagePayload, MessagePayloadInterface} from '../../../../models/api.model';
 
 @Component({
   selector: 'fpcare-registration-requirements',
@@ -53,7 +59,16 @@ export class RegistrationRequirementsComponent extends Base implements OnInit, A
 
     // Load messages from cache
     this.apiService.getMessages().subscribe(
-        (response) => { this.responseStore.cacheMsgs = response; }
+        (response) => {
+
+          const payload = new MessagePayload( response );
+
+          if ( payload.success ) {
+            this.responseStore.cacheMsgs = payload.messages;
+          } else {
+            this.router.navigate([REGISTRATION_PATH + '/' + REGISTRATION_RESULTS] );
+          }
+        }
     );
   }
 

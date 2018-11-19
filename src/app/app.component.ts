@@ -9,6 +9,8 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Logger } from './services/logger.service';
 import { SplashPageService } from './modules/splash-page/splash-page.service';
+import {ApiService} from './services/api-service.service';
+import {UUID} from 'angular2-uuid';
 
 @Component({
   selector: 'app-root',
@@ -27,10 +29,15 @@ export class AppComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private logger: Logger,
-              public splash: SplashPageService) {
+              public splash: SplashPageService,
+              public apiService: ApiService ) {
   }
 
   ngOnInit() {
+
+    // Set UUID for session
+    this.apiService.uuid = UUID.UUID().toString();
+
     if (!environment.bypassSplashPage){
       this.splash.setup();
     }
@@ -41,7 +48,6 @@ export class AppComponent implements OnInit {
     else {
       console.error(version.message);
     }
-
 
     this.updateTitleOnRouteChange();
 

@@ -3,12 +3,17 @@ import {RegistrationService} from '../../registration.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
 import { Router, ActivatedRoute } from '@angular/router';
 import {FinanceService} from '../../../financial-calculator/finance.service';
-import {REGISTRATION_ELIGIBILITY, REGISTRATION_PATH} from '../../../../models/route-paths.constants';
+import {
+  REGISTRATION_ELIGIBILITY,
+  REGISTRATION_PATH,
+  REGISTRATION_RESULTS
+} from '../../../../models/route-paths.constants';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ApiService} from '../../../../services/api-service.service';
 import {environment} from '../../../../../environments/environment';
 import {SampleModalComponent} from '../../../core/components/sample-modal/sample-modal.component';
 import {ImageInterface} from '../../../../models/image-interface';
+import {DeductiblePayload, MessagePayload} from '../../../../models/api.model';
 
 
 @Component({
@@ -67,16 +72,20 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
 
   ngOnInit() {
 
-    this.apiService.getDeductibles().subscribe((deductibleResponse) => {
+    this.apiService.getDeductibles().subscribe((response) => {
+          const payload = new DeductiblePayload( response );
 
-        this.financeService.setAssistanceLevels(deductibleResponse.assistanceLevels,
-            deductibleResponse.pre1939AssistanceLevels);
-        this._taxYear = deductibleResponse.taxYear;
-        this._benefitYear = deductibleResponse.benefitYear;
+          if ( payload.success ) {
+            this.financeService.setAssistanceLevels(payload.assistanceLevels, payload.pre1939AssistanceLevels);
+            this._taxYear = payload.taxYear;
+            this._benefitYear = payload.benefitYear;
+          } else {
+            this.financeService.failedToLoadAssistanceLevels(payload.error);
+          }
       },
-      (deductibleError) => {
+      (error) => {
         // When API service returns an error we need to manually trigger an error in financeService
-        this.financeService.failedToLoadAssistanceLevels(deductibleError);
+        this.financeService.failedToLoadAssistanceLevels(error);
       });
 
     // Retrieve standalone state from router data
