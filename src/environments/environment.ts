@@ -5,8 +5,8 @@
 
 export const environment = {
   production: false,
-  useDummyData: false,
-  useMockBackend: false,
+  useDummyData: true,
+  useMockBackend: true,
 
   /** Base url for all API requests. Note: This should be a relative URL, not absolute, so it can properly map to dev/test/prod. */
   baseAPIUrl: '/fpcare/api/fpcareIntegration/rest/',

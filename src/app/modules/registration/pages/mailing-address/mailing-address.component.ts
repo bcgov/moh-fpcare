@@ -8,7 +8,8 @@ import { RegistrationService } from '../../registration.service';
 import { FPCareRequiredDirective } from '../../../../validation/fpcare-required.directive';
 import {
   CountryNames,
-  defaultCountry, defaultProv,
+  defaultCountry,
+  defaultProv,
   provinceList,
   ProvinceNames
 } from '../../../../models/province-names.enum';
@@ -92,6 +93,11 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     if (this.applicant.address.hasPostal()) {
       this.isPostalMatch = this.isPostalCodeMatch( this.applicant.getNonFormattedPostalCode() );
       //console.log('checkPostal', this.isPostalMatch, this._postalCode );
+
+      if ( this.isPostalMatch && this.applicant.isAddressUpdated  ) {
+        // Remove postal code causes updated address structure to be incomplete
+        this.applicant.updAddress.postal = '';
+      }
     }
   }
 
@@ -101,14 +107,14 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   get updatePostalCode(): string {
 
+    console.log('update postal code', this.isPostalMatch, this.applicant.isAddressUpdated );
+
     // Set postal code
     if (!this.isPostalMatch && (this.applicant.address.postal !== this.applicant.updAddress.postal)) {
       // Update postal for updated address
       this.applicant.updAddress.postal = this.applicant.address.postal;
-    } else if ( this.isPostalMatch && this.applicant.isAddressUpdated ) {
-      // Remove postal code causes updated address structure to be incomplete
-      this.applicant.updAddress.postal = '';
     }
+
     return this.applicant.updAddress.postal;
   }
 
