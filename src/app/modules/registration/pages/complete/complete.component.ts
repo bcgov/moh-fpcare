@@ -13,6 +13,7 @@ import {
 } from '../../../../models/api.model';
 import {FinanceService} from '../../../financial-calculator/finance.service';
 import {
+  ERROR_PAGE,
   REGISTRATION_PATH,
   REGISTRATION_RESULTS
 } from '../../../../models/route-paths.constants';
@@ -138,7 +139,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
         (responseError) => {
           this.loading = false;
           console.log( 'response error: ', responseError );
-          this.navigate(this._baseUrl +  REGISTRATION_RESULTS );
+          this.navigate( ERROR_PAGE );
         });
    }
 

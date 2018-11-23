@@ -7,7 +7,7 @@ import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ApiService} from '../../../../services/api-service.service';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {ReprintLetter, ReprintLetterPayload} from '../../../../models/api.model';
-import {REPRINT_LETTERS_PATH, REPRINT_STATUS} from '../../../../models/route-paths.constants';
+import {ERROR_PAGE, REPRINT_LETTERS_PATH, REPRINT_STATUS} from '../../../../models/route-paths.constants';
 
 /**
  * Letter types
@@ -110,7 +110,7 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
     error => { // TODO: Confirm that this will be the error-page component
       this.loading = false;
       console.log( 'Error occurred: ', error );
-      this.navigate( this._url );
+      this.navigate( ERROR_PAGE );
     });
   }
 }

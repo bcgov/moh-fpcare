@@ -7,8 +7,9 @@ import {
   REGISTRATION_STATUS_PATH,
   REPRINT_LETTERS_PATH,
   STANDALONE_CALCULATOR,
-  MAINTENANCE
+  MAINTENANCE, ERROR_PAGE
 } from './models/route-paths.constants';
+import {ErrorPageComponent} from './pages/error-page/error-page.component';
 
 
 const routes: Routes = [
@@ -48,6 +49,10 @@ const routes: Routes = [
   {
     path: MAINTENANCE,
     loadChildren: 'app/modules/splash-page/splash-page.module#SplashPageModule',
+  },
+  {
+    path: ERROR_PAGE,
+    component: ErrorPageComponent
   },
   {
     path: '**',

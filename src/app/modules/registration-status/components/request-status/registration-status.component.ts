@@ -7,7 +7,7 @@ import { ApiService } from '../../../../services/api-service.service';
 import { ResponseStoreService } from '../../../../services/response-store.service';
 import { StatusCheckPHNPayload, StatusCheckRegNumberPayload, StatusCheckPHN, StatusCheckRegNum } from 'app/models/api.model';
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
-import {REGISTRATION_STATUS_PATH, RESULT_REG_STATUS} from '../../../../models/route-paths.constants';
+import {ERROR_PAGE, REGISTRATION_STATUS_PATH, RESULT_REG_STATUS} from '../../../../models/route-paths.constants';
 import {ValidationService} from '../../../../services/validation.service';
 
 @Component({
@@ -146,7 +146,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     error => { // TODO: Confirm that this will be the error-page component
       this.loading = false;
       console.log( 'Error occurred: ' + error );
-      this.navigate( this._url );
+      this.navigate( ERROR_PAGE );
     });
   }
 }

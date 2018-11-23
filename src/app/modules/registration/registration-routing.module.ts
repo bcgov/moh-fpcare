@@ -4,12 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegistrationContainerComponent } from './components/registration-container/registration-container.component';
 import { RegistrationRequirementsComponent } from './pages/registration-requirements/registration-requirements.component';
 import {
+  ERROR_PAGE,
   REGISTRATION_REQUIREMENTS,
   REGISTRATION_RESULTS
 } from '../../models/route-paths.constants';
 import {RegistrationGuard} from './registration.guard';
 import {RegResultsComponent} from './pages/reg-results/reg-results.component';
-
 
 export const routes: Routes = [
   {

@@ -6,6 +6,7 @@ import {Person} from '../../../../models/person.model';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ValidationService} from '../../../../services/validation.service';
 import {
+  ERROR_PAGE,
   REGISTRATION_PATH,
   REGISTRATION_PERSONAL,
   REGISTRATION_RESULTS
@@ -176,7 +177,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
         (responseError) => {
           this.loading = false;
           console.log( 'response error: ', responseError );
-          this.navigate(this._baseUrl +  REGISTRATION_RESULTS );
+          this.navigate( ERROR_PAGE );
     });
   }
 }
