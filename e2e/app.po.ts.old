@@ -40,16 +40,7 @@ export class BaseFPCarePage {
     this.clickModalSubmit();
   }
 
-  canContinue() {
-    this.continueElement.isEnabled();
-  }
 
-  continue() {
-    this.continueElement.click();
-
-    // Doesn't seem necessary but other people required a sleep after navigating to new routes.
-    // browser.waitForAngular() OR browser.sleep(10);
-  }
 
   back() {
     return this.backElement.click();

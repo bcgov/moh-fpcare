@@ -5,15 +5,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {FinanceService} from '../../../financial-calculator/finance.service';
 import {
   REGISTRATION_ELIGIBILITY,
-  REGISTRATION_PATH,
-  REGISTRATION_RESULTS
+  REGISTRATION_PATH
 } from '../../../../models/route-paths.constants';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ApiService} from '../../../../services/api-service.service';
 import {environment} from '../../../../../environments/environment';
 import {SampleModalComponent} from '../../../core/components/sample-modal/sample-modal.component';
 import {ImageInterface} from '../../../../models/image-interface';
-import {DeductiblePayload, MessagePayload} from '../../../../models/api.model';
+import {DeductiblePayload} from '../../../../models/api.model';
 
 
 @Component({
