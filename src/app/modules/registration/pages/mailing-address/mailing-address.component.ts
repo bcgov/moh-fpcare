@@ -107,6 +107,8 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   get updatePostalCode(): string {
 
+    console.log('update postal code', this.isPostalMatch, this.applicant.isAddressUpdated );
+
     // Set postal code
     if (!this.isPostalMatch && (this.applicant.address.postal !== this.applicant.updAddress.postal)) {
       // Update postal for updated address
