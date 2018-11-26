@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { RegistrationContainerComponent } from './components/registration-container/registration-container.component';
 import { RegistrationRequirementsComponent } from './pages/registration-requirements/registration-requirements.component';
 import {
-  ERROR_PAGE,
   REGISTRATION_REQUIREMENTS,
   REGISTRATION_RESULTS
 } from '../../models/route-paths.constants';

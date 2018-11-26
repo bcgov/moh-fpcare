@@ -39,12 +39,12 @@
     <p class="deductible-legend deductible-legend-blue"
        [@growVertical]
        *ngIf="pharmaCareDeductible >= 1" >
-      You pay 100% of drug costs (between $0 and ${{deductible}})
+      You pay 100% of eligible drug costs (between $0 and ${{deductible}})
     </p>
     <p class="deductible-legend deductible-legend-yellow"
        [@growVertical]
        *ngIf="pharmaCareLevel?.maximum >= 1 && applicantPortion > 0" >
-      PharmaCare pays {{pharmaCarePortion}}% and you pay {{applicantPortion}}% of drug costs (between ${{deductible}} and ${{maximum}})
+      PharmaCare pays {{pharmaCarePortion}}% and you pay {{applicantPortion}}% of eligible drug costs (between ${{deductible}} and ${{maximum}})
     </p>
     <p class="deductible-legend deductible-legend-green">
       PharmaCare pays 100% after you reach the family maximum (${{maximum}})

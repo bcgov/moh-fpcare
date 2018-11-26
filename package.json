@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "npm run dev",
     "predev": "node src/version.js",
-    "dev": "ng serve -o",
+    "dev": "ng serve --host='0.0.0.0' -o",
     "version": "node src/version.js",
     "test-version": "npm version minor -m 'TEST build: %s'",
     "prod-version": "npm version major -m 'PROD build: %s'",

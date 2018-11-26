@@ -223,10 +223,10 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   get imageList(): ImageInterface[] {
 
     return [
-      { path: 'assets/income_tax_t1_sample.png',
+      { path: 'assets/income_tax_t1_sample.jpeg',
         desc: 'Income Tax T1 General Sample image',
         title: 'Income Tax T1 General Sample' },
-      { path: 'assets/notice_of_assess_sample.png',
+      { path: 'assets/notice_of_assess_sample.jpeg',
         desc: 'Notice Of Assessment Sample image',
         title: 'Notice Of Assessment Sample'}
     ];
@@ -263,10 +263,10 @@ export class CalculatorPageComponent extends AbstractFormComponent implements On
   }
 
   get bornBefore1939Label(): string {
-    return 'Were you ' + (this.hasSpouse ? 'or your spouse / common-law partner ' : '') + ' born in 1939 or earlier?';
+    return 'Were you ' + (this.hasSpouse ? 'or your spouse/common-law partner ' : '') + ' born in 1939 or earlier?';
   }
 
   get hasSpouseLabel(): string {
-    return 'Do you have a spouse / common-law partner?';
+    return 'Do you have a spouse/common-law partner?';
   }
 }

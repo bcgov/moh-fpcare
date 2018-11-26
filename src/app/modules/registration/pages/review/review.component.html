@@ -31,7 +31,7 @@
   </div>
 
   <div>
-    <h2>Spouse Information
+    <h2>Spouse/Common-law Partner Information
       <i class="fa fa-pencil edit--icon"
          aria-hidden="true"
          (click)="editSpouse()"></i>
@@ -83,19 +83,19 @@
     </div>
   </div>
 
-  <div>
-    <h2>Contact Information
-      <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editContactInfo()"></i>
-    </h2>
-    <div class="bg-light section">
-      <div class="line-item">
-        <div class="line-item--text">Mailing Address</div>
-        <div *ngIf="!isAddressUpdated; else updatedAddress" class="line-item--value">{{getPostalCode()}}</div>
+  <aside>
+    <div>
+      <h2>Contact Information
+        <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editContactInfo()"></i>
+      </h2>
+      <div class="bg-light section">
+        <div class="line-item">
+          <div class="line-item--text">Mailing Address</div>
+          <div *ngIf="!isAddressUpdated; else updatedAddress" class="line-item--value">{{getPostalCode()}}</div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <aside>
     <div>
       <h2>Financial Information
         <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editFinancialInfo()"></i>
@@ -107,11 +107,11 @@
             <div class="line-item--value">{{applicantIncome}}</div>
           </div>
           <div class="line-item">
-            <div class="line-item--text">Spouse/common-law partner</div>
+            <div class="line-item--text">Spouse/Common-law partner</div>
             <div class="line-item--value">{{hasSpouse ? 'Yes' : 'No'}}</div>
           </div>
           <div *ngIf="hasSpouse" class="line-item">
-            <div class="line-item--text">Spouse's annual income</div>
+            <div class="line-item--text">Spouse/Common-law partner's annual income</div>
             <div class="line-item--value">{{spouseIncome}}</div>
           </div>
           <div class="line-item">
@@ -126,7 +126,7 @@
             <div class="line-item--value">{{disabilityAmount}}</div>
           </div>
           <div *ngIf="hasSpouse" class="line-item">
-            <div class="line-item--text">Your Spouse's Registered Disability Savings Plan amount</div>
+            <div class="line-item--text">Your Spouse/Common-law Partner's Registered Disability Savings Plan amount</div>
             <div class="line-item--value">{{spouseDisabilityAmount}}</div>
           </div>
           <div class="line-item">
