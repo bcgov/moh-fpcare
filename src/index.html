@@ -29,7 +29,8 @@
       browserCheck();
 
       function browserCheck() {
-        var isBelowIE11 = window.navigator.userAgent.indexOf('MSIE') > 0; //ie10 and lower - we don't support
+        // MSIE tokens are removed from IE11 and up
+        var isBelowIE11 = !!navigator.userAgent.match(/MSIE/g); //ie10 and lower - we don't support
         if (isBelowIE11) {
           failedToLoad();
         }
