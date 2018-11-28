@@ -145,6 +145,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     },
     error => { // TODO: Confirm that this will be the error-page component
       this.loading = false;
+      this.responseStore.error = error;
       console.log( 'Error occurred: ' + error );
       this.navigate( ERROR_PAGE );
     });

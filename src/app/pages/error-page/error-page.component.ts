@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ResponseStoreService} from '../../services/response-store.service';
 
 @Component({
   selector: 'fpcare-error-page',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ErrorPageComponent implements OnInit {
 
-  constructor() { }
+  constructor(private responseStore: ResponseStoreService) { }
 
   ngOnInit() {
+  }
+
+  get errorResponse() {
+    return this.responseStore.error;
   }
 
 }
