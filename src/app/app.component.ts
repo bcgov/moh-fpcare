@@ -35,9 +35,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
-    // Set UUID for session
-    this.apiService.uuid = UUID.UUID().toString();
-
     if (!environment.bypassSplashPage){
       this.splash.setup();
     }

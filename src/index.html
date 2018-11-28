@@ -9,7 +9,17 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  <app-root><span id="loading">Loading...</span></app-root>
+  <script type="text/javascript">
+
+      // No support for IE 10 or lower so show an error.  Note MSIE tokens are removed from IE 11 and up
+      var isBelowIE11 = window.navigator.userAgent.indexOf('MSIE') > 0; //ie10 and lower - we don't support
+      if (isBelowIE11) {
+          console.log('unsupported browser' );
+          document.write("<p class='ml-2 mt-2 font-weight-bold'><i class='fa fa-exclamation-circle text-danger'></i> " +
+              "You are using an old browser that is not supported. " +
+              "Please update to the latest version of Chrome, FireFox, Safari, or Edge.</p>");
+      }
+  </script>
   <noscript>
     <p>
       JavaScript must be enabled to use this site. If you are unsure why you are seeing this message your browser is not supported. Please update your browser to the latest version of Chrome, FireFox, Safari, or Edge.
@@ -17,34 +27,8 @@
       <b>TODO: Get specific language!</b>
     </p>
   </noscript>
-  <div id="failedToLoad" style='display: none;'>
-    <p>
-      You are using an old browser that is not supported. Please update to the latest version of Chrome, FireFox, Safari, or Edge.
-    </p>
+  <div id="loadApp">
+    <app-root><span>Loading...</span></app-root>
   </div>
 </body>
-<script>
-    (function () {
-      // Make sure browser is not IE10 or lower; if so, show error.
-      browserCheck();
-
-      function browserCheck() {
-        // MSIE tokens are removed from IE11 and up
-        var isBelowIE11 = !!window.navigator.userAgent.match(/MSIE/g); //ie10 and lower - we don't support
-        if (isBelowIE11) {
-          failedToLoad();
-        }
-      }
-      function failedToLoad() {
-        var elLoading = document.getElementById('loading');
-        var elFailed = document.getElementById('failedToLoad');
-        if (elLoading && elFailed) {
-          elLoading.style.display = 'none';
-          elFailed.style.display = 'block';
-        }
-      }
-
-    })();
-
-</script>
 </html>

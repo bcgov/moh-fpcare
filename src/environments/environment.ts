@@ -33,7 +33,7 @@ export const environment = {
   purgeWhenInactive: false,
 
   /** Should logs be sent to Splunk? If false, no logs are made. */
-  enableLogging: false,
+  enableLogging: true,
 
   /** Link used in app */
   links: {
