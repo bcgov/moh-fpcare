@@ -29,7 +29,6 @@ export class ApiService extends AbstractHttpService {
   protected _headers: HttpHeaders = new HttpHeaders();
   private _token: string;
   private _clientName: string = 'ppiweb';
-  public uuid: string;
 
   constructor( protected http: HttpClient, public logService: Logger ){
     super(http);
@@ -59,7 +58,7 @@ export class ApiService extends AbstractHttpService {
     const url = environment.baseAPIUrl + 'statusCheckFamNumber';
 
     return this.post<StatusCheckRegNum>(url, {
-      uuid: this.uuid,
+      uuid: this.logService.getApplicationID,
       clientName: this._clientName,
       processDate: processDate,
       famNumber: input.regNumber
@@ -79,7 +78,7 @@ export class ApiService extends AbstractHttpService {
     const url = environment.baseAPIUrl + 'statusCheckPhn';
 
     return this.post<StatusCheckPHN>(url, {
-      uuid: this.uuid,
+      uuid: this.logService.getApplicationID(),
       clientName: this._clientName,
       processDate: processDate,
       phn: input.phn,
@@ -99,7 +98,7 @@ export class ApiService extends AbstractHttpService {
     const url = environment.baseAPIUrl + 'requestLetter';
 
     return this.post<ReprintLetter>(url, {
-      uuid: this.uuid,
+      uuid: this.logService.getApplicationID(),
       clientName: this._clientName,
       processDate: processDate,
       phn: input.phn,
@@ -125,7 +124,7 @@ export class ApiService extends AbstractHttpService {
     const url = environment.baseAPIUrl + 'checkEligibility';
 
     return this.post<EligibilityInterface>(url, {
-      uuid: this.uuid,
+      uuid: this.logService.getApplicationID(),
       clientName: this._clientName,
       processDate: processDate,
       persons: input.persons
@@ -141,7 +140,7 @@ export class ApiService extends AbstractHttpService {
 
       // Address was updated
       return this.post<RegistrationInterface>(url, {
-        uuid: this.uuid,
+        uuid: this.logService.getApplicationID(),
         clientName: this._clientName,
         processDate: processDate,
         persons: input.persons,
@@ -150,7 +149,7 @@ export class ApiService extends AbstractHttpService {
     }
 
     return this.post<RegistrationInterface>(url, {
-      uuid: this.uuid,
+      uuid: this.logService.getApplicationID(),
       clientName: this._clientName,
       processDate: processDate,
       persons: input.persons

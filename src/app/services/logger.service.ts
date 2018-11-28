@@ -4,6 +4,7 @@ import { environment } from 'environments/environment';
 import { AbstractHttpService } from './abstract-api-service';
 import { throwError } from 'rxjs';
 import * as moment from 'moment';
+import {UUID} from 'angular2-uuid';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class Logger extends AbstractHttpService {
    * @memberof LogService
    */
   protected _headers: HttpHeaders = new HttpHeaders({
-    applicationId: this.objectId,
+    applicationId: UUID.UUID().toString(),
     logsource: window.location.hostname,
     http_x_forwarded_host: window.location.hostname,
     program: 'fpc',
@@ -87,6 +88,7 @@ export class Logger extends AbstractHttpService {
     const body = { message: message };
 
     if (environment.logHTTPRequestsToConsole){
+      console.log('header: ', this._headers );
       console.log('Log Message', message);
     }
 
@@ -137,6 +139,10 @@ export class Logger extends AbstractHttpService {
    */
   private setTags(message: LogMessage){
     this._headers = this._headers.set('tags', message.event);
+  }
+
+  public getApplicationID(): string {
+    return this._headers.get('applicationId');
   }
 }
 
