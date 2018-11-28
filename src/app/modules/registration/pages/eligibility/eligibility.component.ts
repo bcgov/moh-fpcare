@@ -176,6 +176,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
     },
         (responseError) => {
           this.loading = false;
+          this.responseStore.error = responseError
           console.log( 'response error: ', responseError );
           this.navigate( ERROR_PAGE );
     });

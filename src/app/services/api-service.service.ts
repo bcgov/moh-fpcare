@@ -180,7 +180,7 @@ export class ApiService extends AbstractHttpService {
 
     this.logService.logHttpError(error);
 
-    // A user facing erorr message /could/ go here; we shouldn't log dev info through the throwError observable
+    // A user facing error message /could/ go here; we shouldn't log dev info through the throwError observable
     return throwError('Something went wrong with the network request.');
   }
 

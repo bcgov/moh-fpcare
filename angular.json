@@ -103,27 +103,12 @@
             ],
             "exclude": []
           }
-        }
-      }
-    },
-    "fpcare-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "architect": {
+        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "./test/protractor.conf.js",
+            "protractorConfig": "src/test/protractor.conf.js",
             "devServerTarget": "fpcare:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
-            "exclude": []
           }
         }
       }

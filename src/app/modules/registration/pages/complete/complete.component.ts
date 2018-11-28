@@ -138,6 +138,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
         },
         (responseError) => {
           this.loading = false;
+          this.responseStore.error = responseError;
           console.log( 'response error: ', responseError );
           this.navigate( ERROR_PAGE );
         });
@@ -170,7 +171,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
            )
        );
      }
-     
+
      if ( this.fpcService.hasChildren ) {
 
        const dependants = this.fpcService.dependants.map(

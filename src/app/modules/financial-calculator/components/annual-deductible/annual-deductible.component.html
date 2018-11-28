@@ -46,9 +46,15 @@
        *ngIf="pharmaCareLevel?.maximum >= 1 && applicantPortion > 0" >
       PharmaCare pays {{pharmaCarePortion}}% and you pay {{applicantPortion}}% of eligible drug costs (between ${{deductible}} and ${{maximum}})
     </p>
-    <p class="deductible-legend deductible-legend-green">
+    <p class="deductible-legend deductible-legend-green" *ngIf="!isMaximuxZero(); else maximusZero;">
       PharmaCare pays 100% after you reach the family maximum (${{maximum}})
     </p>
   </div>
 
 </div>
+
+<ng-template #maximusZero>
+  <p class="deductible-legend deductible-legend-green">
+    PharmaCare pays 100%
+  </p>
+</ng-template>

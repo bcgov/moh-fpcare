@@ -30,10 +30,13 @@ export class ResponseStoreService {
   private _statusCheckRegNumber: StatusCheckRegNumberPayload;
   private _statusCheckPHN: StatusCheckPHNPayload;
 
-  public  internalResponse: ServerPayload;
+  public internalResponse: ServerPayload;
   public reprintLetter: ReprintLetterPayload;
   public eligibility: EligibilityPayload;
   public registration: RegistrationPayload;
+
+  /** For error page */
+  public error: any;
 
   /**
    * Returns the response for a Reg Num Status Check request. Note: A PHN Status

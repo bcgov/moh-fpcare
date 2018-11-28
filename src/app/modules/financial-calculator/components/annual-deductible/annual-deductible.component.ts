@@ -160,4 +160,8 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
   get deductibleTitle(): string {
     return this.isReview ? 'Level of Coverage' : 'Annual Deductible';
   }
+
+  isMaximuxZero(): boolean {
+    return ( this.financeService.currencyStrToNumber(this.maximum) === 0 )
+  }
 }
