@@ -14,20 +14,16 @@
 
     <div class="p-md-2 col-md-8 col-lg-6">
 
-      <div class="form-group">
-        <fpcare-date
-                id="ap_dob"
-                [useCurrentDate]="false"
-                [(date)]="applicant.dateOfBirth"
-                [restrictDate]="'past'"
-                [label]="'Birthdate'">
-        </fpcare-date>
+      <fpcare-date
+              id="ap_dob"
+              [useCurrentDate]="false"
+              [(date)]="applicant.dateOfBirth"
+              [restrictDate]="'past'"
+              [label]="'Birthdate'">
+      </fpcare-date>
 
-        <div class="form-group">
-          <fpcare-phn [(value)]="applicant.phn"> </fpcare-phn>
-        </div>
+      <fpcare-phn [(value)]="applicant.phn"> </fpcare-phn>
 
-      </div>
     </div>
 
     <div  *ngIf="hasSpouse">
@@ -35,20 +31,16 @@
       <h2 class="border-bottom">Spouse/Common-law Partner Information</h2>
 
       <div class="p-md-2 col-md-8 col-lg-6">
-        <div class="form-group">
-          <fpcare-date
-                  id="sp_dob"
-                  [useCurrentDate]="false"
-                  [(date)]="spouse.dateOfBirth"
-                  [restrictDate]="'past'"
-                  [label]="'Birthdate'">
-          </fpcare-date>
+        <fpcare-date
+                id="sp_dob"
+                [useCurrentDate]="false"
+                [(date)]="spouse.dateOfBirth"
+                [restrictDate]="'past'"
+                [label]="'Birthdate'">
+        </fpcare-date>
 
-          <div class="form-group">
-            <fpcare-phn [(value)]="spouse.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError"></fpcare-phn>
-          </div>
+        <fpcare-phn [(value)]="spouse.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError"></fpcare-phn>
 
-        </div>
       </div>
     </div>
 
