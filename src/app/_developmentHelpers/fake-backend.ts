@@ -14,7 +14,7 @@ import {
   DeductibleInterface,
   DependentMandatory,
   EligibilityInterface,
-  MessageInterface, MessagePayloadInterface,
+  MessagePayloadInterface,
   RegistrationInterface,
   RegStatusCode, ReprintLetter,
   StatusCheckPHN,
@@ -249,7 +249,7 @@ export class FakeBackendInterceptor implements HttpInterceptor  {
       regStatusCode: RegStatusCode.SUCCESS,
       regStatusMsg: 'Success'
     };
-  };
+  }
 }
 
 export let fakeBackendProvider = {
