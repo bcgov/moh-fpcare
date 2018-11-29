@@ -21,7 +21,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "6.0.4",
-    "@angular/cli": "^6.0.8",
+    "@angular/cli": "6.0.8",
     "@angular/common": "6.0.4",
     "@angular/compiler": "6.0.4",
     "@angular/compiler-cli": "6.0.4",
@@ -49,7 +49,7 @@
     "rx-dom": "^7.0.3",
     "rxjs": "^6.2.1",
     "text-mask-addons": "^3.8.0",
-    "typescript": "^2.7.2",
+    "typescript": "2.7.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
