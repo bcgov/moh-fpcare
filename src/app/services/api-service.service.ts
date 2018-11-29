@@ -58,7 +58,7 @@ export class ApiService extends AbstractHttpService {
     const url = environment.baseAPIUrl + 'statusCheckFamNumber';
 
     return this.post<StatusCheckRegNum>(url, {
-      uuid: this.logService.getApplicationID,
+      uuid: this.logService.getApplicationID(),
       clientName: this._clientName,
       processDate: processDate,
       famNumber: input.regNumber
