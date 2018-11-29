@@ -9,6 +9,7 @@ import { StatusCheckPHNPayload, StatusCheckRegNumberPayload, StatusCheckPHN, Sta
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
 import {ERROR_PAGE, REGISTRATION_STATUS_PATH, RESULT_REG_STATUS} from '../../../../models/route-paths.constants';
 import {ValidationService} from '../../../../services/validation.service';
+import {ErrorPageService} from '../../../../pages/error-page/error-page.service';
 
 @Component({
   selector: 'fpcare-registration-status',
@@ -25,11 +26,11 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
   /** Result page */
   private _url = REGISTRATION_STATUS_PATH + '/' + RESULT_REG_STATUS;
 
-
   constructor(protected router: Router,
               private fpcareDataService: FPCareDataService,
               private apiService: ApiService,
-              private responseStore: ResponseStoreService) {
+              private responseStore: ResponseStoreService,
+              private errorPageService: ErrorPageService) {
     super(router);
   }
 
@@ -145,8 +146,7 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
     },
     error => { // TODO: Confirm that this will be the error-page component
       this.loading = false;
-      this.responseStore.error = error;
-      console.log( 'Error occurred: ' + error );
+      this.errorPageService.errorResponse = error;
       this.navigate( ERROR_PAGE );
     });
   }

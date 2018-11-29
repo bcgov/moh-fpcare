@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ResponseStoreService} from '../../services/response-store.service';
+import {ErrorPageService} from './error-page.service';
+import {DisplayIcon} from '../../modules/core/components/results-framework/results-framework.component';
 
 @Component({
   selector: 'fpcare-error-page',
@@ -8,13 +9,17 @@ import {ResponseStoreService} from '../../services/response-store.service';
 })
 export class ErrorPageComponent implements OnInit {
 
-  constructor(private responseStore: ResponseStoreService) { }
+  constructor(private errorPageService: ErrorPageService) {
+  }
 
   ngOnInit() {
   }
 
   get errorResponse() {
-    return this.responseStore.error;
+    return this.errorPageService.errorResponse;
   }
 
+  getErrorIcon(): number {
+    return DisplayIcon.ERROR;
+  }
 }

@@ -14,7 +14,7 @@ import {
   PersonInterface,
   AddressInterface,
   EligibilityInterface,
-  RegistrationInterface, MessageInterface, MessagePayloadInterface
+  RegistrationInterface, MessageInterface, MessagePayloadInterface, SRQ_Msgs
 } from '../models/api.model';
 
 @Injectable({
@@ -167,6 +167,8 @@ export class ApiService extends AbstractHttpService {
   }
 
   protected handleError(error: HttpErrorResponse) {
+    let errMsg = 'Something went wrong with the network request.';
+
     console.log( 'Error handleError: ', error );
 
     if (error.error instanceof ErrorEvent) {
@@ -176,12 +178,17 @@ export class ApiService extends AbstractHttpService {
     else {
       // The backend returned an unsuccessful response code
       console.error(`Backend returned error code: ${error.status}.  Error body: ${error.error}`);
+
+      // Unauthorized - assume the captcha token has expired
+      if ( 401 === error.status ) {
+        errMsg = SRQ_Msgs.find( val => val.msgCode === 'SRQ_058' ).msgText;
+      }
     }
 
     this.logService.logHttpError(error);
 
     // A user facing error message /could/ go here; we shouldn't log dev info through the throwError observable
-    return throwError('Something went wrong with the network request.');
+    return throwError( errMsg );
   }
 
   /**

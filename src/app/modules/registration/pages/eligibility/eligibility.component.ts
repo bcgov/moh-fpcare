@@ -18,6 +18,7 @@ import {
 } from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import { Logger } from '../../../../services/logger.service';
+import {ErrorPageService} from '../../../../pages/error-page/error-page.service';
 
 @Component({
   selector: 'fpcare-eligibility',
@@ -42,7 +43,8 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
              , private registrationService: RegistrationService
              , private apiService: ApiService
              , private responseStore: ResponseStoreService
-             , private logger: Logger ) {
+             , private logger: Logger
+             , private errorPageService: ErrorPageService ) {
     super( router );
   }
 
@@ -160,24 +162,27 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
             ((this.applicant.dateOfBirth.year <= this._SENIOR_ASSISTENCE_YEAR ) ||
              (this.hasSpouse && this.spouse.dateOfBirth.year <= this._SENIOR_ASSISTENCE_YEAR )) ? true : false;
 
-        this.navigate( this._baseUrl + REGISTRATION_PERSONAL );
         this.logger.log({
           event: 'eligibilityCheck',
           success: this.responseStore.eligibility.success
         });
+        this.navigate( this._baseUrl + REGISTRATION_PERSONAL );
       } else {
 
         // Something went wrong with our response
         if ( !this.responseStore.eligibility.message ) {
           this.responseStore.eligibility = null;
         }
+        this.logger.log({
+          event: 'eligibilityCheck',
+          success: this.responseStore.eligibility.error
+        });
         this.navigate(this._baseUrl +  REGISTRATION_RESULTS );
       }
     },
         (responseError) => {
           this.loading = false;
-          this.responseStore.error = responseError
-          console.log( 'response error: ', responseError );
+          this.errorPageService.errorResponse = responseError;
           this.navigate( ERROR_PAGE );
     });
   }

@@ -8,6 +8,7 @@ import {ApiService} from '../../../../services/api-service.service';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {ReprintLetter, ReprintLetterPayload} from '../../../../models/api.model';
 import {ERROR_PAGE, REPRINT_LETTERS_PATH, REPRINT_STATUS} from '../../../../models/route-paths.constants';
+import {ErrorPageService} from '../../../../pages/error-page/error-page.service';
 
 /**
  * Letter types
@@ -40,7 +41,8 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   constructor( protected router: Router,
                private fpcareDataService: FPCareDataService,
                private apiService: ApiService,
-               private responseStore: ResponseStoreService ) {
+               private responseStore: ResponseStoreService,
+               private errorPageService: ErrorPageService) {
     super( router );
   }
 
@@ -89,7 +91,7 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   continue() {
     if (!this.canContinue()) {
       return;
-    };
+    }
 
     this.loading = true;
 
@@ -107,10 +109,9 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
       this.loading = false;
       this.navigate( this._url );
     },
-    error => { // TODO: Confirm that this will be the error-page component
+    error => {
       this.loading = false;
-      console.log( 'Error occurred: ', error );
-      this.responseStore.error = error;
+      this.errorPageService.errorResponse = error;
       this.navigate( ERROR_PAGE );
     });
   }

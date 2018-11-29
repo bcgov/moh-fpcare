@@ -10,7 +10,10 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 import { Logger } from './services/logger.service';
 import { SplashPageService } from './modules/splash-page/splash-page.service';
 import {ApiService} from './services/api-service.service';
-import {UUID} from 'angular2-uuid';
+import {MessagePayload} from './models/api.model';
+import {REGISTRATION_PATH, REGISTRATION_RESULTS} from './models/route-paths.constants';
+import {ResponseStoreService} from './services/response-store.service';
+
 
 @Component({
   selector: 'app-root',
@@ -30,7 +33,8 @@ export class AppComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private logger: Logger,
               public splash: SplashPageService,
-              public apiService: ApiService ) {
+              public apiService: ApiService,
+              private responseStore: ResponseStoreService) {
   }
 
   ngOnInit() {
@@ -38,6 +42,7 @@ export class AppComponent implements OnInit {
     if (!environment.bypassSplashPage){
       this.splash.setup();
     }
+
     // Testers have asked for Version to be logged with every build.
     if (version.success){
       console.log('%c' + version.message, 'color: #036; font-size: 20px;');
@@ -47,6 +52,20 @@ export class AppComponent implements OnInit {
     }
 
     this.updateTitleOnRouteChange();
+
+    // Load messages from cache
+    this.apiService.getMessages().subscribe(
+        (response) => {
+
+          const payload = new MessagePayload( response );
+
+          if ( payload.success ) {
+            this.responseStore.cacheMsgs = payload.messages;
+          } else {
+            this.router.navigate([REGISTRATION_PATH + '/' + REGISTRATION_RESULTS] );
+          }
+        }
+    );
 
     // Debugging purposes - MD5 hashing
     //(window as any).md5 = Md5;

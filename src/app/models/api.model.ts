@@ -140,14 +140,23 @@ export interface MessageInterface {
 }
 
 /**
- * Hard coded so that is can be displayed whenever system has encounters an issue
+ * Hard coded so that is can be displayed whenever system has encounters an issue or user tries to access page after
+ * data has been cleared
  * @type {{msgCode: string; msgText: string; msgType: RegStatusCode}}
  */
-export const SRQ_099Msg = {
-  msgCode: 'SRQ_099',
-  msgText: 'This error occurred because the system encountered an unanticipated situation which forced it to stop',
-  msgType: RegStatusCode.ERROR
-};
+export const SRQ_Msgs = [
+  {
+    msgCode: 'SRQ_058',
+    msgText: 'Your session has timed out due to inactivity.  Any data you may have entered has been cleared.  ' +
+             'Please close this browser window and try again.',
+    msgType: RegStatusCode.ERROR
+  },
+  {
+    msgCode: 'SRQ_099',
+    msgText: 'This error occurred because the system encountered an unanticipated situation which forced it to stop',
+    msgType: RegStatusCode.ERROR
+  }
+];
 
 export interface MessagePayloadInterface extends PayloadInterface {
   appLayer?: string; // Code identifying layer message relates to

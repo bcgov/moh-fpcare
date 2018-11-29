@@ -55,6 +55,7 @@ export class StatusResultsComponent extends AbstractResultsComponent {
       return this.fpcareDataService.applicant.getNonFormattedPhn();
     }
   }
+
   ngOnInit() {
     if (this.response){
       // Log result

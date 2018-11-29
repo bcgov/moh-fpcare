@@ -19,6 +19,7 @@ import {
 } from '../../../../models/route-paths.constants';
 import {ResponseStoreService} from '../../../../services/response-store.service';
 import {environment} from '../../../../../environments/environment';
+import {ErrorPageService} from '../../../../pages/error-page/error-page.service';
 
 @Component({
   selector: 'fpcare-complete',
@@ -40,7 +41,8 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
              , private registrationService: RegistrationService
              , private financialService: FinanceService
              , private responseStore: ResponseStoreService
-             , private logger: Logger ) {
+             , private logger: Logger
+             , private errorPageService: ErrorPageService ) {
     super( router );
   }
 
@@ -138,8 +140,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
         },
         (responseError) => {
           this.loading = false;
-          this.responseStore.error = responseError;
-          console.log( 'response error: ', responseError );
+          this.errorPageService.errorResponse = responseError;
           this.navigate( ERROR_PAGE );
         });
    }

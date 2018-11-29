@@ -8,7 +8,7 @@ import {
   ServerPayload,
   MessageInterface,
   RegStatusCode,
-  SRQ_099Msg
+  SRQ_Msgs
 } from '../models/api.model';
 
 /**
@@ -34,9 +34,6 @@ export class ResponseStoreService {
   public reprintLetter: ReprintLetterPayload;
   public eligibility: EligibilityPayload;
   public registration: RegistrationPayload;
-
-  /** For error page */
-  public error: any;
 
   /**
    * Returns the response for a Reg Num Status Check request. Note: A PHN Status
@@ -93,6 +90,6 @@ export class ResponseStoreService {
     }
 
     // If no message found, return error 99
-    return ( msg ? msg : SRQ_099Msg );
+    return ( msg ? msg : SRQ_Msgs.find( val => val.msgCode === 'SRQ_099' ) );
   }
 }
