@@ -127,7 +127,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * @returns {string}
    */
   get labelGivenName(): string {
-    return 'Given Name';
+    return 'First Name';
   }
 
   /**
@@ -135,7 +135,7 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    * @returns {string}
    */
   get labelSurname(): string {
-    return 'Family Name';
+    return 'Last Name';
   }
 
   /**
