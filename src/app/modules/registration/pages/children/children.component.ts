@@ -125,7 +125,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    */
   get buttonLabel(): string {
 
-    return (this.hasChildren) ? 'Continue' : 'Skip this step';
+    return (this.hasChildren) ? 'Continue' : 'No Child';
   }
 
   /**
