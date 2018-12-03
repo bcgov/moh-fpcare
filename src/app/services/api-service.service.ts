@@ -167,7 +167,8 @@ export class ApiService extends AbstractHttpService {
   }
 
   protected handleError(error: HttpErrorResponse) {
-    let errMsg = 'Something went wrong with the network request.';
+    // SRQ_099 for all network errors not related to unauthorized request
+    let errMsg = SRQ_Msgs.find( val => val.msgCode === 'SRQ_099' ).msgText;
 
     console.log( 'Error handleError: ', error );
 
