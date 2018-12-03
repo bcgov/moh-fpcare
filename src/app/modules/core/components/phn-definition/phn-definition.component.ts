@@ -13,11 +13,25 @@ export class PhnDefinitionComponent extends Base implements OnInit {
 
   @ViewChild('bcscSample') bcscSample: SampleModalComponent;
 
+  public imageList: ImageInterface[];
+
   constructor() {
     super();
   }
 
   ngOnInit() {
+
+    if (this.driverLicense) {
+      this.imageList = [
+        {path: 'assets/bcsc_sample_back.png', desc: 'BC Service Card Sample Back image'},
+        {path: 'assets/bcsc_sample_front.png', desc: 'BC Service Card Sample Front image'}
+      ];
+    } else {
+      this.imageList = [
+        {path: 'assets/no_photo_bcsc_sample_back.png', desc: 'No Photo BC Service Card Sample Back image'},
+        {path: 'assets/no_photo_bcsc_sample_front.png', desc: 'No Photo BC Service Card Sample Front image'}
+      ];
+    }
   }
 
   openSample() {
@@ -31,19 +45,5 @@ export class PhnDefinitionComponent extends Base implements OnInit {
           'This information may also be on your driver\'s license.';
     }
     return 'Personal Health Number (PHN) as shown on the back of your dependent child\'s BC Services Card.';
-  }
-
-  get imageList(): ImageInterface[] {
-
-    if (this.driverLicense) {
-      return [
-        {path: 'assets/bcsc_sample_back.png', desc: 'BC Service Card Sample Back image'},
-        {path: 'assets/bcsc_sample_front.png', desc: 'BC Service Card Sample Front image'}
-      ];
-    }
-    return [
-      {path: 'assets/no_photo_bcsc_sample_back.png', desc: 'No Photo BC Service Card Sample Back image'},
-      {path: 'assets/no_photo_bcsc_sample_front.png', desc: 'No Photo BC Service Card Sample Front image'}
-    ];
   }
 }
