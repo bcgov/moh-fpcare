@@ -1,18 +1,21 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ImageInterface} from '../../../../models/image-interface';
 import {SampleModalComponent} from '../sample-modal/sample-modal.component';
+import {Base} from '../base/base.class';
 
 @Component({
   selector: 'fpcare-phn-definition',
   templateUrl: './phn-definition.component.html',
   styleUrls: ['./phn-definition.component.scss']
 })
-export class PhnDefinitionComponent implements OnInit {
+export class PhnDefinitionComponent extends Base implements OnInit {
   @Input() driverLicense: boolean = true;
 
   @ViewChild('bcscSample') bcscSample: SampleModalComponent;
 
-  constructor() { }
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
   }
