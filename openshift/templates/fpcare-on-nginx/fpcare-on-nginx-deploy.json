@@ -81,6 +81,10 @@
                     "value": "${HTTP_BASIC_PASSWORD}"
                   },
                   {
+                    "name": "JWT_SIGN_EXPIRY",
+                    "value": "${JWT_SIGN_EXPIRY}"
+                  },
+                  {
                     "name": "USE_SPLUNK_FORWARDER",
                     "value": "${USE_SPLUNK_FORWARDER}"
                   },
@@ -293,6 +297,12 @@
       "displayName": "HTTP Basic Password",
       "name": "HTTP_BASIC_PASSWORD",
       "value": ""
+    },
+    {
+      "description": "Captcha expiry time in minutes",
+      "displayName": "JWT_SIGN_EXPIRY",
+      "name": "JWT_SIGN_EXPIRY",
+      "value": "60"
     },
     {
       "description": "If true use the Splunk Forwarder",
