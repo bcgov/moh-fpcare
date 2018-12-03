@@ -25,7 +25,7 @@ export class PhnDefinitionComponent extends Base implements OnInit {
       this.imageList = [
         {path: 'assets/bcsc_sample_back.png', desc: 'BC Service Card Sample Back image'},
         {path: 'assets/bcsc_sample_front.png', desc: 'BC Service Card Sample Front image'}
-      ]
+      ];
     } else {
       this.imageList = [
         {path: 'assets/no_photo_bcsc_sample_back.png', desc: 'No Photo BC Service Card Sample Back image'},
