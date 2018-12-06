@@ -22,6 +22,9 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
   /** Indicates whether or not the same SIN has been used for spouse */
   public uniqueSinError = false;
   public links = environment.links;
+  public imageList: ImageInterface[]  = [{
+    path: 'assets/sin_card_sample.png', desc: 'Social Insurance Number Card Sample image'
+  }];
 
   /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_CHILD;
@@ -143,17 +146,6 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
    */
   openSample() {
     this.sinSample.openModal();
-  }
-
-  /**
-   *
-   * @returns {ImageInterface[]}
-   */
-  get imageList(): ImageInterface[] {
-
-    return [
-      {path: 'assets/sin_card_sample.png', desc: 'Social Insurance Number Card Sample image'}
-    ];
   }
 
   // Methods triggered by the form action bar
