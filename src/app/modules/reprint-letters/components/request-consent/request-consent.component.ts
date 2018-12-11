@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {ComponentData, LetterTypes} from '../request-template/request-template.component';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'fpcare-request-consent',
@@ -8,10 +9,12 @@ import {ComponentData, LetterTypes} from '../request-template/request-template.c
 })
 export class RequestConsentComponent {
 
+  public links = environment.links;
+
   consentRequest: ComponentData = {
     label: 'Request Consent',
     letterType: LetterTypes.CONSENT_LETTER
-  }
+  };
 
   constructor() {
   }
