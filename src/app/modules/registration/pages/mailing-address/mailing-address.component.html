@@ -64,7 +64,10 @@
           </select>
         </div>
         <div class="form-group">
-          <fpcare-postal-code [value]="updatePostalCode" disabled></fpcare-postal-code>
+          <fpcare-postal-code [value]="updatePostalCode" 
+                              [label]="'Mailing Postal Code (as entered above)'"
+                              disabled>
+          </fpcare-postal-code>
         </div>
         <div class="form-group">
           <label for="country">Country</label>
@@ -82,7 +85,9 @@
   <aside>
       <p class="h5">Postal Code</p>
       <p>
-        This information is used to confirm your identity and also to mail out Fair PharmaCare letters.
+          We ask for your postal code so we can check the address information we have is correct. If 
+          your current postal code does not match, you will be asked to update your address. We need 
+          your address to mail you Fair PharmaCare letters.
       </p>
 
       <p class="h5">Address Lookup</p>

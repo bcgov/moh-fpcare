@@ -18,7 +18,6 @@ export const environment = {
     FAQ: 'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/who-we-cover/fair-pharmacare-plan/frequently-asked-questions-about-registration-income-and-consent',
     FormularySearch: 'https://pharmacareformularysearch.gov.bc.ca/',
     HIBC: 'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/contact-us',
-    FPCareInfo: 'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/pharmacare-for-bc-residents/who-we-cover/fair-pharmacare-plan/register-for-fair-pharmacare',
     MSP: 'https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp',
     CRA: 'https://www.canada.ca/en/revenue-agency.html'
   }
