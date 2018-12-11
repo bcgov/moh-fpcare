@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ControlContainer, NgForm } from '@angular/forms';
 import {LETTER, Masking, NUMBER, SPACE} from '../../../../models/masking.model';
 
@@ -15,6 +15,8 @@ export class PostalCodeComponent extends Masking implements OnInit {
 
   public mask = [LETTER, NUMBER, LETTER, SPACE, NUMBER, LETTER, NUMBER];
   public placeholder = 'V1V V1V';
+
+  @Input() label: string = 'Mailing Postal Code';
 
   constructor() {
     super();
