@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {ComponentData, LetterTypes} from '../request-template/request-template.component';
+import {STANDALONE_CALCULATOR} from '../../../../models/route-paths.constants';
 
 @Component({
   selector: 'fpcare-request-cob',
@@ -7,6 +8,8 @@ import {ComponentData, LetterTypes} from '../request-template/request-template.c
   styleUrls: ['./request-cob.component.scss']
 })
 export class RequestCobComponent {
+
+  public fpcare_calculator: string  = '/' + STANDALONE_CALCULATOR;
 
   cobRequest: ComponentData = {
     label: 'Request Confirmation',
