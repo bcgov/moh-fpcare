@@ -37,7 +37,7 @@ export class Person extends Base {
    */
   get isAddressUpdated(): boolean {
     return this.updAddress.isComplete();
-  };
+  }
 
   /**
    * Returns DoB in YYYYMMDD format, used by API.
