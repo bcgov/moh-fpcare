@@ -19,8 +19,6 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
   /** Used to load different PharmaCare assistance level values */
   @Input() bornBefore1939: boolean;
 
-  @Input() isReview: boolean = false;
-
   /**
    * The main data object, retrieved via lookup using familyNetIncome. Used in calclations.
    * Passed in assistence level for registration result page
@@ -158,7 +156,7 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
   }
 
   get deductibleTitle(): string {
-    return this.isReview ? 'Level of Coverage' : 'Annual Deductible';
+    return 'Level of Coverage';
   }
 
   isMaximuxZero(): boolean {

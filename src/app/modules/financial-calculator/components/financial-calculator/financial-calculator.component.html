@@ -28,7 +28,10 @@
 
 <div *ngIf='!isLoadingData; else loadingSpinner' [@growVertical] >
 
-  <p>The information you entered indicates you would be eligible for the level of coverage below:</p>
+  <p>
+    The information you entered indicates you would be eligible for the level of 
+    coverage below.  Coverage is temporary until we verity your income with CRA.
+  </p>
 
   <fpcare-annual-deductible
     [familyNetIncome]="adjustedIncomeAmount"
