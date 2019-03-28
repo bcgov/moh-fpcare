@@ -39,10 +39,10 @@
         </span>
       </div>
       <div class="mt-2 pl-4" *ngIf="agreeCheck" [@growVertical]>
-        <!-- <captcha [apiBaseUrl]="captchaApiBaseUrl"
+        <common-captcha [apiBaseUrl]="captchaApiBaseUrl"
                  [nonce]="nonce"
                  (onValidToken)="setToken($event)"
-                 [successMessage]="'  '"></captcha> -->
+                 [successMessage]="'  '"></common-captcha>
       </div>
 
       

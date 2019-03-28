@@ -27,14 +27,13 @@ import {RegNumberValidationComponent} from '../../validation/reg-number-validati
 import {PcValidationComponent} from '../../validation/pc-validation/pc-validation.component';
 import { ResultsFrameworkComponent } from './components/results-framework/results-framework.component';
 import {NameValidationComponent} from '../../validation/name-validation/name-validation.component';
-// import { CaptchaDataService } from 'mygovbc-captcha-widget/src/app/captcha-data.service';
-// import { CaptchaComponent } from 'mygovbc-captcha-widget/src/app/captcha/captcha.component';
 import { PhnComponent } from './components/phn/phn.component';
 import { SinComponent } from './components/sin/sin.component';
 import {NameComponent} from './components/name/name.component';
 import { ModalFocusDirective } from './components/consent-modal/modal-focus.directive';
 import { PhnDefinitionComponent } from './components/phn-definition/phn-definition.component';
 import { SampleModalComponent } from './components/sample-modal/sample-modal.component';
+import { CaptchaModule } from 'moh-common-lib/captcha';
 
 
 const componentList = [
@@ -64,7 +63,6 @@ const componentList = [
   FileUploaderComponent,
   FPCareDateComponent,
   ResultsFrameworkComponent,
-  // CaptchaComponent,
   ModalFocusDirective,
   PhnDefinitionComponent,
   SampleModalComponent
@@ -80,6 +78,7 @@ const componentList = [
     RouterModule,
     ModalModule.forRoot(),
     TextMaskModule,
+    CaptchaModule
   ],
   declarations: [
     componentList
@@ -96,7 +95,6 @@ const componentList = [
     NameValidationComponent
   ],
   providers: [
-    // CaptchaDataService
   ]
 })
 export class CoreModule { }
