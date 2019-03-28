@@ -4,150 +4,156 @@
     [isReview]="'true'">
 </fpcare-annual-deductible>
 
-<fpcare-page-framework layout='double'>
+<common-page-framework layout='blank'>
 
-  <div>
-  <h2>Applicant Information
-    <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editPersonalInfo()"></i>
-  </h2>
-    <div class="bg-light section">
-      <div class="line-item">
-        <div class="line-item--text">Name</div>
-        <div class="line-item--value">{{applicant.name}}</div>
-      </div>
-       <div class="line-item">
-        <div class="line-item--text">Personal Health Number (PHN)</div>
-        <div class="line-item--value">{{applicant.phn}}</div>
-      </div>
-      <div class="line-item">
-        <div class="line-item--text">Birthdate</div>
-        <div class="line-item--value">{{getApplicantDob()}}</div>
-      </div>
-      <div class="line-item">
-        <div class="line-item--text">Social Insurance Number (SIN)</div>
-        <div class="line-item--value">{{applicant.sin}}</div>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <h2>Spouse/Common-law Partner Information
-      <i class="fa fa-pencil edit--icon"
-         aria-hidden="true"
-         (click)="editSpouse()"></i>
-    </h2>
-    <div class="bg-light section">
-      <div *ngIf="hasSpouse; else noSpouse">
+  <h1>Review</h1>
+  <p>
+    Please review the information you have entered prior to submitting your application.
+  </p>
+  <common-page-section layout='double'>
+    <div>
+      <h2>Applicant Information
+        <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editPersonalInfo()"></i>
+      </h2>
+      <div class="bg-light section">
         <div class="line-item">
           <div class="line-item--text">Name</div>
-          <div class="line-item--value">{{spouse.name}}</div>
+          <div class="line-item--value">{{applicant.name}}</div>
         </div>
         <div class="line-item">
           <div class="line-item--text">Personal Health Number (PHN)</div>
-          <div class="line-item--value">{{spouse.phn}}</div>
+          <div class="line-item--value">{{applicant.phn}}</div>
         </div>
         <div class="line-item">
           <div class="line-item--text">Birthdate</div>
-          <div class="line-item--value">{{getSpouseDob()}}</div>
+          <div class="line-item--value">{{getApplicantDob()}}</div>
         </div>
         <div class="line-item">
           <div class="line-item--text">Social Insurance Number (SIN)</div>
-          <div class="line-item--value">{{spouse.sin}}</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div>
-    <h2>Child Information
-      <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editChildInfo()"></i>
-    </h2>
-    <div class="bg-light section">
-      <div *ngFor="let child of children">
-        <div class="line-item">
-          <div class="line-item--text">Name</div>
-          <div class="line-item--value">{{child.name}}</div>
-        </div>
-        <div class="line-item">
-          <div class="line-item--text">Personal Health Number (PHN)</div>
-          <div class="line-item--value">{{child.phn}}</div>
-        </div>
-        <div class="line-item">
-          <div class="line-item--text">Birthdate</div>
-          <div class="line-item--value">{{getChildDob(child)}}</div>
-        </div>
-        <!-- Space between next child for readibility -->
-        <br *ngIf="children.length - 1 !== children.indexOf(child)"/>
-      </div>
-      <div class="p-md-1" *ngIf="!hasChildren">No Children Added</div>
-    </div>
-  </div>
-
-  <aside>
-    <div>
-      <h2>Contact Information
-        <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editContactInfo()"></i>
-      </h2>
-      <div class="bg-light section">
-        <div class="line-item">
-          <div class="line-item--text">Mailing Address</div>
-          <div *ngIf="!isAddressUpdated; else updatedAddress" class="line-item--value">{{getPostalCode()}}</div>
+          <div class="line-item--value">{{applicant.sin}}</div>
         </div>
       </div>
     </div>
 
     <div>
-      <h2>Financial Information
-        <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editFinancialInfo()"></i>
+      <h2>Spouse/Common-law Partner Information
+        <i class="fa fa-pencil edit--icon"
+          aria-hidden="true"
+          (click)="editSpouse()"></i>
       </h2>
       <div class="bg-light section">
-        <div class="pb-2">
+        <div *ngIf="hasSpouse; else noSpouse">
           <div class="line-item">
-            <div class="line-item--text">Your net annual income</div>
-            <div class="line-item--value">{{applicantIncome}}</div>
-          </div>
-          <div class="line-item">
-            <div class="line-item--text">Spouse/Common-law partner</div>
-            <div class="line-item--value">{{hasSpouse ? 'Yes' : 'No'}}</div>
-          </div>
-          <div *ngIf="hasSpouse" class="line-item">
-            <div class="line-item--text">Spouse's annual income</div>
-            <div class="line-item--value">{{spouseIncome}}</div>
+            <div class="line-item--text">Name</div>
+            <div class="line-item--value">{{spouse.name}}</div>
           </div>
           <div class="line-item">
-            <div class="line-item--text font-weight-bold">Total family annual income </div>
-            <div class="line-item--value font-weight-bold">{{totalFamilyAnnualIncome}}</div>
-          </div>
-        </div>
-
-        <div class="pb-2">
-          <div class="line-item">
-            <div class="line-item--text">Your Registered Disability Savings Plan amount</div>
-            <div class="line-item--value">{{disabilityAmount}}</div>
-          </div>
-          <div *ngIf="hasSpouse" class="line-item">
-            <div class="line-item--text">Your Spouse's Registered Disability Savings Plan amount</div>
-            <div class="line-item--value">{{spouseDisabilityAmount}}</div>
+            <div class="line-item--text">Personal Health Number (PHN)</div>
+            <div class="line-item--value">{{spouse.phn}}</div>
           </div>
           <div class="line-item">
-            <div class="line-item--text font-weight-bold">Total family deductions</div>
-            <div class="line-item--value font-weight-bold">{{totalDisabilityAmount}}</div>
+            <div class="line-item--text">Birthdate</div>
+            <div class="line-item--value">{{getSpouseDob()}}</div>
           </div>
-        </div>
-
-        <div class="line-item pb-2">
-          <div class="line-item--text font-weight-bold">Adjusted income</div>
-          <div class="line-item--value font-weight-bold">{{adjustedIncome}}</div>
+          <div class="line-item">
+            <div class="line-item--text">Social Insurance Number (SIN)</div>
+            <div class="line-item--value">{{spouse.sin}}</div>
+          </div>
         </div>
       </div>
     </div>
-  </aside>
 
-  <fpcare-form-action-bar
+    <div>
+      <h2>Child Information
+        <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editChildInfo()"></i>
+      </h2>
+      <div class="bg-light section">
+        <div *ngFor="let child of children">
+          <div class="line-item">
+            <div class="line-item--text">Name</div>
+            <div class="line-item--value">{{child.name}}</div>
+          </div>
+          <div class="line-item">
+            <div class="line-item--text">Personal Health Number (PHN)</div>
+            <div class="line-item--value">{{child.phn}}</div>
+          </div>
+          <div class="line-item">
+            <div class="line-item--text">Birthdate</div>
+            <div class="line-item--value">{{getChildDob(child)}}</div>
+          </div>
+          <!-- Space between next child for readibility -->
+          <br *ngIf="children.length - 1 !== children.indexOf(child)"/>
+        </div>
+        <div class="p-md-1" *ngIf="!hasChildren">No Children Added</div>
+      </div>
+    </div>
+
+    <aside>
+      <div>
+        <h2>Contact Information
+          <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editContactInfo()"></i>
+        </h2>
+        <div class="bg-light section">
+          <div class="line-item">
+            <div class="line-item--text">Mailing Address</div>
+            <div *ngIf="!isAddressUpdated; else updatedAddress" class="line-item--value">{{getPostalCode()}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h2>Financial Information
+          <i class="fa fa-pencil edit--icon" aria-hidden="true" (click)="editFinancialInfo()"></i>
+        </h2>
+        <div class="bg-light section">
+          <div class="pb-2">
+            <div class="line-item">
+              <div class="line-item--text">Your net annual income</div>
+              <div class="line-item--value">{{applicantIncome}}</div>
+            </div>
+            <div class="line-item">
+              <div class="line-item--text">Spouse/Common-law partner</div>
+              <div class="line-item--value">{{hasSpouse ? 'Yes' : 'No'}}</div>
+            </div>
+            <div *ngIf="hasSpouse" class="line-item">
+              <div class="line-item--text">Spouse's annual income</div>
+              <div class="line-item--value">{{spouseIncome}}</div>
+            </div>
+            <div class="line-item">
+              <div class="line-item--text font-weight-bold">Total family annual income </div>
+              <div class="line-item--value font-weight-bold">{{totalFamilyAnnualIncome}}</div>
+            </div>
+          </div>
+
+          <div class="pb-2">
+            <div class="line-item">
+              <div class="line-item--text">Your Registered Disability Savings Plan amount</div>
+              <div class="line-item--value">{{disabilityAmount}}</div>
+            </div>
+            <div *ngIf="hasSpouse" class="line-item">
+              <div class="line-item--text">Your Spouse's Registered Disability Savings Plan amount</div>
+              <div class="line-item--value">{{spouseDisabilityAmount}}</div>
+            </div>
+            <div class="line-item">
+              <div class="line-item--text font-weight-bold">Total family deductions</div>
+              <div class="line-item--value font-weight-bold">{{totalDisabilityAmount}}</div>
+            </div>
+          </div>
+
+          <div class="line-item pb-2">
+            <div class="line-item--text font-weight-bold">Adjusted income</div>
+            <div class="line-item--value font-weight-bold">{{adjustedIncome}}</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </common-page-section>
+
+  <common-form-action-bar
           (btnClick)="continue()">
-  </fpcare-form-action-bar>
+  </common-form-action-bar>
   
-</fpcare-page-framework>
+</common-page-framework>
 
 
 <ng-template #noSpouse>

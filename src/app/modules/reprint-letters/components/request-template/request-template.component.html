@@ -3,7 +3,7 @@
         (onConsented)="onAccept($event)">
 </fpcare-consent-modal>
 
-<fpcare-page-framework layout='default'>
+<common-page-framework layout='default'>
 
   <div>
     <ng-content select="[title]"></ng-content>
@@ -42,11 +42,11 @@
     <fpcare-phn-definition></fpcare-phn-definition>
   </aside>
 
-  <fpcare-form-action-bar
+  <common-form-action-bar
           [submitLabel]="data.label"
           [canContinue]="canContinue()"
           (btnClick)="continue()"
           [isLoading]="loading">
-  </fpcare-form-action-bar>
+  </common-form-action-bar>
 
-</fpcare-page-framework>
+</common-page-framework>

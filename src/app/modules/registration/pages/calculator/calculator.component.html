@@ -1,4 +1,4 @@
-<fpcare-page-framework layout='default'>
+<common-page-framework layout='default'>
 
   <h1>Fair PharmaCare Calculator</h1>
 
@@ -142,13 +142,13 @@
     ></fpcare-financial-calculator>
   </aside>
 
-   <fpcare-form-action-bar
+   <common-form-action-bar
        *ngIf="!standalone"
        [submitLabel]="buttonText"
        [defaultColor]="false"
        [canContinue]="canContinue()"
        (btnClick)="continue()">
-   </fpcare-form-action-bar>
+   </common-form-action-bar>
 
 
    <fpcare-sample-modal
@@ -157,4 +157,4 @@
        [images]="imageList">
    </fpcare-sample-modal>
 
-</fpcare-page-framework>
+</common-page-framework>

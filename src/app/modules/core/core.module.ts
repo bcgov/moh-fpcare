@@ -6,11 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FPCareToggleComponent } from './components/toggle/toggle.component';
 import { PostalCodeComponent } from './components/postal-code/postal-code.component';
-import { PageFrameworkComponent } from './components/page-framework/page-framework.component';
 import { WizardProgressBarComponent } from './components/wizard-progress-bar/wizard-progress-bar.component';
 import { CoreBreadcrumbComponent } from './components/core-breadcrumb/core-breadcrumb.component';
 import { TextMaskModule } from 'angular2-text-mask';
-import { FormActionBarComponent } from './components/form-action-bar/form-action-bar.component';
 import { FPCareRequiredDirective } from '../../validation/fpcare-required.directive';
 import { RequiredValidationErrorsComponent } from '../../validation/required-validation/required-validation.component';
 import { ConsentModalComponent } from './components/consent-modal/consent-modal.component';
@@ -19,7 +17,6 @@ import { CalendarYearValidatorDirective } from './components/date/calendar-year.
 import { CalendarDayValidatorDirective } from './components/date/calendar-day.validator';
 import { CalendarMonthValidatorDirective } from './components/date/calendar-month.validator';
 import { CalendarFutureDatesDirective } from './components/date/calendar-future-dates.validator';
-import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { FPCareDateComponent } from './components/date/date.component';
 import {PhnValidationComponent} from '../../validation/phn-validation/phn-validation.component';
 import {SinValidationComponent} from '../../validation/sin-validation/sin-validation.component';
@@ -34,7 +31,7 @@ import { ModalFocusDirective } from './components/consent-modal/modal-focus.dire
 import { PhnDefinitionComponent } from './components/phn-definition/phn-definition.component';
 import { SampleModalComponent } from './components/sample-modal/sample-modal.component';
 import { CaptchaModule } from 'moh-common-lib/captcha';
-
+import { SharedCoreModule } from 'moh-common-lib';
 
 const componentList = [
   AlertComponent,
@@ -43,10 +40,8 @@ const componentList = [
   PhnComponent,
   SinComponent,
   NameComponent,
-  PageFrameworkComponent,
   WizardProgressBarComponent,
   CoreBreadcrumbComponent,
-  FormActionBarComponent,
   FPCareRequiredDirective,
   RequiredValidationErrorsComponent,
   PhnValidationComponent,
@@ -60,7 +55,6 @@ const componentList = [
   CalendarDayValidatorDirective,
   CalendarMonthValidatorDirective,
   CalendarFutureDatesDirective,
-  FileUploaderComponent,
   FPCareDateComponent,
   ResultsFrameworkComponent,
   ModalFocusDirective,
@@ -78,13 +72,15 @@ const componentList = [
     RouterModule,
     ModalModule.forRoot(),
     TextMaskModule,
-    CaptchaModule
+    CaptchaModule,
+    SharedCoreModule
   ],
   declarations: [
     componentList
   ],
   exports: [
-    componentList
+    componentList,
+    SharedCoreModule
   ],
   entryComponents: [
     RequiredValidationErrorsComponent,

@@ -85,13 +85,13 @@ Layouts can be: `single`, `double`, or `default`.
 Anything in an `<aside></aside>` will appear in the right columns if they exist. In the single layout they just function as a normal div.
 
 ```html
-<fpcare-page-framework layout='single'>
+<common-page-framework layout='single'>
 
-  <fpcare-form-action-bar
+  <common-form-action-bar
     [canContinue]="canContinue()"
     (click)="continue()"
-  ></fpcare-form-action-bar>
-</fpcare-page-framework>
+  ></common-form-action-bar>
+</common-page-framework>
 ```
 
 ### Dates

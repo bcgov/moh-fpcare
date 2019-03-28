@@ -3,7 +3,7 @@
         (onConsented)="onAccept($event)">
 </fpcare-consent-modal>
 
-<fpcare-page-framework layout='default'>
+<common-page-framework layout='default'>
 
   <div>
     <h1>
@@ -86,10 +86,10 @@
 
   </aside>
 
-  <fpcare-form-action-bar
+  <common-form-action-bar
           [canContinue]="canContinue()"
           (btnClick)="continue()"
           [isLoading]="loading">
-  </fpcare-form-action-bar>
+  </common-form-action-bar>
 
-</fpcare-page-framework>
+</common-page-framework>
