@@ -69,6 +69,7 @@ http {
         add_header X-Content-Type-Options "nosniff";
         add_header X-XSS-Protection 1;
         add_header X-Frame-Options DENY;
+        add_header Strict-Transport-Security: max-age=3153600
 
         # serve our angular app here
         location / {

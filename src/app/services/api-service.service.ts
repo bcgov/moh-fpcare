@@ -26,7 +26,9 @@ export class ApiService extends AbstractHttpService {
    *  Default hardcoded header values.  Note: Authentication headers are added
    *  at runtime in the httpOptions() method.
    */
-  protected _headers: HttpHeaders = new HttpHeaders();
+  protected _headers: HttpHeaders = new HttpHeaders({
+    'Cache-Control' : 'private'
+  });
   private _token: string;
   private _clientName: string = 'ppiweb';
 
