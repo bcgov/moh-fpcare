@@ -6,14 +6,6 @@
     "baseUrl": "",
     "types": []
   },
-  // Necessary because MyGovBC-Captcha-Widget returns raw TS files rather than
-  // the compiled assets, which is bad practice.  Because we set files, we must
-  // also set include back to a default state otherwise it would _only_ use the
-  // specified files. 
-  "files": [
-    "../node_modules/mygovbc-captcha-widget/src/app/captcha-data.service.ts",
-    "../node_modules/mygovbc-captcha-widget/src/app/captcha/captcha.component.ts"
-  ],
   "include": [
     "*.ts",
     "**/*.ts"

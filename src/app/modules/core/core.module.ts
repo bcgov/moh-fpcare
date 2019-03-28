@@ -27,8 +27,8 @@ import {RegNumberValidationComponent} from '../../validation/reg-number-validati
 import {PcValidationComponent} from '../../validation/pc-validation/pc-validation.component';
 import { ResultsFrameworkComponent } from './components/results-framework/results-framework.component';
 import {NameValidationComponent} from '../../validation/name-validation/name-validation.component';
-import { CaptchaDataService } from 'mygovbc-captcha-widget/src/app/captcha-data.service';
-import { CaptchaComponent } from 'mygovbc-captcha-widget/src/app/captcha/captcha.component';
+// import { CaptchaDataService } from 'mygovbc-captcha-widget/src/app/captcha-data.service';
+// import { CaptchaComponent } from 'mygovbc-captcha-widget/src/app/captcha/captcha.component';
 import { PhnComponent } from './components/phn/phn.component';
 import { SinComponent } from './components/sin/sin.component';
 import {NameComponent} from './components/name/name.component';
@@ -64,7 +64,7 @@ const componentList = [
   FileUploaderComponent,
   FPCareDateComponent,
   ResultsFrameworkComponent,
-  CaptchaComponent,
+  // CaptchaComponent,
   ModalFocusDirective,
   PhnDefinitionComponent,
   SampleModalComponent
@@ -96,7 +96,7 @@ const componentList = [
     NameValidationComponent
   ],
   providers: [
-    CaptchaDataService
+    // CaptchaDataService
   ]
 })
 export class CoreModule { }
