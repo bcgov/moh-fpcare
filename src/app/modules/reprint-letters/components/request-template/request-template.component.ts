@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
-import {Person} from '../../../../models/person.model';
+import {FPCPerson} from '../../../../models/person.model';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {Router} from '@angular/router';
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
@@ -60,9 +60,9 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
 
   /**
    * Object for recording registrant's information
-   * @returns {Person}
+   * @returns {FPCPerson}
    */
-  get applicant(): Person {
+  get applicant(): FPCPerson {
     return this.fpcareDataService.applicant;
   }
 

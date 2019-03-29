@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Router} from '@angular/router';
 import {PersonInterface, PersonType} from '../../models/api.model';
-import {Person} from '../../models/person.model';
+import {FPCPerson} from '../../models/person.model';
 import * as Md5 from 'js-md5';
 
 export interface RegistrationItem {
@@ -94,7 +94,7 @@ export class RegistrationService {
    * @param {string} rdsp
    * @returns {PersonInterface}
    */
-  setPersonInterfaceForReg( person: Person,
+  setPersonInterfaceForReg( person: FPCPerson,
                             personType: PersonType,
                             netIncome: number = 0,
                             rdsp: number = 0 ): PersonInterface {

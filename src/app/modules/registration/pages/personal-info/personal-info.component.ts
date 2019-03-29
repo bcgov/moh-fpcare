@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Person} from '../../../../models/person.model';
+import {FPCPerson} from '../../../../models/person.model';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
@@ -58,17 +58,17 @@ export class PersonalInfoPageComponent extends AbstractFormComponent implements 
 
   /**
    * Gets the applicant object
-   * @returns {Person}
+   * @returns {FPCPerson}
    */
-  get applicant(): Person {
+  get applicant(): FPCPerson {
     return this.fpcService.applicant;
   }
 
   /**
    * Gets the spouse object
-   * @returns {Person}
+   * @returns {FPCPerson}
    */
-  get spouse(): Person {
+  get spouse(): FPCPerson {
     return this.fpcService.spouse;
   }
 

@@ -2,7 +2,7 @@ import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
-import {Person} from '../../../../models/person.model';
+import {FPCPerson} from '../../../../models/person.model';
 import {FPCareDateComponent} from '../../../core/components/date/date.component';
 import {ValidationService} from '../../../../services/validation.service';
 import {
@@ -71,7 +71,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    * Gets the applicant object
    * @returns {Person}
    */
-  get applicant(): Person {
+  get applicant(): FPCPerson {
     return this.fpcareDataService.applicant;
   }
 
@@ -79,7 +79,7 @@ export class EligibilityPageComponent extends AbstractFormComponent implements O
    * Gets the spouse object
    * @returns {Person}
    */
-  get spouse(): Person {
+  get spouse(): FPCPerson {
     return this.fpcareDataService.spouse;
   }
 

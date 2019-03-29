@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChildren } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
-import { Person } from '../../../../models/person.model';
+import { FPCPerson } from '../../../../models/person.model';
 import { REGISTRATION_PATH, REGISTRATION_REVIEW } from '../../../../models/route-paths.constants';
 import { FPCareDataService } from '../../../../services/fpcare-data.service';
 import { RegistrationService } from '../../registration.service';
@@ -120,9 +120,9 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
 
   /**
    * Gets the applicant object
-   * @returns {Person}
+   * @returns {FPCPerson}
    */
-  get applicant(): Person {
+  get applicant(): FPCPerson {
     return this.fpcService.applicant;
   }
 
