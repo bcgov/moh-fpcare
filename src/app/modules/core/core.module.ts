@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FPCareToggleComponent } from './components/toggle/toggle.component';
 import { PostalCodeComponent } from './components/postal-code/postal-code.component';
-import { WizardProgressBarComponent } from './components/wizard-progress-bar/wizard-progress-bar.component';
 import { CoreBreadcrumbComponent } from './components/core-breadcrumb/core-breadcrumb.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { FPCareRequiredDirective } from '../../validation/fpcare-required.directive';
@@ -40,7 +39,6 @@ const componentList = [
   PhnComponent,
   SinComponent,
   NameComponent,
-  WizardProgressBarComponent,
   CoreBreadcrumbComponent,
   FPCareRequiredDirective,
   RequiredValidationErrorsComponent,
