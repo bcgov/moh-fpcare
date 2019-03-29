@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Base } from '../base/base.class';
+import { Base } from 'moh-common-lib/models';
 import * as moment from 'moment';
 import { SimpleDate } from './simple-date.interface';
 
@@ -17,7 +17,7 @@ export enum MonthName {
   Oct = 'October',
   Nov = 'November',
   Dec = 'December'
-};
+}
 
 @Component({
   selector: 'fpcare-date',

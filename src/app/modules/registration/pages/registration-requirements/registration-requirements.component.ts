@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
-import {Base} from '../../../core/components/base/base.class';
+import { Base } from 'moh-common-lib/models';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {ConsentModalComponent} from '../../../core/components/consent-modal/consent-modal.component';
 import {

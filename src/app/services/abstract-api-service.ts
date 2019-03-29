@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { Base } from '../modules/core/components/base/base.class';
+import { Base } from 'moh-common-lib/models';
 
 
 export abstract class AbstractHttpService extends Base {

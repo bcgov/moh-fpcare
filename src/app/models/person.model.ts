@@ -1,4 +1,4 @@
-import { Base } from './base.alias';
+import { Base } from 'moh-common-lib/models';
 import { Address } from './address.model';
 import {SimpleDate} from '../modules/core/components/date/simple-date.interface';
 import * as moment from 'moment';

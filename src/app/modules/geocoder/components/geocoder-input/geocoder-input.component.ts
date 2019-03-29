@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectorRef, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { GeocoderService, GeoAddressResult } from '../../geocoder.service';
-import { Base } from '../../../../models/base.alias';
+import { Base } from 'moh-common-lib/models';
 import { Subject, Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, tap, catchError } from 'rxjs/operators';
 import { TypeaheadMatch } from 'ngx-bootstrap';

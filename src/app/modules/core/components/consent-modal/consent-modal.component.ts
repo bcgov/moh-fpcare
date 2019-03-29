@@ -1,5 +1,5 @@
 import {Component, ViewChild, EventEmitter, Output, OnInit, ElementRef, ChangeDetectorRef} from '@angular/core';
-import { Base } from '../base/base.class';
+import { Base } from 'moh-common-lib/models';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import {environment} from '../../../../../environments/environment';
 import {ApiService} from '../../../../services/api-service.service';

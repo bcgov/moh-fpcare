@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {ImageInterface} from '../../../../models/image-interface';
 import {SampleModalComponent} from '../sample-modal/sample-modal.component';
-import {Base} from '../base/base.class';
+import { Base } from 'moh-common-lib/models';
 
 @Component({
   selector: 'fpcare-phn-definition',

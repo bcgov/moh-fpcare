@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
 import {Person} from '../../../../models/person.model';
-import {Base} from '../../../core/components/base/base.class';
+import { Base } from 'moh-common-lib/models';
 import {
   REGISTRATION_ADDRESS,
   REGISTRATION_AUTHORIZE,
