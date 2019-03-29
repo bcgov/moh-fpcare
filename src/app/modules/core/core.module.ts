@@ -5,7 +5,6 @@ import { AlertModule, TooltipModule, ProgressbarModule, ModalModule } from 'ngx-
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FPCareToggleComponent } from './components/toggle/toggle.component';
-import { PostalCodeComponent } from './components/postal-code/postal-code.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { FPCareRequiredDirective } from '../../validation/fpcare-required.directive';
 import { RequiredValidationErrorsComponent } from '../../validation/required-validation/required-validation.component';
@@ -34,7 +33,6 @@ import { SharedCoreModule } from 'moh-common-lib';
 const componentList = [
   AlertComponent,
   FPCareToggleComponent,
-  PostalCodeComponent,
   PhnComponent,
   SinComponent,
   NameComponent,
