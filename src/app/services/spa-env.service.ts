@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AbstractHttpService } from './abstract-api-service';
+import { AbstractHttpService } from 'moh-common-lib/services';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Logger } from './logger.service';
 import { throwError, BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'environments/environment';
-import { tap, retry, filter } from 'rxjs/operators';
+import { retry, filter } from 'rxjs/operators';
 
 /**
  * The list of all server envs we expect back from the spa-env-server. By adding

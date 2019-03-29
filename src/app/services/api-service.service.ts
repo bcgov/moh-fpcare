@@ -1,10 +1,9 @@
-import { AbstractHttpService } from './abstract-api-service';
+import { AbstractHttpService } from 'moh-common-lib/services';
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpParams} from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { throwError, Observable } from 'rxjs';
 import { Logger } from './logger.service';
-import { UUID } from 'angular2-uuid';
 import * as moment from 'moment';
 import {
   StatusCheckPHN,
@@ -14,7 +13,7 @@ import {
   PersonInterface,
   AddressInterface,
   EligibilityInterface,
-  RegistrationInterface, MessageInterface, MessagePayloadInterface, SRQ_Msgs
+  RegistrationInterface, MessagePayloadInterface, SRQ_Msgs
 } from '../models/api.model';
 
 @Injectable({

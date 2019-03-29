@@ -103,7 +103,7 @@ describe('GeocoderInputComponent', () => {
     // Check UI
     const el = fixture.nativeElement.querySelector('.geocoder-status');
     fixture.detectChanges();
-    expect(el.textContent).toContain('No Results', '"No Results" text should be displayed to user')
+    expect(el.textContent).toContain('No Results', '"No Results" text should be displayed to user');
   });
 
   it('should show an error on network failure', fakeAsync(() => {
@@ -121,7 +121,7 @@ describe('GeocoderInputComponent', () => {
 
     const el = fixture.nativeElement.querySelector('.geocoder-status');
     fixture.detectChanges();
-    expect(el.textContent).toContain('Error', 'Error msg should be displayed to user')
+    expect(el.textContent).toContain('Error', 'Error msg should be displayed to user');
   }));
 
 });

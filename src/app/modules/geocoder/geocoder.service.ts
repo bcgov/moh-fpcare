@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractHttpService } from '../../services/abstract-api-service';
+import { AbstractHttpService } from 'moh-common-lib/services';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';

@@ -8,8 +8,12 @@
   <form #formRef="ngForm" novalidate>
     <div class="p-md-2 col-md-6">
       <div class="form-group">
-          <common-postal-code [(value)]="applicant.address.postal" (valueChange)="checkPostal()"></common-postal-code>
-          <div *ngIf="!isPostalMatch" class='validation-alert' role="alert" aria-live="assertive">
+          <common-postal-code [(value)]="applicant.address.postal" 
+                              (valueChange)="checkPostal()"></common-postal-code>
+          <div *ngIf="!isPostalMatch" 
+                class='error-container' 
+                role="alert" 
+                aria-live="assertive">
             <div class="text-danger">The mailing address does not match our records.</div>
           </div>
       </div>
