@@ -1,10 +1,12 @@
 import { Component, OnInit, Input, ChangeDetectorRef, Output, EventEmitter, SimpleChanges } from '@angular/core';
-import { GeocoderService, GeoAddressResult } from '../../geocoder.service';
+import { GeocoderService } from 'moh-common-lib/services';
+import { GeoAddressResult } from 'moh-common-lib/services/geocoder.service';
 import { Base } from 'moh-common-lib/models';
 import { Subject, Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, tap, catchError } from 'rxjs/operators';
 import { TypeaheadMatch } from 'ngx-bootstrap';
 import { Address } from '../../../../models/address.model';
+import { defaultCountry, defaultProv } from '../../../../models/province-names.enum';
 
 @Component({
   selector: 'fpcare-geocoder-input',
@@ -86,15 +88,22 @@ export class GeocoderInputComponent extends Base implements OnInit {
 
   onSelect(event: TypeaheadMatch): void{
     const data: GeoAddressResult = event.item;
+
+    console.log( 'OnSelect (geoCoder - data): ', data );
+
     const addr = new Address();
     addr.city = data.city;
-    addr.country = data.country;
-    addr.province = data.province;
+
+    // GeoCoder is only for BC, Canada, values can be set.
+    addr.country = defaultCountry; // Default country is Canda
+    addr.province = defaultProv;  // Default province is BC
     addr.street = data.street;
     addr._geocoderFullAddress = data.fullAddress;
 
     // Save and emit Address
     this.selectedAddress = addr;
+
+    console.log( 'OnSelect (geoCoder): ', this.selectedAddress );
     this.addressChange.emit(this.selectedAddress);
   }
 
