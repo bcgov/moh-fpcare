@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FPCPerson } from '../models/person.model';
-import { Address } from '../models/address.model';
+import { FPCAddress } from '../models/address.model';
 import {SimpleDate} from '../modules/core/components/date/simple-date.interface';
 import {CountryNames, ProvinceNames} from '../models/province-names.enum';
 
@@ -121,10 +121,10 @@ export class DummyDataService {
     return sin;
   }
 
-  private generateAddress(): Address {
+  private generateAddress(): FPCAddress {
     const streetNames = ['Kings', 'Main', 'Fort', 'Yates', 'Douglas'];
     const postalCodes = ['V8R 1R9', 'V8R 2W0', 'V8E 2T9', 'V6R 0N2', 'V6E 2N9'];
-    const address = new Address();
+    const address = new FPCAddress();
 
     address.street = `${Math.ceil(Math.random() * 8000)} ${this.getRandomElFromArray( streetNames )} St.`;
     address.postal = `${this.getRandomElFromArray( postalCodes )}`;

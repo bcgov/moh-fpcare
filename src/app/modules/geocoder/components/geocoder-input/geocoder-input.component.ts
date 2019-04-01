@@ -5,7 +5,7 @@ import { Base } from 'moh-common-lib/models';
 import { Subject, Observable, of } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap, tap, catchError } from 'rxjs/operators';
 import { TypeaheadMatch } from 'ngx-bootstrap';
-import { Address } from '../../../../models/address.model';
+import { FPCAddress } from '../../../../models/address.model';
 import { defaultCountry, defaultProv } from '../../../../models/province-names.enum';
 
 @Component({
@@ -16,8 +16,8 @@ import { defaultCountry, defaultProv } from '../../../../models/province-names.e
 export class GeocoderInputComponent extends Base implements OnInit {
 
   @Input() label: string = 'Address Lookup';
-  @Input() address: Address = new Address();
-  @Output() addressChange = new EventEmitter<Address>();
+  @Input() address: FPCAddress = new FPCAddress();
+  @Output() addressChange = new EventEmitter<FPCAddress>();
 
   /** The string in the box the user has typed */
   public search: string;
@@ -28,7 +28,7 @@ export class GeocoderInputComponent extends Base implements OnInit {
   public hasError: boolean = false;
 
   /** Similar to this.address, but we can null it when user is searching for new addresses */
-  public selectedAddress: Address;
+  public selectedAddress: FPCAddress;
   /** The list of results, from API, that is passed to the typeahead list */
   public typeaheadList$: Observable<GeoAddressResult[]>; //Result from GeoCoderService address lookup
   /** The subject that triggers on user text input and gets typeaheadList$ to update.  */
@@ -91,7 +91,7 @@ export class GeocoderInputComponent extends Base implements OnInit {
 
     console.log( 'OnSelect (geoCoder - data): ', data );
 
-    const addr = new Address();
+    const addr = new FPCAddress();
     addr.city = data.city;
 
     // GeoCoder is only for BC, Canada, values can be set.

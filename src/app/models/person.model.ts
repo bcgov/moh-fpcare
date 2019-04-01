@@ -1,5 +1,5 @@
 import { Person } from 'moh-common-lib/models';
-import { Address } from './address.model';
+import { FPCAddress } from './address.model';
 
 /**
  * Information about person. Should be relevant to all people in app, from the
@@ -18,11 +18,13 @@ export class FPCPerson extends Person {
 
   // Contact information for person
   /* Mailing address for person */
-  public address: Address = new Address();
-  public updAddress: Address = new Address();
+  public address: FPCAddress = new FPCAddress();
+  public updAddress: FPCAddress = new FPCAddress();
 
   constructor() {
     super();
+
+    // Set date of birth string format for read only fields
     this.dobFormat = 'MMMM DD, YYYY';
   }
 
