@@ -21,6 +21,11 @@ export class FPCPerson extends Person {
   public address: Address = new Address();
   public updAddress: Address = new Address();
 
+  constructor() {
+    super();
+    this.dobFormat = 'MMMM DD, YYYY';
+  }
+
   /**
    *
    * @returns {boolean}
