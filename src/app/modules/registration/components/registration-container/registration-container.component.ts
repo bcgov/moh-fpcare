@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { pageRoutes } from '../../registration-page-routing';
-import { WizardProgressItem } from 'moh-common-lib/lib/components/wizard-progress-bar/wizard-progress-bar.component';
+import { WizardProgressItem } from 'moh-common-lib/models';
 
 @Component({
   selector: 'fpcare-registration-component',
