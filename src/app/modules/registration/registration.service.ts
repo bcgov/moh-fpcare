@@ -107,8 +107,8 @@ export class RegistrationService {
         perType: personType,
         phn: person.getNonFormattedPhn(),
         dateOfBirth: person.dateOfBirthShort,
-        givenName: person.firstName,
-        surname: person.lastName,
+        givenName: person.firstName.toUpperCase(),
+        surname: person.lastName.toUpperCase(),
         sin : person.getNonFormattedSin(),
         netIncome: (netIncome ? netIncome.toFixed(2) : '0.00'),
         rdsp: (rdsp ? rdsp.toFixed( 2 ) : '0.00' )
@@ -118,8 +118,8 @@ export class RegistrationService {
         perType: personType,
         phn: person.getNonFormattedPhn(),
         dateOfBirth: person.dateOfBirthShort,
-        givenName: person.firstName,
-        surname: person.lastName,
+        givenName: person.firstName.toUpperCase(),
+        surname: person.lastName.toUpperCase(),
       };
     }
 
