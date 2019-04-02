@@ -63,13 +63,7 @@ http {
         listen       8080;
         server_name  localhost;
 
-        # add in most common security headers
-        # Orig
-        # add_header Content-Security-Policy "default-src * data: blob: filesystem: 'unsafe-inline' 'unsafe-eval'";
-        # add_header Content-Security-Policy "default-src 'self'";
         add_header Content-Security-Policy "default-src 'self' data: blob: filesystem: 'unsafe-inline' 'unsafe-eval'";
-
-
         add_header Cache-Control private;
         add_header Strict-Transport-Security "max-age=3153600; includeSubDomains";
         add_header X-Content-Type-Options "nosniff";
