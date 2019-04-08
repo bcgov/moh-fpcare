@@ -30,7 +30,7 @@ export const pageRoutes: Routes = [
     {
         path: REGISTRATION_PERSONAL,
         component: PersonalInfoPageComponent,
-        data: { title: 'Personal Information'}
+        data: { title: 'Family Information'}
     },
     {
         path: REGISTRATION_CHILD,
@@ -50,7 +50,7 @@ export const pageRoutes: Routes = [
     {
         path: REGISTRATION_AUTHORIZE,
         component: CompletePageComponent,
-        data: { title: 'Authorization'}
+        data: { title: 'Authorize Income Verification'}
     },
     {
         path: '',
