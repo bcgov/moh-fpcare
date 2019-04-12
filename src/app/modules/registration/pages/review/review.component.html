@@ -1,15 +1,16 @@
-<fpcare-annual-deductible
-    [familyNetIncome]="adjustedIncomeAmount"
-    [bornBefore1939]="bornBefore1939"
-    [isReview]="'true'">
-</fpcare-annual-deductible>
-
 <common-page-framework layout='blank'>
 
   <h1>Review Application</h1>
   <p>
     Please review the information you have entered prior to submitting your application.
   </p>
+
+  <fpcare-annual-deductible
+    [familyNetIncome]="adjustedIncomeAmount"
+    [bornBefore1939]="bornBefore1939"
+    [isReview]="'true'">
+  </fpcare-annual-deductible>
+
   <common-page-section layout='double'>
     <div>
       <h2>Applicant Information
