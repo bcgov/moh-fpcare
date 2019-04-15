@@ -12,12 +12,12 @@ export const STANDALONE_CALCULATOR = 'financial-calculator';
 
 export const REGISTRATION_PATH = 'registration';
 export const REGISTRATION_REQUIREMENTS = 'requirements';
-export const REGISTRATION_FINANCIAL = 'financial';
+export const REGISTRATION_FINANCIAL = 'financial-calculator';
 export const REGISTRATION_ELIGIBILITY = 'eligibility';
-export const REGISTRATION_PERSONAL = 'personal-info';
+export const REGISTRATION_PERSONAL = 'family-info';
 export const REGISTRATION_CHILD = 'child-info';
-export const REGISTRATION_ADDRESS = 'mailing-address';
-export const REGISTRATION_REVIEW = 'review';
+export const REGISTRATION_ADDRESS = 'address';
+export const REGISTRATION_REVIEW = 'review-application';
 export const REGISTRATION_AUTHORIZE = 'verify-income';
 export const REGISTRATION_RESULTS = 'results';
 export const MAINTENANCE = 'maintenance';

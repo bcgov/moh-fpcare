@@ -1,15 +1,16 @@
-<fpcare-annual-deductible
-    [familyNetIncome]="adjustedIncomeAmount"
-    [bornBefore1939]="bornBefore1939"
-    [isReview]="'true'">
-</fpcare-annual-deductible>
-
 <common-page-framework layout='blank'>
 
-  <h1>Review</h1>
+  <h1>Review Application</h1>
   <p>
     Please review the information you have entered prior to submitting your application.
   </p>
+
+  <fpcare-annual-deductible
+    [familyNetIncome]="adjustedIncomeAmount"
+    [bornBefore1939]="bornBefore1939"
+    [isReview]="'true'">
+  </fpcare-annual-deductible>
+
   <common-page-section layout='double'>
     <div>
       <h2>Applicant Information
@@ -112,15 +113,15 @@
               <div class="line-item--value">{{applicantIncome}}</div>
             </div>
             <div class="line-item">
-              <div class="line-item--text">Spouse/Common-law partner</div>
+              <div class="line-item--text">Spouse/common-law partner declared?</div>
               <div class="line-item--value">{{hasSpouse ? 'Yes' : 'No'}}</div>
             </div>
             <div *ngIf="hasSpouse" class="line-item">
-              <div class="line-item--text">Spouse's annual income</div>
+              <div class="line-item--text">Spouse's net annual income</div>
               <div class="line-item--value">{{spouseIncome}}</div>
             </div>
             <div class="line-item">
-              <div class="line-item--text font-weight-bold">Total family annual income </div>
+              <div class="line-item--text font-weight-bold">Family net annual income</div>
               <div class="line-item--value font-weight-bold">{{totalFamilyAnnualIncome}}</div>
             </div>
           </div>
@@ -131,7 +132,7 @@
               <div class="line-item--value">{{disabilityAmount}}</div>
             </div>
             <div *ngIf="hasSpouse" class="line-item">
-              <div class="line-item--text">Your Spouse's Registered Disability Savings Plan amount</div>
+              <div class="line-item--text">Spouse's Registered Disability Savings Plan amount</div>
               <div class="line-item--value">{{spouseDisabilityAmount}}</div>
             </div>
             <div class="line-item">
@@ -141,7 +142,7 @@
           </div>
 
           <div class="line-item pb-2">
-            <div class="line-item--text font-weight-bold">Adjusted income</div>
+            <div class="line-item--text font-weight-bold">Family adjusted income</div>
             <div class="line-item--value font-weight-bold">{{adjustedIncome}}</div>
           </div>
         </div>
