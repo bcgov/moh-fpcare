@@ -89,7 +89,7 @@ export class GeocoderInputComponent extends Base implements OnInit {
   onSelect(event: TypeaheadMatch): void{
     const data: GeoAddressResult = event.item;
 
-    console.log( 'OnSelect (geoCoder - data): ', data );
+    //console.log( 'OnSelect (geoCoder - data): ', data );
 
     const addr = new FPCAddress();
     addr.city = data.city;
@@ -103,7 +103,7 @@ export class GeocoderInputComponent extends Base implements OnInit {
     // Save and emit Address
     this.selectedAddress = addr;
 
-    console.log( 'OnSelect (geoCoder): ', this.selectedAddress );
+    //console.log( 'OnSelect (geoCoder): ', this.selectedAddress );
     this.addressChange.emit(this.selectedAddress);
   }
 
