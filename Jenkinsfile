@@ -15,7 +15,7 @@ node {
 
   stage('nginx runtime') {
     echo "Building: " + NGINX_BUILD_CONFIG
-    echo "printenv"
+    sh 'printenv'
     env.getEnvironment()
     openshiftBuild bldCfg: NGINX_BUILD_CONFIG, showBuildLogs: 'true'
   }
