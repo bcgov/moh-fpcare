@@ -4,6 +4,7 @@ def APP_NAME = 'fpcare'
 // Edit your environment TAG names below
 def TAG_NAMES = ['dev', 'test', 'prod']
 def TAG_NAMES_BACKUP = ['devbackup', 'testbackup', 'prodbackup']
+// def DIR_NAME = ['dir1', 'dir2']
 
 // You shouldn't have to edit these if you're following the conventions
 def NGINX_BUILD_CONFIG = 'nginx-runtime'
@@ -15,8 +16,11 @@ node {
 
   stage('nginx runtime') {
     echo "Building: " + NGINX_BUILD_CONFIG
-    sh 'printenv'
-    env.getEnvironment()
+    // dirindex = sh 'if [ "X$PROJECT_NAME" = "Xdir1" ]; then echo 0; elif [ "X$PROJECT_NAME" = "Xdir2" ]; then echo 1; else echo 2; fi'
+    // dir("$DIR_NAME[$dirindex]") {
+    //   sh 'echo current directory is $CWD'
+    //   sh 'echo current project name is $PROJECT_NAME'
+	// }  
     openshiftBuild bldCfg: NGINX_BUILD_CONFIG, showBuildLogs: 'true'
   }
 
