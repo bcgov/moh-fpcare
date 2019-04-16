@@ -9,6 +9,7 @@
     <div class="p-md-2 col-md-6">
       <div class="form-group">
           <common-postal-code [(value)]="applicant.address.postal" 
+                              label="Mailing Postal Code"
                               (valueChange)="checkPostal()"></common-postal-code>
           <div *ngIf="!isPostalMatch" 
                 class='error-container' 
