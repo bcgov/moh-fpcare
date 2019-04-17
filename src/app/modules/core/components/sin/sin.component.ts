@@ -52,7 +52,7 @@ export class SinComponent extends Masking implements OnInit {
           if ( list && list .filter( x => this._regex.test(x) ).length > 1 ) {
 
             this.uniqueSins = this.validationService.isUnique( list  );
-            this.uniqueSinError.emit( this.uniqueSins );
+            this.uniqueSinError.emit( (this.uniqueSins ? false : true ) );
 
             // Since we use debounceTime(), updates can happen after Angular change
             // detection is done, so we have to manually invoke it.
