@@ -45,7 +45,7 @@
           </fpcare-date>
 
           <div class="form-group">
-            <fpcare-phn [(value)]="spouse.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError"></fpcare-phn>
+            <fpcare-phn [(value)]="spouse.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError=$event"></fpcare-phn>
           </div>
 
         </div>

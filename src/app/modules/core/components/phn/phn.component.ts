@@ -50,7 +50,7 @@ export class PhnComponent extends Masking implements OnInit {
           if ( list && list .filter( x => this._regex.test(x) ).length > 1 ) {
 
             this.uniquePhns = this.validationService.isUnique( list  );
-            this.uniquePhnError.emit( this.uniquePhns );
+            this.uniquePhnError.emit( (this.uniquePhns ? false : true) );
 
             // Since we use debounceTime(), updates can happen after Angular change
             // detection is done, so we have to manually invoke it.
