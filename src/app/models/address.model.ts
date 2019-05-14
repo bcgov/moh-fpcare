@@ -1,4 +1,4 @@
-import { Address } from 'moh-common-lib/models/';
+import { Address } from 'moh-common-lib/models';
 
 export class FPCAddress extends Address {
 

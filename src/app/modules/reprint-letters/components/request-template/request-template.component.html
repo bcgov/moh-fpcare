@@ -32,8 +32,10 @@
         </div>
 
         <div class="form-group">
-            <common-postal-code [(value)]="applicant.address.postal"
-                                label="Mailing Postal Code" ></common-postal-code>
+            <common-postal-code name="postal_code"
+                                [(ngModel)]="applicant.address.postal"
+                                label="Mailing Postal Code" 
+                                required></common-postal-code>
         </div>
       </div>
     </div>

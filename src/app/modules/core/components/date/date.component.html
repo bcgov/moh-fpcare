@@ -35,7 +35,8 @@
                   [required]="required"
                   [disabled]="disabled"
                   min="1"
-                  max="31">
+                  max="31"
+                  autocomplete="off">
            <label class="visuallyhidden" for="year{{objectId}}">Year</label>
            <input type="number" [calendarFieldFormatter]="'year'"
                   class="form-control yearInput"
@@ -48,7 +49,8 @@
                   [required]="required"
                   min="1830"
                   max="2300"
-                  step="1">
+                  step="1"
+                  autocomplete="=off">
          </div>
 
            <div *ngIf='yearRef.status !== "DISABLED"' role="alert" class='error-container' aria-live="assertive">

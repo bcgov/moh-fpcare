@@ -41,7 +41,8 @@
                 [ngModel]="income"
                 (ngModelChange)="income = $event; update()"
                 [textMask]="{mask: moneyMask}"
-                placeholder="Enter Your Income"/>
+                placeholder="Enter Your Income"
+                autocomplete="off"/>
           </div>
       </div>
 
@@ -78,7 +79,8 @@
                 [ngModel]="spouseIncome"
                 (ngModelChange)="spouseIncome = $event; update()"
                 [textMask]="{mask: moneyMask}"
-                placeholder="Enter Your Spouse's Income"/>
+                placeholder="Enter Your Spouse's Income"
+                autocomplete="off"/>
           </div>
       </div>
 
@@ -106,7 +108,8 @@
                 [ngModel]="disability"
                 (ngModelChange)="disability = $event; update();"
                 [textMask]="{mask: moneyMask}"
-                placeholder="Enter Disability Savings Amounts"/>
+                placeholder="Enter Disability Savings Amounts"
+                autocomplete="off"/>
           </div>
       </div>
 
@@ -126,7 +129,8 @@
                   [ngModel]="spouseDisability"
                   (ngModelChange)="spouseDisability = $event; update();"
                   [textMask]="{mask: moneyMask}"
-                  placeholder="Enter Disability Savings Amounts"/>
+                  placeholder="Enter Disability Savings Amounts"
+                  autocomplete="off"/>
         </div>
      </div>
         
