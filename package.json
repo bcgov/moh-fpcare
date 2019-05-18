@@ -42,7 +42,7 @@
     "jquery": "^3.4.1",
     "js-md5": "^0.7.3",
     "lodash": "^4.17.10",
-    "moh-common-lib": "0.0.32",
+    "moh-common-lib": "0.0.29",
     "moment": "^2.22.1",
     "mygovbc-bootstrap-theme": "^0.4.0",
     "ng-select": "^1.0.1",
