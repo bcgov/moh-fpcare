@@ -8,11 +8,10 @@
   <form #formRef="ngForm" novalidate>
     <div class="p-md-2 col-md-6">
       <div class="form-group">
-          <common-postal-code name="mailing_postal_code"
-                              [(ngModel)]="applicant.address.postal"
+          <common-postal-code [(value)]="applicant.address.postal"
                               label="Mailing Postal Code"
-                              (ngModelChange)="checkPostal()"
-                              required></common-postal-code>
+                              (valueChange)="checkPostal()"
+                              [required]="true"></common-postal-code>
           <div *ngIf="!isPostalMatch" 
                 class='error-container' 
                 role="alert" 
@@ -75,7 +74,7 @@
         <div class="form-group">
           <common-postal-code [value]="updatePostalCode" 
                               [label]="'Mailing Postal Code (as entered above)'"
-                              disabled>
+                              [disabled]="true">
           </common-postal-code>
         </div>
         <div class="form-group">
