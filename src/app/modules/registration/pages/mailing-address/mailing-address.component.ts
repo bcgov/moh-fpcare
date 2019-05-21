@@ -39,7 +39,7 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
              , private cd: ChangeDetectorRef) {
     super( router );
   }
-  
+
   ngOnInit() {
 
     // Update address not complete, set defaults
@@ -98,6 +98,9 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
         // Remove postal code causes updated address structure to be incomplete
         this.applicant.updAddress.postal = '';
       }
+    } else {
+      // Postal code is empty
+      this.isPostalMatch = true; // hides request for updating address
     }
   }
 
