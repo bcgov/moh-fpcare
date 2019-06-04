@@ -117,8 +117,9 @@ export class ValidationService {
   static validateSIN (sin: string): boolean {
 
     // pre req checks
-    if (sin === null || sin === undefined ||
-      sin.length < 1) return false;
+    if (sin === null || sin === undefined || sin.length < 1) return false;
+
+    if ( sin === '000000000') return false;
 
     // Init weights and other stuff
     const weights: number[] = [1, 2, 1, 2, 1, 2, 1, 2, 1];
