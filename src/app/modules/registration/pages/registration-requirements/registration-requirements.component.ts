@@ -19,7 +19,7 @@ import * as moment from 'moment';
 })
 export class RegistrationRequirementsComponent extends Base implements OnInit, AfterViewInit {
 
-  @ViewChild('consentModal') consentModal: ConsentModalComponent;
+  @ViewChild('consentModal', { static: true }) consentModal: ConsentModalComponent;
   /** Page to navigate to when continue process */
   private _url = REGISTRATION_PATH + '/' + REGISTRATION_FINANCIAL;
 

@@ -19,8 +19,8 @@ export class ConsentModalComponent extends Base implements OnInit {
   private _agreeCheck: boolean = false;
   private _hasToken = false;
 
-  @ViewChild('informationCollectionModal') public informationCollectionModal: ModalDirective;
-  @ViewChild('agree') checkbox: ElementRef<HTMLInputElement>;
+  @ViewChild('informationCollectionModal', { static: true }) public informationCollectionModal: ModalDirective;
+  @ViewChild('agree', { static: true }) checkbox: ElementRef<HTMLInputElement>;
 
   @Output() onConsented = new EventEmitter<boolean>();
 

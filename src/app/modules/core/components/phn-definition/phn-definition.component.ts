@@ -11,7 +11,7 @@ import { Base } from 'moh-common-lib/models';
 export class PhnDefinitionComponent extends Base implements OnInit {
   @Input() driverLicense: boolean = true;
 
-  @ViewChild('bcscSample') bcscSample: SampleModalComponent;
+  @ViewChild('bcscSample', { static: false }) bcscSample: SampleModalComponent;
 
   public imageList: ImageInterface[];
 

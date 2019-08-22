@@ -33,7 +33,7 @@ export class RequestTemplateComponent extends AbstractFormComponent implements O
   @Input() data: ComponentData;
 
   /** Access to date component */
-  @ViewChild('consentModal') consentModal: ConsentModalComponent;
+  @ViewChild('consentModal', { static: true }) consentModal: ConsentModalComponent;
 
   /** Result page */
   private _url = REPRINT_LETTERS_PATH + '/' + REPRINT_STATUS;

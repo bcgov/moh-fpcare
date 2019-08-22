@@ -17,7 +17,7 @@ import {environment} from '../../../../../environments/environment';
 })
 export class PersonalInfoPageComponent extends AbstractFormComponent implements OnInit {
 
-  @ViewChild('sinSample') sinSample: SampleModalComponent;
+  @ViewChild('sinSample', { static: false }) sinSample: SampleModalComponent;
 
   /** Indicates whether or not the same SIN has been used for spouse */
   public uniqueSinError = false;

@@ -13,7 +13,7 @@ export class SampleModalComponent extends Base implements OnInit {
   @Input() title: string;
   @Input() images: ImageInterface[] = [];
 
-  @ViewChild('samplesModal') public samplesModal: ModalDirective;
+  @ViewChild('samplesModal', { static: true }) public samplesModal: ModalDirective;
 
   constructor() {
     super();
