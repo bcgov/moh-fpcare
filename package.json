@@ -45,7 +45,7 @@
     "moment": "^2.22.1",
     "mygovbc-bootstrap-theme": "^0.4.0",
     "ng-select": "^1.0.1",
-    "ngx-bootstrap": "^3.1.2",
+    "ngx-bootstrap": "^5.1.2",
     "ngx-mydatepicker": "^2.4.9",
     "pdfjs-dist": "^2.0.943",
     "popper.js": "^1.14.5",
