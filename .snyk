@@ -8,3 +8,12 @@ patch:
         patched: '2019-07-03T22:17:40.315Z'
     - '@angular/cli > inquirer > lodash':
         patched: '2019-07-03T22:17:40.315Z'
+  SNYK-JS-HTTPSPROXYAGENT-469131:
+    - '@angular/cli > pacote > make-fetch-happen > https-proxy-agent':
+        patched: '2019-10-05T02:11:51.171Z'
+    - '@angular/cli > pacote > npm-registry-fetch > make-fetch-happen > https-proxy-agent':
+        patched: '2019-10-05T02:11:51.171Z'
+    - '@angular/cli > @schematics/update > pacote > make-fetch-happen > https-proxy-agent':
+        patched: '2019-10-05T02:11:51.171Z'
+    - '@angular/cli > @schematics/update > pacote > npm-registry-fetch > make-fetch-happen > https-proxy-agent':
+        patched: '2019-10-05T02:11:51.171Z'
