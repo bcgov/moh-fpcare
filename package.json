@@ -1,6 +1,6 @@
 {
   "name": "fpcare",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "license": "Apache-2.0",
   "scripts": {
     "ng": "ng",
@@ -59,7 +59,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.0",
+    "@angular-devkit/build-angular": "^0.803.23",
     "@types/jasmine": "2.5.38",
     "@types/node": "^8.10.36",
     "codelyzer": "^5.0.1",
