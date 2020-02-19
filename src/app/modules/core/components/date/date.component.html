@@ -68,11 +68,11 @@
              <div *ngIf='(yearRef.touched || showError) && !isValid()
                && formRef?.errors?.dateNotInPast !== true
                && formRef?.errors?.dateNotInFuture !== true'>
-               <div class="text-danger" i18n="@@yearErrorBadFormat">Not a valid {{label}}</div>
+               <div class="text-danger" i18n="@@yearErrorBadFormat">{{label}} is invalid.  You must enter a {{label}} in a valid format (month, day, year)</div>
              </div>
 
              <div *ngIf='(dayRef.touched || showError)'>
-               <div class="text-danger" *ngIf="dayRef?.errors?.calendarDayOutOfRange" i18n="@@calendarDayOutOfRange">Day of the month is out of range</div>
+               <div class="text-danger" *ngIf="dayRef?.errors?.calendarDayOutOfRange" i18n="@@calendarDayOutOfRange">Day entered is not valid for the month entered</div>
              </div>
              <div *ngIf='(yearRef.touched || showError)'>
                <div class="text-danger" *ngIf="yearRef?.errors?.yearDistantPast" i18n="@@yearErrorDistantPast">{{label}} is too far in the past</div>
