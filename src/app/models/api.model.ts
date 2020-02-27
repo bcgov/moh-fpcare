@@ -153,7 +153,8 @@ export const SRQ_Msgs = [
   },
   {
     msgCode: 'SRQ_099',
-    msgText: 'This error occurred because the system encountered an unanticipated situation which forced it to stop',
+    msgText: 'Recommendation is for you to try using the Back function on your browser and restart ' +
+             'registration from a prior screen or start over.  If the situation persists, contact Health Insurance BC.',
     msgType: RegStatusCode.ERROR
   }
 ];
