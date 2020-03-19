@@ -42,7 +42,7 @@ export class PhnDefinitionComponent extends Base implements OnInit {
 
     if (this.driverLicense) {
       return 'Personal Health Number (PHN) as shown on the back of your BC Services Card. ' +
-          'This information may also be on your driver\'s license if you have a combined card.';
+          'This information may also be on your driver\'s license.';
     }
     return 'Personal Health Number (PHN) as shown on the back of your dependent child\'s BC Services Card.';
   }
