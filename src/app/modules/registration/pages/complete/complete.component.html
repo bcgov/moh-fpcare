@@ -7,17 +7,26 @@
   <div>
     <h2 class="border-bottom">Declaration and Consent</h2>
     <p>
+      Your online application is now complete. In order to make your Fair PharmaCare coverage permanent, we need to 
+      check your income information with the Canada Revenue Agency (CRA). The CRA requires that you provide written 
+      consent to share your income information. If you are married or living in a marriage-like relationship, your 
+      spouse must also provide written consent.
+    </p>
+    <p>
+      You will receive a letter at the address you provided, asking you to agree to the following statement:
+    </p>
+    <p>
       I consent to allow the Canada Revenue Agency to release information from my income tax returns and other required
       taxpayer information to the B.C. Ministry of Health and Health Insurance BC.
     </p>
     <p>
-      The information provided will be used solely to determine, verify and administer my and/or my family's Fair PharmaCare 
-      Plan coverage, but may be aggregated for Ministry of Health evaluation and planning for business improvement purposes.
+      The information provided will be used solely to determine, verify and administer my and/or my family's Fair
+      PharmaCare Plan coverage, but may be aggregated for planning and evaluation purposes.
     </p>
     <p>
-      I understand my information will be collected, used and disclosed in accordance with the British Columbia Pharmaceutical Services 
-      Act and the Freedom of Information and Protection of Privacy Act.  Access will be only by the Ministry of Heath and its authorized 
-      service providers.
+      I understand my information will be collected, used and disclosed in accordance with the British Columbia
+      Pharmaceutical Services Act and the Freedom of Information and Protection of Privacy Act. It will not be
+      disclosed to any persons without my consent.
     </p>
     <p>
       This consent is valid for the two taxation years before the year in which I sign this document, for the year in
@@ -32,6 +41,13 @@
 
   <div>
     <h2 class="border-bottom">Your Information</h2>
+    <div>
+        Please confirm that you (and your spouse, if you have one):
+        <ul>
+          <li>filed tax returns for the tax year two years prior to this application, and</li>
+          <li>agree to allow the CRA to share your income information with PharmaCare.</li>
+      </ul>
+    </div>
     <p class="h3">{{applicant.name}}, do you agree?</p>
     <span class="checkbox checkbox-success checkbox-inline mb-4 mb-md-0">
       <input type="checkbox" class="btn btn-lg mr-md-2" id="ap_agree" [(ngModel)]="applicantAgreement">
@@ -47,7 +63,7 @@
       <label class="form-check-label" for="sp_agree">Yes, I agree</label>
     </span>
     <p class="text-muted font-italic">
-      Note: If you are married or living and cohabiting in a marriage-like relationship, your spouse must also agree.
+      Note: You may agree here on behalf of your spouse, but your spouse must sign the consent letter you receive.
     </p>
   </div>
 
