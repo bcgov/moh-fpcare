@@ -1,7 +1,7 @@
-import {Component, Input} from '@angular/core';
-import {environment} from '../../../../../environments/environment';
-import {MessageInterface, SRQ_Msgs} from '../../../../models/api.model';
-import {ResponseStoreService} from '../../../../services/response-store.service';
+import { Component, Input } from '@angular/core';
+import { environment } from '../../../../../environments/environment';
+import { MessageInterface, SRQ_Msgs } from '../../../../models/api.model';
+import { ResponseStoreService } from '../../../../services/response-store.service';
 
 export enum DisplayIcon {
   SUCCESS = 0,
@@ -15,14 +15,13 @@ export enum DisplayIcon {
   styleUrls: ['./results-framework.component.scss']
 })
 export class ResultsFrameworkComponent {
-
   @Input() displayIcon: DisplayIcon = DisplayIcon.SUCCESS;
   @Input() hasBody: boolean = true;
   @Input() displayPrint: boolean = false;
 
   public links = environment.links;
 
-  constructor( protected responseStore: ResponseStoreService ) { }
+  constructor(protected responseStore: ResponseStoreService) {}
 
   get errorIcon() {
     return DisplayIcon.ERROR;
@@ -41,13 +40,14 @@ export class ResultsFrameworkComponent {
    * @returns {string}
    */
   get noResponseMsg(): string {
-
     let msg: MessageInterface;
 
     // Use value from cache if exists
-    if ( this.responseStore.cacheMsgs ) {
-      msg =  this.responseStore.cacheMsgs.find( val => val.msgCode === 'SRQ_058' );
+    if (this.responseStore.cacheMsgs) {
+      msg = this.responseStore.cacheMsgs.find(val => val.msgCode === 'SRQ_058');
     }
-    return ( msg ? msg.msgText : SRQ_Msgs.find( val => val.msgCode === 'SRQ_058' ).msgText );
+    return msg
+      ? msg.msgText
+      : SRQ_Msgs.find(val => val.msgCode === 'SRQ_058').msgText;
   }
 }
