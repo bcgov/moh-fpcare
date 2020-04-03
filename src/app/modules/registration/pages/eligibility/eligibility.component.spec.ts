@@ -1,14 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  ComponentFixtureAutoDetect,
+  TestBed
+} from '@angular/core/testing';
 
 import { EligibilityPageComponent } from './eligibility.component';
 import { CoreModule } from '../../../core/core.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import {FormsModule} from '@angular/forms';
-import {FPCareDataService} from '../../../../services/fpcare-data.service';
-import {ValidationService} from '../../../../services/validation.service';
-import {RegistrationService} from '../../registration.service';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-
+import { FormsModule } from '@angular/forms';
+import { FPCareDataService } from '../../../../services/fpcare-data.service';
+import { ValidationService } from '../../../../services/validation.service';
+import { RegistrationService } from '../../registration.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('EligibilityComponent - Single Applicant', () => {
   let component: EligibilityPageComponent;
@@ -16,9 +20,7 @@ describe('EligibilityComponent - Single Applicant', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        EligibilityPageComponent
-      ],
+      declarations: [EligibilityPageComponent],
       imports: [
         CoreModule,
         FormsModule,
@@ -28,10 +30,10 @@ describe('EligibilityComponent - Single Applicant', () => {
       providers: [
         FPCareDataService,
         ValidationService,
-        RegistrationService
+        RegistrationService,
+        { provide: ComponentFixtureAutoDetect, useValue: true }
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -49,32 +51,38 @@ describe('EligibilityComponent - Single Applicant', () => {
   });
 
   // Field Validations
-  it('missing birthdate cannot continue', () => {
+  it('missing birthdate cannot continue', done => {
     component.applicant.phn = '9999 999 998';
+
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeFalsy();
+
+      done();
     });
   });
 
-  it('missing PHN cannot continue', () => {
-    component.applicant.dateOfBirth = {year: 1989, month: 4, day: 1};
-    fixture.detectChanges();
+  it('missing PHN cannot continue', done => {
+    component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
+
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeFalsy();
+
+      done();
     });
   });
 
-  it('required data populated can continue', () => {
+  it('required data populated can continue', done => {
     component.applicant.phn = '9999 999 998';
-    component.applicant.dateOfBirth = {year: 1989, month: 4, day: 1};
-    fixture.detectChanges();
+    component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
+
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeTruthy();
+
+      done();
     });
   });
 });
-
 
 describe('EligibilityComponent - Applicant with Spouse', () => {
   let component: EligibilityPageComponent;
@@ -83,9 +91,7 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        EligibilityPageComponent
-      ],
+      declarations: [EligibilityPageComponent],
       imports: [
         CoreModule,
         FormsModule,
@@ -95,14 +101,14 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
       providers: [
         FPCareDataService,
         ValidationService,
-        RegistrationService
+        RegistrationService,
+        { provide: ComponentFixtureAutoDetect, useValue: true }
       ]
-    })
-        .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    dataService = TestBed.get( FPCareDataService );
+    dataService = TestBed.get(FPCareDataService);
     dataService.addSpouse();
     dataService.hasSpouse = true;
     fixture = TestBed.createComponent(EligibilityPageComponent);
@@ -118,53 +124,63 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
     expect(component.canContinue()).toBeFalsy();
   });
 
-  it('missing applicant birthdate cannot continue', () => {
+  it('missing applicant birthdate cannot continue', done => {
     component.applicant.phn = '9999 999 998';
-    component.spouse.dateOfBirth = {year: 1989, month: 4, day: 1};
-    component.spouse.phn = '9999 999 973'
-    fixture.detectChanges();
+    component.spouse.dateOfBirth = { year: 1989, month: 4, day: 1 };
+    component.spouse.phn = '9999 999 973';
+
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeFalsy();
+
+      done();
     });
   });
-  it('missing applicant phn cannot continue', () => {
+
+  it('missing applicant phn cannot continue', done => {
     component.spouse.phn = '9999 999 998';
-    component.spouse.dateOfBirth = {year: 1989, month: 4, day: 1};
-    component.applicant.dateOfBirth = {year: 1990, month: 5, day: 30};
-    fixture.detectChanges();
+    component.spouse.dateOfBirth = { year: 1989, month: 4, day: 1 };
+    component.applicant.dateOfBirth = { year: 1990, month: 5, day: 30 };
+
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeFalsy();
+
+      done();
     });
   });
 
-  it('missing spouse birthdate cannot continue', () => {
+  it('missing spouse birthdate cannot continue', done => {
     component.applicant.phn = '9999 999 998';
-    component.applicant.dateOfBirth = {year: 1989, month: 4, day: 1};
-    component.spouse.phn = '9999 999 973'
-    fixture.detectChanges();
+    component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
+    component.spouse.phn = '9999 999 973';
+
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeFalsy();
+
+      done();
     });
   });
 
-  it('missing spouse phn cannot continue', () => {
+  it('missing spouse phn cannot continue', done => {
     component.applicant.phn = '9999 999 998';
-    component.applicant.dateOfBirth = {year: 1989, month: 4, day: 1};
-    component.applicant.dateOfBirth = {year: 1990, month: 5, day: 30};
-    fixture.detectChanges();
+    component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
+
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeFalsy();
+
+      done();
     });
   });
 
-  it('required data populated can continue', () => {
+  it('required data populated can continue', done => {
     component.applicant.phn = '9999 999 998';
-    component.applicant.dateOfBirth = {year: 1989, month: 4, day: 1};
-    component.spouse.phn = '9999 999 973'
-    component.spouse.dateOfBirth = {year: 1990, month: 5, day: 30};
-    fixture.detectChanges();
+    component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
+    component.spouse.phn = '9999 999 973';
+    component.spouse.dateOfBirth = { year: 1990, month: 5, day: 30 };
+
     fixture.whenStable().then(() => {
       expect(component.canContinue()).toBeTruthy();
+
+      done();
     });
   });
 });
