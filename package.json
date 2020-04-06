@@ -13,7 +13,7 @@
     "push-version": "git push --follow-tags",
     "prebuild": "node src/version.js",
     "build": "ng build --prod",
-    "test": "ng test --source-map=false",
+    "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e --webdriver-update false",
     "pree2e": "webdriver-manager update --versions.chrome=2.40"
