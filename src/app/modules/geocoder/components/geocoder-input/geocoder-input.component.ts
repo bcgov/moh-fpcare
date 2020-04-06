@@ -5,7 +5,7 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
-  SimpleChanges
+  SimpleChanges,
 } from '@angular/core';
 import { GeocoderService } from 'moh-common-lib/services';
 import { GeoAddressResult } from 'moh-common-lib/services/geocoder.service';
@@ -16,19 +16,19 @@ import {
   distinctUntilChanged,
   switchMap,
   tap,
-  catchError
+  catchError,
 } from 'rxjs/operators';
 import { TypeaheadMatch } from 'ngx-bootstrap';
 import { FPCAddress } from '../../../../models/address.model';
 import {
   defaultCountry,
-  defaultProv
+  defaultProv,
 } from '../../../../models/province-names.enum';
 
 @Component({
   selector: 'fpcare-geocoder-input',
   templateUrl: './geocoder-input.component.html',
-  styleUrls: ['./geocoder-input.component.scss']
+  styleUrls: ['./geocoder-input.component.scss'],
 })
 export class GeocoderInputComponent extends Base implements OnInit {
   @Input() label: string = 'Address Lookup';
@@ -62,9 +62,9 @@ export class GeocoderInputComponent extends Base implements OnInit {
       debounceTime(500),
       distinctUntilChanged(),
       // Trigger the network request, get results
-      switchMap(searchPhrase => this.geocoderService.lookup(searchPhrase)),
+      switchMap((searchPhrase) => this.geocoderService.lookup(searchPhrase)),
       // tap(log => console.log('taplog', log)),
-      catchError(err => this.onError(err))
+      catchError((err) => this.onError(err))
     );
   }
 

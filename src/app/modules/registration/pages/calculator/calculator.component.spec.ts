@@ -2,7 +2,7 @@ import {
   async,
   ComponentFixture,
   ComponentFixtureAutoDetect,
-  TestBed
+  TestBed,
 } from '@angular/core/testing';
 
 import { CalculatorPageComponent } from './calculator.component';
@@ -19,7 +19,7 @@ import { FinanceService } from '../../../financial-calculator/finance.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   baselineAssist,
-  pre1939Assist
+  pre1939Assist,
 } from '../../../financial-calculator/assistenceLevelsTestData';
 
 describe('CalculatorComponent', () => {
@@ -36,15 +36,15 @@ describe('CalculatorComponent', () => {
         TextMaskModule,
         RouterTestingModule,
         HttpClientTestingModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
       ],
       providers: [
         RegistrationService,
         FPCareDataService,
         FinanceService,
         ApiService,
-        { provide: ComponentFixtureAutoDetect, useValue: true }
-      ]
+        { provide: ComponentFixtureAutoDetect, useValue: true },
+      ],
     }).compileComponents();
   }));
 
@@ -67,7 +67,7 @@ describe('CalculatorComponent', () => {
   });
 
   // Required Fields - validations
-  it('applicant cannot continue without relationship status', done => {
+  it('applicant cannot continue without relationship status', (done) => {
     component.income = '45,000';
     component.bornBefore1939 = false;
 
@@ -78,7 +78,7 @@ describe('CalculatorComponent', () => {
     });
   });
 
-  it('applicant cannot continue without indicating if born before 1939', done => {
+  it('applicant cannot continue without indicating if born before 1939', (done) => {
     component.income = '45,000';
     component.hasSpouse = false;
 
@@ -89,7 +89,7 @@ describe('CalculatorComponent', () => {
     });
   });
 
-  it('Single applicant can continue (No spouse)', done => {
+  it('Single applicant can continue (No spouse)', (done) => {
     component.income = '45,000';
     component.hasSpouse = false;
     component.bornBefore1939 = false;
@@ -101,7 +101,7 @@ describe('CalculatorComponent', () => {
     });
   });
 
-  it('applicant with spouse cannot continue without spouse income', done => {
+  it('applicant with spouse cannot continue without spouse income', (done) => {
     component.income = '45,000';
     component.hasSpouse = true;
     component.bornBefore1939 = false;
@@ -113,7 +113,7 @@ describe('CalculatorComponent', () => {
     });
   });
 
-  it('applicant with spouse can continue', done => {
+  it('applicant with spouse can continue', (done) => {
     component.income = '45,000';
     component.hasSpouse = true;
     component.bornBefore1939 = false;

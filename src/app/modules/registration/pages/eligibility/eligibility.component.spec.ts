@@ -2,7 +2,7 @@ import {
   async,
   ComponentFixture,
   ComponentFixtureAutoDetect,
-  TestBed
+  TestBed,
 } from '@angular/core/testing';
 
 import { EligibilityPageComponent } from './eligibility.component';
@@ -25,14 +25,14 @@ describe('EligibilityComponent - Single Applicant', () => {
         CoreModule,
         FormsModule,
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       providers: [
         FPCareDataService,
         ValidationService,
         RegistrationService,
-        { provide: ComponentFixtureAutoDetect, useValue: true }
-      ]
+        { provide: ComponentFixtureAutoDetect, useValue: true },
+      ],
     }).compileComponents();
   }));
 
@@ -51,7 +51,7 @@ describe('EligibilityComponent - Single Applicant', () => {
   });
 
   // Field Validations
-  it('missing birthdate cannot continue', done => {
+  it('missing birthdate cannot continue', (done) => {
     component.applicant.phn = '9999 999 998';
 
     fixture.detectChanges();
@@ -62,7 +62,7 @@ describe('EligibilityComponent - Single Applicant', () => {
     });
   });
 
-  it('missing PHN cannot continue', done => {
+  it('missing PHN cannot continue', (done) => {
     component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
 
     fixture.whenStable().then(() => {
@@ -72,7 +72,7 @@ describe('EligibilityComponent - Single Applicant', () => {
     });
   });
 
-  it('required data populated can continue', done => {
+  it('required data populated can continue', (done) => {
     component.applicant.phn = '9999 999 998';
     component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
 
@@ -96,14 +96,14 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
         CoreModule,
         FormsModule,
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       providers: [
         FPCareDataService,
         ValidationService,
         RegistrationService,
-        { provide: ComponentFixtureAutoDetect, useValue: true }
-      ]
+        { provide: ComponentFixtureAutoDetect, useValue: true },
+      ],
     }).compileComponents();
   }));
 
@@ -124,7 +124,7 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
     expect(component.canContinue()).toBeFalsy();
   });
 
-  it('missing applicant birthdate cannot continue', done => {
+  it('missing applicant birthdate cannot continue', (done) => {
     component.applicant.phn = '9999 999 998';
     component.spouse.dateOfBirth = { year: 1989, month: 4, day: 1 };
     component.spouse.phn = '9999 999 973';
@@ -136,7 +136,7 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
     });
   });
 
-  it('missing applicant phn cannot continue', done => {
+  it('missing applicant phn cannot continue', (done) => {
     component.spouse.phn = '9999 999 998';
     component.spouse.dateOfBirth = { year: 1989, month: 4, day: 1 };
     component.applicant.dateOfBirth = { year: 1990, month: 5, day: 30 };
@@ -148,7 +148,7 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
     });
   });
 
-  it('missing spouse birthdate cannot continue', done => {
+  it('missing spouse birthdate cannot continue', (done) => {
     component.applicant.phn = '9999 999 998';
     component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
     component.spouse.phn = '9999 999 973';
@@ -160,7 +160,7 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
     });
   });
 
-  it('missing spouse phn cannot continue', done => {
+  it('missing spouse phn cannot continue', (done) => {
     component.applicant.phn = '9999 999 998';
     component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
 
@@ -171,7 +171,7 @@ describe('EligibilityComponent - Applicant with Spouse', () => {
     });
   });
 
-  it('required data populated can continue', done => {
+  it('required data populated can continue', (done) => {
     component.applicant.phn = '9999 999 998';
     component.applicant.dateOfBirth = { year: 1989, month: 4, day: 1 };
     component.spouse.phn = '9999 999 973';

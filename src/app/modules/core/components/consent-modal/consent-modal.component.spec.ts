@@ -20,9 +20,9 @@ describe('ConsentModalComponent', () => {
         ModalModule.forRoot(),
         RouterTestingModule,
         HttpClientTestingModule,
-        CoreModule
+        CoreModule,
       ],
-      providers: [BsModalService, FPCareDataService]
+      providers: [BsModalService, FPCareDataService],
     }).compileComponents();
   }));
 

@@ -2,7 +2,7 @@ import {
   async,
   ComponentFixture,
   ComponentFixtureAutoDetect,
-  TestBed
+  TestBed,
 } from '@angular/core/testing';
 import { FormsModule, NgForm, ValidationErrors } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
@@ -19,10 +19,10 @@ import { RegNumberValidationComponent } from '../../../../validation/reg-number-
 function formHasError(form: NgForm, errorKey: string): boolean {
   return (
     Object.keys(form.controls)
-      .map(key => form.controls[key].errors)
-      .filter(x => x)
-      .map(x => Object.keys(x))
-      .filter(str => str.includes(errorKey)).length === 1
+      .map((key) => form.controls[key].errors)
+      .filter((x) => x)
+      .map((x) => Object.keys(x))
+      .filter((str) => str.includes(errorKey)).length === 1
   );
 }
 
@@ -36,14 +36,14 @@ describe('RegistrationStatusComponent', () => {
         CoreModule,
         FormsModule,
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
       ],
       declarations: [RegistrationStatusComponent],
       providers: [
         FPCareDataService,
         ValidationService,
-        { provide: ComponentFixtureAutoDetect, useValue: true }
-      ]
+        { provide: ComponentFixtureAutoDetect, useValue: true },
+      ],
     }).compileComponents();
   }));
 
@@ -87,7 +87,7 @@ describe('RegistrationStatusComponent', () => {
     expect(component.disableRegNum()).toBeFalsy();
   });
 
-  it('invalid PHN', done => {
+  it('invalid PHN', (done) => {
     component.applicant.phn = '9999999990';
 
     fixture.whenStable().then(() => {
@@ -100,7 +100,7 @@ describe('RegistrationStatusComponent', () => {
     });
   });
 
-  it('valid PHN', done => {
+  it('valid PHN', (done) => {
     component.applicant.phn = '9999999998';
 
     fixture.whenStable().then(() => {
@@ -113,7 +113,7 @@ describe('RegistrationStatusComponent', () => {
     });
   });
 
-  it('required PHN', done => {
+  it('required PHN', (done) => {
     component.applicant.address.postal = 'V1D3G4';
     component.applicant.dateOfBirth = { month: 1, day: 2, year: 1989 };
 
@@ -130,7 +130,7 @@ describe('RegistrationStatusComponent', () => {
     });
   });
 
-  it('requires Postal Code', done => {
+  it('requires Postal Code', (done) => {
     component.applicant.phn = '9999999998';
     component.applicant.dateOfBirth = { month: 1, day: 2, year: 1989 };
 
@@ -143,7 +143,7 @@ describe('RegistrationStatusComponent', () => {
     });
   });
 
-  it('invalid FPC Registration Number', done => {
+  it('invalid FPC Registration Number', (done) => {
     component.applicant.fpcRegNumber = 'B99999999';
 
     fixture.whenStable().then(() => {
@@ -156,7 +156,7 @@ describe('RegistrationStatusComponent', () => {
     });
   });
 
-  it('valid FPC Registration Number', done => {
+  it('valid FPC Registration Number', (done) => {
     component.applicant.fpcRegNumber = 'A08349678';
 
     fixture.whenStable().then(() => {

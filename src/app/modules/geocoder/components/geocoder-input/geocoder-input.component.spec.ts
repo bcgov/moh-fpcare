@@ -3,7 +3,7 @@ import {
   ComponentFixture,
   TestBed,
   fakeAsync,
-  tick
+  tick,
 } from '@angular/core/testing';
 
 import { GeocoderInputComponent } from './geocoder-input.component';
@@ -28,15 +28,15 @@ describe('GeocoderInputComponent', () => {
       city: 'Victoria',
       street: '784 Yates St',
       country: 'CAN',
-      province: 'BC'
+      province: 'BC',
     },
     {
       fullAddress: '784 Young Rd, Kelowna, BC',
       city: 'Kelowna',
       street: '784 Young Rd',
       country: 'CAN',
-      province: 'BC'
-    }
+      province: 'BC',
+    },
   ];
 
   beforeEach(async(() => {
@@ -46,7 +46,11 @@ describe('GeocoderInputComponent', () => {
     TestBed.configureTestingModule({
       declarations: [GeocoderInputComponent],
       providers: [{ provide: GeocoderService, useValue: geoService }],
-      imports: [FormsModule, TypeaheadModule.forRoot(), HttpClientTestingModule]
+      imports: [
+        FormsModule,
+        TypeaheadModule.forRoot(),
+        HttpClientTestingModule,
+      ],
     }).compileComponents();
   }));
 
@@ -86,7 +90,7 @@ describe('GeocoderInputComponent', () => {
 
   it('should emit an address when one is selected from typeahead', fakeAsync(() => {
     let typeaheadMatch: any;
-    component.typeaheadList$.subscribe(x => {
+    component.typeaheadList$.subscribe((x) => {
       typeaheadMatch = { item: x[0] };
       // Simulate user has selected the first typeahead item (i.e. enter/tab/clicked on first item)
       component.onSelect(typeaheadMatch);

@@ -12,7 +12,7 @@ describe('SplashPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [SplashPageComponent],
-      imports: [HttpClientTestingModule, RouterTestingModule, CoreModule]
+      imports: [HttpClientTestingModule, RouterTestingModule, CoreModule],
     }).compileComponents();
   }));
 

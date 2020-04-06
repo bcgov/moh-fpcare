@@ -8,7 +8,7 @@ describe('ResultsFrameworkComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CoreModule]
+      imports: [CoreModule],
     }).compileComponents();
   }));
 

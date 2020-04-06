@@ -6,13 +6,13 @@ import { ResponseStoreService } from '../../../../services/response-store.servic
 export enum DisplayIcon {
   SUCCESS = 0,
   ERROR = 1,
-  WARNING = 2
+  WARNING = 2,
 }
 
 @Component({
   selector: 'fpcare-results-framework',
   templateUrl: './results-framework.component.html',
-  styleUrls: ['./results-framework.component.scss']
+  styleUrls: ['./results-framework.component.scss'],
 })
 export class ResultsFrameworkComponent {
   @Input() displayIcon: DisplayIcon = DisplayIcon.SUCCESS;
@@ -44,10 +44,12 @@ export class ResultsFrameworkComponent {
 
     // Use value from cache if exists
     if (this.responseStore.cacheMsgs) {
-      msg = this.responseStore.cacheMsgs.find(val => val.msgCode === 'SRQ_058');
+      msg = this.responseStore.cacheMsgs.find(
+        (val) => val.msgCode === 'SRQ_058'
+      );
     }
     return msg
       ? msg.msgText
-      : SRQ_Msgs.find(val => val.msgCode === 'SRQ_058').msgText;
+      : SRQ_Msgs.find((val) => val.msgCode === 'SRQ_058').msgText;
   }
 }
