@@ -38,7 +38,7 @@
     "core-js": "^2.4.1",
     "float-label-css": "^1.0.2",
     "font-awesome": "^4.6.3",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "js-md5": "^0.7.3",
     "lodash": "^4.17.15",
     "moh-common-lib": "0.0.29-captcha",
