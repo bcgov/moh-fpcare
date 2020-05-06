@@ -1,5 +1,5 @@
 import {Component, ViewChild, EventEmitter, Output, OnInit, ElementRef, ChangeDetectorRef} from '@angular/core';
-import { Base } from '../base/base.class';
+import { Base } from 'moh-common-lib/models';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import {environment} from '../../../../../environments/environment';
 import {ApiService} from '../../../../services/api-service.service';
@@ -19,8 +19,8 @@ export class ConsentModalComponent extends Base implements OnInit {
   private _agreeCheck: boolean = false;
   private _hasToken = false;
 
-  @ViewChild('informationCollectionModal') public informationCollectionModal: ModalDirective;
-  @ViewChild('agree') checkbox: ElementRef<HTMLInputElement>;
+  @ViewChild('informationCollectionModal', { static: true }) public informationCollectionModal: ModalDirective;
+  @ViewChild('agree', { static: true }) checkbox: ElementRef<HTMLInputElement>;
 
   @Output() onConsented = new EventEmitter<boolean>();
 

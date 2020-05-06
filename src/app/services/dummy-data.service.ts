@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Person } from '../models/person.model';
-import { Address } from '../models/address.model';
+import { FPCPerson } from '../models/person.model';
+import { FPCAddress } from '../models/address.model';
 import {SimpleDate} from '../modules/core/components/date/simple-date.interface';
 import {CountryNames, ProvinceNames} from '../models/province-names.enum';
 
@@ -26,18 +26,18 @@ export class DummyDataService {
   constructor() { }
 
   // Applicant for test purpose - personal info
-  createApplicant( populated: boolean = true ): Person {
+  createApplicant( populated: boolean = true ): FPCPerson {
 
-    return populated ? this.createAdult( true, false ) : new Person();
+    return populated ? this.createAdult( true, false ) : new FPCPerson();
   }
 
   // Spouse for test purpose - personal info
-  createSpouse( populated: boolean = true ): Person {
-    return populated ? this.createAdult() : new Person();
+  createSpouse( populated: boolean = true ): FPCPerson {
+    return populated ? this.createAdult() : new FPCPerson();
   }
 
-  createAdult( setAddress: boolean = false, setUpdAddress: boolean = false ): Person {
-    const result: Person = new Person;
+  createAdult( setAddress: boolean = false, setUpdAddress: boolean = false ): FPCPerson {
+    const result: FPCPerson = new FPCPerson;
 
     result.name = this.generatePersonName();
     result.dateOfBirth = this.generateDateOfBirth();
@@ -58,11 +58,11 @@ export class DummyDataService {
   }
 
   // Applicant for test purpose - personal info
-  createChildren( count: number ): Person[] {
-    const result: Person [] = [];
+  createChildren( count: number ): FPCPerson[] {
+    const result: FPCPerson [] = [];
 
     for (let index = 0; index < count; index++) {
-      const person = new Person();
+      const person = new FPCPerson();
       person.name = this.generatePersonName();
       person.dateOfBirth = this.generateDateOfBirth( 1, 19 );
       person.phn = this.generatePHN();
@@ -121,10 +121,10 @@ export class DummyDataService {
     return sin;
   }
 
-  private generateAddress(): Address {
+  private generateAddress(): FPCAddress {
     const streetNames = ['Kings', 'Main', 'Fort', 'Yates', 'Douglas'];
     const postalCodes = ['V8R 1R9', 'V8R 2W0', 'V8E 2T9', 'V6R 0N2', 'V6E 2N9'];
-    const address = new Address();
+    const address = new FPCAddress();
 
     address.street = `${Math.ceil(Math.random() * 8000)} ${this.getRandomElFromArray( streetNames )} St.`;
     address.postal = `${this.getRandomElFromArray( postalCodes )}`;
@@ -144,8 +144,8 @@ export class DummyDataService {
 
   // Data that uses fake-backend
 
-  createPerson( phn: string, dob: SimpleDate, postalCode: string = null ): Person {
-    const result: Person = new Person;
+  createPerson( phn: string, dob: SimpleDate, postalCode: string = null ): FPCPerson {
+    const result: FPCPerson = new FPCPerson;
 
     result.name = this.generatePersonName();
     result.dateOfBirth = dob;
@@ -160,7 +160,7 @@ export class DummyDataService {
 
   createPersonforStatusCheck( value: string, dob: SimpleDate = {year: null, month: null, day: null},
                               postalCode: string = null ) {
-    const result: Person = new Person;
+    const result: FPCPerson = new FPCPerson;
 
     if ( dob && postalCode ) {
       result.phn = value;

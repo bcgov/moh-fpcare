@@ -1,4 +1,4 @@
-<fpcare-page-framework layout='default'>
+<common-page-framework layout='default'>
 
   <ng-content select="[title]"></ng-content>
 
@@ -20,7 +20,7 @@
 
     <div class="col-md-6" *ngIf="displayPrint">
       <button class="btn btn-default float-right fpc-icon--print" onclick="window.print();return false;" aria-label="print">
-        <i class="fa fa-print fa-lg pointer" aria-hidden="true"></i>
+        <i class="fa fa-print fa-2x pointer" aria-hidden="true"></i>
       </button>
     </div>
   </div>
@@ -33,7 +33,7 @@
   <p>More information is available on <a target="_blank" href="{{links.FAQ}}">Frequently Asked Questions</a></p>
 </div>
 
-</fpcare-page-framework>
+</common-page-framework>
 
 <!-- There's no response object - user hasn't submitted the HTTP request. -->
 <ng-template #noBody>

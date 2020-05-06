@@ -32,23 +32,23 @@ const routes: Routes = [
   // Lazy loading modules below
   {
     path: REGISTRATION_PATH,
-    loadChildren: 'app/modules/registration/registration.module#RegistrationModule'
+    loadChildren: () => import('app/modules/registration/registration.module').then(m => m.RegistrationModule)
   },
   {
     path: REGISTRATION_STATUS_PATH,
-    loadChildren: 'app/modules/registration-status/registration-status.module#RegistrationStatusModule'
+    loadChildren: () => import('app/modules/registration-status/registration-status.module').then(m => m.RegistrationStatusModule)
   },
   {
     path: REPRINT_LETTERS_PATH,
-    loadChildren: 'app/modules/reprint-letters/reprint-letters.module#ReprintLettersModule'
+    loadChildren: () => import('app/modules/reprint-letters/reprint-letters.module').then(m => m.ReprintLettersModule)
   },
   {
     path: STANDALONE_CALCULATOR,
-    loadChildren: 'app/modules/financial-calculator/standalone-calculator-page/standalone-calculator-page.module#StandaloneCalculatorPageModule'
+    loadChildren: () => import('app/modules/financial-calculator/standalone-calculator-page/standalone-calculator-page.module').then(m => m.StandaloneCalculatorPageModule)
   },
   {
     path: MAINTENANCE,
-    loadChildren: 'app/modules/splash-page/splash-page.module#SplashPageModule',
+    loadChildren: () => import('app/modules/splash-page/splash-page.module').then(m => m.SplashPageModule),
   },
   {
     path: ERROR_PAGE,

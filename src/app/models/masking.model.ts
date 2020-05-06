@@ -1,5 +1,5 @@
 //List of constants used for masking inputs
-import {Base} from '../modules/core/components/base/base.class';
+import { Base } from 'moh-common-lib/models';
 import {EventEmitter, Input, Output} from '@angular/core';
 
 export const LETTER = /[A-Z]/i; //Ignore case here, then upperCase it via pipe.

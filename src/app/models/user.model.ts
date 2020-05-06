@@ -1,4 +1,4 @@
-import { Base } from './base.alias';
+import { Base } from 'moh-common-lib/models';
 
 
 /** Main class for the active user's session. */

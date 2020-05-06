@@ -1,6 +1,6 @@
-<fpcare-page-framework layout='default'>
+<common-page-framework layout='default'>
 
-  <h1>Fair PharmaCare Calculator</h1>
+  <h1>{{ standalone ? 'Fair PharmaCare' : 'Financial' }} Calculator</h1>
 
    <div>
       <p>
@@ -41,7 +41,8 @@
                 [ngModel]="income"
                 (ngModelChange)="income = $event; update()"
                 [textMask]="{mask: moneyMask}"
-                placeholder="Enter Your Income"/>
+                placeholder="Enter Your Income"
+                autocomplete="off"/>
           </div>
       </div>
 
@@ -78,7 +79,8 @@
                 [ngModel]="spouseIncome"
                 (ngModelChange)="spouseIncome = $event; update()"
                 [textMask]="{mask: moneyMask}"
-                placeholder="Enter Your Spouse's Income"/>
+                placeholder="Enter Your Spouse's Income"
+                autocomplete="off"/>
           </div>
       </div>
 
@@ -106,7 +108,8 @@
                 [ngModel]="disability"
                 (ngModelChange)="disability = $event; update();"
                 [textMask]="{mask: moneyMask}"
-                placeholder="Enter Disability Savings Amounts"/>
+                placeholder="Enter Disability Savings Amounts"
+                autocomplete="off"/>
           </div>
       </div>
 
@@ -126,7 +129,8 @@
                   [ngModel]="spouseDisability"
                   (ngModelChange)="spouseDisability = $event; update();"
                   [textMask]="{mask: moneyMask}"
-                  placeholder="Enter Disability Savings Amounts"/>
+                  placeholder="Enter Disability Savings Amounts"
+                  autocomplete="off"/>
         </div>
      </div>
         
@@ -142,13 +146,13 @@
     ></fpcare-financial-calculator>
   </aside>
 
-   <fpcare-form-action-bar
+   <common-form-action-bar
        *ngIf="!standalone"
        [submitLabel]="buttonText"
        [defaultColor]="false"
        [canContinue]="canContinue()"
        (btnClick)="continue()">
-   </fpcare-form-action-bar>
+   </common-form-action-bar>
 
 
    <fpcare-sample-modal
@@ -157,4 +161,4 @@
        [images]="imageList">
    </fpcare-sample-modal>
 
-</fpcare-page-framework>
+</common-page-framework>

@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import { Person } from '../../../../models/person.model';
+import { FPCPerson } from '../../../../models/person.model';
 import { Router } from '@angular/router';
 import { FPCareDataService } from '../../../../services/fpcare-data.service';
 import { AbstractFormComponent } from '../../../../models/abstract-form-component';
@@ -19,7 +19,7 @@ import {ErrorPageService} from '../../../../pages/error-page/error-page.service'
 export class RegistrationStatusComponent extends AbstractFormComponent implements OnInit, AfterViewInit {
 
   /** Access to date component */
-  @ViewChild('consentModal') consentModal: ConsentModalComponent;
+  @ViewChild('consentModal', { static: true }) consentModal: ConsentModalComponent;
 
   public placeholder = 'A12345678';
 
@@ -69,9 +69,9 @@ export class RegistrationStatusComponent extends AbstractFormComponent implement
 
   /**
    * Structure to record data for request
-   * @returns {Person}
+   * @returns {FPCPerson}
    */
-  get applicant(): Person {
+  get applicant(): FPCPerson {
     return this.fpcareDataService.applicant;
   }
 

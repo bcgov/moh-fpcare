@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Person} from '../models/person.model';
+import {FPCPerson} from '../models/person.model';
 
 /**
  * FPCareDataService is responsible for storing and searching data. It is not
@@ -11,16 +11,16 @@ import {Person} from '../models/person.model';
 export class FPCareDataService {
 
   /** Applicant information */
-  public applicant: Person;
+  public applicant: FPCPerson;
 
   /** Flag to indicate that applicant has a spouse */
   public hasSpouse: boolean;
 
   /** Information for applicant's spouse */
-  public spouse: Person;
+  public spouse: FPCPerson;
 
   /** Information for children related to applicant */
-  private _dependants: Person[] = [];
+  private _dependants: FPCPerson[] = [];
 
   /** Variable to record whether individual has consented to collection notice */
   public acceptedCollectionNotice: boolean = false;
@@ -41,22 +41,22 @@ export class FPCareDataService {
 
   constructor() {
     // Create applicant
-    this.applicant = new Person();
+    this.applicant = new FPCPerson();
   }
 
   /**
    * Gets list of dependants
-   * @returns {Person[]}
+   * @returns {FPCPerson[]}
    */
-  get dependants(): Person[] {
+  get dependants(): FPCPerson[] {
     return this._dependants;
   }
 
   /**
    * Sets the list of dependants
-   * @param {Person[]} children
+   * @param {FPCPerson[]} children
    */
-  set dependants( children: Person[] ) {
+  set dependants( children: FPCPerson[] ) {
     this._dependants = children;
   }
 
@@ -64,7 +64,7 @@ export class FPCareDataService {
    * Adds a spouse
    */
   addSpouse() {
-    this.spouse = new Person();
+    this.spouse = new FPCPerson();
   }
 
   /**
@@ -79,7 +79,7 @@ export class FPCareDataService {
    * Adds a child to the dependants list
    */
   addChild() {
-    const child: Person = new Person();
+    const child: FPCPerson = new FPCPerson();
 
     if (this.canAddChild()){
       this._dependants.push(child);

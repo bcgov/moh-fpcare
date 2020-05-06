@@ -10,7 +10,8 @@
          [ngModel]="value"
          (ngModelChange)="onUpdate($event)"
          [textMask]="{mask: mask}"
-         [disabled]="disabled" />
+         [disabled]="disabled" 
+         autocomplete="off"/>
 </div>
 
 <div *ngIf="!uniquePhns" role="alert" aria-live="assertive">

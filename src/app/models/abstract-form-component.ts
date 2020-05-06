@@ -1,5 +1,5 @@
 import {Router} from '@angular/router';
-import {Base} from '../modules/core/components/base/base.class';
+import { Base } from 'moh-common-lib/models';
 import {NgForm} from '@angular/forms';
 import {QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {FPCareDateComponent} from '../modules/core/components/date/date.component';
@@ -18,7 +18,7 @@ export abstract class AbstractFormComponent extends Base {
   abstract continue(): void;
 
   /** Access to the form elements for validation */
-  @ViewChild('formRef') form: NgForm;
+  @ViewChild('formRef', { static: true}) form: NgForm;
   @ViewChildren(FPCareDateComponent) dateForm: QueryList<FPCareDateComponent>;
 
   /**

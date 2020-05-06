@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SplashPageComponent } from './splash-page.component';
-import {RouterTestingModule} from '@angular/router/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {PageFrameworkComponent} from '../../../core/components/page-framework/page-framework.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CoreModule } from '../../../core/core.module';
 
 describe('SplashPageComponent', () => {
   let component: SplashPageComponent;
@@ -11,16 +11,9 @@ describe('SplashPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        SplashPageComponent,
-        PageFrameworkComponent
-      ],
-      imports: [
-        HttpClientTestingModule,
-        RouterTestingModule
-      ]
-    })
-    .compileComponents();
+      declarations: [SplashPageComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule, CoreModule],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

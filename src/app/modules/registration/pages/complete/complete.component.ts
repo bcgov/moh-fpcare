@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {Router} from '@angular/router';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
-import {Person} from '../../../../models/person.model';
+import {FPCPerson} from '../../../../models/person.model';
 import {ApiService} from '../../../../services/api-service.service';
 import {RegistrationService} from '../../registration.service';
 import { Logger } from '../../../../services/logger.service';
@@ -54,7 +54,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
    * Gets the applicant object
    * @returns {Person}
    */
-  get applicant(): Person {
+  get applicant(): FPCPerson {
     return this.fpcService.applicant;
   }
 
@@ -62,7 +62,7 @@ export class CompletePageComponent extends AbstractFormComponent implements OnIn
    * Gets the spouse object
    * @returns {Person}
    */
-  get spouse(): Person {
+  get spouse(): FPCPerson {
     return this.fpcService.spouse;
   }
 

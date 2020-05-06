@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ControlContainer, NgForm} from '@angular/forms';
-import {Base} from '../base/base.class';
+import { Base } from 'moh-common-lib/models';
 
 @Component({
   selector: 'fpcare-name',
