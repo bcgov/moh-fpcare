@@ -1,7 +1,7 @@
-<fpcare-page-framework layout='default'>
+<common-page-framework layout='default'>
 
   <h1>
-    Tell us a bit about who's applying for Fair PharmaCare
+    Tell us a bit about who's applying for Fair PharmaCare coverage
   </h1>
 
   <div>
@@ -45,7 +45,7 @@
           </fpcare-date>
 
           <div class="form-group">
-            <fpcare-phn [(value)]="spouse.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError"></fpcare-phn>
+            <fpcare-phn [(value)]="spouse.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError=$event"></fpcare-phn>
           </div>
 
         </div>
@@ -58,10 +58,10 @@
     <fpcare-phn-definition></fpcare-phn-definition>
   </aside>
 
-  <fpcare-form-action-bar
+  <common-form-action-bar
     [canContinue]="canContinue()"
     (btnClick)="continue()"
     [isLoading]="loading">
-  </fpcare-form-action-bar>
+  </common-form-action-bar>
 
-</fpcare-page-framework>
+</common-page-framework>

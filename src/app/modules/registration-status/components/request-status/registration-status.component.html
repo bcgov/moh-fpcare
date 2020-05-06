@@ -3,7 +3,7 @@
         (onConsented)="onAccept($event)">
 </fpcare-consent-modal>
 
-<fpcare-page-framework layout='default'>
+<common-page-framework layout='default'>
 
   <div>
     <h1>
@@ -49,10 +49,10 @@
         </div>
 
         <div class="form-group">
-          <fpcare-postal-code 
-              [(value)]="applicant.address.postal"
-              [disabled]="disablePhn()">
-          </fpcare-postal-code>
+          <common-postal-code [(value)]="applicant.address.postal"
+                              label="Mailing Postal Code"
+                              [disabled]="disablePhn()">
+          </common-postal-code>
         </div>
       </div>
       <div class="col-lg-1 or-col text-center">
@@ -70,7 +70,8 @@
                  fpcareRequired="required,regnum-check"
                  [ngModel]="applicant.fpcRegNumber"
                  (ngModelChange)="updateRegNumber($event)"
-                 [disabled]="disableRegNum()">
+                 [disabled]="disableRegNum()"
+                 autocomplete="off">
         </div>
       </div>
     </div>
@@ -86,10 +87,10 @@
 
   </aside>
 
-  <fpcare-form-action-bar
+  <common-form-action-bar
           [canContinue]="canContinue()"
           (btnClick)="continue()"
           [isLoading]="loading">
-  </fpcare-form-action-bar>
+  </common-form-action-bar>
 
-</fpcare-page-framework>
+</common-page-framework>

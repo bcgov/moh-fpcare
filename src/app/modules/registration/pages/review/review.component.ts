@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
 import {Router} from '@angular/router';
-import {Person} from '../../../../models/person.model';
-import {Base} from '../../../core/components/base/base.class';
+import {FPCPerson} from '../../../../models/person.model';
+import { Base } from 'moh-common-lib/models';
 import {
   REGISTRATION_ADDRESS,
   REGISTRATION_AUTHORIZE,
@@ -39,7 +39,7 @@ export class ReviewPageComponent extends Base implements OnInit {
    * Gets the applicant object
    * @returns {Person}
    */
-  get applicant(): Person {
+  get applicant(): FPCPerson {
     return this.fpcService.applicant;
   }
 
@@ -47,15 +47,15 @@ export class ReviewPageComponent extends Base implements OnInit {
    * Gets the spouse object
    * @returns {Person}
    */
-  get spouse(): Person {
+  get spouse(): FPCPerson {
     return this.fpcService.spouse;
   }
 
   /**
    * Retrieves the list of children
-   * @returns {Person[]}
+   * @returns {FPCPerson[]}
    */
-  get children(): Person[] {
+  get children(): FPCPerson[] {
     return this.fpcService.dependants;
   }
 
@@ -145,10 +145,10 @@ export class ReviewPageComponent extends Base implements OnInit {
 
   /**
    * Retrieves the child's date of birth as a string
-   * @param {Person} child
+   * @param {FPCPerson} child
    * @returns {string}
    */
-  getChildDob( child: Person ): string {
+  getChildDob( child: FPCPerson ): string {
     return child.formatDateOfBirth;
   }
 

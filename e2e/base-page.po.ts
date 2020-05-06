@@ -9,7 +9,7 @@ export class BasePagePo {
   private _continueButton;
 
   constructor() {
-    this._continueButton = element(by.css('fpcare-form-action-bar .submit'));
+    this._continueButton = element(by.css('common-form-action-bar .submit'));
   }
 
   /**

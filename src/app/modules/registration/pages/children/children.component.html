@@ -1,12 +1,12 @@
-<fpcare-page-framework layout='default'>
+<common-page-framework layout='default'>
 
   <h1>Child Information</h1>
    <p>
-      Enter your child or children's personal information if applicable.
+      Enter your child or children's personal information, if applicable.
    </p>
 
    <p class="text-muted font-italic">
-      Note: In the case of shared custody, children can be included in only one parent's Fair PharmaCare account.
+      Note: If you share custody of any of your children with a former partner, the children can only be on one parent's Fair PharmaCare account.
    </p>
 
    <h2>Your child's personal information</h2>
@@ -46,7 +46,7 @@
         </div>
         <div class="form-group">
            <fpcare-phn
-               [(value)]="child.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError">
+               [(value)]="child.phn" [phnList]="familyPhnList" (uniquePhnError)="uniquePhnError=$event">
            </fpcare-phn>
         </div>
       </div>
@@ -61,10 +61,10 @@
     <fpcare-phn-definition [driverLicense]="false"></fpcare-phn-definition>
   </aside>
 
-  <fpcare-form-action-bar
+  <common-form-action-bar
           [submitLabel]="buttonLabel"
           [canContinue]="canContinue()"
           (btnClick)="continue()">
-  </fpcare-form-action-bar>
+  </common-form-action-bar>
 
-</fpcare-page-framework>
+</common-page-framework>

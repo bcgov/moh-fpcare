@@ -1,4 +1,4 @@
-<fpcare-page-framework layout='single' xmlns="http://www.w3.org/1999/html">
+<common-page-framework layout='single' xmlns="http://www.w3.org/1999/html">
 
   <div>
     <h1>Give permission for your income tax information to be checked</h1>
@@ -67,10 +67,10 @@
     </p>
   </div>
 
-  <fpcare-form-action-bar
+  <common-form-action-bar
           [submitLabel]="buttonLabel"
           [canContinue]="canContinue()"
           (btnClick)="continue()"
           [isLoading]="loading">
-  </fpcare-form-action-bar>
-</fpcare-page-framework>
+  </common-form-action-bar>
+</common-page-framework>

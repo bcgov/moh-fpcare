@@ -3,7 +3,7 @@
         (onConsented)="onAccept($event)">
 </fpcare-consent-modal>
 
-<fpcare-page-framework layout='default'>
+<common-page-framework layout='default'>
 
   <h1>Register for Fair PharmaCare</h1>
   <div>
@@ -19,10 +19,8 @@
           <li>Date of Birth</li>
         </ul>
         <p class="font-italic text-muted">
-            Note: The child must be registered on the account of the parent on whose Medical 
-            Services Plan (MSP) account the child is registered. MSP and PharmaCare share family 
-            structure information, so children must be on the same parents account for both MSP 
-            and PharmaCare.
+            Note: If you share custody of any of your children with a former partner, the 
+            children can only be on one parent's Fair PharmaCare account.
         </p>
       </div>
     </div>
@@ -76,8 +74,8 @@
 
   </aside>
 
-  <fpcare-form-action-bar
+  <common-form-action-bar
           (btnClick)="continue()">
-  </fpcare-form-action-bar>
+  </common-form-action-bar>
 
-</fpcare-page-framework>
+</common-page-framework>

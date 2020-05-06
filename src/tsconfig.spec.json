@@ -2,8 +2,6 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
-    "module": "commonjs",
-    "target": "es5",
     "baseUrl": "",
     "types": [
       "jasmine",
@@ -13,8 +11,6 @@
   "files": [
     "test.ts",
     "polyfills.ts",
-    "../node_modules/mygovbc-captcha-widget/src/app/captcha-data.service.ts",
-    "../node_modules/mygovbc-captcha-widget/src/app/captcha/captcha.component.ts"
   ],
   "include": [
     "**/*.spec.ts",

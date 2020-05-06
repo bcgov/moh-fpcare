@@ -5,12 +5,7 @@ import { AlertModule, TooltipModule, ProgressbarModule, ModalModule } from 'ngx-
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FPCareToggleComponent } from './components/toggle/toggle.component';
-import { PostalCodeComponent } from './components/postal-code/postal-code.component';
-import { PageFrameworkComponent } from './components/page-framework/page-framework.component';
-import { WizardProgressBarComponent } from './components/wizard-progress-bar/wizard-progress-bar.component';
-import { CoreBreadcrumbComponent } from './components/core-breadcrumb/core-breadcrumb.component';
 import { TextMaskModule } from 'angular2-text-mask';
-import { FormActionBarComponent } from './components/form-action-bar/form-action-bar.component';
 import { FPCareRequiredDirective } from '../../validation/fpcare-required.directive';
 import { RequiredValidationErrorsComponent } from '../../validation/required-validation/required-validation.component';
 import { ConsentModalComponent } from './components/consent-modal/consent-modal.component';
@@ -19,7 +14,6 @@ import { CalendarYearValidatorDirective } from './components/date/calendar-year.
 import { CalendarDayValidatorDirective } from './components/date/calendar-day.validator';
 import { CalendarMonthValidatorDirective } from './components/date/calendar-month.validator';
 import { CalendarFutureDatesDirective } from './components/date/calendar-future-dates.validator';
-import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { FPCareDateComponent } from './components/date/date.component';
 import {PhnValidationComponent} from '../../validation/phn-validation/phn-validation.component';
 import {SinValidationComponent} from '../../validation/sin-validation/sin-validation.component';
@@ -27,27 +21,21 @@ import {RegNumberValidationComponent} from '../../validation/reg-number-validati
 import {PcValidationComponent} from '../../validation/pc-validation/pc-validation.component';
 import { ResultsFrameworkComponent } from './components/results-framework/results-framework.component';
 import {NameValidationComponent} from '../../validation/name-validation/name-validation.component';
-import { CaptchaDataService } from 'mygovbc-captcha-widget/src/app/captcha-data.service';
-import { CaptchaComponent } from 'mygovbc-captcha-widget/src/app/captcha/captcha.component';
 import { PhnComponent } from './components/phn/phn.component';
 import { SinComponent } from './components/sin/sin.component';
 import {NameComponent} from './components/name/name.component';
 import { ModalFocusDirective } from './components/consent-modal/modal-focus.directive';
 import { PhnDefinitionComponent } from './components/phn-definition/phn-definition.component';
 import { SampleModalComponent } from './components/sample-modal/sample-modal.component';
-
+import { CaptchaModule } from 'moh-common-lib/captcha';
+import { SharedCoreModule } from 'moh-common-lib';
 
 const componentList = [
   AlertComponent,
   FPCareToggleComponent,
-  PostalCodeComponent,
   PhnComponent,
   SinComponent,
   NameComponent,
-  PageFrameworkComponent,
-  WizardProgressBarComponent,
-  CoreBreadcrumbComponent,
-  FormActionBarComponent,
   FPCareRequiredDirective,
   RequiredValidationErrorsComponent,
   PhnValidationComponent,
@@ -61,10 +49,8 @@ const componentList = [
   CalendarDayValidatorDirective,
   CalendarMonthValidatorDirective,
   CalendarFutureDatesDirective,
-  FileUploaderComponent,
   FPCareDateComponent,
   ResultsFrameworkComponent,
-  CaptchaComponent,
   ModalFocusDirective,
   PhnDefinitionComponent,
   SampleModalComponent
@@ -80,12 +66,15 @@ const componentList = [
     RouterModule,
     ModalModule.forRoot(),
     TextMaskModule,
+    CaptchaModule,
+    SharedCoreModule
   ],
   declarations: [
     componentList
   ],
   exports: [
-    componentList
+    componentList,
+    SharedCoreModule
   ],
   entryComponents: [
     RequiredValidationErrorsComponent,
@@ -96,7 +85,6 @@ const componentList = [
     NameValidationComponent
   ],
   providers: [
-    CaptchaDataService
   ]
 })
 export class CoreModule { }

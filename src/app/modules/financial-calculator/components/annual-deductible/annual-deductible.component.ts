@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnInit, ChangeDetectorRef } 
 import { FinanceService } from '../../finance.service';
 import { PharmaCareAssistanceLevel } from '../../assistance-levels.interface';
 import {debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { Base } from '../../../../models/base.alias';
+import { Base } from 'moh-common-lib/models';
 import { growVertical } from '../../../../animations/animations';
 import {BehaviorSubject} from 'rxjs/internal/BehaviorSubject';
 
@@ -158,10 +158,10 @@ export class AnnualDeductibleComponent extends Base implements OnInit {
   }
 
   get deductibleTitle(): string {
-    return this.isReview ? 'Level of Coverage' : 'Annual Deductible';
+    return 'Level of Coverage';
   }
 
   isMaximuxZero(): boolean {
-    return ( this.financeService.currencyStrToNumber(this.maximum) === 0 )
+    return ( this.financeService.currencyStrToNumber(this.maximum) === 0 );
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {Base} from '../base/base.class';
+import { Base } from 'moh-common-lib/models';
 
 @Component({
   selector: 'fpcare-toggle',

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FPCareDataService} from '../../../../services/fpcare-data.service';
-import {Person} from '../../../../models/person.model';
+import {FPCPerson} from '../../../../models/person.model';
 import {Router} from '@angular/router';
 import {AbstractFormComponent} from '../../../../models/abstract-form-component';
 import {ValidationService} from '../../../../services/validation.service';
@@ -83,7 +83,7 @@ export class ChildrenPageComponent extends AbstractFormComponent implements OnIn
    * Retrieves the list of children
    * @returns {Person[]}
    */
-  get children(): Person[] {
+  get children(): FPCPerson[] {
     return this.fpcService.dependants;
   }
 
