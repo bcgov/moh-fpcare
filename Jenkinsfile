@@ -1,6 +1,8 @@
 // Edit your app's name below
 def APP_NAME = 'fpcare-sec'
 
+def CHAINED_ANGULAR_BUILD = 'angular-builder-sec' 
+
 // Edit your environment TAG names below
 def TAG_NAMES = ['dev', 'test']
 
