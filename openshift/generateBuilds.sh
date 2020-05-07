@@ -34,7 +34,7 @@ if [ -z "$PROJECT_NAME" ]; then
 fi
 
 if [ -z "$GIT_REF" ]; then
-	GIT_REF="master"
+	GIT_REF="security"
 	echo "Defaulting 'GIT_REF' to ${GIT_REF} ..."
 	echo
 fi
