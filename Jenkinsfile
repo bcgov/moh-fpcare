@@ -1,7 +1,6 @@
 // Edit your app's name below
 def APP_NAME = 'fpcare-sec'
 
-def CHAINED_ANGULAR_BUILD = 'fpcare-sec' 
 
 // Edit your environment TAG names below
 def TAG_NAMES = ['dev', 'test']
@@ -9,7 +8,8 @@ def TAG_NAMES = ['dev', 'test']
 // You shouldn't have to edit these if you're following the conventions
 def NGINX_BUILD_CONFIG = 'nginx-runtime-sec'
 def BUILD_CONFIG = APP_NAME + '-build'
-def IMAGESTREAM_NAME = APP_NAME
+def CHAINED_ANGULAR_BUILD = APP_NAME + '-on-nginx-build' 
+def IMAGESTREAM_NAME = APP_NAME + '-on-nginx'
 
 node {
 
