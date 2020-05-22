@@ -2,7 +2,7 @@
   "kind": "Template",
   "apiVersion": "v1",
   "metadata": {
-    "name": "fpcare-build-sec",
+    "name": "fpcare-build-template",
     "creationTimestamp": null
   },
   "objects": [
@@ -90,7 +90,7 @@
       "displayName": "Name",
       "description": "The name assigned to all of the objects defined in this template.",
       "required": true,
-      "value": "fpcare-sec"
+      "value": "fpcare"
     },
     {
       "name": "OUTPUT_IMAGE_TAG",
@@ -111,7 +111,7 @@
       "displayName": "Git Reference",
       "description": "The git reference or branch.",
       "required": true,
-      "value": "security"
+      "value": "master"
     },
     {
       "name": "SOURCE_CONTEXT_DIR",

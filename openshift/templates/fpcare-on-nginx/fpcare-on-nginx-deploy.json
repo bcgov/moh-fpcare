@@ -6,7 +6,7 @@
       "description": "Deployment template for a angular on nginx",
       "tags": "angular,nginx"
     },
-    "name": "fpcare-sec"
+    "name": "fpcare"
   },
   "objects": [
     {
@@ -240,7 +240,7 @@
       "displayName": "Name",
       "name": "NAME",
       "required": true,
-      "value": "fpcare-sec"
+      "value": "fpcare"
     },
     {
       "description": "The namespace where to get the above image name",
@@ -272,7 +272,7 @@
       "description": "The exposed hostname that will route to the service, e.g., myappname.pathfinder.gov.bc.ca, if left blank a value will be defaulted.",
       "displayName": "Application Hostname",
       "name": "APPLICATION_DOMAIN",
-      "value": "moh-fpcare-sec-dev.pathfinder.gov.bc.ca"
+      "value": "moh-fpcare-dev.pathfinder.gov.bc.ca"
     },
     {
       "description": "The TAG name for this environment, e.g., dev, test, prod",
