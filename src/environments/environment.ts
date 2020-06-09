@@ -16,6 +16,8 @@ export const environment = {
   captchaApiBaseUrl: '/fpcare/api/captcha',
   /** Url used for spa-env server, where we get splash screen info. */
   envServerUrl: '/fpcare/api/env',
+  /** Url used for address-validator service. */
+  addressUrl: '/fpcare/api/address',
 
   /** console.log() HTTP requests from our API and Log services */
   logHTTPRequestsToConsole: true,
