@@ -68,7 +68,8 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   }
 
   get countryName(): string {
-    return CountryNames[this.applicant.updAddress.country];
+    return CountryNames[this.applicant.updAddress.country]
+      || (this.applicant.updAddress && this.applicant.updAddress.country);
   }
 
   getProvinceID( index ) {
@@ -152,6 +153,8 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
       this.applicant.updAddress.postal = address.postal;
       this.applicant.updAddress.province = address.province;
       this.applicant.updAddress.country = address.country;
+
+      this.onGeoLookup();
     }
   }
 
