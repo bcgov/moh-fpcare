@@ -16,6 +16,7 @@ import {
 import {ValidationService} from '../../../../services/validation.service';
 import {PersonType} from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
+import { Address } from 'moh-common-lib/models/public_api';
 
 @Component({
   selector: 'fpcare-mailing-address',
@@ -137,6 +138,21 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
       this.fpcareRequired.map(x => x.runAll());
       this.cd.detectChanges();
     }, 0);
+  }
+
+  onAddressSelected(address: Address) {
+    if (address &&
+        address.street &&
+        address.city &&
+        address.postal &&
+        address.province &&
+        address.country) {
+      this.applicant.updAddress.street = address.street;
+      this.applicant.updAddress.city = address.city;
+      this.applicant.updAddress.postal = address.postal;
+      this.applicant.updAddress.province = address.province;
+      this.applicant.updAddress.country = address.country;
+    }
   }
 
   /**
