@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { TypeaheadModule } from 'ngx-bootstrap';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of, throwError } from 'rxjs';
-import { GeocoderService } from 'moh-common-lib/services';
 import { Address } from 'moh-common-lib/models';
 
 
@@ -13,10 +12,7 @@ describe('AddressValidatorComponent', () => {
   let component: AddressValidatorComponent;
   let fixture: ComponentFixture<AddressValidatorComponent>;
 
-  let lookupSpy;
-  let geoService;
-
-  // The result when user searches '784 y' - after GeocoderService has processed it
+  // The result when user searches '784 y'.
   const yatesResponse = [
     {fullAddress: '784 Yates St, Victoria, BC', city: 'Victoria', street: '784 Yates St', country: 'Canada', province: 'British Columbia'},
     {fullAddress: '784 Young Rd, Kelowna, BC', city: 'Kelowna', street: '784 Young Rd', country: 'Canada', province: 'British Columbia'}
@@ -24,15 +20,13 @@ describe('AddressValidatorComponent', () => {
 
   beforeEach(async(() => {
 
-    geoService = jasmine.createSpyObj('GeocoderService', ['lookup']);
-    lookupSpy = geoService.lookup.and.returnValue( of(yatesResponse) );
-
     TestBed.configureTestingModule({
       declarations: [ AddressValidatorComponent ],
-      providers: [
-        {provide: GeocoderService, useValue: geoService}
-      ],
-      imports: [ FormsModule, TypeaheadModule.forRoot(), HttpClientTestingModule ]
+      imports: [
+        FormsModule,
+        TypeaheadModule.forRoot(),
+        HttpClientTestingModule
+      ]
     })
     .compileComponents();
   }));
@@ -48,10 +42,6 @@ describe('AddressValidatorComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should not call GeocoderService.lookup() after initialization', () => {
-    expect(lookupSpy.calls.any()).toBe(false, 'GeoCoderService.lookup() should not be called on component load');
-  });
-
   it('should emit an address when one is selected from typeahead', fakeAsync(() => {
     let typeaheadMatch: any;
     component.typeaheadList$.subscribe(x => {
@@ -64,7 +54,6 @@ describe('AddressValidatorComponent', () => {
     component.addressChange.subscribe((address: Address) => {
       expect(address).toBeDefined('Address should be emitted after calling component.onSelect()');
       // tslint:disable-next-line: max-line-length
-      // expect(address._geocoderFullAddress).toBe(typeaheadMatch.item.fullAddress, 'Address _geocoderFullAddress should equal typeahead match ');
       expect(address.street).toBe(typeaheadMatch.item.street, 'Address street should match typeahead value');
       expect(address.city).toBe(typeaheadMatch.item.city, 'Address city should match typeahead value');
       expect(address.province).toBe(typeaheadMatch.item.province, 'Address province should match typeahead value');
@@ -90,7 +79,7 @@ describe('AddressValidatorComponent', () => {
     expect(component.hasNoResults).toBe(true);
 
     // Check UI
-    const el = fixture.nativeElement.querySelector('.geocoder-status');
+    const el = fixture.nativeElement.querySelector('.address-validator-status');
     fixture.detectChanges();
     expect(el.textContent).toContain('No Results', '"No Results" text should be displayed to user');
   });

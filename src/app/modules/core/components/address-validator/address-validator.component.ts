@@ -98,7 +98,7 @@ export class AddressValidatorComponent extends Base implements OnInit, ControlVa
   }
 
   onLoading(val: boolean): void {
-    // console.log( 'onLoading - geocoder' , val );
+    // console.log( 'onLoading - address-validator' , val );
     this.isTypeaheadLoading = val;
     this.hasError = false;
   }
@@ -216,8 +216,8 @@ export class AddressValidatorComponent extends Base implements OnInit, ControlVa
   }
 
   protected handleError(error: HttpErrorResponse) {
-    console.error('GeoCoder network error', { error });
-    return throwError('Geocoder error');
+    console.error('AddressValidator network error', { error });
+    return throwError('AddressValidator error');
   }
 
 }
