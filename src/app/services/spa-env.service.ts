@@ -16,6 +16,7 @@ const serverEnvs = {
   SPA_ENV_FPC_MAINTENANCE_START: '',
   SPA_ENV_FPC_MAINTENANCE_END: '',
   SPA_ENV_FPC_MAINTENANCE_MESSAGE: '',
+  SPA_ENV_FPC_ENABLE_ADDRESS_VALIDATOR: '',
 };
 
 // Used in HTTP request
@@ -57,6 +58,10 @@ export class SpaEnvService extends AbstractHttpService {
     super(http);
 
     this.loadEnvs().subscribe(response => this._values.next(response));
+  }
+
+  public getValues(): SpaEnvResponse {
+    return this._values.getValue();
   }
 
   private loadEnvs(){
