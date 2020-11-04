@@ -16,6 +16,8 @@ import {
 import {ValidationService} from '../../../../services/validation.service';
 import {PersonType} from '../../../../models/api.model';
 import {ResponseStoreService} from '../../../../services/response-store.service';
+import { Address } from 'moh-common-lib/models/public_api';
+import { SpaEnvService } from '../../../../services/spa-env.service';
 
 @Component({
   selector: 'fpcare-mailing-address',
@@ -36,7 +38,8 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
              , protected router: Router
              , private registrationService: RegistrationService
              , private responseStore: ResponseStoreService
-             , private cd: ChangeDetectorRef) {
+             , private cd: ChangeDetectorRef
+             , public spaEnvService: SpaEnvService) {
     super( router );
   }
 
@@ -67,7 +70,8 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
   }
 
   get countryName(): string {
-    return CountryNames[this.applicant.updAddress.country];
+    return CountryNames[this.applicant.updAddress.country]
+      || (this.applicant.updAddress && this.applicant.updAddress.country);
   }
 
   getProvinceID( index ) {
@@ -139,6 +143,23 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
     }, 0);
   }
 
+  onAddressSelected(address: Address) {
+    if (address &&
+        address.street &&
+        address.city &&
+        address.postal &&
+        address.province &&
+        address.country) {
+      this.applicant.updAddress.street = address.street;
+      this.applicant.updAddress.city = address.city;
+      this.applicant.updAddress.postal = address.postal;
+      this.applicant.updAddress.province = address.province;
+      this.applicant.updAddress.country = address.country;
+
+      this.onGeoLookup();
+    }
+  }
+
   /**
    * Retrieve maximum length for city name
    * @returns {number}
@@ -153,6 +174,11 @@ export class MailingAddressPageComponent extends AbstractFormComponent implement
    */
   get streetMaxLength(): number {
     return ValidationService.MAX_STREET_LENGTH;
+  }
+
+  get isAddressValidatorEnabled(): boolean {
+    const envs = this.spaEnvService.getValues();
+    return envs && envs.SPA_ENV_FPC_ENABLE_ADDRESS_VALIDATOR === 'true';
   }
 
   /**
