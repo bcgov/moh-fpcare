@@ -44,7 +44,7 @@
     "js-md5": "^0.7.3",
     "lodash": "^4.17.15",
     "moh-common-lib": "0.0.29-captcha",
-    "moment": "^2.22.1",
+    "moment": "^2.29.2",
     "mygovbc-bootstrap-theme": "^0.4.0",
     "ng-select": "^1.0.1",
     "ngx-bootstrap": "^5.1.2",
