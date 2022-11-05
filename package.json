@@ -49,7 +49,7 @@
     "ng-select": "^1.0.1",
     "ngx-bootstrap": "^5.1.2",
     "ngx-mydatepicker": "^2.4.9",
-    "pdfjs-dist": "^2.0.943",
+    "pdfjs-dist": "^2.4.456",
     "popper.js": "^1.14.5",
     "rx-dom": "^7.0.3",
     "rxjs": "^6.5.2",
